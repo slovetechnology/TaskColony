@@ -1,0 +1,95 @@
+.status-tag {
+  width: 60%;
+  padding: 5px 4px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-tag.small {
+  font-size: 16px;
+}
+
+.status-tag.medium {
+  font-size: 14px;
+}
+
+/* Existing classes */
+.accept {
+  border: 1px solid #28a745;
+  background: #28a745;
+  color: white;
+  
+
+}
+.success {
+  border: 1px solid #1d672e;
+  background: #1d672e;
+  color: white;
+
+}
+.gold {
+  border: 1px solid #f5ab0b;
+  background: #f5ab0b;
+  color: white;
+
+}
+
+.danger {
+  border: 1px solid #E73D17;
+  background: #dc3545;
+  color: white;
+
+}
+
+.warn {
+  border: 1px solid #e1be56;
+  background: #e1be56;
+
+  color: white;
+
+}
+
+/* New background classes */
+.error {
+  border: 1px solid #dc3545;  /* Red */
+  background: #dc3545;
+  color: white;
+
+}
+
+.primary {
+  border: 1px solid #007bff;  /* Blue */
+  background: #007bff;
+  color: white;
+
+}
+
+.info {
+  border: 1px solid #17a2b8;  /* Teal */
+  background: #17a2b8;
+  color: white;
+
+}
+
+.secondary {
+  border: 1px solid #6c757d;  /* Gray */
+  background: #6c757d;
+  color: white;
+
+}
+
+.light {
+  border: 1px solid #f8f9fa;  /* Light Gray */
+  background: #f8f9fa;
+  color: black;
+
+}
+
+.dark {
+  border: 1px solid #343a40;  /* Dark Gray */
+  background: #343a40;
+  color: white;
+
+}

@@ -1,0 +1,49 @@
+.slider {
+  @apply relative bg-secondary transition rounded-[3rem];
+  width: 42px;
+  height: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  transition: all;
+}
+
+#input:checked + .slider {
+  background-color: #58be29;
+}
+
+#input:focus + .slider {
+  box-shadow: 0 0 1px #58be29;
+}
+
+#input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.on {
+  background-color: #58be29;
+  &:before {
+    content: '';
+    left: 50%;
+  }
+}
+
+.slider.off {
+  background-color: #ccc;
+  &:before {
+    content: '';
+    left: 4px;
+  }
+}
+
+#input:checked + .slider:before {
+  background-color: #fff;
+}

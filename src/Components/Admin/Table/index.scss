@@ -1,0 +1,53 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &.lg-and-above {
+    display: none;
+
+    @media screen and (min-width: 1024px) {
+      display: table;
+    }
+  }
+
+  &__mobile {
+    @media screen and (min-width: 1024px) {
+      display: none;
+    }
+  }
+
+  &__head {
+    &__row {
+
+      &__text {
+        @apply  p-2.5 text-left text-base font-medium;
+      }
+    }
+  }
+  &__data_checkbox {
+    display: inline-flex !important;
+    margin-left: 0.5rem;
+    --tw-translate-y: 2px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate))
+      skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+      scaleY(var(--tw-scale-y));
+  }
+
+  &__loading {
+    text-align: center;
+    padding: 1rem;
+  }
+  &__data_cell {
+    @apply text-left px-2.5 py-6;
+  }
+
+  &__row {
+    text-align: left;
+    border-bottom: 1px solid #E2E2E2;
+    line-height: 1.25rem;
+
+    &__data {
+      text-align: center;
+    }
+  }
+}
