@@ -38,7 +38,7 @@ function Footer() {
                             <div className="relative" key={index}>
                                 <div className="text-xs text-secondary">{item.title}</div>
                                 <div className="text-xs">{item.content}</div>
-                                {index !== FooterContacts.length - 1 && <div className="absolute top-0 right-3 w-[0.05rem] h-10 bg-secondary/60"></div>}
+                                {index !== FooterContacts.length - 1 && <div className="absolute top-0 right-3 hidden lg:block w-[0.05rem] h-10 bg-secondary/60"></div>}
                             </div>
                         ))}
                     </div>

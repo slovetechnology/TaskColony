@@ -20,8 +20,8 @@ function Home() {
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
                             <h1>
-                                <div className="text-secondary text-5xl font-bold">A One-Stop Place </div>
-                                <div className="font-bold text-5xl">For Home Repair</div>
+                                <div className="text-secondary text-4xl md:text-5xl font-bold">A One-Stop Place </div>
+                                <div className="font-bold text-4xl md:text-5xl">For Home Repair</div>
                             </h1>
                             <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
                         </div>
@@ -55,7 +55,7 @@ function Home() {
                         <div className="relative">
                             <div className="absolute top-0 left-0 bg-[#E73D17] size-[8.75rem] rounded-full -mt-20"></div>
                             <div className="absolute top-0 left-0 bg-[#F29D8A] size-[2rem] rounded-full -mt-16 ml-[10rem]"></div>
-                            <div className="absolute bottom-0 right-0 bg-gradient-to-r from-[#FFBC0A] to-[#FF3D3D] size-[13rem] rounded-full -mt-20 mr-20"></div>
+                            <div className="absolute bottom-0 right-0 bg-gradient-to-r from-[#FFBC0A] to-[#FF3D3D] size-[9rem] md:size-[13rem] rounded-full -mt-14 md:-mt-20 mr-20"></div>
                             <div className="absolute bottom-7 right-0 bg-[#E73D17] size-[2rem] rounded-full mr-[18rem]"></div>
                             <LazyLoadImage
                                 src={img4}
