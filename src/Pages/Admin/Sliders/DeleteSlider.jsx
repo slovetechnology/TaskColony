@@ -1,6 +1,6 @@
 import ModalLayout from "../../../Components/Admin/ModalLayout";
 
-const ConfirmDeleteSlider = ({ closeView, confirmAction }) => {
+const ConfirmDeleteSlider = ({ closeView, confirmAction, isLoading }) => {
   return (
     <>
        <ModalLayout closeView={closeView}>

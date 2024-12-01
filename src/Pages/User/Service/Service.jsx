@@ -1,26 +1,25 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import Layout from '../../../Components/User/Layout'
-import { FaHeart, FaSearch, FaStar } from 'react-icons/fa'
-import { SlArrowDown } from 'react-icons/sl'
-import { Link } from 'react-router-dom'
-import { Apis, AuthGeturl } from '../../../Components/General/Api'
-import { HomeOurServices } from '../../../utils/utils'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import React, { useCallback, useEffect, useState } from 'react';
+import Layout from '../../../Components/User/Layout';
+import { FaHeart, FaSearch, FaStar } from 'react-icons/fa';
+import { SlArrowDown } from 'react-icons/sl';
+import { Link } from 'react-router-dom';
+import { Apis, AuthGeturl } from '../../../Components/General/Api';
+import { HomeOurServices } from '../../../utils/utils';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Service = () => {
-  const [items, setItems] = useState([]); // List of services
-  const [carts, setCarts] = useState([]); // List of categories
-  const [error, setError] = useState(null); // Error message
-  const [loading, setLoading] = useState(true); // Loading state
-  const [searchQuery, setSearchQuery] = useState(''); // Search query state
+  const [items, setItems] = useState([]);
+  const [carts, setCarts] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const [view, setView] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(''); // Selected category state
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleView = (tag) => {
     setView(view !== tag ? tag : '');
   };
 
-  // Fetch services
   const fetchServices = useCallback(async () => {
     try {
       const res = await AuthGeturl(Apis.users.get_all_services);
@@ -40,7 +39,6 @@ const Service = () => {
     fetchServices();
   }, [fetchServices]);
 
-  // Fetch categories
   const fetchCarts = useCallback(async () => {
     try {
       const res = await AuthGeturl(Apis.users.get_category);
@@ -58,22 +56,19 @@ const Service = () => {
     fetchCarts();
   }, [fetchCarts]);
 
-  // Filter items based on search query and selected category
   const filteredItems = items.filter(item => {
     const matchesSearchQuery = item.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory ? item.category_name === selectedCategory : true;
     return matchesSearchQuery && matchesCategory;
   });
 
-  // Handle category selection
   const handleCategorySelect = (category) => {
     setSelectedCategory(category.name);
   };
 
-  // Handle search input change
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-    setSelectedCategory(''); // Reset category when changing search
+    setSelectedCategory('');
   };
 
   return (
@@ -91,7 +86,7 @@ const Service = () => {
         </div>
       </div>
 
-      <div className="w-[80%] gap-10 xl:mt-28 mt-10 mb-32 border-b pb-16 xl:flex mx-auto">
+      <div className="lg:w-[80%] gap-10 xl:mt-28 mt-10 mb-32 border-b pb-16 xl:flex mx-auto">
         {/* Search Bar */}
         <div className="mx-3">
           <div className="border-b py-5">
@@ -145,24 +140,18 @@ const Service = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
-          {HomeOurServices.map((item, index) => (
+          {(searchQuery ? filteredItems : items).map((item, index) => (
             <div className="w-11/12 mx-auto" key={index}>
               <div className="relative">
-                <div className="absolute z-10 text-sm top-2 right-4 bg-white rounded-full py-1  font-semibold px-2">
-                  ${item.price}
-                </div>
-                <div className="absolute z-10 text-sm bottom-4 flex items-center gap-1 right-4 bg-white rounded-full py-1  font-semibold px-2">
-                  <FaHeart className='text-secondary' /> {item.rating} <FaStar className='text-yellow' />
-                </div>
                 <LazyLoadImage
                   effect="blur"
-                  src={item.img}
-                  className="w-[30rem] object-cover"
+                  src={item.banner_image[0]}
+                  className="w-[30rem] h-[10rem] object-cover"
                 />
               </div>
               <div className="py-4 px-5 bg-white rounded-b-3xl -mt-3">
-                <div className="font-medium">{item.title}</div>
-                <div className="text-xs capitalize text-slate-500 mt-3">{item.tag}</div>
+                <div className="font-medium">{item.name}</div>
+                <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
               </div>
             </div>
           ))}

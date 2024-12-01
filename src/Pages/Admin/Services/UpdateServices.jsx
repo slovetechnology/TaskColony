@@ -8,8 +8,9 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [galleryImageName, setGalleryImageName] = useState('');
+    const [bannerImageName, setBannerImageName] = useState(''); // For banner image name
 
-    // Pre-populate form fields with existing data from singles
     useEffect(() => {
         if (singles) {
             setValue('name', singles.name || '');
@@ -22,6 +23,18 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
             setValue('data_tid', singles.trackid || '');
         }
     }, [singles, setValue]);
+
+    const handleGalleryImageChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setGalleryImageName(e.target.files[0].name);
+        }
+    };
+
+    const handleBannerImageChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setBannerImageName(e.target.files[0].name);
+        }
+    };
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -37,13 +50,9 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
         fetchCategories();
     }, []);
 
-    // Handle form submission
     const onSubmit = async (data, event) => {
-        event.preventDefault(); // Prevent default form behavior
-
+        event.preventDefault();
         setIsSubmitting(true);
-
-        // Form data to send to the backend
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('duration', data.duration);
@@ -54,7 +63,6 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
         formData.append('featured', data.feature_front_page === 'yes' ? 1 : 0);
         formData.append('description', data.description);
 
-        // Handle image uploads
         if (data.banner_image && data.banner_image[0]) {
             formData.append('images[]', data.banner_image[0]);
         }
@@ -69,7 +77,7 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
 
             if (res.status === true) {
                 ToastAlert(res.text);
-                resendSignal(); // Trigger a refresh of the data
+                resendSignal();
             } else {
                 ToastAlert(res.text);
             }
@@ -85,7 +93,6 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
             <div className="bg-white w-[95%] mx-auto text-primary h-[35rem] px- scrollsdown pt-10 overflow-auto">
                 <div className="text-slate-600 text-xl rounded-lg shadow-xl mb-5 bg-blue-50 p-3">Update Service</div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-
                     <div className="mb-5">
                         <label className="text-xs">Name</label>
                         <input
@@ -158,7 +165,6 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
                             {...register('description')}
                         />
                     </div>
-
                     <div className="gap-5 items-center mb-5">
                         <div className="relative w-full">
                             <label className="text-xs">Banner Image</label>
@@ -166,10 +172,11 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
                                 type="file"
                                 {...register('banner_image')}
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                onChange={handleBannerImageChange} // Handle banner image change
                             />
                             <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
                                 <div className="w-full px-4 py-2 text-gray-500">
-                                    Choose Image
+                                    {bannerImageName || 'Choose Image'} {/* Display banner image name */}
                                 </div>
                                 <div className="bg-gray-200 border-l border-gray-300 text-gray-700 px-4 py-2 cursor-pointer">
                                     Browse
@@ -183,10 +190,11 @@ const UpdateService = ({ closeView, singles, resendSignal }) => {
                                 type="file"
                                 {...register('gallery_image')}
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                onChange={handleGalleryImageChange}
                             />
                             <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
                                 <div className="w-full px-4 py-2 text-gray-500">
-                                    Choose Image
+                                    {galleryImageName || 'Choose Image'}
                                 </div>
                                 <div className="bg-gray-200 border-l border-gray-300 text-gray-700 px-4 py-2 cursor-pointer">
                                     Browse

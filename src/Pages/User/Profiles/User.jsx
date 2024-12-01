@@ -108,7 +108,7 @@ const User = () => {
                     />
                     <div className="bg-white w-full xl:px-10 px-4 py-5 xl:h-[39rem] shadow-2xl">
                         <div>
-                            <div className="xl:flex items-center justify-between mb-3 gap-4 pb-3 border last:border-none">
+                            <div className="md:flex items-center justify-between mb-3 gap-4 pb-3 border last:border-none">
                                 <div className="flex items-center gap-4">
                                     <FaUserCircle className='xl:text-[5rem] text-4xl bg-gray-200' />
                                     <span className="flex-1">
@@ -132,7 +132,7 @@ const User = () => {
                                         ${user.user_wallets[0].walletbal}
                                     </div>
                                 </div>
-                                <div className="border flex items-center justify-between xl:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">
+                                <div className="border flex items-center justify-between md:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">
                                     <MdOutlineLocationOn />
                                     <div>{location}</div>
                                     <MdOutlineMyLocation />
@@ -146,7 +146,7 @@ const User = () => {
                             </div>
                         </div>
 
-                        <div className="border-t xl:grid grid-cols-2 g xl:mt-10 py-10 gap-10   ">
+                        <div className="border-t md:grid grid-cols-2 g xl:mt-10 py-10 gap-5   ">
                             <div onClick={handleOpenFundWallet} className="border py-3 px-2">
                                 <Link to=''>Fund Wallet</Link>
                             </div>
