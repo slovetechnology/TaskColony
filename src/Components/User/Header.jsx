@@ -35,7 +35,7 @@ const Header = () => {
 
   return (
     <div>
-      <div className={`fixed w-full bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[20rem]' : 'h-[4.6rem]'} transition-all`}>
+      <div className={`fixed w-full bg-white z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[16rem]' : 'h-[4.6rem]'} transition-all`}>
         <div className='flex items-center justify-between px-5 lg:px-10'>
           <div className="flex items-center gap-5">
             <Link to="/" className="hidden lg:block">
@@ -47,10 +47,10 @@ const Header = () => {
 
           </div>
           <div className="lg:flex flex-row items-center gap-4 hidden">
-            <div className="border border-slate-500 w-[15rem] rounded-md p-2 flex items-center gap-1">
+            {/* <div className="border border-slate-500 w-[15rem] rounded-md p-2 flex items-center gap-1">
               <input type="text" placeholder='What are you looking for today?' className="outline-none w-full text-xs bg-transparent" />
               <SlMagnifier className='text-zinc-400 text-xs' />
-            </div>
+            </div> */}
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}
@@ -106,10 +106,10 @@ const Header = () => {
         </div>
        {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
           <div className="flex flex-col">
-            <div className="border mb-3 border-slate-500 w-full rounded-md p-4 flex items-center gap-1">
+            {/* <div className="border mb-3 border-slate-500 w-full rounded-md p-4 flex items-center gap-1">
               <input type="text" placeholder='What are you looking for today?' className="outline-none w-full text-xs bg-transparent" />
               <SlMagnifier className='text-zinc-400 text-xs' />
-            </div>
+            </div> */}
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}

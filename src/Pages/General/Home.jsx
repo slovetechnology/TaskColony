@@ -156,7 +156,7 @@ function Home() {
                 </div>
             </div>
             <div className="w-11/12 mx-auto lg:w-10/12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-16 text-white">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
                     <div className="flex flex-col justify-center">
                         <div className="font-medium text-4xl mb-6">What our customers says</div>
                         <div className="">
@@ -191,7 +191,7 @@ function Home() {
                     <div className="">
                         <LazyLoadImage
                             src={img23}
-                            className=''
+                            className='object-cover'
                             effect='blur'
                         />
                     </div>
@@ -263,7 +263,7 @@ function Home() {
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                         {HomeProviders.map((item, index) => (
                             <div key={index} className="bg-white rounded-3xl">
-                                <LazyLoadImage src={item.img} className='' effect='blur' />
+                                <LazyLoadImage src={item.img} className='w-[40rem] md:w-[30rem] object-cover' effect='blur' />
                                 <div className="px-4 py-5 -mt-5 rounded-b-2xl ">
                                     <div className="text-center text-sm font-semibold">{item.title}</div>
                                     <div className="text-center text-secondary text-xs">{item.tag}</div>
