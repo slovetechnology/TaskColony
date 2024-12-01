@@ -146,7 +146,7 @@ const AllCategories = () => {
             {paginatedItems.map((member, index) => (
               <TableRow className='mb-10' key={index}>
                 <TableData className='flex gap-2 items-center'>
-                  <div className='w-12 h-12 rounded-full overflow-hidden'>
+                  <div className='w-16 h-16 bg-secondary p-4 rounded-full overflow-hidden'>
                     <img
                       className='w-full h-full object-cover'
                       src={member.icon_image}

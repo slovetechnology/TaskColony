@@ -62,10 +62,8 @@ const Header = () => {
                       <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                     </div>
                   </div>
-                  <div className="xl:hidden flex lg:text-2xl cursor-pointer">
-                    <TopNavIcon onClick={() => setTopNav(!topNav)} />
-                  </div>
-                  <div className="lg:text-3xl xl:hidden">
+
+                  <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
                     <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
                       <IoIosLogOut />
                     </div>
@@ -88,7 +86,7 @@ const Header = () => {
                     </div>
 
                   </div>
-                  <div onClick={() => navigate('/login')} className="block text-3xl mx-5 xl:hidden">
+                  <div onClick={() => navigate('/user')} className="block text-3xl mx-5 xl:hidden">
                     <FaUserCircle />
                   </div>
                 </div>
@@ -102,10 +100,7 @@ const Header = () => {
         </div>
         {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
           <div className="flex flex-col">
-            {/* <div className="border mb-3 border-slate-500 w-full rounded-md p-4 flex items-center gap-1">
-              <input type="text" placeholder='What are you looking for today?' className="outline-none w-full text-xs bg-transparent" />
-              <SlMagnifier className='text-zinc-400 text-xs' />
-            </div> */}
+            
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}
