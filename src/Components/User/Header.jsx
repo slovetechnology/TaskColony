@@ -35,8 +35,8 @@ const Header = () => {
 
   return (
     <div>
-      <div className={`fixed bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[20rem]' : 'h-[4.6rem]'} transition-all`}>
-        <div className='flex items-center justify-between w-11/12 lg:w-10/12 mx-auto'>
+      <div className={`fixed w-full bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[20rem]' : 'h-[4.6rem]'} transition-all`}>
+        <div className='flex items-center justify-between px-5 lg:px-10'>
           <div className="flex items-center gap-5">
             <Link to="/" className="hidden lg:block">
               <Lottie options={defaultOptions} height={40} width={140} />
@@ -118,8 +118,8 @@ const Header = () => {
       </div>
       <br />
       <br />
-      <br />
-      <div className={`bg-secondary z-10 relative lg:mt-2 transition-all ${mobile ? 'h-[30rem]' : 'h-[3rem]'}`}>
+      {/* <br /> */}
+      <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
         <div className="lg:hidden ml-auto py-3 w-fit mr-10">
           <MobileIcon onClick={() => setMobile(!mobile)} className='text-white text-2xl cursor-pointer' />
         </div>
