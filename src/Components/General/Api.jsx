@@ -9,7 +9,7 @@ const user = 'user';
 const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user`,
-    login: `${user}/auth/loginapp`,
+    login: `${user}/auth/loginapp.php`,
     get_user_profile: `${user}/profile/get_user_detail`,
     fund_wallet: `${user}/profile/fundwallet`,
     fund_history: `${user}/profile/get_fund_history`,
@@ -132,7 +132,7 @@ export const Deleteurl = async (endpoint, data) => {
 // Unauthenticated GET request
 export const Geturl = async (endpoint) => {
     try {
-        const response = await axios.get(`${offline}/${endpoint}`);
+        const response = await axios.get(`${offline }/${endpoint}`);
         return response.data;
     } catch (error) {
         return error.response ? error.response.data : { status: false, text: 'Network error' };

@@ -99,7 +99,7 @@ const Login = () => {
                     minLength: { value: 6, message: 'Password must be at least 6 characters' }
                   })}
                   type={showPassword ? 'text' : 'password'}
-                  className={`input ${errors.password ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.password ? 'border-red-600' : 'border'}`}
                 />
                 {errors.password && <div className="text-red-600">{errors.password.message}</div>}
               </div>
