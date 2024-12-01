@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
-import { SlArrowRight, SlBell, SlMagnifier, SlMenu } from 'react-icons/sl';
-import { img1, img2, img3, img4, logo, NavLinks, TopNavsLinks } from 'utils/utils';
-import { FooterContacts, FooterLinks, FooterSocials, HomeBestOffers, HomeCategories, HomeGallery, HomeOurServices, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, img37, img38, StoreLinks } from '../../utils/utils';
+import { img1, img3, img4 } from 'utils/utils';
+import { HomeBestOffers, HomeCategories, HomeGallery, HomeOurServices, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
 import { FaArrowLeft, FaArrowRight, FaHeart, FaStar } from 'react-icons/fa';
+import Layout from '../../Components/User/Layout';
 
 
 const ActiveTabOptions = [
@@ -14,8 +14,8 @@ const ActiveTabOptions = [
 function Home() {
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
-        <div>
-            <div className="z-10 relative">
+        <Layout>
+            {/* <div className="z-10 relative">
                 <div className=" py-5 bg-secondary-light">
                     <div className="flex items-center justify-between lg:justify-center gap-8 w-11/12 lg:w-10/12 mx-auto">
                         <div className="">
@@ -33,7 +33,7 @@ function Home() {
                                 <SlMagnifier className='text-zinc-400 text-xs' />
                             </div>
                             {TopNavsLinks.map((item, index) => (
-                                <Link to="" key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
+                                <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
                             ))}
                         </div>
                         <div className="">
@@ -54,7 +54,7 @@ function Home() {
                         <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="h-fit lg:h-[84dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
@@ -313,50 +313,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="bg-black py-20 text-white">
-                <div className="w-11/12 mx-auto lg:w-10/12">
-                    <div className="text-3xl text-secondary mb-10">Why choose Task Colony</div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                        <div className="">
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
-                                {FooterLinks.map((item, index) => (
-                                    <Link to="" key={index} className='text-white py-3 px-3 hover:text-secondary transition-all text-sm flex items-center gap-1'> <SlArrowRight className='text-xs' /> {item.title}</Link>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="">
-                            <div className="uppercase">dOWNLOAD THE APP ON</div>
-                            <div className="flex flex-wrap items-center gap-2 mt-2">
-                                <a href="" rel="noreferrer"> <img src={img37} alt="" className="w-10/12" /> </a>
-                                <a href="" rel="noreferrer"> <img src={img38} alt="" className="w-10/12" /> </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-16">
-                        <div className="">
-                            <div className="">For enquiries, reach us on :</div>
-                            <div className="flex flex-row flex-wrap mt-3">
-                                {FooterSocials.map((item, index) => (
-                                    <a href={item.link} key={index} rel="noreferrer"> <img src={item.img} alt="" className="w-10/12" /> </a>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                {FooterContacts.map((item, index) => (
-                                    <div className="relative" key={index}>
-                                        <div className="text-xs text-secondary">{item.title}</div>
-                                        <div className="text-xs">{item.content}</div>
-                                        {index !== FooterContacts.length - 1 && <div className="absolute top-0 right-3 w-[0.05rem] h-10 bg-secondary/60"></div>}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-10 text-secondary text-center text-xs">© 2024 All Rights Reserved by Task Colony</div>
-                </div>
-            </div>
-        </div>
+        </Layout>
     )
 }
 

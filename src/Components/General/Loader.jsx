@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 
 import Lottie from 'react-lottie';
 import animationData from '../../Lotties/task-colony';
+import { useLocation } from 'react-router-dom';
 const Loader = ({ children }) => {
     const [loading, setLoading] = useState(true);
+    const {pathname} = useLocation()
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -13,12 +15,13 @@ const Loader = ({ children }) => {
         }
     };
     useEffect(() => {
+        setLoading(true)
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 3000);
+        }, 2000);
 
         return () => clearTimeout(timer);
-    }, []);
+    }, [pathname]);
 
     if (loading) {
         return (
