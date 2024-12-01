@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaBars, FaUserCircle, FaUserPlus } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
 import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import Lottie from 'react-lottie';
@@ -13,6 +13,8 @@ import { NavLinks, TopNavsLinks } from '../../utils/utils';
 const Header = () => {
   const { userloggedin, user } = useSelector(state => state.data); // Pulling from Redux
   const navigate = useNavigate();
+  const [mobile, setMobile] = useState(false)
+  const MobileIcon = mobile ? FaTimes : SlMenu
 
   const defaultOptions = {
     loop: true,
@@ -34,11 +36,6 @@ const Header = () => {
     sessionStorage.clear();
 
     navigate('/login');
-    window.location.reload();
-  };
-
-  const handleNavigation = (path) => {
-    window.location.href = path;
   };
 
   return (
@@ -115,15 +112,17 @@ const Header = () => {
       <br />
       <br />
       <br />
-      <div className="bg-secondary z-10 relative lg:mt-2">
+      <div className={`bg-secondary z-10 relative lg:mt-2 transition-all ${mobile ? 'h-[30rem]' : 'h-[3rem]'}`}>
         <div className="lg:hidden ml-auto py-3 w-fit mr-10">
-          <SlMenu className='text-white text-2xl cursor-pointer' />
+          <MobileIcon onClick={() => setMobile(!mobile)} className='text-white text-2xl cursor-pointer' />
         </div>
-        <div className="hidden lg:flex flex-row gap-1 items-center justify-center w-11/12 lg:w-10/12 mx-auto py-3">
+        <div className={` ${mobile ? 'flex flex-col' : 'flex-row hidden lg:flex items-center justify-center'} gap-1 w-11/12 lg:w-10/12 mx-auto py-3`}>
           {NavLinks.map((item, index) => (
-            <Link to={`${item.link}`} key={index} className='text-xs truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
+            <Link to={`${item.link}`} key={index} className='text-xs hover:text-white transition-all truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
           ))}
-          <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>
+         {mobile ?
+         <Link to={``} className='text-xs truncate uppercase hover:text-white transition-all text-orange-100 py-3 px-3'>notifications</Link>
+         :  <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>}
         </div>
       </div>
     </div>

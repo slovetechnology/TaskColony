@@ -25,13 +25,8 @@ const Navbar = ({ closeView }) => {
         sessionStorage.clear();
 
         navigate('/login');
-        window.location.reload();
     };
-
-    const handleNavigation = (path) => {
-        window.location.href = path;
-    };  
-
+    
     return (
         <AnimatePresence>
             {isVisible && (
@@ -52,16 +47,16 @@ const Navbar = ({ closeView }) => {
                     <div className="grid grid-cols-1 leading-1 mx-10 font-medium gap-3 text-lg">
                         <div className="block items-center gap-6 font-medium text-[14px]">
                             {userloggedin ? <>
-                                <div onClick={() => handleNavigation('/')} className="cursor-pointer mb-4 hover:text-secondary">HOME</div>
-                                <div onClick={() => handleNavigation('/category')} className="cursor-pointer mb-4 hover:text-secondary">CATEGORIES</div>
-                                <div onClick={() => handleNavigation('/service')} className="cursor-pointer mb-4 hover:text-secondary">SERVICES</div>
-                                <div onClick={() => handleNavigation('/booking-list')} className="cursor-pointer mb-4 hover:text-secondary">MY BOOKING</div>
-                                <div onClick={() => handleNavigation('/user')} className="cursor-pointer mb-4 hover:text-secondary">MY PROFILE</div>
+                                <div  className="cursor-pointer mb-4 hover:text-secondary">HOME</div>
+                                <div className="cursor-pointer mb-4 hover:text-secondary">CATEGORIES</div>
+                                <div className="cursor-pointer mb-4 hover:text-secondary">SERVICES</div>
+                                <div className="cursor-pointer mb-4 hover:text-secondary">MY BOOKING</div>
+                                <div className="cursor-pointer mb-4 hover:text-secondary">MY PROFILE</div>
                             </> : <>
-                                <div onClick={() => handleNavigation('/')} className="cursor-pointer mb-4 hover:text-secondary">HOME</div>
-                                <div onClick={() => handleNavigation('/about')} className="cursor-pointer mb-4 hover:text-secondary">ABOUT US</div>
-                                <div onClick={() => handleNavigation('/category')} className="cursor-pointer mb-4 hover:text-secondary">CATEGORIES</div>
-                                <div onClick={() => handleNavigation('/team')} className="cursor-pointer mb-4 hover:text-secondary">TEAM</div>
+                                <div  className="cursor-pointer mb-4 hover:text-secondary">HOME</div>
+                                <div  className="cursor-pointer mb-4 hover:text-secondary">ABOUT US</div>
+                                <div  className="cursor-pointer mb-4 hover:text-secondary">CATEGORIES</div>
+                                <div className="cursor-pointer mb-4 hover:text-secondary">TEAM</div>
                             </>}
                         </div>
                     </div>
