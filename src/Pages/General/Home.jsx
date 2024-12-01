@@ -15,7 +15,7 @@ function Home() {
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
         <Layout>
-            <div className="h-fit lg:h-[84dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
+            <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
@@ -28,7 +28,7 @@ function Home() {
                         <div className="mt-10">
                             <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
                         </div>
-                        <div className="flex flex-row md:flex-col items-center mt-10 gap-2">
+                        <div className="flex items-center mt-10 gap-2">
                             <LazyLoadImage
                                 effect="blur"
                                 className='size-5'
@@ -43,7 +43,7 @@ function Home() {
                     <div className="lg:col-span-4 -mt-32 lg:-mt-0">
                         <LazyLoadImage
                             effect="blur"
-                            className='w-full object-contain lg:h-[41rem]'
+                            className='w-full object-contain lg:h-[51rem]'
                             src={img1}
                         />
                     </div>
