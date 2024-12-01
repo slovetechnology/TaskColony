@@ -198,7 +198,7 @@ function Home() {
                 </div>
             </div>
             <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
-                <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})` }}>
+                <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>
                     <div className="lg:col-span-3 w-fit mx-auto lg:ml-auto order-2 lg:order-1">
                         <LazyLoadImage src={img26} className='object-cover h-full w-full' effect='blur' />
                     </div>
