@@ -28,7 +28,7 @@ function Home() {
                         <div className="mt-10">
                             <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
                         </div>
-                        <div className="flex items-center mt-10 gap-2">
+                        <div className="flex flex-row md:flex-col items-center mt-10 gap-2">
                             <LazyLoadImage
                                 effect="blur"
                                 className='size-5'

@@ -118,7 +118,6 @@ const Header = () => {
       </div>
       <br />
       <br />
-      {/* <br /> */}
       <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
         <div className="lg:hidden ml-auto py-3 w-fit mr-10">
           <MobileIcon onClick={() => setMobile(!mobile)} className='text-white text-2xl cursor-pointer' />

@@ -25,7 +25,7 @@ const Loader = ({ children }) => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center w-full h-screen">
+            <div className="flex items-center bg-white justify-center w-full h-screen">
                 <div className="">
                     <Lottie
                         options={defaultOptions}
