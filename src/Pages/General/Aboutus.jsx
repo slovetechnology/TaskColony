@@ -2,6 +2,7 @@ import React from 'react'
 import Layout from '../../Components/User/Layout'
 import grid from '../../assets/grid.svg'
 import img1 from 'assets/new/img1.svg'
+import img2 from 'assets/new/img1.svg'
 import { FaUsers, FaStar, FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import profiles from '../../assets/profile.png'
 import review from '../../assets/review.png'
@@ -40,7 +41,7 @@ const Aboutus = () => {
                 <p className="text-base">gave Services across the cities and world</p>
               </div>
               <img src={img1} alt="" className="rounded-xl w-full object-cover h-[12rem]" />
-              <img src={img1} alt="" className="rounded-xl w-full md:col-span-2 object-cover md:h-[15rem] h-[12rem]" />
+              <img src={img2} alt="" className="rounded-xl w-full md:col-span-2 object-cover md:h-[15rem] h-[12rem]" />
             </div>
           </div>
 
