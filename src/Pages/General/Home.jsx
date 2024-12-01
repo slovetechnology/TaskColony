@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
-import { SlMagnifier, SlMenu } from 'react-icons/sl';
+import { SlArrowRight, SlBell, SlMagnifier, SlMenu } from 'react-icons/sl';
 import { img1, img2, img3, img4, logo, NavLinks, TopNavsLinks } from 'utils/utils';
-import { HomeBestOffers, HomeCategories, HomeOurServices, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
-import { FaArrowLeft, FaArrowRight, FaBars, FaHeart, FaStar } from 'react-icons/fa';
-import Footer from '../../Components/User/Footer';
+import { FooterContacts, FooterLinks, FooterSocials, HomeBestOffers, HomeCategories, HomeGallery, HomeOurServices, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, img37, img38, StoreLinks } from '../../utils/utils';
+import { FaArrowLeft, FaArrowRight, FaHeart, FaStar } from 'react-icons/fa';
 
 
 const ActiveTabOptions = [
@@ -34,7 +33,7 @@ function Home() {
                                 <SlMagnifier className='text-zinc-400 text-xs' />
                             </div>
                             {TopNavsLinks.map((item, index) => (
-                                <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
+                                <Link to="" key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
                             ))}
                         </div>
                         <div className="">
@@ -52,6 +51,7 @@ function Home() {
                         {NavLinks.map((item, index) => (
                             <Link to={`${item.link}`} key={index} className='text-xs truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
                         ))}
+                        <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>
                     </div>
                 </div>
             </div>
@@ -125,8 +125,7 @@ function Home() {
                     </div>
                 </div>
 
-               <div className="">
-               <div className="grid grid-cols-1 lg:grid-cols-5 mt-20 mb-20">
+                <div className="grid grid-cols-1 lg:grid-cols-5 mt-20 mb-20">
                     <div className="lg:col-span-2"></div>
                     <div className="flex  lg:col-span-3 items-center justify-between">
                         <div className="font-medium text-2xl">Categories</div>
@@ -143,7 +142,6 @@ function Home() {
                         </div>
                     ))}
                 </div>
-               </div>
                 <div className="flex  items-center justify-between mt-20">
                     <div className="font-medium text-2xl">Our Services</div>
                     <div className="">
@@ -163,7 +161,7 @@ function Home() {
                                 <LazyLoadImage
                                     effect="blur"
                                     src={item.img}
-                                    className="w-[30rem] object-cover"
+                                    className="w-[40rem] md:w-[30rem] object-cover"
                                 />
                             </div>
                             <div className="py-4 px-5 bg-white rounded-b-3xl -mt-3">
@@ -239,11 +237,11 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="w-11/12 mx-auto lg:w-10/12 my-20">
+            <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})` }}>
                     <div className="lg:col-span-3 w-fit mx-auto lg:ml-auto order-2 lg:order-1">
-                       <LazyLoadImage src={img26} className='object-cover h-full w-full' effect='blur' />
-                       </div>
+                        <LazyLoadImage src={img26} className='object-cover h-full w-full' effect='blur' />
+                    </div>
                     {/* </div> */}
                     <div className="lg:col-span-4 order-1 lg:order-2">
                         <div className="flex flex-col justify-center">
@@ -265,11 +263,11 @@ function Home() {
                                 <div className="lg:col-span-2 relative flex items-center gap-3">
                                     <img src={img22} alt="" className="" />
                                     <div className="flex flex-col items-center gap-3">
-                                    {StoreLinks.map((item, index) => (
-                                        <Link to="" className='' key={index}>
-                                            <LazyLoadImage src={item.img} effect='blur' className='' />
-                                        </Link>
-                                    ))}
+                                        {StoreLinks.map((item, index) => (
+                                            <Link to="" className='' key={index}>
+                                                <LazyLoadImage src={item.img} effect='blur' className='' />
+                                            </Link>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +275,87 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            <div className="bg-zinc-200 py-10 mt-20">
+                <div className="w-11/12 mx-auto lg:w-10/12">
+                    <div className="flex  items-center justify-between">
+                        <div className="font-medium text-2xl capitalize">our Work gallery</div>
+                        <div className="">
+                            <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
+                        </div>
+                    </div>
+                    <div className="mt-8">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                            {HomeGallery.map((item, index) => (
+                                <LazyLoadImage key={index} src={item.img} className='' effect='blur' />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="w-11/12 mx-auto lg:w-10/12 mb-20">
+                <div className="flex  items-center justify-between mt-20">
+                    <div className="font-medium text-2xl capitalize">our best providers</div>
+                    <div className="">
+                        <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
+                    </div>
+                </div>
+                <div className="mt-8">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {HomeProviders.map((item, index) => (
+                            <div key={index} className="bg-white rounded-3xl">
+                                <LazyLoadImage src={item.img} className='' effect='blur' />
+                                <div className="px-4 py-5 -mt-5 rounded-b-2xl ">
+                                    <div className="text-center text-sm font-semibold">{item.title}</div>
+                                    <div className="text-center text-secondary text-xs">{item.tag}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            <div className="bg-black py-20 text-white">
+                <div className="w-11/12 mx-auto lg:w-10/12">
+                    <div className="text-3xl text-secondary mb-10">Why choose Task Colony</div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                        <div className="">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
+                                {FooterLinks.map((item, index) => (
+                                    <Link to="" key={index} className='text-white py-3 px-3 hover:text-secondary transition-all text-sm flex items-center gap-1'> <SlArrowRight className='text-xs' /> {item.title}</Link>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="uppercase">dOWNLOAD THE APP ON</div>
+                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                                <a href="" rel="noreferrer"> <img src={img37} alt="" className="w-10/12" /> </a>
+                                <a href="" rel="noreferrer"> <img src={img38} alt="" className="w-10/12" /> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-16">
+                        <div className="">
+                            <div className="">For enquiries, reach us on :</div>
+                            <div className="flex flex-row flex-wrap mt-3">
+                                {FooterSocials.map((item, index) => (
+                                    <a href={item.link} key={index} rel="noreferrer"> <img src={item.img} alt="" className="w-10/12" /> </a>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                {FooterContacts.map((item, index) => (
+                                    <div className="relative" key={index}>
+                                        <div className="text-xs text-secondary">{item.title}</div>
+                                        <div className="text-xs">{item.content}</div>
+                                        {index !== FooterContacts.length - 1 && <div className="absolute top-0 right-3 w-[0.05rem] h-10 bg-secondary/60"></div>}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mt-10 text-secondary text-center text-xs">© 2024 All Rights Reserved by Task Colony</div>
+                </div>
+            </div>
         </div>
     )
 }

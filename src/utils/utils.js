@@ -28,6 +28,22 @@ import img26 from "assets/new/img26.svg"
 import img27 from "assets/new/img27.svg"
 import img28 from "assets/new/img28.svg"
 import img22 from "assets/new/img22.svg"
+import img29 from "assets/new/img29.svg"
+import img30 from "assets/new/img30.svg"
+import img31 from "assets/new/img31.svg"
+import img32 from "assets/new/img32.svg"
+import img33 from "assets/new/img33.svg"
+import img34 from "assets/new/img34.svg"
+import img35 from "assets/new/img35.svg"
+import img36 from "assets/new/img36.svg"
+import img37 from "assets/new/img37.svg"
+import img38 from "assets/new/img38.svg"
+import img39 from "assets/new/img39.svg"
+import img40 from "assets/new/img40.svg"
+import img41 from "assets/new/img41.svg"
+import img42 from "assets/new/img42.svg"
+import img43 from "assets/new/img43.svg"
+
 
 import team1 from "assets/new/team1.svg"
 import team2 from "assets/new/team2.svg"
@@ -106,4 +122,41 @@ export const StoreLinks = [
     {img: img28},
 ]
 
-export {img1, img2, img3, img4, img23, img25, img26, img22, logo}
+export const HomeGallery = [
+    {img: img29},
+    {img: img30},
+    {img: img31},
+    {img: img32},
+]
+
+export const HomeProviders = [
+    {img: img33, title: `Leslie Alexander`, tag: 'electrician'},
+    {img: img34, title: `Marvin McKinney`, tag: 'painter'},
+    {img: img35, title: `Arlene McCoy`, tag: 'carpenter'},
+    {img: img36, title: `Courtney Henry`, tag: 'plumber'},
+]
+
+export const FooterLinks = [
+    {title: 'About us', link: ''},
+    {title: 'Contact us', link: ''},
+    {title: 'Privacy', link: ''},
+    {title: 'Terms and condition', link: ''},
+    {title: 'career', link: ''},
+    {title: 'Team', link: ''},
+]
+
+export const FooterSocials = [
+    {img: img39},
+    {img: img40},
+    {img: img41},
+    {img: img42},
+    {img: img43},
+]
+
+export const FooterContacts = [
+    {title: `Carreers`, content: `Jobs@taskcolony.com`},
+    {title: `Business Inquries`, content: `inquries@taskcolony.com`},
+    {title: `helpline Number`, content: `+144  1234 56789`},
+]
+
+export {img1, img2, img3, img4, img23, img25, img37, img38, img26, img22, logo}
