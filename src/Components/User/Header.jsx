@@ -35,7 +35,7 @@ const Header = () => {
 
   return (
     <div>
-      <div className={`fixed w-full bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[20rem]' : 'h-[4.6rem]'} transition-all`}>
+      <div className={`fixed bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[20rem]' : 'h-[4.6rem]'} transition-all`}>
         <div className='flex items-center justify-between w-11/12 lg:w-10/12 mx-auto'>
           <div className="flex items-center gap-5">
             <Link to="/" className="hidden lg:block">
