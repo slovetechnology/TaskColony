@@ -47,16 +47,12 @@ const Header = () => {
 
           </div>
           <div className="lg:flex flex-row items-center gap-4 hidden">
-            {/* <div className="border border-slate-500 w-[15rem] rounded-md p-2 flex items-center gap-1">
-              <input type="text" placeholder='What are you looking for today?' className="outline-none w-full text-xs bg-transparent" />
-              <SlMagnifier className='text-zinc-400 text-xs' />
-            </div> */}
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <Link to='/user' className="">
+            <Link to='/login' className="">
               {userloggedin ? (
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
@@ -104,7 +100,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-       {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
+        {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
           <div className="flex flex-col">
             {/* <div className="border mb-3 border-slate-500 w-full rounded-md p-4 flex items-center gap-1">
               <input type="text" placeholder='What are you looking for today?' className="outline-none w-full text-xs bg-transparent" />

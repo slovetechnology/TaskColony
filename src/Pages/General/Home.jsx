@@ -137,24 +137,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-            {/* <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-32">
-                <div className="w-fit flex items-center gap-5">
-                    {HomeBestOffers.map((item, index) => (
-                        <div className="flex bg-white px-3 py-5 shadow-xl mb-10 gap-3 items-center rounded-xl" key={index}>
-                            <div className="">
-                                <LazyLoadImage src={item.img} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
-                            </div>
-                            <div className="w-[30rem]">
-                                <div className="text-sm text-slate-500">{item.tag}</div>
-                                <div className="font-medium text-lg">{item.title}</div>
-                                <div className="text-slate-600 text-xs my-3"> {item.deal && <span className='text-secondary'>{item.deal}% off </span>} {item.sub} </div>
-
-                                <button className="bg-secondary py-2 px-6 rounded-full text-white text-xs">From ${item.price}</button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div> */}
+            
             <div className="w-11/12 mx-auto lg:w-10/12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
                     <div className="flex flex-col justify-center">

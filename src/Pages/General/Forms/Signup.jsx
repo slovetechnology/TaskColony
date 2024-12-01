@@ -64,11 +64,11 @@ const Signup = () => {
           </span>
         </div>
       </div>
-      {view === 1 && <div className="md:flex my-14 items-center md:mx-7 justify-center">
+      {view === 1 && <div className="md:flex my-14 items-center w-11/12 mx-auto md:mx-7 justify-center">
         <div>
-          <img src={signup} alt="Signup" className="w-[27rem] rounded-tl-md rounded-bl-md md:h-[75rem] object-cover" />
+          <img src={signup} alt="Signup" className="md:w-[27rem] rounded-tl-md rounded-bl-md md:h-[75rem] object-cover" />
         </div>
-        <div className="bg-white w-[27rem] rounded-tr-md rounded-br-md h-[75rem] shadow-2xl py-5 px-6">
+        <div className="bg-white md:w-[27rem] rounded-tr-md rounded-br-md h-[75rem] shadow-2xl py-5 px-6">
           <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome to Task Colony</div>
           <div className="flex items-center mb-3 justify-center gap-10">
             <div className="w-24 h-0.5 bg-[#E5E7EB]"></div>
@@ -194,7 +194,7 @@ const Signup = () => {
                 <input
                   {...register('confirm_password', { required: 'Confirm your password' })}
                   type={pass2 ? 'text' : 'password'}
-                  className="input"
+                  className={`input ${errors.password ? 'border-red-600' : 'border'}`}
                 />
               </div>
 

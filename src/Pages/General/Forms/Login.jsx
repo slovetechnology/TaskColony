@@ -60,9 +60,9 @@ const Login = () => {
           </span>
         </div>
       </div>
-      <div className="md:flex my-14 items-center md:mx-7 justify-center">
-        <div className=""><img src={login} alt="" className="w-[27rem] rounded-tl-md rounded-bl-md h-[33rem] object-cover" /></div>
-        <div className="bg-white w-[27rem] rounded-tr-md rounded-br-md h-[33rem] shadow-2xl py-5 px-6">
+      <div className="md:flex my-14 items-center w-11/12 mx-auto justify-center">
+        <div className=""><img src={login} alt="" className="md:w-[27rem] md:rounded-tl-md md:rounded-bl-md md:h-[33rem] object-cover" /></div>
+        <div className="bg-white md:w-[27rem] md:rounded-tr-md rounded-br-md md:h-[33rem] shadow-2xl py-5 px-6">
           <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome back!</div>
           <div className="flex items-center mb-3 justify-center gap-10">
             <div className="w-24 h-0.5 bg-[#E5E7EB]"></div>
@@ -104,11 +104,11 @@ const Login = () => {
                 {errors.password && <div className="text-red-600">{errors.password.message}</div>}
               </div>
             </div>
-            <div className="mt-10">
+            <div className="md:mt-10 mt-5">
               <button className='bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg' disabled={isSubmitting}>
                 {isSubmitting ? 'Logging in...' : 'Login'}
               </button>
-              <div className="text-sm font-[500] text-center mt-2">DON'T HAVE AN ACCOUNT? <Link to='/signup' className='text-secondary'>SIGN UP NOW</Link></div>
+              <div className="text-sm my-5 font-[500] text-center mt-2">DON'T HAVE AN ACCOUNT? <Link to='/signup' className='text-secondary'>SIGN UP</Link></div>
               <GoogleOAuthProvider
                 clientId="590633888307-0jkfj9qsvakabpju0orans14cesrdpjv.apps.googleusercontent.com">
                 <Signin />
