@@ -34,7 +34,7 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <div className='relative'>
       <div className={`fixed w-full bg-white z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[16rem]' : 'h-[4.6rem]'} transition-all`}>
         <div className='flex items-center justify-between px-5 lg:px-10'>
           <div className="flex items-center gap-5">
