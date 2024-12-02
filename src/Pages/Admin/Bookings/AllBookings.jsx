@@ -17,6 +17,7 @@ import { ImCancelCircle } from 'react-icons/im';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { ToastAlert } from '../../../Components/General/Utils';
 import AssignBooking from './AssignBooking';
+import { SlMagnifier } from 'react-icons/sl';
 
 const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Status', '', '', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -170,7 +171,7 @@ const AllBookings = () => {
         />
       )}
 
-      <div className="mx-10 mb-10">
+      <div className="lg:mx-10 mx-4 mb-10">
         <div className="bg-white mt-10 px-5 py-4 w-full">
           <div className="flex items-center justify-between">
             <div className="font-medium text-lg">All Requested Gigs</div>
@@ -179,11 +180,12 @@ const AllBookings = () => {
                 <input
                   type="text"
                   placeholder="Search"
-                  className="w-[16rem] placeholder:text-[16px] placeholder:text-primary outline-none"
+                  className="w-[16rem]  placeholder:text-[16px] placeholder:text-primary outline-none"
                   value={searchTerm}
                   onChange={handleSearch}
                 />
               </label>
+
               <span className="text-primary text-2xl">
                 <HiOutlineAdjustments />
               </span>

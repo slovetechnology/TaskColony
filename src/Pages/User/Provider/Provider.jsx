@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../../Components/User/Layout';
-import profiles from '../assets/new/img15.jpeg';
 import gradient from '../../../assets/gradient.jpeg';
 import { MdOutlineLocationOn, MdOutlineMyLocation } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -8,10 +7,11 @@ import axios from 'axios';
 import CustomDropdown from '../../../Components/General/DropDown';
 import { Link } from 'react-router-dom';
 import KycForm from './KycForm';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Provider = () => {
     const { user } = useSelector((state) => state.data);
-    const [isEditUserOpen, setIsEditUserOpen] = useState(false); // EditUser modal
+    const [isEditUserOpen, setIsEditUserOpen] = useState(false);
 
     const [location, setLocation] = useState("Fetching location...");
     const handleOpenEditModal = () => {
@@ -82,11 +82,7 @@ const Provider = () => {
                         <div className="">
                             <div className="flex items-center justify-between mb-3 gap-4 pb-3 border last:border-none">
                                 <div className="flex items-center gap-4">
-                                    <img
-                                        src={profiles}
-                                        alt=""
-                                        className="xl:w-20 xl:h-20 w-16 h-16 rounded-full object-cover"
-                                    />
+                                    <div className=""> <FaUserCircle /> </div>
                                     <span className="flex-1">
                                         <h5 className="font-[500] text-sm xl:text-base">
                                             {user.firstname} {user.lastname}

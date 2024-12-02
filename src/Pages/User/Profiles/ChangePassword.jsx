@@ -101,7 +101,7 @@ const ChangePassword = ({ isOpen, closeview, resendSignal }) => {
           <input
             {...register('confirm_password', { required: 'Confirm your password' })}
             type={pass2 ? 'text' : 'password'}
-            className="input"
+            className={`input ${errors.new_password ? 'border-red-600' : 'border'}`}
           />
         </div>
 

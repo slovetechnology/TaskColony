@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { AdminRoutes, GeneralNoAuth, GeneralRoutes } from './routes'
+import { AdminNoRoutes, AdminRoutes, GeneralNoAuth, GeneralRoutes } from './routes'
 import Loader from './Components/General/Loader'
 import AppWrapper from './Private/AppWrapper'
 import AdminRoute from './Private/AdminRoute'
@@ -22,6 +22,9 @@ function App() {
 
           {AdminRoutes.map((item, index) => (
             <Route key={index} path={`/auth/admin/${item.path}`} element={<AdminRoute> <Loader> <item.element /> </Loader></AdminRoute>} />
+          ))}
+          {AdminNoRoutes.map((item, index) => (
+            <Route key={index} path={`/auth/admin/${item.path}`} element={<> <Loader> <item.element /> </Loader></>} />
           ))}
         </Routes>
       </AppWrapper>

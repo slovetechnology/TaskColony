@@ -73,90 +73,94 @@ export const TopNavsLinks = [
 ]
 
 export const HomeServices = [
-    {img: img5, title: 'The best for every budget', content:'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. '},
-    {img: img6, title: 'Quality work done quickly', content:'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. '},
-    {img: img7, title: '24 hours customer support', content:'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. '},
+    { img: img5, title: 'The best for every budget', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
+    { img: img6, title: 'Quality work done quickly', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
+    { img: img7, title: '24 hours customer support', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
 ]
 export const HomeCategories = [
-    {img: img8, title: 'handlyman'},
-    {img: img9, title: 'moving services'},
-    {img: img10, title: 'Furniture Assembly'},
-    {img: img11, title: 'Mounting & Installation'},
-    {img: img12, title: 'cleaning'},
-    {img: img13, title: 'Shopping & Delivery'},
+    { img: img8, title: 'handlyman' },
+    { img: img9, title: 'moving services' },
+    { img: img10, title: 'Furniture Assembly' },
+    { img: img11, title: 'Mounting & Installation' },
+    { img: img12, title: 'cleaning' },
+    { img: img13, title: 'Shopping & Delivery' },
 ]
 export const Team = [
-    {img: team1, title: 'Olivia Rhye', position: 'Founder & CEO', description: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit."},
-    {img: team2, title: 'Phoenix Baker', position: 'Engineering Manager', description: "Lead engineering teams at Figma, Pitch, and Protocol Labs."},
-    {img: team3, title: 'Lana Steiner', position: 'Product Manager', description: "Former PM for Linear, Lambda School, and On Deck."},
-    {img: team4, title: 'Demi Wilkinson', position: 'Frontend Developer', description: "Former frontend dev fpr Linear, Coinbase, and Postscript."},
-    {img: team5, title: 'Candice Wu', position: 'Backend Developer', description: "Lead backend dev at Clearbit. Former Clearbit and Loom."},
-    {img: team6, title: 'Natali Craig', position: 'Product Designer', description: "Founding design team at Figma. Former Pleo, Stripe, and Tile."},
-    {img: team7, title: 'Drew Cano', position: 'UX Researcher', description: "Lead user research for Slack. Contractor for Netflix and Udacity."},
-    {img: team8, title: 'Orlando Diggs', position: 'Customer Success', description: "Lead CX at Wealthsimple. Former PagerDuty and Sqreen."},
+    { img: team1, title: 'Olivia Rhye', position: 'Founder & CEO', description: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit." },
+    { img: team2, title: 'Phoenix Baker', position: 'Engineering Manager', description: "Lead engineering teams at Figma, Pitch, and Protocol Labs." },
+    { img: team3, title: 'Lana Steiner', position: 'Product Manager', description: "Former PM for Linear, Lambda School, and On Deck." },
+    { img: team4, title: 'Demi Wilkinson', position: 'Frontend Developer', description: "Former frontend dev fpr Linear, Coinbase, and Postscript." },
+    { img: team5, title: 'Candice Wu', position: 'Backend Developer', description: "Lead backend dev at Clearbit. Former Clearbit and Loom." },
+    { img: team6, title: 'Natali Craig', position: 'Product Designer', description: "Founding design team at Figma. Former Pleo, Stripe, and Tile." },
+    { img: team7, title: 'Drew Cano', position: 'UX Researcher', description: "Lead user research for Slack. Contractor for Netflix and Udacity." },
+    { img: team8, title: 'Orlando Diggs', position: 'Customer Success', description: "Lead CX at Wealthsimple. Former PagerDuty and Sqreen." },
+]
+export const Faq = [
+    { title: 'Question text goes here', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere." },
+
 ]
 
 export const HomeOurServices = [
-    {img: img14, title: 'Painting for Beautiful Homes', tag: 'painting', price: 550.6, rating: 4.8},
-    {img: img15, title: 'Car Wash and Cleaning', tag: 'car wash', price: 550.6, rating: 4.8},
-    {img: img16, title: 'Cleaning & Disinfecting Office', tag: 'painting', price: 550.6, rating: 4.8},
-    {img: img17, title: 'Furniture Assembly', tag: 'car wash', price: 550.6, rating: 4.8},
-    {img: img18, title: 'Home Cleaning', tag: 'painting', price: 550.6, rating: 4.8},
-    {img: img19, title: 'TV Installation', tag: 'car wash', price: 550.6, rating: 4.8},
-    {img: img20, title: 'Electronic Devices', tag: 'painting', price: 550.6, rating: 4.8},
-    {img: img21, title: 'CCTV Installation', tag: 'car wash', price: 550.6, rating: 4.8},
+    { img: img14, title: 'Painting for Beautiful Homes', tag: 'painting', price: 550.6, rating: 4.8 },
+    { img: img15, title: 'Car Wash and Cleaning', tag: 'car wash', price: 550.6, rating: 4.8 },
+    { img: img16, title: 'Cleaning & Disinfecting Office', tag: 'painting', price: 550.6, rating: 4.8 },
+    { img: img17, title: 'Furniture Assembly', tag: 'car wash', price: 550.6, rating: 4.8 },
+    { img: img18, title: 'Home Cleaning', tag: 'painting', price: 550.6, rating: 4.8 },
+    { img: img19, title: 'TV Installation', tag: 'car wash', price: 550.6, rating: 4.8 },
+    { img: img20, title: 'Electronic Devices', tag: 'painting', price: 550.6, rating: 4.8 },
+    { img: img21, title: 'CCTV Installation', tag: 'car wash', price: 550.6, rating: 4.8 },
 ]
 
 export const HomeBestOffers = [
-    {img: img16, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35},
-    {img: img21, title: 'CCTV Installation', tag: 'Repair Service', deal: false, sub: 'Experts at your door in 1 hour', price: 35},
-    {img: img21, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35},
+    { img: img16, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35 },
+    { img: img21, title: 'CCTV Installation', tag: 'Repair Service', deal: false, sub: 'Experts at your door in 1 hour', price: 35 },
+    { img: img21, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35 },
 ]
 
 export const HomeTestimonials = [
-    {title: "“ Excellent Service by handyman“", content: `On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même.`, name: `Cameron Williamson`, img: img24}
+    { title: "“ Excellent Service by handyman“", content: `On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même.`, name: `Cameron Williamson`, img: img24 }
 ]
 
 export const StoreLinks = [
-    {img: img27},
-    {img: img28},
+    { img: img27 },
+    { img: img28 },
 ]
 
 export const HomeGallery = [
-    {img: img29},
-    {img: img30},
-    {img: img31},
-    {img: img32},
+    { img: img29 },
+    { img: img30 },
+    { img: img31 },
+    { img: img32 },
 ]
 
 export const HomeProviders = [
-    {img: img33, title: `Leslie Alexander`, tag: 'electrician'},
-    {img: img34, title: `Marvin McKinney`, tag: 'painter'},
-    {img: img35, title: `Arlene McCoy`, tag: 'carpenter'},
-    {img: img36, title: `Courtney Henry`, tag: 'plumber'},
+    { img: img33, title: `Leslie Alexander`, tag: 'electrician' },
+    { img: img34, title: `Marvin McKinney`, tag: 'painter' },
+    { img: img35, title: `Arlene McCoy`, tag: 'carpenter' },
+    { img: img36, title: `Courtney Henry`, tag: 'plumber' },
 ]
 
 export const FooterLinks = [
-    {title: 'About us', link: ''},
-    {title: 'Contact us', link: ''},
-    {title: 'Privacy', link: ''},
-    {title: 'Terms and condition', link: ''},
-    {title: 'career', link: ''},
-    {title: 'Team', link: ''},
+    { title: 'About us', link: '' },
+    { title: 'Contact us', link: '' },
+    { title: 'Privacy', link: '' },
+    { title: 'Terms and condition', link: '' },
+    { title: 'career', link: '' },
+    { title: 'Team', link: '' },
 ]
 
 export const FooterSocials = [
-    {img: img39},
-    {img: img40},
-    {img: img41},
-    {img: img42},
-    {img: img43},
+    { img: img39 },
+    { img: img40 },
+    { img: img41 },
+    { img: img42 },
+    { img: img43 },
 ]
 
 export const FooterContacts = [
-    {title: `Carreers`, content: `Jobs@taskcolony.com`},
-    {title: `Business Inquries`, content: `inquries@taskcolony.com`},
-    {title: `helpline Number`, content: `+144  1234 56789`},
+    { title: `Carreers`, content: `Jobs@taskcolony.com` },
+    { title: `Business Inquries`, content: `inquries@taskcolony.com` },
+    { title: `helpline Number`, content: `+144  1234 56789` },
 ]
 
-export {img1, img2, img3, img4, img23, img25, img37, img38, img26, img22, logo}
+export { img1, img2, img3, img4, img23, img25, img37, img38, img26, img22, logo }

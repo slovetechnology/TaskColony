@@ -44,6 +44,9 @@ const admin_urls = {
     get_user: `${admin}/users/get_all_users.php`,
     user_update: `${admin}/users/update_user.php`,
     user_delete: `${admin}/users/delete_user.php`,
+    provider_payout: `${admin}/providers/get_all_provider_payout.php`,
+    delete_provider: `${admin}/providers/delete_provider.php`,
+    update_provider_docs: `${admin}/providers/update_provider_doc_status`,
 
     //admin
     get_admin: `${admin}/admins/get_all_admin.php`,
@@ -132,7 +135,7 @@ export const Deleteurl = async (endpoint, data) => {
 // Unauthenticated GET request
 export const Geturl = async (endpoint) => {
     try {
-        const response = await axios.get(`${offline }/${endpoint}`);
+        const response = await axios.get(`${offline}/${endpoint}`);
         return response.data;
     } catch (error) {
         return error.response ? error.response.data : { status: false, text: 'Network error' };

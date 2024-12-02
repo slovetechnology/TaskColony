@@ -36,9 +36,9 @@ const Dashboard = () => {
         <AdminLayout>
             <div className="w-[90%] mb-10 mx-auto">
                 {items ? (
-                    <div className="grid grid-cols-3 mt-8 gap-5">
+                    <div className="grid lg:grid-cols-3 mt-8 gap-5">
                         <div>
-                            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#FF3D3D] to-[#FFBC0A]">
+                            <div className="h-[13rem] text-white rounded-xl w-full bg-gradient-to-r px-6 py-14 from-[#FF3D3D] to-[#FFBC0A]">
                                 <p className="text-base">Total Bookings</p>
                                 <div className="flex mt-5 items-center justify-between">
                                     <p className="text-5xl font-medium ">{items?.total_gigs}</p>
@@ -49,7 +49,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div>
-                            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#4797BD] to-[#63C2AB]">
+                            <div className="h-[13rem] text-white rounded-xl w-full bg-gradient-to-r px-6 py-14 from-[#4797BD] to-[#63C2AB]">
                                 <p className="text-base">Pending Bookings</p>
                                 <div className="flex mt-5 items-center justify-between">
                                     <p className="text-5xl font-medium ">{items?.pending_bookings}</p>
@@ -60,7 +60,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div>
-                            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#3626E3] to-[#72FF13]">
+                            <div className="h-[13rem] text-white rounded-xl w-full bg-gradient-to-r px-6 py-14 from-[#3626E3] to-[#72FF13]">
                                 <p className="text-base">Ongoing Services</p>
                                 <div className="flex mt-5 items-center justify-between">
                                     <p className="text-5xl font-medium ">{items?.ongoing_bookings}</p>
@@ -71,7 +71,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div>
-                            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#FF3D3D] to-[#FFBC0A]">
+                            <div className="h-[13rem] text-white rounded-xl w-full bg-gradient-to-r px-6 py-14 from-[#FF3D3D] to-[#FFBC0A]">
                                 <p className="text-base">Total Services</p>
                                 <div className="flex mt-5 items-center justify-between">
                                     <p className="text-5xl font-medium ">{items?.total_services}</p>
@@ -82,7 +82,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div>
-                            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#4797BD] to-[#63C2AB]">
+                            <div className="h-[13rem] text-white rounded-xl w-full bg-gradient-to-r px-6 py-14 from-[#4797BD] to-[#63C2AB]">
                                 <p className="text-base">Unassigned Gigs</p>
                                 <div className="flex mt-5 items-center justify-between">
                                     <p className="text-5xl font-medium ">{items?.unassigned_gigs}</p>
@@ -93,7 +93,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div>
-                            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#3626E3] to-[#72FF13]">
+                            <div className="h-[13rem] text-white rounded-xl w-full bg-gradient-to-r px-6 py-14 from-[#3626E3] to-[#72FF13]">
                                 <p className="text-base">Completed Bookings</p>
                                 <div className="flex mt-5 items-center justify-between">
                                     <p className="text-5xl font-medium ">{items?.completed_bookings}</p>
@@ -105,17 +105,15 @@ const Dashboard = () => {
                         </div>
                     </div>
                 ) : (
-                    <p>Loading data...</p>
+                    <p></p>
                 )}
 
-                {error && <p className="text-red-500">{error}</p>}
-
-                <div className="flex mt-6 items-stretch">
-                    <div className="bg-white w-[25rem] p-5 shadow-2xl rounded-xl flex-shrink-0 h-full">
+                <div className="lg:flex mt-6 items-stretch">
+                    <div className="bg-white lg:w-[25rem] p-5 shadow-2xl rounded-xl flex-shrink-0 h-full">
                         <p className="font-medium text-xl">Revenue</p>
                         <Chart />
                     </div>
-                    <div className="flex-grow ml-6 flex flex-col justify-between">
+                    <div className="flex-grow lg:ml-6 mt-4 lg:mt-0 flex flex-col justify-between">
                         <div className="mb-5">
                             <div>
                                 <div className="h-[7rem] text-white rounded-xl bg-gradient-to-r px-6 py-2 from-[#3626E3] to-[#72FF13]">

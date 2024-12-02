@@ -33,6 +33,8 @@ import ForgetPassword from "./Pages/General/Forms/ForgetPassword"
 import Notification from "./Pages/General/Notification"
 import ConfirmBooking from "./Pages/User/Service/ConfirmBooking"
 import Contactus from "./Pages/General/Contactus"
+import Faq from "./Pages/General/Faq"
+import Provider from "./Pages/User/Provider/Provider"
 
 
 
@@ -45,6 +47,7 @@ export const GeneralNoAuth = [
     { path: 'terms', element: Terms },
     { path: 'privacy', element: Privacy },
     { path: 'about', element: Aboutus },
+    { path: 'faq', element: Faq },
 ]
 export const GeneralRoutes = [
     { path: 'user', element: User },
@@ -52,15 +55,14 @@ export const GeneralRoutes = [
     { path: 'category', element: Category },
     { path: 'sub-category', element: Subcategory },
     { path: 'service-detail', element: ServiceDetail },
-
     { path: 'reset-password', element: ForgetPassword },
     { path: 'notification', element: Notification },
     { path: 'contact', element: Contactus },
     { path: 'confirm-booking', element: ConfirmBooking },
+    { path: 'provider', element: Provider },
 ]
 
 export const AdminRoutes = [
-    { path: 'login', element: AdminLogin },
     { path: '', element: Dashboard },
     { path: 'admin', element: AllAdmin },
     { path: 'new-admin', element: CreateAdmin },
@@ -68,7 +70,7 @@ export const AdminRoutes = [
     { path: 'new-service', element: NewServices },
     { path: 'Earning', element: AllEarning },
     { path: 'user', element: AllUser },
-    { path: 'user/singl/:userId', element: SingleUser },
+    { path: 'user/single/:userId', element: SingleUser },
     { path: 'booking', element: AllBookings },
     { path: 'category', element: AllCategories },
     { path: 'new-category', element: NewCategory },
@@ -78,4 +80,8 @@ export const AdminRoutes = [
     { path: 'new-tax', element: NewTax },
     { path: 'new-coupon', element: NewCoupon },
     { path: 'coupon', element: AllCoupon },
+]
+export const AdminNoRoutes = [
+    { path: 'login', element: AdminLogin },
+
 ]

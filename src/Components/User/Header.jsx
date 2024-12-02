@@ -25,13 +25,13 @@ const Header = () => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
-
   const handleLogout = () => {
     Cookies.remove('taskcolony');
     sessionStorage.clear();
-
     navigate('/login');
+    window.location.reload();
   };
+
 
   return (
     <div className='relative'>
@@ -100,7 +100,7 @@ const Header = () => {
         </div>
         {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
           <div className="flex flex-col">
-            
+
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}
