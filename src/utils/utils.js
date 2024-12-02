@@ -95,6 +95,33 @@ export const HomeCategories = [
     { img: img12, title: 'cleaning' },
     { img: img13, title: 'Shopping & Delivery' },
 ]
+export const Packages = [
+    {
+        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
+        text: 'Question text goes here',
+        id: 1
+    },
+    {
+        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
+        text: 'Question text goes here',
+        id: 2
+    },
+    {
+        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
+        text: 'Question text goes here',
+        id: 3
+    },
+    {
+        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
+        text: 'Question text goes here',
+        id: 4
+    },
+    {
+        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
+        text: 'Question text goes here',
+        id: 5
+    },
+];
 export const Team = [
     { img: team1, title: 'Olivia Rhye', position: 'Founder & CEO', description: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit." },
     { img: team2, title: 'Phoenix Baker', position: 'Engineering Manager', description: "Lead engineering teams at Figma, Pitch, and Protocol Labs." },

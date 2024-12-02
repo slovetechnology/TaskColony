@@ -149,7 +149,7 @@ function Home() {
                                     className="w-[40rem] h-[10rem] object-top md:w-[30rem] object-cover"
                                 />
                             </div>
-                            <div className="py-4 px-5 bg-white rounded-b-3xl -mt-3">
+                            <div className="py-4 px-5 bg-white rounded-b-3xl shadow-xl -mt-3">
                                 <div className="font-medium">{item.name}</div>
                                 <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
                             </div>
@@ -162,14 +162,14 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-32">
+            <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-">
                 <div className="w-fit flex items-center gap-5">
                     {HomeBestOffers.map((item, index) => (
                         <div className="flex bg-white px-3 py-5 shadow-xl mb-10 gap-3 items-center rounded-xl" key={index}>
                             <div className="">
                                 <LazyLoadImage src={item.img} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
                             </div>
-                            <div className="w-[30rem]">
+                            <div className="w-[25rem]">
                                 <div className="text-sm text-slate-500">{item.tag}</div>
                                 <div className="font-medium text-lg">{item.title}</div>
                                 <div className="text-slate-600 text-xs my-3"> {item.deal && <span className='text-secondary'>{item.deal}% off </span>} {item.sub} </div>

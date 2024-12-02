@@ -8,7 +8,7 @@ const Modal = ({
   height = 'h-[20rem]',
   overlayColor = 'bg-black/60',
   closeButton = true,
-  padding = 'p-6', // Add a padding prop with a default value
+  padding = 'p-6',
 }) => {
   const modalRef = useRef();
 
@@ -31,9 +31,7 @@ const Modal = ({
   }, [closeView]);
 
   return (
-    <div
-      className={`${overlayColor} fixed top-0 z-[99] left-0 w-full h-screen flex items-center  justify-center`}
-    >
+    <div className={`${overlayColor} fixed top-0 z-[99] left-0 w-full h-screen flex items-center justify-center`}>
       <div
         ref={modalRef}
         className={`w-11/12 ${width} ${padding} bg-white rounded-lg ${height} overflow-y-auto overflow-x-hidden scrollsdown relative`}

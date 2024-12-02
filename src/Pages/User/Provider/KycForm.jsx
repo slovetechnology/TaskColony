@@ -56,7 +56,7 @@ const KycForm = ({ closeView }) => {
             formData.append('gender', data.gender);
             formData.append('dob', data.dob);
             if (image.main) {
-                formData.append('image', image.main); // Append the binary file
+                formData.append('images[]', image.main); // Append the binary file
             }
 
             const response = await AuthPosturl(Apis.users.kyc_form, formData, {
