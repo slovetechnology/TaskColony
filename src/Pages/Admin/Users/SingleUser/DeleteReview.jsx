@@ -1,5 +1,6 @@
 // ConfirmDeleteReview.js
-import ModalLayout from "../../../Components/Admin/ModalLayout";
+
+import ModalLayout from "../../../../Components/Admin/ModalLayout";
 
 const ConfirmDeleteReview = ({ closeView, confirmAction, isLoading }) => {
   return (

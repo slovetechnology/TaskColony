@@ -86,7 +86,7 @@ const User = () => {
     const handleCloseFundWallet = () => {
         SetFundwallet(false);
     };
-  
+
     return (
         <Layout>
             <div className="bg-gray w-full xl:h-[20rem]">
@@ -137,37 +137,36 @@ const User = () => {
                                     <div>{location}</div>
                                     <MdOutlineMyLocation />
                                 </div>
-                                
+
                             </div>
                         </div>
-
-                        <div className="xl:border-t pt-5">
+                        <div className="bg-secondary px-5 py-1 w-fit text-white font-semibold my-3"><Link to='/provider'>Provider</Link></div>
+                        <div className=" border-t pt-5">
                             <div className="flex items-center text-primary gap-3 justify-between">
                             </div>
                         </div>
 
-                        <div className="border-t md:grid grid-cols-2 g xl:mt-10 py-10 gap-5   ">
+                        <div className=" md:grid grid-cols-2 py-4 gap-5 ">
                             <div onClick={handleOpenFundWallet} className="border py-3 px-2">
                                 <Link to=''>Fund Wallet</Link>
                             </div>
-                            <div className="border py-3 px-2">
-                                <Link to='/notification'>Notification</Link>
-                            </div>
+
+                            < Link to='/notification' className="border py-3 px-2 ">Notification</Link>
+
                             <div onClick={handleOpenChangePass} className="border py-3 px-2">
                                 <Link to=''>Change Password</Link>
                             </div>
                             <div onClick={handleOpenSettings} className="border py-3 px-2">
                                 <Link to=''>Settings</Link>
                             </div>
-                            <div className="border py-3 px-2">
-                                <Link to='/terms'>Terms & Conditions</Link>
-                            </div>
+
+                            <Link className="border py-3 px-2" to='/terms'>Terms & Conditions</Link>
+
                             <div onClick={handleOpenModal} className="border py-3 px-2">
                                 <Link to='' >Favourite Service</Link>
                             </div>
-                                                <div className="border py-3 px-2">
-                                <Link to='/privacy'>Privacy Policy</Link>
-                            </div>
+
+                            <Link className="border py-3 px-2" to='/privacy'>Privacy Policy</Link>
                         </div>
                     </div>
                 </div>
@@ -195,7 +194,7 @@ const User = () => {
                 />
             )}
             {fundWallet && (
-                <FundWallet 
+                <FundWallet
                     closeview={handleCloseFundWallet}
                 />
             )}

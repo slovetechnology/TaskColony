@@ -5,7 +5,7 @@ import { Table } from '../../../../Components/Admin/Table/Table';
 import PaginationButton from '../../../../Components/General/Pagination/PaginationButton';
 import { TableRow } from '../../../../Components/Admin/Table/TableRow';
 import { TableData } from '../../../../Components/Admin/Table/TableData';
-const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Status', '', '', ''];
+const TABLE_HEADERS = ['Id', 'Name', 'Status', ''];
 const DEFAULT_PER_PAGE = 10;
 
 const ProviderDocuments = () => {
