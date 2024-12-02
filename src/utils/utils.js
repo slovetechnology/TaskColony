@@ -65,11 +65,21 @@ export const NavLinks = [
     { title: 'smart home', link: '' },
 ]
 
+export const FooterLinks = [
+    { title: 'About us', link: '/about' },
+    { title: 'Contact us', link: '/contact' },
+    { title: 'Privacy', link: '/prvacy' },
+    { title: 'Terms and condition', link: '/terms' },
+    { title: 'career', link: '' },
+    { title: 'Team', link: '/team' },
+]
+
 export const TopNavsLinks = [
     { title: 'home', link: '/' },
     { title: 'categories', link: '/category' },
     { title: 'services', link: '/service' },
     { title: 'my booking', link: '/booking-list' },
+    { title: 'profile', link: '/user' },
 ]
 
 export const HomeServices = [
@@ -138,15 +148,6 @@ export const HomeProviders = [
     { img: img34, title: `Marvin McKinney`, tag: 'painter' },
     { img: img35, title: `Arlene McCoy`, tag: 'carpenter' },
     { img: img36, title: `Courtney Henry`, tag: 'plumber' },
-]
-
-export const FooterLinks = [
-    { title: 'About us', link: '' },
-    { title: 'Contact us', link: '' },
-    { title: 'Privacy', link: '' },
-    { title: 'Terms and condition', link: '' },
-    { title: 'career', link: '' },
-    { title: 'Team', link: '' },
 ]
 
 export const FooterSocials = [

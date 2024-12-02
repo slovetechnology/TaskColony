@@ -11,10 +11,10 @@ import ConfirmDeleteReview from './DeleteReview';
 import { ToastAlert } from '../../../../Components/General/Utils';
 
 
-const TABLE_HEADERS = ['Id', 'User', 'Service', 'Review', ''];
+const TABLE_HEADERS = ['Id', 'Provider Name', 'Service', 'Review', ''];
 const DEFAULT_PER_PAGE = 10;
 
-const Reviews = () => {
+const ProviderReviews = () => {
   const { userId } = useParams();
   const [reviews, setReviews] = useState([]); // Initialize as an empty array
   const [loading, setLoading] = useState(true);
@@ -98,7 +98,7 @@ const Reviews = () => {
             {currentReviews.map((item, i) => (
               <TableRow key={i}>
                 <TableData>{item.trackid}</TableData>
-                <TableData>{item.ulname}</TableData>
+                <TableData>{item.pfname}</TableData>
                 <TableData>{item.service_name}</TableData>
                 <TableData>{item.review}</TableData>
                 <TableData>
@@ -120,4 +120,4 @@ const Reviews = () => {
   );
 };
 
-export default Reviews;
+export default ProviderReviews;

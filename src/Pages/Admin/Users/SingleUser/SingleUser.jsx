@@ -8,6 +8,7 @@ import Bookings from './Bookings';
 import Reviews from './Reviews';
 import Payouts from './Payout';
 import ProviderDocuments from './Document';
+import ProviderReviews from './ProviderReview';
 
 const SingleUser = () => {
     const { userId } = useParams();
@@ -71,6 +72,9 @@ const SingleUser = () => {
         if (activeTab === 'payout') {
             return <Payouts />
         }
+        if (activeTab === 'providerreview') {
+            return <ProviderReviews />
+        }
     };
 
     return (
@@ -132,7 +136,8 @@ const SingleUser = () => {
                                         <button onClick={() => setActiveTab('about')} className={activeTab === 'about' ? 'text-secondary border-b border-secondary font-bold' : ''}>About</button>
                                         <button onClick={() => setActiveTab('my-gigs')} className={activeTab === 'my-gigs' ? 'text-secondary border-b border-secondary font-bold' : ''}>My Gigs</button>
                                         <button onClick={() => setActiveTab('bookings')} className={activeTab === 'bookings' ? 'text-secondary border-b border-secondary font-bold' : ''}>Bookings</button>
-                                        <button onClick={() => setActiveTab('reviews')} className={activeTab === 'reviews' ? 'text-secondary border-b border-secondary font-bold' : ''}>Reviews</button>
+                                        <button onClick={() => setActiveTab('reviews')} className={activeTab === 'reviews' ? 'text-secondary border-b border-secondary font-bold' : ''}>My Gigs Reviews</button>
+                                        <button onClick={() => setActiveTab('providerreview')} className={activeTab === 'providerreview' ? 'text-secondary border-b border-secondary font-bold' : ''}> Reviews</button>
                                         <button onClick={() => setActiveTab('document')} className={activeTab === 'document' ? 'text-secondary border-b border-secondary font-bold' : ''}>Document</button>
                                         <button onClick={() => setActiveTab('payout')} className={activeTab === 'payout' ? 'text-secondary border-b border-secondary font-bold' : ''}>Payout</button>
                                     </div>
