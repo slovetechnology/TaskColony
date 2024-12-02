@@ -4,7 +4,7 @@ import { FaEdit, FaSearch } from 'react-icons/fa';
 import { SlArrowLeft } from 'react-icons/sl';
 import Layout from '../../../Components/User/Layout';
 import { Apis, AuthGeturl } from '../../../Components/General/Api';
-
+import image from '../../../assets/new/img18.svg'
 const BookingList = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedPayment, setSelectedPayment] = useState(null);
@@ -88,7 +88,7 @@ const BookingList = () => {
               >
                 <div className="w-full xl:w-[20rem]">
                   <img
-                    src={item.imageslink && item.imageslink[0] ? item.imageslink[0] : 'default-image.png'}
+                    src={image}
                     alt={item.title}
                     className="w-full h-[14rem] xl:h-[14rem] mb-3 xl:mb-0 rounded-xl object-cover"
                   />

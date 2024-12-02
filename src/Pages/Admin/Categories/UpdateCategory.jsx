@@ -14,19 +14,16 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [iconPreview, setIconPreview] = useState(null);
 
-    // Pre-populate form fields with existing data or set default values
     useEffect(() => {
         if (singles) {
             setValue('name', singles.name || '');
-            setValue('status', singles.status ? 'active' : 'inactive');
+            setValue('status', singles.status || 'active'); // Default to 'active' if no status provided
             setValue('data_tid', singles.trackid || '');
         } else {
-            // Set default status to active if no singles data
-            setValue('status', 'active');
+            setValue('status', 'active'); // Default to 'active'
         }
     }, [singles, setValue]);
 
-    // Handle image preview
     const handleBannerImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -34,20 +31,17 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
         }
     };
 
-    // Handle form submission
     const onSubmit = async (data, event) => {
-        event.preventDefault(); // Prevent default form behavior
+        event.preventDefault(); 
         setIsSubmitting(true);
 
-        // Log the data being submitted for debugging
         console.log('Submitting data:', data);
 
-        // Form data to send to the backend
         const formData = new FormData();
         formData.append('name', data.name);
-        formData.append('status', data.status); // Ensure this is a string
+        formData.append('status', data.status === 'active' ? 1 : 0);
         formData.append('data_tid', singles.trackid);
-        if (data.iconImage[0]) {
+        if (data.iconImage && data.iconImage[0]) {
             formData.append('images[]', data.iconImage[0]);
         }
 
@@ -58,7 +52,8 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
 
             if (res.status === true) {
                 ToastAlert(res.text);
-                resendSignal(); // Refresh parent view
+                resendSignal(); 
+                closeView();
             } else {
                 ToastAlert(res.text);
             }
@@ -75,7 +70,6 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
                 <div className="text-slate-600 text-xl rounded-lg shadow-xl mb-5 bg-blue-50 p-3">Update Category</div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-3 mb-6 gap-12">
-                        {/* Name Field */}
                         <div className="col-span-2">
                             <label className="text-xs">Name</label>
                             <input
@@ -88,14 +82,11 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
                             {errors.name && <span className="text-red-500">{errors.name.message}</span>}
                         </div>
 
-                        {/* Status Dropdown using select */}
                         <div>
                             <label className="text-xs">Status</label>
                             <select
                                 {...register('status', { required: 'Status is required' })}
                                 className="admininput"
-                                defaultValue={singles && singles.status ? (singles.status ? 'active' : 'inactive') : 'active'}
-                                onChange={(e) => setValue('status', e.target.value)}
                             >
                                 {statusOptions.map(option => (
                                     <option key={option.value} value={option.value}>
@@ -107,7 +98,6 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
                         </div>
                     </div>
 
-                    {/* Icon Image Upload */}
                     <div className="mb-8">
                         <label className="text-xs mb-2 block">Icon Image</label>
                         <div className="relative w-full">
@@ -127,9 +117,13 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
                                 </div>
                             </div>
                         </div>
+                        {iconPreview && (
+                            <div className="mt-2">
+                                <img src={iconPreview} alt="Icon Preview" className="h-20 w-20 object-cover" />
+                            </div>
+                        )}
                     </div>
 
-                    {/* Submit Button */}
                     <div className="flex items-start justify-start mt-8">
                         <button
                             type="submit"
