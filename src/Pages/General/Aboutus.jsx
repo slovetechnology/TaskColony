@@ -47,30 +47,30 @@ const Aboutus = () => {
 
           <div className="2xl:mx-10">
             <span><h3 className='font-[700] leading-tight my-5 lg:text-2xl xl:text-[30px]'>A whole world of services at your door step</h3></span>
-            <div className="flex items-center gap-4">
-              <span className="">
+            <div className="lg:flex items-center gap-4">
+              <div className="mb-3">
                 <div className="rounded-full p-4 w-16 bg-icons shadow-2xl"> <img src={grid} alt="" /> </div>
-              </span>
+              </div>
               <span className="">
                 <h3 className="font-[500] text-[17px]">The Best For Every Budget</h3>
                 <p className="text-[14px] text-primary">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
               </span>
             </div>
 
-            <div className="flex items-center my-12 gap-4">
-              <span className="">
+            <div className="lg:flex items-center my-12 gap-4">
+              <div className="mb-3">
                 <div className="rounded-full p-4 w-16 bg-icons shadow-2xl"> <img src={grid} alt="" /> </div>
-              </span>
+              </div>
               <span className="">
                 <h3 className="font-[500] text-[17px]">Quality work done quickly</h3>
                 <p className="text-[14px] text-primary">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
               </span>
             </div>
 
-            <div className="flex items-center gap-4">
-              <span className="">
+            <div className="lg:flex items-center gap-4">
+              <div className="mb-3">
                 <div className="rounded-full p-4 w-16 bg-icons shadow-2xl text-secondary"> <FaUsers size={24} /> </div>
-              </span>
+              </div>
               <span className="">
                 <h3 className="font-[500] text-[17px]">24 hours customer support</h3>
                 <p className="text-[14px] text-primary">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
@@ -80,19 +80,19 @@ const Aboutus = () => {
         </div>
 
         <div className="relative">
-          <div className="bg-gray h-[40rem] xl:mt-28">
-            <div className=" xl:w-[80%] mx-auto">
-              <div className="xl:flex px-9 gap-7 pt-10  xl:pt-28 ">
+          <div className="bg-gray h-[44rem] lg:mt-28">
+            <div className=" lg:w-[80%] mx-auto">
+              <div className="lg:flex px-5 gap-7 pt-10  xl:pt-28 ">
                 <div className="">
                   <p className="font-medium text-2xl mb-3">Experience in Number</p>
                   <p className="text-xs mb-3 text-primary">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters</p>
                   <p className="text-secondary text-xs italic">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
                 </div>
-                <div className="flex items-center justify-center xl:mt-0 mt-8 gap-6">
+                <div className="lg:flex items-center justify-center  xl:mt-0 mt-8 gap-6">
                   {about.map((item, i) => (
-                    <div key={i} className="bg-white w-[12rem] flex items-center justify-center flex-col h-[12rem] rounded-xl">
+                    <div key={i} className="bg-white w-[12rem] mb-3 flex items-center justify-center flex-col lg:h-[12rem] py-3 rounded-xl">
                       <img src={item.image} alt="" className="xl:w-16 w-10 md:w-14" />
-                      <div className="text-center mt-6">
+                      <div className="text-center lg:mt-6">
                         <p className="font-[500] text-xl xl:text-2xl">{item.num}</p>
                         <p className="text-primary text-xs xl:text-sm">{item.text}</p>
                       </div>
@@ -101,8 +101,8 @@ const Aboutus = () => {
                 </div>
               </div>
               <div className="relative text-white">
-                <img src={worker} alt="" className="w-full xl:h-[26rem] h-[24rem] mt-20 object-cover object-top xl:rounded-xl" />
-                <div className="absolute bg-secondary top-7 right-10 rounded-xl px-5 py-7 h-[21rem] w-[16rem] xl:w-[18rem]">
+                <img src={worker} alt="" className="w-full xl:h-[26rem] h-[24rem] mt-10 hidden md:block object-cover object-top xl:rounded-xl" />
+                <div className="absolute bg-secondary left-0 top-7 right-10 rounded-xl  px-5 py-7 h-[21rem] w-[16rem] xl:w-[18rem]">
                   <p className=" font-medium xl:text-3xl">Goal To Achieve</p>
                   <p className="text-xs mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
                   <div className="xl:mt-5 mt-3">
@@ -133,7 +133,7 @@ const Aboutus = () => {
             ))}
           </div>
         </div>
-        <div className="mt-[8rem] mb-20">
+        <div className="mt-[8rem] mx-10 mb-20">
           <div className="bg-black h-[44rem] md:h-[45rem]  xl:h-[32rem] xl:px-20 text-white my-10 xl:flex items-center justify-center gap-7 px-5 rounded-3xl xl:mx-0 mx-[rem] xl:rounded-[3rem]">
             <div className="my-6">
               <div className=""><h5 className="font-[500] text-[1.7rem] xl:text-[2rem] pt-6 -mt-10 mb-4 xl:mb-7">What our customers says</h5></div>
@@ -169,7 +169,7 @@ const Aboutus = () => {
 
         <div className="bg-gray xl:w-[80%] w-full h-auto xl:h-[15rem] mb-40 mt-10 xl:py-20 py-10 xl:px-20 mx-auto">
           <div className="flex flex-col xl:flex-row items-center justify-center mx-10 gap-10">
-            <div className="text-center xl:text-left"> {/* Center on small, align left on large */}
+            <div className="text-center xl:text-left"> 
               <p className="font-[500] text-2xl">Subscribe to our newsletter</p>
               <p className="text-xs text-primary">Subscribe to the newsletter to receive exclusive offers, latest news, and updates</p>
             </div>

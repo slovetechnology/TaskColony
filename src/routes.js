@@ -48,6 +48,8 @@ export const GeneralNoAuth = [
     { path: 'privacy', element: Privacy },
     { path: 'about', element: Aboutus },
     { path: 'faq', element: Faq },
+    { path: 'contact', element: Contactus },
+
 ]
 export const GeneralRoutes = [
     { path: 'user', element: User },
@@ -57,7 +59,6 @@ export const GeneralRoutes = [
     { path: 'service-detail', element: ServiceDetail },
     { path: 'reset-password', element: ForgetPassword },
     { path: 'notification', element: Notification },
-    { path: 'contact', element: Contactus },
     { path: 'confirm-booking', element: ConfirmBooking },
     { path: 'provider', element: Provider },
 ]

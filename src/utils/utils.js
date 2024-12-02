@@ -88,7 +88,7 @@ export const HomeServices = [
     { img: img7, title: '24 hours customer support', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
 ]
 export const HomeCategories = [
-    { img: img8, title: 'handlyman' },
+    { img: img8, title: 'handyman' },
     { img: img9, title: 'moving services' },
     { img: img10, title: 'Furniture Assembly' },
     { img: img11, title: 'Mounting & Installation' },

@@ -140,13 +140,13 @@ const User = () => {
 
                             </div>
                         </div>
-
+                        <div className="bg-secondary px-5 py-1 w-fit text-white font-semibold my-3"><Link to='/provider'>Provider</Link></div>
                         <div className=" border-t pt-5">
                             <div className="flex items-center text-primary gap-3 justify-between">
                             </div>
                         </div>
 
-                        <div className=" md:grid grid-cols-2 py-10 gap-5 ">
+                        <div className=" md:grid grid-cols-2 py-4 gap-5 ">
                             <div onClick={handleOpenFundWallet} className="border py-3 px-2">
                                 <Link to=''>Fund Wallet</Link>
                             </div>
