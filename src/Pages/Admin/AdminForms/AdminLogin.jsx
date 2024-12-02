@@ -43,8 +43,8 @@ const AdminLogin = () => {
 
   return (
     <div>
-      <div className="bg-gray w-full h-[17rem]">
-        <div className="text-center pt-32">
+      <div className="bg-gray w-full xl:h-[20rem]">
+        <div className="text-center py-10 xl:pt-24">
           <p className='font-[500] text-4xl mb-3'>Login</p>
           <span className='flex items-center gap-4 font-[500] justify-center'>
             <p className="text-primary">Admin</p>
@@ -54,7 +54,7 @@ const AdminLogin = () => {
         </div>
       </div>
       <div className="md:flex my-14 items-center md:mx-7 justify-center">
-        <div className="bg-white w-[27rem] rounded-tr-md rounded-br-md h-[25rem] shadow-2xl py-5 px-6">
+        <div className="bg-white md:w-[27rem] border mx-3 rounded-tr-md rounded-br-md md:h-[25rem] shadow-2xl py-5 px-6">
           <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome back Admin!</div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="text-sm text-[#374151]">
