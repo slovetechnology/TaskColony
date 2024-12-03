@@ -79,7 +79,6 @@ export const TopNavsLinks = [
     { title: 'categories', link: '/category' },
     { title: 'services', link: '/service' },
     { title: 'my booking', link: '/booking-list' },
-    { title: 'profile', link: '/user' },
 ]
 
 export const HomeServices = [

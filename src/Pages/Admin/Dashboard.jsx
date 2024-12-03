@@ -117,7 +117,7 @@ const Dashboard = () => {
                         <div className="mb-5">
                             <div>
                                 <div className="h-[7rem] text-white rounded-xl bg-gradient-to-r px-6 py-2 from-[#3626E3] to-[#72FF13]">
-                                    <p className="text-base">Active Users</p>
+                                    <p className="md:text-base text-xs">Active Users</p>
                                     <div className="flex mt-5 items-center justify-between">
                                         <p className="text-5xl font-medium ">{items?.active_users}</p>
                                         <div className="bg-white p-3 rounded-full text-xl text-orange-500">
@@ -130,7 +130,7 @@ const Dashboard = () => {
                         <div className="mb-5">
                             <div>
                                 <div className="h-[7rem] text-white rounded-xl bg-gradient-to-r px-6 py-2 from-[#FF3D3D] to-[#FFBC0A]">
-                                    <p className="text-base">Verified Providers</p>
+                                    <p className="md:text-base text-xs">Verified Providers</p>
                                     <div className="flex mt-5 items-center justify-between">
                                         <p className="text-5xl font-medium ">{items?.verified_providers}</p>
                                         <div className="bg-white p-3 rounded-full text-xl text-orange-500">
@@ -143,7 +143,7 @@ const Dashboard = () => {
                         <div className="mb-5">
                             <div>
                                 <div className="h-[7rem] text-white rounded-xl bg-gradient-to-r px-6 py-2 from-[#4797BD] to-[#63C2AB]">
-                                    <p className="text-base">Unverified Providers</p>
+                                    <p className="md:text-base text-xs">Unverified Providers</p>
                                     <div className="flex mt-5 items-center justify-between">
                                         <p className="text-5xl font-medium ">{items?.unverified_providers}</p>
                                         <div className="bg-white p-3 rounded-full text-xl text-orange-500">

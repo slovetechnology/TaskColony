@@ -5,29 +5,28 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { Apis, AuthPosturl } from '../../../Components/General/Api';
 
-const VerifyEmail = () => {
-    const [view, setView] = useState(1); // 1 = Email, 2 = OTP
-    const [otp, setOtp] = useState(["1", "2", "3", "4"]); // Default OTP values
+const VerifyEmail = ({ email: initialEmail }) => {
+    const [email, setEmail] = useState(initialEmail || '');
+    const [view, setView] = useState(1); 
+    const [otp, setOtp] = useState(["", "", "", ""]); 
     const [timeLeft, setTimeLeft] = useState(60);
     const inputRefs = useRef([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-
     const onSubmit = async (data) => {
         setIsSubmitting(true);
         const dataToSend = {
-            email: email ,
-            verifytype: email, 
-            method: email 
+            email: email, 
+            verifytype: 1,
+            method: 1, 
         };
         try {
             const res = await AuthPosturl(Apis.users.send_verify, dataToSend);
-            console.log(res);
             if (res.status === true) {
                 ToastAlert(res.text);
-                setView(2); // Move to OTP verification view
+                setView(2); 
             } else {
                 ErrorAlert(res.text || 'Error during verification');
             }
@@ -39,7 +38,6 @@ const VerifyEmail = () => {
         }
     };
 
-    // Handle OTP input changes
     const handleChange = (element, index) => {
         if (isNaN(element.value)) return;
 
@@ -58,18 +56,17 @@ const VerifyEmail = () => {
         }
     };
 
-    // Format time for countdown
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
     };
 
-    // Handle OTP submission
     const handleOtpSubmit = async () => {
         setIsSubmitting(true);
         const dataToSend = {
-            otp: otp.join("") || "1234", // Convert OTP array to string
+            otp: otp.join(""), 
+            email: email, 
         };
         try {
             const res = await AuthPosturl(Apis.users.otp_verify, dataToSend);
@@ -78,7 +75,7 @@ const VerifyEmail = () => {
                 Cookies.set('taskcolony', token);
                 ToastAlert(res.data.text);
                 setTimeout(() => {
-                    navigate('/user');
+                    navigate('/user'); 
                 }, 3000);
             } else {
                 ErrorAlert(res.text || 'OTP verification failed');
@@ -91,7 +88,6 @@ const VerifyEmail = () => {
         }
     };
 
-    // Countdown timer for OTP
     useEffect(() => {
         if (view === 2 && timeLeft > 0) {
             const timer = setInterval(() => {
@@ -103,7 +99,6 @@ const VerifyEmail = () => {
 
     return (
         <div>
-            {/* Email View */}
             {view === 1 && (
                 <div className="flex items-center mt-16 mb-32 justify-center">
                     <div className="bg-white h-[20rem] w-[24rem] border shadow-xl rounded-lg px-8 py-4">
@@ -119,8 +114,8 @@ const VerifyEmail = () => {
                                     })}
                                     type="email"
                                     className={`input ${errors.email ? 'border-red-600' : 'border'}`}
-                                    defaultValue={email} // Default email value
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email} // Bind to state
+                                    onChange={(e) => setEmail(e.target.value)} // Update state on change
                                 />
                                 {errors.email && <div className="text-red-600">{errors.email.message}</div>}
                             </div>
@@ -135,8 +130,6 @@ const VerifyEmail = () => {
                     </div>
                 </div>
             )}
-
-            {/* OTP View */}
             {view === 2 && (
                 <div className="flex items-center justify-center mt-16 mb-32">
                     <div className="bg-white h-[24rem] w-[24rem] border shadow-xl rounded-lg px-12 py-7">
@@ -152,7 +145,6 @@ const VerifyEmail = () => {
                                         maxLength="1"
                                         className="w-full h-14 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         value={value}
-                                        defaultValue={otp[index]} // Default OTP value
                                         onChange={(e) => handleChange(e.target, index)}
                                         onKeyDown={(e) => e.key === "Backspace" ? handleBackspace(e.target, index) : null}
                                         ref={(el) => inputRefs.current[index] = el}

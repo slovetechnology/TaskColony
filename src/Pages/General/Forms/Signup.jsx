@@ -47,7 +47,7 @@ const Signup = () => {
     if (res.data.status === true) {
       setView(2)
     } else {
-      ErrorAlert(res.data.text);
+      ErrorAlert(res.text);
     }
 
   };
@@ -64,11 +64,9 @@ const Signup = () => {
           </span>
         </div>
       </div>
-      {view === 1 && <div className="md:flex my-14 items-center w-11/12 mx-auto md:mx-7 justify-center">
-        <div>
-          <img src={signup} alt="Signup" className="md:w-[27rem] rounded-tl-md rounded-bl-md md:h-[75rem] object-cover" />
-        </div>
-        <div className="bg-white md:w-[27rem] rounded-tr-md rounded-br-md h-[75rem] shadow-2xl py-5 px-6">
+      {view === 1 && <div className="grid grid-cols-2 my-14 lg:w-[60%] mx-20 lg:mx-auto">
+          <img src={signup} alt="Signup" className="w-full rounded-tl-md rounded-bl-md object-cover" />
+        <div className="bg-white rounded-tr-md rounded-br-md shadow-2xl py-5 px-6">
           <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome to Task Colony</div>
           <div className="flex items-center mb-3 justify-center gap-10">
             <div className="w-24 h-0.5 bg-[#E5E7EB]"></div>
@@ -83,7 +81,7 @@ const Signup = () => {
                 <input
                   {...register('firstname', { required: 'First name is required' })}
                   type="text"
-                  className={`input ${errors.firstname ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.firstname ? 'border-red-600' : 'border'}`}
                 />
                 {errors.firstname && <div className="text-red-600">{errors.firstname.message}</div>}
               </div>
@@ -93,7 +91,7 @@ const Signup = () => {
                 <input
                   {...register('lastname', { required: 'Last name is required' })}
                   type="text"
-                  className={`input ${errors.lastname ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.lastname ? 'border-red-600' : 'border'}`}
                 />
                 {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
               </div>
@@ -106,7 +104,7 @@ const Signup = () => {
                     validate: (value) => value.includes('@') || 'Enter a valid email address'
                   })}
                   type="email"
-                  className={`input ${errors.email ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.email ? 'border-red-600' : 'border'}`}
                 />
                 {errors.email && <div className="text-red-600">{errors.email.message}</div>}
               </div>
@@ -116,7 +114,7 @@ const Signup = () => {
                 <input
                   {...register('username', { required: 'Username is required' })}
                   type="text"
-                  className={`input ${errors.username ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.username ? 'border-red-600' : 'border'}`}
                 />
                 {errors.username && <div className="text-red-600">{errors.username.message}</div>}
               </div>
@@ -125,7 +123,7 @@ const Signup = () => {
                 <input
                   {...register('state', { required: 'State is required' })}
                   type="text"
-                  className={`input ${errors.state ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.state ? 'border-red-600' : 'border'}`}
                 />
                 {errors.state && <div className="text-red-600">{errors.state.message}</div>}
               </div>
@@ -135,7 +133,7 @@ const Signup = () => {
                 <input
                   {...register('city', { required: 'City is required' })}
                   type="text"
-                  className={`input ${errors.city ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.city ? 'border-red-600' : 'border'}`}
                 />
                 {errors.city && <div className="text-red-600">{errors.city.message}</div>}
               </div>
@@ -145,14 +143,15 @@ const Signup = () => {
                 <input
                   {...register('zipcode', { required: 'Zip code is required' })}
                   type="text"
-                  className={`input ${errors.zipcode ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.zipcode ? 'border-red-600' : 'border'}`}
                 />
                 {errors.zipcode && <div className="text-red-600">{errors.zipcode.message}</div>}
               </div>
 
               <div className="mb-3">
                 <label>Company <span>(Optional)</span></label>
-                <input {...register('company')} type="text" className="input border" />
+                <input {...register('company')} type="text"
+                  className={`input border ${errors.lastname ? 'border-red-600' : 'border'}`} />
               </div>
 
               <div className="mb-3">
@@ -165,7 +164,7 @@ const Signup = () => {
                     pattern: { value: /^[0-9]*$/, message: 'Only numbers are allowed' }
                   })}
                   type="text"
-                  className={`input ${errors.phone ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.phone ? 'border-red-600' : 'border'}`}
                 />
                 {errors.phone && <div className="text-red-600">{errors.phone.message}</div>}
               </div>
@@ -181,7 +180,7 @@ const Signup = () => {
                     minLength: { value: 6, message: 'Password must be at least 6 characters' }
                   })}
                   type={pass1 ? 'text' : 'password'}
-                  className={`input ${errors.password ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.password ? 'border-red-600' : 'border'}`}
                 />
                 {errors.password && <div className="text-red-600">{errors.password.message}</div>}
               </div>
@@ -194,7 +193,7 @@ const Signup = () => {
                 <input
                   {...register('confirm_password', { required: 'Confirm your password' })}
                   type={pass2 ? 'text' : 'password'}
-                  className={`input ${errors.password ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.password ? 'border-red-600' : 'border'}`}
                 />
               </div>
 

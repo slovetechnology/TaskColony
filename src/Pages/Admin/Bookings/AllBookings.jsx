@@ -171,11 +171,11 @@ const AllBookings = () => {
         />
       )}
 
-      <div className="lg:mx-10 mx-4 mb-10">
+      <div className="lg:mx-10 mx-2 mb-10">
         <div className="bg-white mt-10 px-5 py-4 w-full">
           <div className="flex items-center justify-between">
             <div className="font-medium text-lg">All Requested Gigs</div>
-            <div className="flex items-center gap-5">
+            <div className="md:flex items-center hidden gap-5">
               <label className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-[#F5F5F5] rounded-md">
                 <input
                   type="text"

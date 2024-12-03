@@ -35,6 +35,7 @@ import ConfirmBooking from "./Pages/User/Service/ConfirmBooking"
 import Contactus from "./Pages/General/Contactus"
 import Faq from "./Pages/General/Faq"
 import Provider from "./Pages/User/Provider/Provider"
+import VerifyEmail from "./Pages/General/Forms/VerifyEmail"
 
 
 
@@ -49,6 +50,7 @@ export const GeneralNoAuth = [
     { path: 'about', element: Aboutus },
     { path: 'faq', element: Faq },
     { path: 'contact', element: Contactus },
+    { path: 'verify', element: VerifyEmail },
 
 ]
 export const GeneralRoutes = [
