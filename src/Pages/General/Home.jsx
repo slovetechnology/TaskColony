@@ -180,7 +180,7 @@ function Home() {
                     ))}
                 </div>
             </div>
-            <div className="w-11/12 mx-auto lg:w-10/12">
+            {/* <div className="w-11/12 mx-auto lg:w-10/12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
                     <div className="flex flex-col justify-center">
                         <div className="font-medium text-4xl mb-6">What our customers says</div>
@@ -221,7 +221,7 @@ function Home() {
                         />
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>
                     <div className="lg:col-span-3 w-fit mx-auto lg:ml-auto order-2 lg:order-1">
@@ -259,7 +259,7 @@ function Home() {
                     </div>
                 </div>
             </div> */}
-            <div className="bg-zinc-200 py-10 mt-20">
+            {/* <div className="bg-zinc-200 py-10 mt-20">
                 <div className="w-11/12 mx-auto lg:w-10/12">
                     <div className="flex  items-center justify-between">
                         <div className="font-medium text-2xl capitalize">our Work gallery</div>
@@ -296,7 +296,7 @@ function Home() {
                         ))}
                     </div>
                 </div>
-            </div>
+            </div> */}
         </Layout>
     )
 }
