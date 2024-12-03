@@ -117,11 +117,11 @@ const AllSlider = () => {
         <AdminLayout>
             {del && <ConfirmDeleteSlider confirmAction={confirmAction} closeView={() => setDel(false)} />}
             {view && <UpdateSlider singles={singles} closeView={() => setView(false)} resendSignal={updateItem} />}
-            <div className="mx-10">
+            <div className="md:mx-10 mx-2">
                 <div className="bg-white mt-10 px-5 py-4 w-full">
                     <div className="flex items-center justify-between">
                         <div className="font-medium text-lg">Slider</div>
-                        <div className="flex items-center gap-5">
+                        <div className="md:flex hidden items-center gap-5">
                             <label className="border gap-[10px] text-[#9C9C9C] items-center flex py-2.5 px-3 border-[#F5F5F5] rounded-md">
                                 <input
                                     type="text"

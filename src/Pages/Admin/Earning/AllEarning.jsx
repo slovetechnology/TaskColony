@@ -70,17 +70,14 @@ const AllEarning = () => {
     setCurrentPage(val.selected);
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   return (
     <AdminLayout>
-      <div className="mx-10 mb-20">
+      <div className="md:mx-10 mx-2 mb-20">
         <div className="bg-white mt-10 px-5 py-4 w-full">
           <div className="flex items-center justify-between">
             <div className="font-medium text-lg">Daily Earning</div>
-            <div className="flex items-center gap-5">
+            <div className="md:flex hidden items-center gap-5">
               <label className='border gap-[10px] text-[#9C9C9C] items-center py-2.5 px-3 border-[#F5F5F5] rounded-md'>
                 <input
                   type="text"
@@ -95,9 +92,9 @@ const AllEarning = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 mt-8 gap-5">
+        <div className="md:grid md:grid-cols-3 mt-8 gap-5">
           <div>
-            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#4797BD] to-[#63C2AB]">
+            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 mb-2 from-[#4797BD] to-[#63C2AB]">
               <p className="text-base">All Time Profit</p>
               <div className="flex mt-5 items-center justify-between">
                 <p className="text-5xl font-medium ">{allProfit}</p>
@@ -108,7 +105,7 @@ const AllEarning = () => {
             </div>
           </div>
           <div>
-            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 from-[#3626E3] to-[#72FF13]">
+            <div className="h-[13rem] text-white rounded-xl xl:w-[20rem] bg-gradient-to-r px-6 py-14 mb-2 from-[#3626E3] to-[#72FF13]">
               <p className="text-base">Last Month</p>
               <div className="flex mt-5 items-center justify-between">
                 <p className="text-5xl font-medium ">{lastMonthSum}</p>
