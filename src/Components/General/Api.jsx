@@ -8,7 +8,7 @@ export const offline = 'https://backend.taskcolony.com/api';
 const user = 'user';
 const admin = 'admin';
 const user_urls = {
-    register: `${user}/auth/register_user`,
+    register: `${user}/auth/register_user.php`,
     login: `${user}/auth/loginapp.php`,
     get_user_profile: `${user}/profile/get_user_detail.php`,
     fund_wallet: `${user}/profile/fundwallet.php`,

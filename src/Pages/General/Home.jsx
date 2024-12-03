@@ -45,7 +45,7 @@ function Home() {
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
         <Layout>
-            <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
+            {/* <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
@@ -78,7 +78,7 @@ function Home() {
                         />
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="w-11/12 lg:w-10/12 mx-auto mt-28">
                 <div className="grid grid-cols-1 lg:grid-cols-7">
                     <div className="lg:col-span-4">
