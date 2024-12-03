@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast'
 const Layout = ({children}) => {
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       {children}
       <Footer />
       <Toaster />

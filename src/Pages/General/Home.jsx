@@ -45,7 +45,7 @@ function Home() {
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
         <Layout>
-            {/* <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
+            <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
@@ -78,8 +78,8 @@ function Home() {
                         />
                     </div>
                 </div>
-            </div> */}
-            <div className="w-11/12 lg:w-10/12 mx-auto mt-28">
+            </div>
+            {/* <div className="w-11/12 lg:w-10/12 mx-auto mt-28">
                 <div className="grid grid-cols-1 lg:grid-cols-7">
                     <div className="lg:col-span-4">
                         <div className="relative">
@@ -161,8 +161,8 @@ function Home() {
                     <div className="">
                     </div>
                 </div>
-            </div>
-            <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-">
+            </div> */}
+            {/* <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-">
                 <div className="w-fit flex items-center gap-5">
                     {HomeBestOffers.map((item, index) => (
                         <div className="flex bg-white px-3 py-5 shadow-xl mb-10 gap-3 items-center rounded-xl" key={index}>
@@ -179,7 +179,7 @@ function Home() {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
             <div className="w-11/12 mx-auto lg:w-10/12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
                     <div className="flex flex-col justify-center">
