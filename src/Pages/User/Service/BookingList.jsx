@@ -159,9 +159,7 @@ const BookingList = () => {
               ))
             ) : (
               <div className="">
-                <div className="text-center text-gray-500 font-[500] mt-5">
-                  No bookings match your search criteria. Please try a different term or filter.
-                </div>
+                <div className="text-center text-gray-500 font-[500] mt-"></div>
                 <img src={notfound} alt="" className="h-[30rem] object-contain w-full" />
               </div>
             )}
