@@ -51,6 +51,7 @@ export const GeneralNoAuth = [
     { path: 'faq', element: Faq },
     { path: 'contact', element: Contactus },
     { path: 'verify', element: VerifyEmail },
+    { path: 'service-detail/:userid', element: ServiceDetail },
 
 ]
 export const GeneralRoutes = [
@@ -58,7 +59,6 @@ export const GeneralRoutes = [
     { path: 'booking-list', element: BookingList },
     { path: 'category', element: Category },
     { path: 'sub-category', element: Subcategory },
-    { path: 'service-detail', element: ServiceDetail },
     { path: 'reset-password', element: ForgetPassword },
     { path: 'notification', element: Notification },
     { path: 'confirm-booking', element: ConfirmBooking },
