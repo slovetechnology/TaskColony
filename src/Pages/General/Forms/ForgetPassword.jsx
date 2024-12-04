@@ -127,24 +127,75 @@ const ForgetPassword = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg flex items-center justify-center"
+                                className="bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg"
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? (
-                                    <div className="flex items-center gap-2">
-                                        <span className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full border-white"></span>
-                                        Sending...
-                                    </div>
-                                ) : (
-                                    "Continue"
-                                )}
+                                Continue
                             </button>
                         </form>
                     </div>
                 </div>
             )}
 
-            {/* Remaining views unchanged */}
+            {view === 2 && (
+                <div className="flex items-center justify-center mt-16 mb-32">
+                    <div className="bg-white h-[36rem] w-[24rem] border shadow-xl rounded-lg px-12 py-7">
+                        <p className="font-[500] text-3xl text-[#1C1F34] mb-4">Verification</p>
+                        <p className="text-xs text-[#828282]">Enter the 4-digit code that you received on your email.</p>
+                        <form className="mt-6" onSubmit={handleSubmit(handleOtpSubmit)}>
+                            <div className="flex items-center justify-center w-full mb-10 space-x-5">
+                                {otp.map((value, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        maxLength="1"
+                                        className="w-full h-14 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        value={value}
+                                        onChange={(e) => handleChange(e.target, index)}
+                                        onKeyDown={(e) => e.key === "Backspace" ? handleBackspace(e.target, index) : null}
+                                        ref={(el) => (inputRefs.current[index] = el)}
+                                    />
+                                ))}
+                            </div>
+                            <div className="mb-4 relative">
+                                <div onClick={() => setPass1(!pass1)} className="absolute top-9 right-4 cursor-pointer text-xl text-primary">
+                                    <Icon1 />
+                                </div>
+                                <label>Password</label>
+                                <input
+                                    {...register('password', {
+                                        required: 'Password is required',
+                                        minLength: { value: 6, message: 'Password must be at least 6 characters' },
+                                    })}
+                                    type={pass1 ? 'text' : 'password'}
+                                    className={`input border ${errors.password ? 'border-red-600' : 'border'}`}
+                                />
+                                {errors.password && <div className="text-red-600">{errors.password.message}</div>}
+                            </div>
+                            <div className="mb-4 relative">
+                                <div onClick={() => setPass2(!pass2)} className="absolute top-8 right-3 cursor-pointer text-slate-600 text-xl">
+                                    <Icon2 />
+                                </div>
+                                <label>Retype Password</label>
+                                <input
+                                    {...register('confirm_password', {
+                                        required: 'Please confirm your password',
+                                        validate: (value) =>
+                                            value === watch('password') || 'Passwords do not match',
+                                    })}
+                                    type={pass2 ? 'text' : 'password'}
+                                    className={`input border ${errors.confirm_password ? 'border-red-600' : 'border'}`}
+                                />
+                                {errors.confirm_password && <div className="text-red-600">{errors.confirm_password.message}</div>}
+                            </div>
+                            <button className='bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg' disabled={isSubmitting}>
+                                {isSubmitting ? 'Continue...' : 'Continue'}
+                            </button>
+                            <p className="text-xs text-[#828282]">If you didn’t receive a code! Resend</p>
+                        </form>
+                    </div>
+                </div>
+            )}
         </Layout>
     );
 };
