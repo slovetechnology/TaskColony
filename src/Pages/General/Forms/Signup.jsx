@@ -9,6 +9,8 @@ import { Apis, Posturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import VerifyEmail from './VerifyEmail';
 import Cookies from 'js-cookie';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import Signin from './Signin';
 
 const Signup = () => {
   const [selected, setSelected] = useState('User');
@@ -232,10 +234,12 @@ const Signup = () => {
                       {isSubmitting ? 'Processing...' : 'Sign Up'}
                     </button>
                   </div>
-
+                  {/* <GoogleOAuthProvider>
+                <Signin />
+              </GoogleOAuthProvider>  */}
                   <div className="mt-4 text-center">
                     <span>Already have an account? </span>
-                    <Link to="/login" className="text-primary">Login In</Link>
+                    <Link to="/login" className="text-secondary">Log In</Link>
                   </div>
                 </div>
               </form>

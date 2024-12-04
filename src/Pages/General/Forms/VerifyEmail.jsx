@@ -62,7 +62,7 @@ const VerifyEmail = ({ email: initialEmail, token }) => {
                 console.log("Token set in cookies (onSubmit):", token);
                 ToastAlert(res.text);
                 setTimeout(() => {
-                    navigate('/user'); 
+                    navigate('/service'); 
                 }, 3000);
             } else {
                 ErrorAlert(res.text || 'OTP verification failed');
