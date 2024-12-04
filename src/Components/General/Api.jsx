@@ -110,10 +110,13 @@ export const Apis = {
 // Unauthenticated POST request
 export const Posturl = async (endpoint, data) => {
     const urlEncodedData = new URLSearchParams(data).toString();
+    const apiKey = 'AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o'; // Your API key
+
     try {
         const response = await axios.post(`${offline}/${endpoint}`, urlEncodedData, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Bearer ${apiKey}` 
             },
         });
         return response;

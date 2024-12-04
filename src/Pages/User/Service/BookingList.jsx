@@ -5,6 +5,7 @@ import { SlArrowLeft } from 'react-icons/sl';
 import Layout from '../../../Components/User/Layout';
 import { Apis, AuthGeturl } from '../../../Components/General/Api';
 import image from '../../../assets/new/img18.svg'
+import EditBooking from './EditBooking';
 const BookingList = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedPayment, setSelectedPayment] = useState(null);
@@ -12,6 +13,7 @@ const BookingList = () => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editbookings, setEditBooking] = useState(false);
 
   // Fetch bookings
   const fetchAllBookings = useCallback(async () => {
@@ -56,14 +58,23 @@ const BookingList = () => {
     return matchesSearch && matchesStatus && matchesPayment;
   });
 
-  // Handle form submit
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
+  const handleOpenEdit = () => {
+    setEditBooking(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditBooking(false);
+  };
+
   return (
     <Layout>
-    <div className="bg-gray w-full xl:h-[20rem]">
+      {editbookings && <EditBooking closeview={handleCloseEdit} />}
+      <div className="bg-gray w-full xl:h-[20rem]">
         <div className="text-center py-10 xl:pt-24">
           <p className="font-[500] text-4xl mb-3">Booking List</p>
           <span className="flex items-center gap-4 font-[500] justify-center">
@@ -80,7 +91,7 @@ const BookingList = () => {
         </div>
 
         <div className="gap-10 xl:flex">
-          <div className="mb-10 overflow-y-auto w-full h-[35rem]">
+          <div className="mb-10 overflow-y-auto scrollsdown w-full h-[35rem]">
             {filteredItems.map((item, i) => (
               <div
                 key={i}
@@ -96,9 +107,9 @@ const BookingList = () => {
                 <div className="flex-grow">
                   <div className="flex items-start w-full justify-between">
                     <p className="text-lg font-[500]">{item.title}</p>
-                    <Link to="" className="flex items-center text-xs font-[500] gap-2 text-secondary">
+                    <div onClick={handleOpenEdit} className="flex items-center text-xs font-[500] cursor-pointer gap-2 text-secondary">
                       Edit Booking <span className="text-primary"><FaEdit /></span>
-                    </Link>
+                    </div>
                   </div>
                   <div className="border-b pt-5 pb-10">
                     <p className="text-primary text-xs">
