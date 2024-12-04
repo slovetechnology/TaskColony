@@ -62,25 +62,20 @@ const Service = () => {
     return matchesSearchQuery && matchesCategory;
   });
 
-  // Handle category selection
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category.name); // Set the selected category
-    setSearchQuery(''); // Clear the search input when a category is selected
+    setSelectedCategory(category.name);
+    setSearchQuery('');
   };
 
   // Handle search input change
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value); // Update the search query
-    setSelectedCategory(''); // Clear the selected category when typing
-  };
-
-  // Clear selected category
-  const clearCategory = () => {
+    setSearchQuery(e.target.value);
     setSelectedCategory('');
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const clearCategory = () => {
+    setSelectedCategory('');
+  };
 
   return (
     <Layout>
@@ -161,22 +156,28 @@ const Service = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
-          {(searchQuery || selectedCategory ? filteredItems : items).map((item, index) => (
-            <div className="w-11/12 mx-auto" key={index}>
-              <div className="relative">
-                <LazyLoadImage
-                  effect="blur"
-                  src={item.banner_image[0]}
-                  className="w-[30rem] h-[10rem] object-top object-cover"
-                />
+          {(searchQuery || selectedCategory ? filteredItems : items).length > 0 ? (
+            (searchQuery || selectedCategory ? filteredItems : items).map((item, index) => (
+              <div className="w-11/12 mx-auto" key={index}>
+                <div className="relative">
+                  <LazyLoadImage
+                    effect="blur"
+                    src={item.banner_image[0]}
+                    className="w-[30rem] h-[10rem] object-top object-cover"
+                  />
+                </div>
+                <div className="py-4 px-5 shadow-2xl bg-white rounded-b-3xl -mt-3">
+                  <div className="font-medium">{item.name}</div>
+                  <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
+                  <Link to={`/service-detail/${item.id}`} className='text-xs font-medium text-secondary'>View Details</Link>
+                </div>
               </div>
-              <div className="py-4 px-5 shadow-2xl bg-white rounded-b-3xl -mt-3">
-                <div className="font-medium">{item.name}</div>
-                <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
-                <Link to={`/service-detail/${item.id}`} className='text-xs font-medium text-secondary'>View Details</Link>
-              </div>
+            ))
+          ) : (
+            <div className="w-full flex h-screen justify-center  text-center my-10">
+              <p className="text-gray-500 text-lg">No services found.</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </Layout>

@@ -6,7 +6,7 @@ import { Geturl } from '../../../Components/General/Api';
 
 const ServiceDetail = () => {
   const { userid } = useParams();
-  const [service, setService] = useState([]);
+  const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,7 +27,7 @@ const ServiceDetail = () => {
 
   useEffect(() => {
     fetchService();
-  }, [fetchService]);
+  }, []);
 
 
   return (

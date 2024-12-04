@@ -35,8 +35,7 @@ import ConfirmBooking from "./Pages/User/Service/ConfirmBooking"
 import Contactus from "./Pages/General/Contactus"
 import Faq from "./Pages/General/Faq"
 import Provider from "./Pages/User/Provider/Provider"
-import VerifyEmail from "./Pages/General/Forms/VerifyEmail"
-
+import AutoLocationComponent from "./Components/General/Map"
 
 
 export const GeneralNoAuth = [
@@ -50,7 +49,7 @@ export const GeneralNoAuth = [
     { path: 'about', element: Aboutus },
     { path: 'faq', element: Faq },
     { path: 'contact', element: Contactus },
-    { path: 'verify', element: VerifyEmail },
+    { path: 'verify', element: AutoLocationComponent },
     { path: 'service-detail/:userid', element: ServiceDetail },
 
 ]
