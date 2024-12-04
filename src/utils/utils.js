@@ -82,9 +82,9 @@ export const TopNavsLinks = [
 ]
 
 export const HomeServices = [
-    { img: img5, title: 'The best for every budget', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
-    { img: img6, title: 'Quality work done quickly', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
-    { img: img7, title: '24 hours customer support', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
+    { img: img5, title: 'The Best For Every Budget', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
+    { img: img6, title: 'Quality Work Done Quickly', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
+    { img: img7, title: '24 Hours Customer Support', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
 ]
 export const HomeCategories = [
     { img: img8, title: 'handyman' },

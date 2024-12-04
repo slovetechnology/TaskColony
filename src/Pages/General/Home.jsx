@@ -122,7 +122,7 @@ function Home() {
                     <div className="flex  lg:col-span-3 items-center justify-between">
                         <div className="font-medium text-2xl">Categories</div>
                         <div className="">
-                            <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
+                            <Link to='/category' className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@ function Home() {
                 <div className="flex items-center justify-between mt-20">
                     <div className="font-medium text-2xl">Our Services</div>
                     <div className="">
-                        <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
+                        <Link to='/service' className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">

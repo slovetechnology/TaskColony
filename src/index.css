@@ -20,6 +20,11 @@ body {
   box-sizing: border-box;
   background-color: white;
 }
+.spinner-border {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-left-color: white;
+}
 
 
 .scrollsdown::-webkit-scrollbar {

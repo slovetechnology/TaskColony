@@ -40,6 +40,7 @@ import AutoLocationComponent from "./Components/General/Map"
 
 export const GeneralNoAuth = [
     { path: 'login', element: Login },
+    { path: 'reset-password', element: ForgetPassword },
     { path: 'signup', element: Signup },
     { path: 'forms', element: FormTest },
     { path: '', element: Home },
@@ -51,14 +52,14 @@ export const GeneralNoAuth = [
     { path: 'contact', element: Contactus },
     { path: 'verify', element: AutoLocationComponent },
     { path: 'service-detail/:userid', element: ServiceDetail },
+    { path: 'booking-list', element: BookingList },
+    { path: 'category', element: Category },
+    { path: 'sub-category', element: Subcategory },
+
 
 ]
 export const GeneralRoutes = [
     { path: 'user', element: User },
-    { path: 'booking-list', element: BookingList },
-    { path: 'category', element: Category },
-    { path: 'sub-category', element: Subcategory },
-    { path: 'reset-password', element: ForgetPassword },
     { path: 'notification', element: Notification },
     { path: 'confirm-booking', element: ConfirmBooking },
     { path: 'provider', element: Provider },

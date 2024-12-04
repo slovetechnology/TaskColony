@@ -9,6 +9,8 @@ const user = 'user';
 const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user.php`,
+    forget_password: `${user}/auth/forgot_password.php`,
+    reset_password: `${user}/auth/reset_password.php`,
     login: `${user}/auth/loginapp.php`,
     get_user_profile: `${user}/profile/get_user_detail.php`,
     fund_wallet: `${user}/profile/fundwallet.php`,
@@ -28,6 +30,7 @@ const user_urls = {
     delete_bookings: `${user}/bookings/delete_booking.php`,
     get_system: `${user}/system/get_system_data.php`,
     get_testimonial: `${user}/testimonials/get_all_testimonials.php`,
+    google_verify: `${user}/auth/login_with_google_verify.php?code=4%2F0AeanS0Y5KLHo2R9a2z93lEVFfmb7vGFjvHEuXlyi73c6OODYE0Rbo0fe9zvbFNNbsSFm_Q&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent&fromcode=2&registervia=1`,
 };
 const admin_urls = {
     get_admin_dashboard: `${admin}/dashboard/all_stat.php`,
@@ -116,7 +119,7 @@ export const Posturl = async (endpoint, data) => {
         const response = await axios.post(`${offline}/${endpoint}`, urlEncodedData, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': `Bearer ${apiKey}` 
+                'Authorization': `Bearer ${apiKey}`
             },
         });
         return response;

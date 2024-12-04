@@ -33,12 +33,15 @@ const Login = () => {
         const token = res.data.data[0].access_token;
         Cookies.set('taskcolony', token);
         ToastAlert(res.data.text);
+
+        // Delay navigation and reload by 4 seconds
         setTimeout(() => {
-          navigate('/user');
-        }, 2000);
+          window.location.href = '/service'; // Navigate and reload the page
+        }, 1000); // 4000ms = 4 seconds
       } else {
         ErrorAlert(res.text);
       }
+
     } catch (error) {
       ErrorAlert('An unexpected error occurred. Please try again.');
       console.log(error)
@@ -110,7 +113,7 @@ const Login = () => {
               </button>
               <div className="text-sm my-5 font-[500] text-center mt-2">DON'T HAVE AN ACCOUNT? <Link to='/signup' className='text-secondary'>SIGN UP</Link></div>
               <GoogleOAuthProvider
-                clientId="590633888307-0jkfj9qsvakabpju0orans14cesrdpjv.apps.googleusercontent.com">
+              >
                 <Signin />
               </GoogleOAuthProvider>
 
