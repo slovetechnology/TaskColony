@@ -45,7 +45,7 @@ function Home() {
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
         <Layout>
-            {/* <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
+            <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
@@ -58,15 +58,17 @@ function Home() {
                         <div className="mt-10">
                             <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
                         </div>
-                        <div className="flex items-center mt-10 gap-2">
-                            <LazyLoadImage
-                                effect="blur"
-                                className='size-5'
-                                src={img3}
-                            />
-                            <div className="text-sm">
-                                <div className="font-medium">Have any Questions?</div>
-                                <div className="text-slate-500">+0 123 888 555</div>
+                        <div className="md:mt-10 mt-40 gap-2">
+                            <div className="flex md:-mt-0 gap-2 items-center -mt-32">
+                                <LazyLoadImage
+                                    effect="blur"
+                                    className='size-5'
+                                    src={img3}
+                                />
+                                <div className="text-sm">
+                                    <div className="font-medium">Have any Questions?</div>
+                                    <div className="text-slate-500">+0 123 888 555</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,7 +80,7 @@ function Home() {
                         />
                     </div>
                 </div>
-            </div> */}
+            </div>
             <div className="w-11/12 lg:w-10/12 mx-auto mt-28">
                 <div className="grid grid-cols-1 lg:grid-cols-7">
                     <div className="lg:col-span-4">
@@ -180,7 +182,7 @@ function Home() {
                     ))}
                 </div>
             </div>
-            {/* <div className="w-11/12 mx-auto lg:w-10/12">
+            <div className="w-11/12 mx-auto lg:w-10/12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
                     <div className="flex flex-col justify-center">
                         <div className="font-medium text-4xl mb-6">What our customers says</div>
@@ -221,8 +223,8 @@ function Home() {
                         />
                     </div>
                 </div>
-            </div> */}
-            {/* <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
+            </div>
+            <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>
                     <div className="lg:col-span-3 w-fit mx-auto lg:ml-auto order-2 lg:order-1">
                         <LazyLoadImage src={img26} className='object-cover h-full w-full' effect='blur' />
@@ -258,8 +260,8 @@ function Home() {
                         </div>
                     </div>
                 </div>
-            </div> */}
-            {/* <div className="bg-zinc-200 py-10 mt-20">
+            </div>
+            <div className="bg-zinc-200 py-10 mt-20">
                 <div className="w-11/12 mx-auto lg:w-10/12">
                     <div className="flex  items-center justify-between">
                         <div className="font-medium text-2xl capitalize">our Work gallery</div>
@@ -296,7 +298,7 @@ function Home() {
                         ))}
                     </div>
                 </div>
-            </div> */}
+            </div>
         </Layout>
     )
 }

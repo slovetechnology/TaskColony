@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../../Components/User/Layout';
-import { FaHeart, FaSearch, FaStar } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 import { SlArrowDown } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
-import { Apis, AuthGeturl } from '../../../Components/General/Api';
-import { HomeOurServices } from '../../../utils/utils';
+import { Apis, AuthGeturl, Geturl } from '../../../Components/General/Api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Service = () => {
@@ -41,7 +40,7 @@ const Service = () => {
 
   const fetchCarts = useCallback(async () => {
     try {
-      const res = await AuthGeturl(Apis.users.get_category);
+      const res = await Geturl(Apis.users.get_system);
       if (res.status) {
         setCarts(res.data.categories);
       } else {
@@ -56,20 +55,32 @@ const Service = () => {
     fetchCarts();
   }, [fetchCarts]);
 
+  // Filter services based on search query and selected category
   const filteredItems = items.filter(item => {
     const matchesSearchQuery = item.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory ? item.category_name === selectedCategory : true;
     return matchesSearchQuery && matchesCategory;
   });
 
+  // Handle category selection
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category.name);
+    setSelectedCategory(category.name); // Set the selected category
+    setSearchQuery(''); // Clear the search input when a category is selected
   };
 
+  // Handle search input change
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    setSearchQuery(e.target.value); // Update the search query
+    setSelectedCategory(''); // Clear the selected category when typing
+  };
+
+  // Clear selected category
+  const clearCategory = () => {
     setSelectedCategory('');
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <Layout>
@@ -128,30 +139,41 @@ const Service = () => {
                 {carts.map((category, i) => (
                   <div
                     key={i}
-                    className="hover:bg-secondary hover:text-white bg-cart w-fit py-2 px-5 rounded-full cursor-pointer"
+                    className={`hover:bg-secondary hover:text-white bg-cart w-fit py-2 px-5 rounded-full cursor-pointer ${
+                      selectedCategory === category.name ? 'bg-secondary text-white' : ''
+                    }`}
                     onClick={() => handleCategorySelect(category)}
                   >
                     {category.name}
                   </div>
                 ))}
+                {selectedCategory && (
+                  <button
+                    className="text-sm text-red-500 mt-3 underline"
+                    onClick={clearCategory}
+                  >
+                    Clear Category
+                  </button>
+                )}
               </div>
             )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
-          {(searchQuery ? filteredItems : items).map((item, index) => (
+          {(searchQuery || selectedCategory ? filteredItems : items).map((item, index) => (
             <div className="w-11/12 mx-auto" key={index}>
               <div className="relative">
                 <LazyLoadImage
                   effect="blur"
                   src={item.banner_image[0]}
-                  className="w-[30rem] h-[10rem] object-cover"
+                  className="w-[30rem] h-[10rem] object-top object-cover"
                 />
               </div>
-              <div className="py-4 px-5 bg-white rounded-b-3xl -mt-3">
+              <div className="py-4 px-5 shadow-2xl bg-white rounded-b-3xl -mt-3">
                 <div className="font-medium">{item.name}</div>
                 <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
+                <Link to={`/service-detail/${item.id}`} className='text-xs font-medium text-secondary'>View Details</Link>
               </div>
             </div>
           ))}

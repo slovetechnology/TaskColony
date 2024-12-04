@@ -3,35 +3,72 @@ import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import { Apis, AuthPosturl } from '../../../Components/General/Api';
+import { Apis, AuthPosturl, Posturl } from '../../../Components/General/Api';
 
-const VerifyEmail = ({ email: initialEmail }) => {
+const VerifyEmail = ({ email: initialEmail, token }) => {
     const [email, setEmail] = useState(initialEmail || '');
-    const [view, setView] = useState(1); 
-    const [otp, setOtp] = useState(["", "", "", ""]); 
+    const [view, setView] = useState(1);
+    const [otp, setOtp] = useState(["", "", "", ""]);
     const [timeLeft, setTimeLeft] = useState(60);
     const inputRefs = useRef([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    const onSubmit = async (data) => {
+    useEffect(() => {
+        if (token) {
+            console.log("Token received in VerifyEmail component:", token);
+        }
+    }, [token]);
+
+    const onSubmit = async () => {
         setIsSubmitting(true);
         const dataToSend = {
-            email: email, 
+            email: email,
             verifytype: 1,
-            method: 1, 
+            method: 1,
         };
         try {
             const res = await AuthPosturl(Apis.users.send_verify, dataToSend);
+            console.log(res)
             if (res.status === true) {
+                console.log(res.status)
+                Cookies.set('taskcolony', token); 
+                console.log("Token set in cookies (onSubmit):", token);
                 ToastAlert(res.text);
-                setView(2); 
+                setView(2);
             } else {
                 ErrorAlert(res.text || 'Error during verification');
             }
         } catch (error) {
             console.error("Error submitting email:", error);
+            ErrorAlert('An unexpected error occurred. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleOtpSubmit = async () => {
+        setIsSubmitting(true);
+        const dataToSend = {
+            otp: otp.join(""), // Combine OTP digits into a single string
+            verifytype: 1,
+        };
+
+        try {
+            const res = await AuthPosturl(Apis.users.otp_verify, dataToSend);
+            if (res.status === true) {
+                Cookies.set('taskcolony', token); 
+                console.log("Token set in cookies (onSubmit):", token);
+                ToastAlert(res.text);
+                setTimeout(() => {
+                    navigate('/user'); 
+                }, 3000);
+            } else {
+                ErrorAlert(res.text || 'OTP verification failed');
+            }
+        } catch (error) {
+            console.error("Error verifying OTP:", error);
             ErrorAlert('An unexpected error occurred. Please try again.');
         } finally {
             setIsSubmitting(false);
@@ -53,38 +90,6 @@ const VerifyEmail = ({ email: initialEmail }) => {
     const handleBackspace = (element, index) => {
         if (element.value === "" && index > 0) {
             inputRefs.current[index - 1].focus();
-        }
-    };
-
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-    };
-
-    const handleOtpSubmit = async () => {
-        setIsSubmitting(true);
-        const dataToSend = {
-            otp: otp.join(""), 
-            email: email, 
-        };
-        try {
-            const res = await AuthPosturl(Apis.users.otp_verify, dataToSend);
-            if (res.status === true) {
-                const token = res.data.access_token;
-                Cookies.set('taskcolony', token);
-                ToastAlert(res.data.text);
-                setTimeout(() => {
-                    navigate('/user'); 
-                }, 3000);
-            } else {
-                ErrorAlert(res.text || 'OTP verification failed');
-            }
-        } catch (error) {
-            console.error("Error verifying OTP:", error);
-            ErrorAlert('An unexpected error occurred. Please try again.');
-        } finally {
-            setIsSubmitting(false);
         }
     };
 
@@ -132,7 +137,7 @@ const VerifyEmail = ({ email: initialEmail }) => {
             )}
             {view === 2 && (
                 <div className="flex items-center justify-center mt-16 mb-32">
-                    <div className="bg-white h-[24rem] w-[24rem] border shadow-xl rounded-lg px-12 py-7">
+                    <div className="bg-white h-[21rem] w-[24rem] border shadow-xl rounded-lg px-12 py-7">
                         <p className='font-[500] text-3xl text-[#1C1F34] mb-4'>Verification</p>
                         <p className="text-xs text-[#828282]">Enter the 4-digit code that you received on your email.</p>
 
@@ -151,18 +156,14 @@ const VerifyEmail = ({ email: initialEmail }) => {
                                     />
                                 ))}
                             </div>
-                            <p className="text-center text-secondary text-sm mb-4">
-                                Time remaining: {formatTime(timeLeft)}
-                            </p>
+
                             <button
                                 type="button"
-                                className={`bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg ${timeLeft === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                disabled={timeLeft === 0 || isSubmitting}
+                                className={`bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg`}
                                 onClick={handleOtpSubmit}
                             >
                                 Continue
                             </button>
-                            <p className="text-xs text-[#828282]">If you didn’t receive a code, <span className="text-blue-600 cursor-pointer">Resend</span></p>
                         </form>
                     </div>
                 </div>
