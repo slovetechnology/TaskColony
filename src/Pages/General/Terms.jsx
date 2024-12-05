@@ -16,7 +16,6 @@ const Terms = () => {
             </div>
             <div className="mx-28 my-20">
                 <div>
-                    <h1 className="text-3xl font-medium text-center mb-10">Terms and Conditions</h1>
                     <h1 className="text-xl font-medium mb-6">Agreement between User and www.taskcolony.com
                     </h1>
                     <p>

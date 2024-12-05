@@ -11,7 +11,7 @@ function Footer() {
                 <div className="">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
                         {FooterLinks.map((item, index) => (
-                            <Link to="" key={index} className='text-white py-3 px-3 hover:text-secondary transition-all text-sm flex items-center gap-1'> <SlArrowRight className='text-xs' /> {item.title}</Link>
+                            <Link to={item.link} key={index} className='text-white py-3 px-3 hover:text-secondary transition-all text-sm flex items-center gap-1'> <SlArrowRight className='text-xs' /> {item.title}</Link>
                         ))}
                     </div>
                 </div>

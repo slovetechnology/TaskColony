@@ -1,12 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link } from 'react-router-dom';
 import { img1, img3, img4 } from 'utils/utils';
 import { HomeBestOffers, HomeCategories, HomeGallery, HomeOurServices, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
-import { FaArrowLeft, FaArrowRight, FaHeart, FaStar } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaStar } from 'react-icons/fa';
 import Layout from '../../Components/User/Layout';
 import { Apis, Geturl } from '../../Components/General/Api';
 
+import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
+import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
+import { Link, useNavigate } from 'react-router-dom';
+import Lottie from 'react-lottie';
+import animationData from '../../Lotties/task-colony';
+import { SlBell, SlMagnifier, SlMenu } from 'react-icons/sl';
+import { useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import { NavLinks, TopNavsLinks } from '../../utils/utils';
 
 const ActiveTabOptions = [
     "mobile", "email"
@@ -18,6 +26,27 @@ function Home() {
     const [category, setCategory] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { userloggedin, user } = useSelector(state => state.data); // Pulling from Redux
+    const navigate = useNavigate();
+    const [mobile, setMobile] = useState(false)
+    const MobileIcon = mobile ? FaTimes : SlMenu
+    const [topNav, setTopNav] = useState(false)
+    const TopNavIcon = topNav ? FaTimes : SlMenu
+
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice',
+        },
+    };
+    const handleLogout = () => {
+        Cookies.remove('taskcolony');
+        sessionStorage.clear();
+        navigate('/login');
+        window.location.reload();
+    };
 
     // Fetch bookings
     const fetchAllHome = useCallback(async () => {
@@ -44,7 +73,96 @@ function Home() {
 
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
-        <Layout>
+        <>
+            <div className='relative'>
+                <div className={`fixed w-full bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[16rem]' : 'h-[4.6rem]'} transition-all`}>
+                    <div className='flex items-center justify-between px-5 lg:px-10'>
+                        <div className="flex items-center gap-5">
+                            <Link to="/" className="hidden lg:block">
+                                <Lottie options={defaultOptions} height={40} width={140} />
+                            </Link>
+                            <Link to="/" className="lg:hidden block">
+                                <Lottie options={defaultOptions} height={40} width={125} />
+                            </Link>
+
+                        </div>
+                        <div className="lg:flex flex-row items-center gap-4 hidden">
+                            {TopNavsLinks.map((item, index) => (
+                                <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
+                            ))}
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Link to='/user' className="">
+                                {userloggedin ? (
+                                    <div className="flex items-center gap-4">
+                                        <div className="flex items-center gap-2">
+                                            <FaUserCircle className="lg:text-[2rem] text-[1rem] bg-gray-200" />
+                                            <div className='text-xs hidden xl:block pr-5'>
+                                                <p className="mb-0">{user?.firstname || 'User'}</p>
+                                                <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
+                                            <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
+                                                <IoIosLogOut />
+                                            </div>
+                                        </div>
+
+                                        <div className="hidden xl:flex">
+                                            <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
+                                                <IoIosLogOut /> Logout
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="">
+                                        <div className="hidden xl:flex">
+                                            <div
+                                                onClick={() => navigate('/login')}
+                                                className="bg-secondary flex text-white gap-2 h-11 w-[9.5rem] justify-center rounded-md items-center cursor-pointer"
+                                            >
+                                                <FaUserPlus /> Login/Register
+                                            </div>
+
+                                        </div>
+                                        <div onClick={() => navigate('/user')} className="block text-3xl mx-5 xl:hidden">
+                                            <FaUserCircle />
+                                        </div>
+                                    </div>
+                                )}
+                            </Link>
+
+                            <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
+                                <TopNavIcon onClick={() => setTopNav(!topNav)} />
+                            </div>
+                        </div>
+                    </div>
+                    {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
+                        <div className="flex flex-col">
+
+                            {TopNavsLinks.map((item, index) => (
+                                <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
+                            ))}
+                        </div>
+                    </div>}
+                </div>
+                <br />
+                <br />
+                <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
+                    <div className="lg:hidden ml-auto py-3 w-fit mr-10">
+                        <MobileIcon onClick={() => setMobile(!mobile)} className='text-white text-2xl cursor-pointer' />
+                    </div>
+                    <div className={` ${mobile ? 'flex flex-col' : 'flex-row hidden lg:flex items-center justify-center'} gap-1 w-11/12 lg:w-10/12 mx-auto py-3`}>
+                        {NavLinks.map((item, index) => (
+                            <Link to={`${item.link}`} key={index} className='text-xs hover:text-white transition-all truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
+                        ))}
+                        {mobile ?
+                            <Link to={``} className='text-xs truncate uppercase hover:text-white transition-all text-orange-100 py-3 px-3'>notifications</Link>
+                            : <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>}
+                    </div>
+                </div>
+            </div>
             <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
@@ -72,7 +190,7 @@ function Home() {
                             </div>
                         </div>
                     </div>
-                    <div className="lg:col-span-4 -mt-32 lg:-mt-0">
+                    <div className="lg:col-span-4 relative -mt-32 lg:-mt-0">
                         <LazyLoadImage
                             effect="blur"
                             className='w-full object-contain lg:h-[51rem]'
@@ -190,15 +308,15 @@ function Home() {
                             {HomeTestimonials.map((item, index) => (
                                 <div className="w-11/12" key={index}>
                                     <div className="font-medium text-xl">{item.title}</div>
-                                    <div className="text-slate-300 w-10/12 ml-7 my-5 text-xs">{item.content}</div>
-                                    <div className="flex items-center justify-between">
+                                    <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">{item.content}</div>
+                                    <div className="flex items-center mt-10 justify-between">
                                         <div className="flex items-center gap-2">
                                             <div className="">
-                                                <LazyLoadImage src={item.img} effect='blur' className='size-10' />
+                                                <LazyLoadImage src={item.img} effect='blur' className='size-12' />
                                             </div>
-                                            <div className="text-sm">
+                                            <div className="text-sm mx-4">
                                                 <div className="font-medium">{item.name}</div>
-                                                <div className="flex items-center text-slate-300 text-xs">
+                                                <div className="flex items-center mt-2 text-slate-300 text-xs">
                                                     {new Array(5).fill(0).map((_, i) => (
                                                         <FaStar key={i} className={`text-secondary`} />
                                                     ))}
@@ -226,7 +344,7 @@ function Home() {
             </div>
             <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>
-                    <div className="lg:col-span-3 w-fit mx-auto lg:ml-auto order-2 lg:order-1">
+                    <div className="lg:col-span-3 w-fit mx-auto -mb-1.5 lg:ml-auto order-2 lg:order-1">
                         <LazyLoadImage src={img26} className='object-cover h-full w-full' effect='blur' />
                     </div>
                     <div className="lg:col-span-4 order-1 lg:order-2">
@@ -288,10 +406,10 @@ function Home() {
                 <div className="mt-8">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                         {HomeProviders.map((item, index) => (
-                            <div key={index} className="bg-white rounded-3xl">
+                            <div key={index} className="bg-white shadow-lg rounded-3xl">
                                 <LazyLoadImage src={item.img} className='w-[40rem] md:w-[30rem] object-cover' effect='blur' />
                                 <div className="px-4 py-5 -mt-5 rounded-b-2xl ">
-                                    <div className="text-center text-sm font-semibold">{item.title}</div>
+                                    <div className="text-center text-xl font-semibold">{item.title}</div>
                                     <div className="text-center text-secondary text-xs">{item.tag}</div>
                                 </div>
                             </div>
@@ -299,7 +417,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-        </Layout>
+        </>
     )
 }
 

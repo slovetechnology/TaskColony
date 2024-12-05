@@ -16,7 +16,6 @@ const Privacy = () => {
             </div>
             <div className="mx-32 my-20">
                 <div>
-                    <h1 className="text-3xl font-medium text-center mb-6">Privacy Policy</h1>
                     <p>
                         This Privacy Policy ("Policy") applies to taskcolony, and taskcolony ("Company") and governs data
                         collection and usage. For the purposes of this Privacy Policy, unless otherwise noted, all references to the
