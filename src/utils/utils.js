@@ -23,7 +23,7 @@ import img20 from "assets/new/img20.svg"
 import img21 from "assets/new/img21.svg"
 import img23 from "assets/new/img23.svg"
 import img24 from "assets/new/img24.svg"
-import img25 from "assets/new/img25.svg"
+import img25 from "assets/electric.png"
 import img26 from "assets/new/img26.svg"
 import img27 from "assets/new/img27.svg"
 import img28 from "assets/new/img28.svg"
@@ -70,7 +70,7 @@ export const FooterLinks = [
     { title: 'Contact us', link: '/contact' },
     { title: 'Privacy', link: '/prvacy' },
     { title: 'Terms and condition', link: '/terms' },
-    { title: 'career', link: '' },
+    { title: 'Career', link: '' },
     { title: 'Team', link: '/team' },
 ]
 
