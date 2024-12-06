@@ -36,6 +36,7 @@ import Contactus from "./Pages/General/Contactus"
 import Faq from "./Pages/General/Faq"
 import Provider from "./Pages/User/Provider/Provider"
 import AutoLocationComponent from "./Components/General/Map"
+import Booking from "./Pages/User/Service/NewBooking"
 
 
 export const GeneralNoAuth = [
@@ -62,6 +63,7 @@ export const GeneralRoutes = [
     { path: 'user', element: User },
     { path: 'notification', element: Notification },
     { path: 'confirm-booking', element: ConfirmBooking },
+    { path: 'new-booking', element: Booking },
     { path: 'provider', element: Provider },
 ]
 

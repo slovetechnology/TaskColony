@@ -23,6 +23,7 @@ const Service = () => {
     try {
       const res = await AuthGeturl(Apis.users.get_all_services);
       if (res.status) {
+        console.log(res.status)
         setItems(res.data.data);
       } else {
         throw new Error('Failed to fetch services');
@@ -55,7 +56,6 @@ const Service = () => {
     fetchCarts();
   }, [fetchCarts]);
 
-  // Filter services based on search query and selected category
   const filteredItems = items.filter(item => {
     const matchesSearchQuery = item.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory ? item.category_name === selectedCategory : true;

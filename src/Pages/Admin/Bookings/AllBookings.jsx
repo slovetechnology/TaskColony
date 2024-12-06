@@ -176,16 +176,16 @@ const AllBookings = () => {
           <div className="flex items-center justify-between">
             <div className="font-medium text-lg">All Requested Gigs</div>
             <div className="md:flex items-center hidden gap-5">
-              <label className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-[#F5F5F5] rounded-md">
+              <label className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md">
                 <input
                   type="text"
                   placeholder="Search"
-                  className="w-[16rem]  placeholder:text-[16px] placeholder:text-primary outline-none"
+                  className="w-[16rem] bg-transparent placeholder:text-[16px] placeholder:text-primary outline-none"
                   value={searchTerm}
                   onChange={handleSearch}
                 />
+                <FaSearch size={16} />
               </label>
-
               <span className="text-primary text-2xl">
                 <HiOutlineAdjustments />
               </span>

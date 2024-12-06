@@ -15,6 +15,7 @@ import { SlBell, SlMagnifier, SlMenu } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
+import Footer from '../../Components/User/Footer';
 
 const ActiveTabOptions = [
     "mobile", "email"
@@ -417,6 +418,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     )
 }

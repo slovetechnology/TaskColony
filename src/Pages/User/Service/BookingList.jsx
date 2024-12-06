@@ -7,6 +7,7 @@ import { Apis, AuthGeturl } from '../../../Components/General/Api';
 import image from '../../../assets/new/img18.svg'
 import notfound from '../../../assets/404.png'
 import EditBooking from './EditBooking';
+import Booking from './NewBooking';
 
 const BookingList = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -16,6 +17,7 @@ const BookingList = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editbookings, setEditBooking] = useState(false);
+  const [newBooking, setNewBooking] = useState(false);
 
   // Fetch bookings
   const fetchAllBookings = useCallback(async () => {
@@ -72,10 +74,19 @@ const BookingList = () => {
   const handleCloseEdit = () => {
     setEditBooking(false);
   };
+  const handleOpenNew = () => {
+    setNewBooking(true);
+  };
+
+  const handleCloseNew = () => {
+    setNewBooking(false);
+  };
 
   return (
     <Layout>
-      {editbookings && <EditBooking closeview={handleCloseEdit} />}
+      {editbookings && <EditBooking closeView={handleCloseEdit} />}
+      {newBooking && <Booking closeView={handleCloseNew} />}
+
       <div className="bg-gray w-full xl:h-[20rem]">
         <div className="text-center py-10 xl:pt-24">
           <p className="font-[500] text-4xl mb-3">Booking List</p>
@@ -88,8 +99,13 @@ const BookingList = () => {
       </div>
 
       <div className="w-[90%] mx-auto">
-        <div className="font-[500] flex items-center my-7 text-xl gap-1">
-          <SlArrowLeft size={10} /> Booking List
+        <div className="flex lg:w-[68%] items-center justify-between">
+          <div className="font-[500] flex items-center my-7 text-xl gap-1">
+            <SlArrowLeft size={10} /> Booking List
+          </div>
+          <div className="" onClick={handleOpenNew}>
+            <Link className="bg-secondary py-2 px-4 rounded-md text-white" to=''>New Booking</Link>
+          </div>
         </div>
 
         <div className="gap-10 xl:flex">
@@ -147,12 +163,7 @@ const BookingList = () => {
                       </div>
                     </div>
                     <div className="flex font-[500] pt-8 gap-3">
-                      <div className="bg-secondary py-1 px-4 rounded-md text-white">
-                        <button>Book Now</button>
-                      </div>
-                      <div className="bg-gray text-secondary py-1 px-4 rounded-md">
-                        <button>Rate Now</button>
-                      </div>
+                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to='/confirm-booking'>View</Link>
                     </div>
                   </div>
                 </div>

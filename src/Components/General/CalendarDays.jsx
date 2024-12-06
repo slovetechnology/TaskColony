@@ -35,7 +35,7 @@ const CalendarDays = ({ onSelectDate }) => {
 
                 return (
                     <div key={`current-${index}`}>
-                        <div className={`flex flex-col text-center p-1  w-10 h-12 rounded-md ${getActive === `${day}` ? "bg-secondary text-white" : "bg-white"}`} onClick={() => handleDateChange(dataToSet)}>
+                        <div className={`flex flex-col text-center w-10 h-14 rounded-md ${getActive === `${day}` ? "bg-secondary text-white" : "bg-white"}`} onClick={() => handleDateChange(dataToSet)}>
                             <label className="pb-1">{momentFix}</label>
                             <button>{day}   </button>
 
