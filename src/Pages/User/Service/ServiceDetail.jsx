@@ -119,7 +119,7 @@ const ServiceDetail = () => {
         </div>
       </div>
 
-      <div className="w-[80%] mt-10  mx-auto">
+      <div className="md:w-[80%] px-2 mt-10  mx-auto">
         <div className="lg:flex gap-10 items-start justify-center">
           <div className="w-full">
             {loading ? (
@@ -200,8 +200,8 @@ const ServiceDetail = () => {
               <div className="text-center"></div>
             )}
           </div>
-          <div className="w-[30%]">
-            <div className="h-[55rem] w-[22rem] px-5 rounded-xl bg-[#e2e2e2]">
+          <div className="md:w-[30%]">
+            <div className="h-[55rem] md:w-[22rem] px-5 rounded-xl bg-[#e2e2e2]">
               <div className="text-xl pt-5 pb-3 font-semibold">Booking  Information </div>
               <form action="">
                 <div className="mb-5 ">
@@ -236,7 +236,7 @@ const ServiceDetail = () => {
                 </div>
 
                 <div className="mb-5  mt-5">
-                <label className='text-xs font-semibold'>Date Required</label>
+                  <label className='text-xs font-semibold'>Date Required</label>
                   <div className="overflow-x-auto scrollsdown mb-4">
                     <div className="flex space-x-2">
                       <CalendarDays onSelectDate={handleDateSelect} />
@@ -298,7 +298,7 @@ const ServiceDetail = () => {
           </div>
         </div>
 
-        <div className="lg:flex -mt-20 mb-20">
+        <div className="lg:flex mt-5 mb-20">
           <div className="lg:flex gap-10 items-end justify-end">
             <div className="w-full">
               <div className="bg-[#e2e2e2] px-4 py-5">
@@ -306,18 +306,15 @@ const ServiceDetail = () => {
                   <div className="font-semibold">Related Search</div>
                   <Link className='text-primary hover:text-secondary' to='/service'>View All</Link>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-3">
+                <div className="flex gap-5 w-full overflow-x-auto">
                   {services.map((item, index) => (
-                    <div className="w-11/12 mx-auto" key={index}>
-                      <div className="relative">
-
-                        <LazyLoadImage
-                          effect="blur"
-                          src={item.banner_image[0]}
-                          className="w-[40rem] h-[10rem] object-top md:w-[30rem] rounded-t-3xl object-cover"
-                        />
-                      </div>
-                      <div className="py-4 px-5 h-[5rem] bg-white rounded-b-3xl shadow-xl -mt-3">
+                    <div className="" key={index}>
+                      <LazyLoadImage
+                        effect="blur"
+                        src={item.banner_image[0]}
+                        className=" object-top w-[] rounded-t-3xl object-cover"
+                      />
+                      <div className="py-4 px-5 bg-white rounded-b-3xl shadow-xl -mt-3">
                         <div className="font-medium text-sm">{item.name}</div>
                         <div className="text-xs capitalize text-slate-500 mt-1">{item.description}</div>
                       </div>
@@ -326,10 +323,19 @@ const ServiceDetail = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[30%]">
-              <div className="h-[30rem] w-[22rem] px-5 rounded-xl bg-[#e2e2e2]">
-                <div className="text-xl pt-5 pb-3 font-semibold">Payment  Summary </div>
-
+            <div className="mt-4 md:w-[30%]">
+              <div className="md:h-[30rem] md:w-[22rem] py-5 px-5 rounded-xl bg-[#e2e2e2]">
+                <div className="text-xl pt-5 pb-3 font-semibold">Payment Summary </div>
+                <div className="">
+                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
+                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
+                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
+                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
+                </div>
+                <div className="">
+                  <p className="">Payment Method</p>
+                </div>
+                <div className="flex mb-4 itemsc justify-between">Total amount <span className="font-medium">$120</span></div>
               </div>
             </div>
           </div>

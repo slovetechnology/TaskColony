@@ -69,7 +69,7 @@ export const FooterLinks = [
     { title: 'About us', link: '/about' },
     { title: 'Contact us', link: '/contact' },
     { title: 'Privacy', link: '/prvacy' },
-    { title: 'Terms and condition', link: '/terms' },
+    { title: 'Terms and Condition', link: '/terms' },
     { title: 'Career', link: '' },
     { title: 'Team', link: '/team' },
 ]
@@ -187,7 +187,7 @@ export const FooterSocials = [
 export const FooterContacts = [
     { title: `Carreers`, content: `Jobs@taskcolony.com` },
     { title: `Business Inquries`, content: `inquries@taskcolony.com` },
-    { title: `helpline Number`, content: `+144  1234 56789` },
+    { title: `Helpline Number`, content: `+144  1234 56789` },
 ]
 
 export { img1, img2, img3, img4, img23, img25, img37, img38, img26, img22, logo }

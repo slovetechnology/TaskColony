@@ -21,14 +21,22 @@ const user_urls = {
     favourite_services: `${user}/profile/update_profile_favorite_service.php`,
     all_notification: `${user}/profile/get_user_notifications.php`,
     kyc_form: `${user}/kyc/kyc_level_1_form.php`,
+    
     send_verify: `${user}/auth/send_email_or_pno_verification_code.php`,
     otp_verify: `${user}/auth/verify_email_or_pno_verification_code.php`,
+
     get_booking: `${user}/bookings/get_all_bookings.php`,
     update_bookings: `${user}/bookings/update_booking.php`,
-    create_bookings: `${user}/bookings/update_booking.php`,
+    create_bookings: `${user}/bookings/create_booking.php`,
     cancel_bookings: `${user}/bookings/assign_booking.php`,
     delete_bookings: `${user}/bookings/delete_booking.php`,
     get_system: `${user}/system/get_system_data.php`,
+
+    get_review: `${user}/reviews/get_all_reviews.php`,
+    new_review: `${user}/reviews/create_review.php`,
+    delete_review: `${user}/reviews/delete_review.php`,
+    update_review: `${user}/reviews/update_review.php`,
+
     get_testimonial: `${user}/testimonials/get_all_testimonials.php`,
     google_verify: `${user}/auth/login_with_google_verify.php?code=4%2F0AeanS0Y5KLHo2R9a2z93lEVFfmb7vGFjvHEuXlyi73c6OODYE0Rbo0fe9zvbFNNbsSFm_Q&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent&fromcode=2&registervia=1`,
 };

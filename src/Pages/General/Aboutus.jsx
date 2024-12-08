@@ -11,7 +11,8 @@ import icon2 from '../../assets/icon12.png'
 import icon3 from '../../assets/icon13.png'
 import worker from '../../assets/about1.png'
 import { IoIosArrowDroprightCircle } from 'react-icons/io'
-import { Team } from '../../utils/utils'
+import { HomeTestimonials, Team } from '../../utils/utils'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 const about = [
   { image: icon3, num: '250+', text: 'Authorized Team' },
   { image: icon1, num: '90+', text: 'Service Cites' },
@@ -62,7 +63,7 @@ const Aboutus = () => {
                 <div className="rounded-full p-4 w-16 bg-icons shadow-2xl"> <img src={grid} alt="" /> </div>
               </div>
               <span className="">
-                <h3 className="font-[500] text-[17px]">Quality work done quickly</h3>
+                <h3 className="font-[500] text-[17px]">Quality Work Done Quickly</h3>
                 <p className="text-[14px] text-primary">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
               </span>
             </div>
@@ -72,7 +73,7 @@ const Aboutus = () => {
                 <div className="rounded-full p-4 w-16 bg-icons shadow-2xl text-secondary"> <FaUsers size={24} /> </div>
               </div>
               <span className="">
-                <h3 className="font-[500] text-[17px]">24 hours customer support</h3>
+                <h3 className="font-[500] text-[17px]">24 Hours Customer Support</h3>
                 <p className="text-[14px] text-primary">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
               </span>
             </div>
@@ -84,13 +85,13 @@ const Aboutus = () => {
             <div className=" lg:w-[80%] mx-auto">
               <div className="lg:flex px-5 gap-7 pt-10  xl:pt-28 ">
                 <div className="">
-                  <p className="font-medium text-2xl mb-3">Experience in Number</p>
+                  <p className="font-medium text-2xl mb-3">Experience In Number</p>
                   <p className="text-xs mb-3 text-primary">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters</p>
                   <p className="text-secondary text-xs italic">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
                 </div>
                 <div className="lg:flex items-center justify-center  xl:mt-0 mt-8 gap-6">
                   {about.map((item, i) => (
-                    <div key={i} className="bg-white w-[12rem] mb-3 flex items-center justify-center flex-col lg:h-[12rem] py-3 rounded-xl">
+                    <div key={i} className="bg-white md:w-[12rem] mb-3 flex items-center justify-center flex-col lg:h-[12rem] py-3 rounded-xl">
                       <img src={item.image} alt="" className="xl:w-16 w-10 md:w-14" />
                       <div className="text-center lg:mt-6">
                         <p className="font-[500] text-xl xl:text-2xl">{item.num}</p>
@@ -100,16 +101,18 @@ const Aboutus = () => {
                   ))}
                 </div>
               </div>
-              <div className="relative text-white">
+              <div className="relative mx-3  text-white">
                 <img src={worker} alt="" className="w-full xl:h-[26rem] h-[24rem] mt-10 hidden md:block object-cover object-top xl:rounded-xl" />
-                <div className="absolute bg-secondary left-0 top-7 right-10 rounded-xl  px-5 py-7 h-[21rem] w-[16rem] xl:w-[18rem]">
-                  <p className=" font-medium xl:text-3xl">Goal To Achieve</p>
-                  <p className="text-xs mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
-                  <div className="xl:mt-5 mt-3">
-                    <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
-                    <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
-                    <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
-                    <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
+                <div className="md:absolute  bg-secondary md:left-0 top-7 right-10 rounded-xl  px-5 py-7 h-[21rem] w-full md:w-[18rem]">
+                  <div className="">
+                    <p className=" font-medium xl:text-3xl">Goal To Achieve</p>
+                    <p className="text-xs mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </p>
+                    <div className="xl:mt-5 mt-3">
+                      <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
+                      <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
+                      <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
+                      <p className="flex py-2 items-center gap-3 text-xs"><IoIosArrowDroprightCircle />Amet minim mollit non deserunt</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -121,55 +124,68 @@ const Aboutus = () => {
         <div className="mt-[20rem] lg:mt-[15rem]">
           <div className="flex items-center justify-center font-semibold text-3xl">Our Team</div>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-16 mt-7">
-            {Team.map((item,i) => (
+            {Team.map((item, i) => (
               <div key={i} className="">
                 <div className="flex items-center justify-center flex-col">
                   <div className=""> <img src={item.img} alt="" className="" /> </div>
                   <div className="">{item.title}</div>
                   <div className="">{item.position}</div>
-                  <div className="text-sm  text-slate-500 break-keep text-center mx-12">{item.description }</div>
+                  <div className="text-sm  text-slate-500 break-keep text-center mx-12">{item.description}</div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="mt-[8rem] mx-10 mb-20">
-          <div className="bg-black h-[44rem] md:h-[45rem]  xl:h-[32rem] xl:px-20 text-white my-10 xl:flex items-center justify-center gap-7 px-5 rounded-3xl xl:mx-0 mx-[rem] xl:rounded-[3rem]">
-            <div className="my-6">
-              <div className=""><h5 className="font-[500] text-[1.7rem] xl:text-[2rem] pt-6 -mt-10 mb-4 xl:mb-7">What our customers says</h5></div>
-              <p className="mb-5">“ Excellent Service by handyman“</p>
-              <i className="text-primary text-sm">On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même.</i>
-              <div className="xl:flex items-center mt-12 justify-between">
-                <div className="flex items-start gap-2 xl:gap-4">
-                  <img src={profiles} alt="" className="w-10 h-10 rounded-full object-cover" />
-                  <span className="">
-                    <h5 className="">Cameron Williamson</h5>
-                    <div className="flex items-center text-sm gap-3">
-                      <span className="flex text-secondary gap-1">
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                      </span>
-                      <div className="text-primary">|</div>
-                      <p className="text-primary">One week Ago</p>
+        <div className="w-11/12 mx-auto lg:w-10/12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
+            <div className="flex flex-col justify-center">
+              <div className="font-medium text-4xl mb-6">What our customers says</div>
+              <div className="">
+                {HomeTestimonials.map((item, index) => (
+                  <div className="w-11/12" key={index}>
+                    <div className="font-medium text-xl">{item.title}</div>
+                    <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">{item.content}</div>
+
+                    <div className="md:flex items-center mt-12 justify-between">
+                      <div className="flex items-start gap-2 md:gap-4">
+                        <img src={profiles} alt="" className="w-10 h-10 rounded-full object-cover" />
+                        <span className="">
+                          <h5 className="">Cameron Williamson</h5>
+                          <div className="md:flex items-center text-sm gap-3">
+                            <span className="flex text-secondary gap-1">
+                              <FaStar />
+                              <FaStar />
+                              <FaStar />
+                              <FaStar />
+                              <FaStar />
+                            </span>
+                            <div className="text-primary hidden md:block">|</div>
+                            <p className="text-primary">One week Ago</p>
+                          </div>
+                        </span>
+                      </div>
+                      <div className="flex justify-between xl:py-0  py-4 gap-3">
+                        <div className='bg-secondary rounded-full p-3'> <FaArrowLeft /> </div>
+                        <div className='border rounded-full p-3'> <FaArrowRight /> </div>
+                      </div>
                     </div>
-                  </span>
-                </div>
-                <div className="flex justify-between xl:py-0  py-4 gap-3">
-                  <div className='bg-secondary rounded-full p-3'> <FaArrowLeft /> </div>
-                  <div className='border rounded-full p-3'> <FaArrowRight /> </div>
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <img src={review} alt="" className=" rounded-[2rem] object-cover xl:w-[24rem] md:h-[18rem] md:w-full xl:h-[22rem]" />
+            <div className="">
+              <LazyLoadImage
+                src={review}
+                className='object-cover'
+                effect='blur'
+              />
+            </div>
           </div>
         </div>
 
         <div className="bg-gray xl:w-[80%] w-full h-auto xl:h-[15rem] mb-40 mt-10 xl:py-20 py-10 xl:px-20 mx-auto">
           <div className="flex flex-col xl:flex-row items-center justify-center mx-10 gap-10">
-            <div className="text-center xl:text-left"> 
+            <div className="text-center xl:text-left">
               <p className="font-[500] text-2xl">Subscribe to our newsletter</p>
               <p className="text-xs text-primary">Subscribe to the newsletter to receive exclusive offers, latest news, and updates</p>
             </div>

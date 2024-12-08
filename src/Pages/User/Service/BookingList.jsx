@@ -17,7 +17,6 @@ const BookingList = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editbookings, setEditBooking] = useState(false);
-  const [newBooking, setNewBooking] = useState(false);
 
   // Fetch bookings
   const fetchAllBookings = useCallback(async () => {
@@ -74,18 +73,9 @@ const BookingList = () => {
   const handleCloseEdit = () => {
     setEditBooking(false);
   };
-  const handleOpenNew = () => {
-    setNewBooking(true);
-  };
-
-  const handleCloseNew = () => {
-    setNewBooking(false);
-  };
-
   return (
     <Layout>
       {editbookings && <EditBooking closeView={handleCloseEdit} />}
-      {newBooking && <Booking closeView={handleCloseNew} />}
 
       <div className="bg-gray w-full xl:h-[20rem]">
         <div className="text-center py-10 xl:pt-24">
@@ -103,8 +93,8 @@ const BookingList = () => {
           <div className="font-[500] flex items-center my-7 text-xl gap-1">
             <SlArrowLeft size={10} /> Booking List
           </div>
-          <div className="" onClick={handleOpenNew}>
-            <Link className="bg-secondary py-2 px-4 rounded-md text-white" to=''>New Booking</Link>
+          <div className="">
+            <Link className="bg-secondary py-2 px-4 rounded-md text-white" to='/new-booking'>New Booking</Link>
           </div>
         </div>
 
@@ -118,7 +108,7 @@ const BookingList = () => {
                 >
                   <div className="w-full xl:w-[20rem]">
                     <img
-                      src={image}
+                      src={item.imageslink?.[0]}
                       alt={item.title}
                       className="w-full h-[14rem] xl:h-[14rem] mb-3 xl:mb-0 rounded-xl object-cover"
                     />
@@ -146,7 +136,7 @@ const BookingList = () => {
                         </p>
                         <p>
                           <span className="font-[500] text-sm text-black">Provider</span> :{' '}
-                          {item.provider}
+                          {item.pfname} {item.plname}
                         </p>
                         <p>
                           <span className="font-[500] text-sm text-black">Time</span> :{' '}
@@ -163,7 +153,7 @@ const BookingList = () => {
                       </div>
                     </div>
                     <div className="flex font-[500] pt-8 gap-3">
-                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to='/confirm-booking'>View</Link>
+                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to={`/booking-detail/${item.id}`}                     >View</Link>
                     </div>
                   </div>
                 </div>
@@ -223,6 +213,15 @@ const BookingList = () => {
                       className="mr-2 my-2"
                     />
                     Complete
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedStatus === 'hold'}
+                      onChange={() => statusHandleCheckboxChange('hold')}
+                      className="mr-2 my-2"
+                    />
+                    Hold
                   </label>
                 </div>
               </div>

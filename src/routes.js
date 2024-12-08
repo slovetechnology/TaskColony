@@ -37,6 +37,8 @@ import Faq from "./Pages/General/Faq"
 import Provider from "./Pages/User/Provider/Provider"
 import AutoLocationComponent from "./Components/General/Map"
 import Booking from "./Pages/User/Service/NewBooking"
+import KycForm from "./Pages/User/Provider/KycForm"
+import BookingDetail from "./Pages/User/Service/BookingDetail"
 
 
 export const GeneralNoAuth = [
@@ -63,8 +65,11 @@ export const GeneralRoutes = [
     { path: 'user', element: User },
     { path: 'notification', element: Notification },
     { path: 'confirm-booking', element: ConfirmBooking },
+    { path: 'booking-detail/:bookingid', element: BookingDetail },
+    { path: 'booking', element: BookingList },
     { path: 'new-booking', element: Booking },
     { path: 'provider', element: Provider },
+    { path: 'provider-kyc', element: KycForm },
 ]
 
 export const AdminRoutes = [

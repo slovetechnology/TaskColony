@@ -1,151 +1,225 @@
-import React, { useEffect, useState } from 'react';
-import Layout from '../../../Components/User/Layout';
-import gradient from '../../../assets/gradient.jpeg';
-import { MdOutlineLocationOn, MdOutlineMyLocation } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import CustomDropdown from '../../../Components/General/DropDown';
-import { Link } from 'react-router-dom';
-import KycForm from './KycForm';
-import { FaUserCircle } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import Layout from "../../../Components/User/Layout";
+import gradient from "../../../assets/gradient.jpeg";
+import { MdOutlineLocationOn, MdOutlineMyLocation } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { FaChevronRight, FaUserCircle } from "react-icons/fa";
+import FavouriteService from "../Profiles/FavouriteService";
+import ChangePassword from "../Profiles/ChangePassword";
+import FundWallet from "../Profiles/Funds/FundWallet";
+import Settings from "../Profiles/Settings";
 
 const Provider = () => {
-    const { user } = useSelector((state) => state.data);
-    const [isEditUserOpen, setIsEditUserOpen] = useState(false);
+  const { user } = useSelector((state) => state.data);
+  const [location, setLocation] = useState("Fetching location...");
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditUserOpen, setIsEditUserOpen] = useState(false);
+  const [changePass, SetChangePass] = useState(false);
+  const [settings, SetSettings] = useState(false);
+  const [fundWallet, SetFundwallet] = useState(false);
 
-    const [location, setLocation] = useState("Fetching location...");
-    const handleOpenEditModal = () => {
-        setIsEditUserOpen(true);
-    };
+  useEffect(() => {
+    // Call the function to get the address when the component mounts
+    getUserGeoAddress();
+  }, []);
 
-    const handleCloseEditModal = () => {
-        setIsEditUserOpen(false);
-    };
+  // Function to get user's geographic address
+  const getUserGeoAddress = async () => {
+    if (!navigator.geolocation) {
+      console.error("Geolocation is not supported by your browser.");
+      return;
+    }
 
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setLocation(`Lat: ${latitude.toFixed(2)}, Lng: ${longitude.toFixed(2)}`);
-                },
-                async () => {
-                    try {
-                        const response = await axios.get('https://ipapi.co/json/');
-                        const { city, region } = response.data;
-                        setLocation(`${city}, ${region}`);
-                    } catch (error) {
-                        setLocation("Unable to fetch location");
-                    }
-                }
-            );
-        } else {
-            (async () => {
-                try {
-                    const response = await axios.get('https://ipapi.co/json/');
-                    const { city, region } = response.data;
-                    setLocation(`${city}, ${region}`);
-                } catch (error) {
-                    setLocation("Unable to fetch location");
-                }
-            })();
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log("Latitude:", latitude, "Longitude:", longitude);
+
+        try {
+          // Replace with your actual Google Maps API key
+          const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o";
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch address information.");
+          }
+
+          const data = await response.json();
+          if (data.status === "OK" && data.results.length > 0) {
+            setLocation(data.results[0].formatted_address);
+          } else {
+            console.error("Could not retrieve address:", data.status);
+          }
+        } catch (error) {
+          console.error("Error fetching address:", error);
         }
-    }, []);
-
-    return (
-        <Layout>
-            {/* Edit User Modal */}
-            {isEditUserOpen && (
-                <KycForm
-                    closeView={handleCloseEditModal}
-
-                />
-            )}
-            <div className="bg-gray w-full h-[20rem]">
-                <div className="text-center pt-24">
-                    <p className="font-[500] text-4xl mb-3">Provider Profile</p>
-                    <span className="flex items-center gap-4 font-[500] justify-center">
-                        <p className="text-primary">Home</p>
-                        <span className="bg-[#6C757D] w-3 py-0.5"></span>
-                        <p className="text-secondary">Provider Profile</p>
-                    </span>
-                </div>
-            </div>
-            <div className="xl:w-[80%] w-full px-5 xl:px-0 my-20 mx-auto">
-                <div className="">
-                    <img
-                        src={gradient}
-                        alt=""
-                        className="h-16 w-full rounded-tl-xl rounded-tr-xl"
-                    />
-                    <div className="bg-white w-full px-10 py-5 h-[39rem] shadow-2xl">
-                        <div className="">
-                            <div className="flex items-center justify-between mb-3 gap-4 pb-3 border last:border-none">
-                                <div className="flex items-center gap-4">
-                                    <div className=""> <FaUserCircle /> </div>
-                                    <span className="flex-1">
-                                        <h5 className="font-[500] text-sm xl:text-base">
-                                            {user.firstname} {user.lastname}
-                                        </h5>
-                                        <p className="text-sm text-primary">{user.email}</p>
-                                        <div className="">
-                                            <div className="text-secondary cursor-pointer">
-                                                Edit Profile
-                                            </div>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <div className="text-primary text-sm font-medium">
-                                        Wallet Balance
-                                    </div>
-                                    <div className="text-secondary text-2xl">
-                                        ${user.user_wallets[0].walletbal}
-                                    </div>
-                                </div>
-
-                                {/* Location Section */}
-                                <div className="border flex items-center justify-between px-10 py-3 gap-10 text-primary bg-white shadow-2xl">
-                                    <MdOutlineLocationOn />
-                                    <div>{location}</div>
-                                    <MdOutlineMyLocation />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Dropdowns Section */}
-                        <div className="border-t grid grid-cols-2 mt-10 py-10 gap-4">
-                            <div className="border py-3 px-2">
-                                <Link to=''>Withdraw Earning</Link>
-                            </div>
-                            <div onClick={handleOpenEditModal} className="border py-3 px-2">
-                                <Link to=''>KYC </Link>
-                            </div>
-                            <div className="border py-3 px-2">
-                                <Link to=''>Change Password </Link>
-                            </div>
-                            <div className="border py-3 px-2">
-                                <Link to=''>Chat Messages</Link>
-                            </div>
-                            <div className="border py-3 px-2">
-                                <Link to=''>Settings</Link>
-                            </div>
-                            <div className="border py-3 px-2">
-                                <Link to='/policy'>Privacy Policy</Link>
-                            </div>
-                            <div className="border py-3 px-2">
-                                <Link to='/terms'>Terms & Conditions</Link>
-                            </div>
-                            <div className="border py-3 px-2">
-                                <Link to=''>Help Support</Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </Layout>
+      },
+      (error) => {
+        console.error("Error getting geolocation:", error.message);
+      }
     );
+  };
+
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
+  const handleEditUserOpen = () => setIsEditUserOpen(true);
+  const handleEditUserClose = () => setIsEditUserOpen(false);
+
+  const handleChangePasswordOpen = () => SetChangePass(true);
+  const handleChangePasswordClose = () => SetChangePass(false);
+
+  const handleFundWalletOpen = () => SetFundwallet(true);
+  const handleFundWalletClose = () => SetFundwallet(false);
+
+  const handleSettingsOpen = () => SetSettings(true);
+  const handleSettingsClose = () => SetSettings(false);
+
+  return (
+    <Layout>
+      <div className="bg-gray w-full xl:h-[20rem]">
+        <div className="text-center py-10 xl:pt-24">
+          <p className="font-[500] xl:text-4xl text-xl mb-3">User Profile</p>
+          <span className="flex items-center gap-4 font-[500] justify-center">
+            <p className="text-primary">Home</p>
+            <span className="bg-[#6C757D] w-3 py-0.5"></span>
+            <p className="text-secondary">User Profile</p>
+          </span>
+        </div>
+      </div>
+
+      <div className="xl:w-[80%] w-full px-2 xl:px-0 xl:my-20 my-10 mx-auto">
+        <div>
+          <img
+            src={gradient}
+            alt="Gradient"
+            className="h-16 w-full rounded-tl-xl rounded-tr-xl"
+          />
+          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[35rem] shadow-2xl">
+            <div className="md:flex items-center justify-between mb-3 gap-4 pb-3">
+              <div className="flex items-center gap-4">
+                <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
+                <span className="flex-1">
+                  <h5 className="font-[500] text-sm xl:text-base">
+                    {user.firstname} {user.lastname}
+                  </h5>
+                  <p className="text-sm text-primary">{user.email}</p>
+                  <div
+                    className="text-secondary cursor-pointer"
+                    onClick={handleEditUserOpen}
+                  >
+                    Edit Profile
+                  </div>
+                </span>
+              </div>
+
+              <div className="flex justify-center items-center my-5 gap-2">
+                <div className="text-primary text-sm font-medium">Wallet Balance</div>
+                <div className="text-secondary text-2xl">${user.user_wallets[0].walletbal}</div>
+              </div>
+
+              <div className=" flex items-center justify-between md:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">
+                <MdOutlineLocationOn />
+                <div>{location}</div>
+                <MdOutlineMyLocation />
+              </div>
+            </div>
+
+            <div className="bg-secondary px-5 py-1 w-fit text-white font-semibold my-3">
+              <Link to="/provider">Provider</Link>
+            </div>
+
+            <div className="border-t pt-5">
+              <div className="flex items-center text-primary gap-3 justify-between"></div>
+            </div>
+
+            <div className="flex flex-col gap-10 lg:grid-cols-2 lg:grid">
+              <div
+                onClick={handleFundWalletOpen}
+                className="border flex items-center justify-between py-3 px-2 cursor-pointer"
+              >
+                <Link to="#">Fund Wallet</Link>
+                <FaChevronRight />
+              </div>
+
+              <Link
+                to="/notification"
+                className="border py-3 px-2 items-center justify-between flex w-full"
+              >
+                Notification <FaChevronRight />
+              </Link>
+
+              <Link
+                to="/faq"
+                className="border py-3 px-2 items-center justify-between flex w-full"
+              >
+                FAQs <FaChevronRight />
+              </Link>
+
+              <div
+                onClick={handleChangePasswordOpen}
+                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
+              >
+                <Link to="#">Change Password</Link>
+                <FaChevronRight />
+              </div>
+
+              <div
+                onClick={handleSettingsOpen}
+                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
+              >
+                <Link to="#">Settings</Link>
+                <FaChevronRight />
+              </div>
+
+              <Link
+                className="border py-3 px-2 items-center justify-between flex w-full"
+                to="/terms"
+              >
+                Terms & Conditions <FaChevronRight />
+              </Link>
+
+              <div
+                onClick={handleModalOpen}
+                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
+              >
+                <Link to="#">Favourite Service</Link>
+                <FaChevronRight />
+              </div>
+
+              <Link
+                className="border py-3 px-2 items-center justify-between flex w-full"
+                to="/privacy"
+              >
+                Privacy Policy <FaChevronRight />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {isEditUserOpen && user && (
+        <EditUser
+          closeView={handleEditUserClose}
+          singles={user}
+          updateUser={(updatedData) => {
+            console.log("User updated:", updatedData);
+            handleEditUserClose();
+          }}
+        />
+      )}
+
+      {isModalOpen && <FavouriteService closeview={handleModalClose} />}
+      {changePass && <ChangePassword closeview={handleChangePasswordClose} />}
+      {fundWallet && <FundWallet closeview={handleFundWalletClose} />}
+      {settings && <Settings closeview={handleSettingsClose} />}
+    </Layout>
+  );
 };
 
 export default Provider;
