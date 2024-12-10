@@ -9,6 +9,7 @@ const user = 'user';
 const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user.php`,
+    top_provider: `${user}/system/get_top_providers.php`,
     forget_password: `${user}/auth/forgot_password.php`,
     reset_password: `${user}/auth/reset_password.php`,
     login: `${user}/auth/loginapp.php`,
@@ -21,7 +22,7 @@ const user_urls = {
     favourite_services: `${user}/profile/update_profile_favorite_service.php`,
     all_notification: `${user}/profile/get_user_notifications.php`,
     kyc_form: `${user}/kyc/kyc_level_1_form.php`,
-    
+
     send_verify: `${user}/auth/send_email_or_pno_verification_code.php`,
     otp_verify: `${user}/auth/verify_email_or_pno_verification_code.php`,
 

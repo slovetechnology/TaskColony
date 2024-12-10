@@ -39,6 +39,7 @@ import AutoLocationComponent from "./Components/General/Map"
 import Booking from "./Pages/User/Service/NewBooking"
 import KycForm from "./Pages/User/Provider/KycForm"
 import BookingDetail from "./Pages/User/Service/BookingDetail"
+import Gallery from "./Pages/General/Gallery"
 
 
 export const GeneralNoAuth = [
@@ -58,6 +59,7 @@ export const GeneralNoAuth = [
     { path: 'booking-list', element: BookingList },
     { path: 'category', element: Category },
     { path: 'sub-category', element: Subcategory },
+    { path: 'gallery', element: Gallery },
 
 
 ]

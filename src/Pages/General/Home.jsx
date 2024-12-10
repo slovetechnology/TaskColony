@@ -4,7 +4,7 @@ import { img1, img3, img4 } from 'utils/utils';
 import { HomeBestOffers, HomeCategories, HomeGallery, HomeOurServices, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
 import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaStar } from 'react-icons/fa';
 import Layout from '../../Components/User/Layout';
-import { Apis, Geturl } from '../../Components/General/Api';
+import { Apis, Geturl, Posturl } from '../../Components/General/Api';
 
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
 import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
@@ -34,6 +34,8 @@ function Home() {
     const [topNav, setTopNav] = useState(false)
     const TopNavIcon = topNav ? FaTimes : SlMenu
 
+    const [provider, setProvider] = useState([]);
+    const [gallery, setGallery] = useState([]);
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -57,7 +59,8 @@ function Home() {
             if (res.status === true) {
                 setOffers(res.data.dashboard_middle_slider);
                 setServices(res.data.random_services);
-                setCategory(res.data.data);
+                setGallery(res.data.gallery_images);
+                setCategory(res.data.categories);
             } else {
                 throw new Error('Failed to fetch data');
             }
@@ -71,6 +74,27 @@ function Home() {
     useEffect(() => {
         fetchAllHome();
     }, [fetchAllHome]);
+
+    const fetchTopProvider = useCallback(async () => {
+        setLoading(true);
+        try {
+            const res = await Posturl(Apis.users.top_provider);
+            console.log(res.data.data.data)
+            if (res.data.status === true && Array.isArray(res.data.data)) {
+                setProvider(res.data.data.data[0]);
+            } else {
+                throw new Error('Failed to fetch data');
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchTopProvider();
+    }, [fetchTopProvider]);
 
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
@@ -245,11 +269,12 @@ function Home() {
                         </div>
                     </div>
                 </div>
+
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 lg:gap-y-16 gap-x-4">
-                    {HomeCategories.map((item, index) => (
+                    {category.map((item, index) => (
                         <div className="bg-white shadow-2xl rounded-xl p-4" key={index}>
-                            <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14"><img src={item.img} alt="" className="size-8" /></div>
-                            <div className="text-center mt-5 mb-10 capitalize">{item.title}</div>
+                            <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14"><img src={item.icon} alt="" className="size-8" /></div>
+                            <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
                         </div>
                     ))}
                 </div>
@@ -382,16 +407,16 @@ function Home() {
             </div>
             <div className="bg-zinc-200 py-10 mt-20">
                 <div className="w-11/12 mx-auto lg:w-10/12">
-                    <div className="flex  items-center justify-between">
-                        <div className="font-medium text-2xl capitalize">our Work gallery</div>
+                    <div className="flex items-center justify-between">
+                        <div className="font-medium text-2xl capitalize">Our Work Gallery</div>
                         <div className="">
-                            <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
+                            <Link to='/gallery' className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /></Link>
                         </div>
                     </div>
-                    <div className="mt-8">
+                    <div className="mt-8 overflow-x-auto">
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                            {HomeGallery.map((item, index) => (
-                                <LazyLoadImage key={index} src={item.img} className='' effect='blur' />
+                            {gallery.slice(0, 4).map((item, index) => (
+                                <LazyLoadImage key={index} src={item} className='md:h-[22rem] h-[10rem] object-cover' effect='blur' />
                             ))}
                         </div>
                     </div>
@@ -406,12 +431,12 @@ function Home() {
                 </div>
                 <div className="mt-8">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                        {HomeProviders.map((item, index) => (
-                            <div key={index} className="bg-white shadow-lg rounded-3xl">
-                                <LazyLoadImage src={item.img} className='w-[40rem] md:w-[30rem] object-cover' effect='blur' />
+                        {provider.map((item, index) => (
+                            <div key={index} className="bg-white border shadow-lg rounded-3xl">
+                                <LazyLoadImage src={item.profile_pic} className='w-[40rem] md:w-[30rem] object-cover' effect='blur' />
                                 <div className="px-4 py-5 -mt-5 rounded-b-2xl ">
-                                    <div className="text-center text-xl font-semibold">{item.title}</div>
-                                    <div className="text-center text-secondary text-xs">{item.tag}</div>
+                                    <div className="text-center text-xl font-semibold">{item.fname} {item.lname}</div>
+                                    <div className="text-center text-secondary text-xs">{item.email}</div>
                                 </div>
                             </div>
                         ))}

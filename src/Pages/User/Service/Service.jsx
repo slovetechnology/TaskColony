@@ -21,10 +21,10 @@ const Service = () => {
 
   const fetchServices = useCallback(async () => {
     try {
-      const res = await AuthGeturl(Apis.users.get_all_services);
+      const res = await Geturl(Apis.users.get_system);
       if (res.status) {
         console.log(res.status)
-        setItems(res.data.data);
+        setItems(res.data.all_services);
       } else {
         throw new Error('Failed to fetch services');
       }
@@ -158,15 +158,15 @@ const Service = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
           {(searchQuery || selectedCategory ? filteredItems : items).length > 0 ? (
             (searchQuery || selectedCategory ? filteredItems : items).map((item, index) => (
-              <div className="w-11/12 mx-auto" key={index}>
-                <div className="relative">
+              <div className="w-11/12 mx-auto relative" key={index}>
+                <div className="">
                   <LazyLoadImage
                     effect="blur"
                     src={item.banner_image[0]}
-                    className="w-[30rem] h-[10rem] object-top object-cover"
+                    className="w-[40rem] md:w-[30rem] h-[10rem] object-top object-cover"
                   />
                 </div>
-                <div className="py-4 px-5 shadow-2xl w-[30rem] md:w-full bg-white rounded-b-3xl -mt-3">
+                <div className="py-4 px-5 shadow-2xl lg:h-[9rem] w-full bg-white rounded-b-3xl -mt-3">
                   <div className="font-medium">{item.name}</div>
                   <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
                   <Link to={`/service-detail/${item.id}`} className='text-xs font-medium text-secondary'>View Details</Link>

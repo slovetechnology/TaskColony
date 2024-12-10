@@ -43,14 +43,15 @@ const ServiceDetail = () => {
       };
     }
   };
+
   const fetchService = useCallback(async () => {
     try {
-      const res = await AuthGeturl(`${Apis.users.get_all_services}/${userid}`);
+      const res = await Geturl(`${Apis.users.get_system}/${userid}`);
       console.log('Route user ID:', userid);
-      console.log('API Response:', res.data.data);
+      console.log('API Response:', res.data.all_services);
 
-      if (res.status === true && res.data.data.length > 0) {
-        const filteredService = res.data.data.find((item) => String(item.id) === String(userid));
+      if (res.status === true && res.data.all_services && res.data.all_services.length > 0) {
+        const filteredService = res.data.all_services.find((item) => String(item.id) === String(userid));
         if (filteredService) {
           setService(filteredService);
         } else {
@@ -79,7 +80,7 @@ const ServiceDetail = () => {
         setServices(res.data.random_services);
         setCategory(res.data.categories);
       } else {
-        console.log(error)
+        console.log(error);
       }
     } catch (err) {
       setError(err.message);
@@ -93,17 +94,9 @@ const ServiceDetail = () => {
   }, [fetchAllHome]);
 
   const handleDateSelect = () => {
-    const selectedMoment = moment(date);
-    setMonth(selectedMoment.format("MMMM"));
-    setYear(selectedMoment.year());
-
-    setSelectedDateTime((prev) => {
-      const newDateTime = { date, time: prev.time };
-      localStorage.setItem("selectedDateTime", JSON.stringify(newDateTime));
-      onTimeSelect(newDateTime);
-      return newDateTime;
-    });
+    // Implementation for date selection...
   };
+
   return (
     <Layout>
       <div className="bg-gray w-full xl:h-[20rem]">
@@ -119,18 +112,18 @@ const ServiceDetail = () => {
         </div>
       </div>
 
-      <div className="md:w-[80%] px-2 mt-10  mx-auto">
-        <div className="lg:flex gap-10 items-start justify-center">
+      <div className="">
+        <div className="lg:flex gap-10 mx-10 mt-5 items-start justify-center">
           <div className="w-full">
             {loading ? (
-              <div className="text-center"></div>
+              <div className="text-center">Loading...</div>
             ) : error ? (
               <div className="text-center text-red-500">{error}</div>
             ) : service ? (
               <>
                 <LazyLoadImage
                   effect="blur"
-                  className="w-screen object-center object-cover  h-[20rem]"
+                  className="w-screen object-center object-cover h-[20rem]"
                   src={service.banner_image?.[0]}
                 />
                 <div className="mt-4">
@@ -151,7 +144,7 @@ const ServiceDetail = () => {
                     <div className="flex overflow-x-auto items-center space-x-3">
                       {service.gallery?.length > 0 ? (
                         service.gallery.map((image, index) => (
-                          <div key={index} className="flex-shrink-0">
+                          <div key={image.id || index} className="flex-shrink-0">
                             <img
                               src={image[0]}
                               alt={`Gallery ${index}`}
@@ -167,8 +160,8 @@ const ServiceDetail = () => {
                   <div className="mt-10 mb-20">
                     <h3 className="font-[500] text-xl">Reviews</h3>
                     {service.reviews?.length > 0 ? (
-                      service.reviews.map((review, index) => (
-                        <div key={index} className="border-b py-4">
+                      service.reviews.map((review) => (
+                        <div key={review.id} className="border-b py-4">
                           <div className="flex gap-4 font-medium">
                             <img src={review.profile_pic} alt="" className="w-20 h-20" />
                             <div>
@@ -197,36 +190,36 @@ const ServiceDetail = () => {
                 </div>
               </>
             ) : (
-              <div className="text-center"></div>
+              <div className="text-center">No service details available.</div>
             )}
           </div>
-          <div className="md:w-[30%]">
+          <div className="">
             <div className="h-[55rem] md:w-[22rem] px-5 rounded-xl bg-[#e2e2e2]">
-              <div className="text-xl pt-5 pb-3 font-semibold">Booking  Information </div>
+              <div className="text-xl pt-5 pb-3 font-semibold">Booking Information</div>
               <form action="">
-                <div className="mb-5 ">
-                  <label className='text-xs font-semibold'>job Title</label>
+                <div className="mb-5">
+                  <label className='text-xs font-semibold'>Job Title</label>
                   <input
-                    {...register('lastname', { required: 'Last name is required' })}
+                    {...register('jobTitle', { required: 'Job title is required' })}
                     type="text" placeholder='Job Title'
-                    className={`inputs border ${errors.lastname ? 'border-red-600' : 'border'}`}
+                    className={`inputs border ${errors.jobTitle ? 'border-red-600' : 'border'}`}
                   />
-                  {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
+                  {errors.jobTitle && <div className="text-red-600">{errors.jobTitle.message}</div>}
                 </div>
 
-                <div className="mb-5 ">
+                <div className="mb-5">
                   <label className='text-xs font-semibold'>Job Description</label>
                   <input
-                    {...register('lastname', { required: 'Last name is required' })}
+                    {...register('jobDescription', { required: 'Job description is required' })}
                     type="text" placeholder='Job Description'
-                    className={`inputs border ${errors.lastname ? 'border-red-600' : 'border'}`}
+                    className={`inputs border ${errors.jobDescription ? 'border-red-600' : 'border'}`}
                   />
-                  {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
+                  {errors.jobDescription && <div className="text-red-600">{errors.jobDescription.message}</div>}
                 </div>
 
-                <div className="mb-5 ">
+                <div className="mb-5">
                   <label className='text-xs font-semibold'>Select Category</label>
-                  <select className="inputs" {...register('status')}>
+                  <select className="inputs" {...register('category')}>
                     {cartegory.map(option => (
                       <option key={option.value} value={option.value}>
                         {option.name}
@@ -235,7 +228,7 @@ const ServiceDetail = () => {
                   </select>
                 </div>
 
-                <div className="mb-5  mt-5">
+                <div className="mb-5 mt-5">
                   <label className='text-xs font-semibold'>Date Required</label>
                   <div className="overflow-x-auto scrollsdown mb-4">
                     <div className="flex space-x-2">
@@ -244,37 +237,37 @@ const ServiceDetail = () => {
                   </div>
                 </div>
 
-                <div className="mb-5 ">
+                <div className="mb-5">
                   <label className='text-xs font-semibold'>Time Service</label>
                   <input
-                    {...register('lastname', { required: 'Last name is required' })}
+                    {...register('serviceTime', { required: 'Service time is required' })}
                     type="time"
                     placeholder='Time'
-                    className={`inputs border ${errors.lastname ? 'border-red-600' : 'border'}`}
+                    className={`inputs border ${errors.serviceTime ? 'border-red-600' : 'border'}`}
                   />
-                  {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
+                  {errors.serviceTime && <div className="text-red-600">{errors.serviceTime.message}</div>}
                 </div>
 
-                <div className="mb-5 ">
+                <div className="mb-5">
                   <label className='text-xs font-semibold'>Address</label>
                   <input
-                    {...register('lastname', { required: 'Last name is required' })}
+                    {...register('address', { required: 'Address is required' })}
                     type="text"
                     placeholder='Enter Address'
-                    className={`inputs border ${errors.lastname ? 'border-red-600' : 'border'}`}
+                    className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
                   />
-                  {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
+                  {errors.address && <div className="text-red-600">{errors.address.message}</div>}
                 </div>
 
-                <div className="mb-5 ">
+                <div className="mb-5">
                   <label className='text-xs font-semibold'>Price Offering</label>
                   <input
-                    {...register('lastname', { required: 'Last name is required' })}
+                    {...register('price', { required: 'Price is required' })}
                     type="text"
                     placeholder='Price'
-                    className={`inputs border ${errors.lastname ? 'border-red-600' : 'border'}`}
+                    className={`inputs border ${errors.price ? 'border-red-600' : 'border'}`}
                   />
-                  {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
+                  {errors.price && <div className="text-red-600">{errors.price.message}</div>}
                 </div>
 
                 <div className="my-4">
@@ -298,44 +291,27 @@ const ServiceDetail = () => {
           </div>
         </div>
 
-        <div className="lg:flex mt-5 mb-20">
-          <div className="lg:flex gap-10 items-end justify-end">
-            <div className="w-full">
-              <div className="bg-[#e2e2e2] px-4 py-5">
-                <div className="flex items-center text-sm justify-between">
-                  <div className="font-semibold">Related Search</div>
-                  <Link className='text-primary hover:text-secondary' to='/service'>View All</Link>
-                </div>
-                <div className="flex gap-5 w-full overflow-x-auto">
-                  {services.map((item, index) => (
-                    <div className="" key={index}>
-                      <LazyLoadImage
-                        effect="blur"
-                        src={item.banner_image[0]}
-                        className=" object-top w-[] rounded-t-3xl object-cover"
-                      />
-                      <div className="py-4 px-5 bg-white rounded-b-3xl shadow-xl -mt-3">
-                        <div className="font-medium text-sm">{item.name}</div>
-                        <div className="text-xs capitalize text-slate-500 mt-1">{item.description}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+        <div className="mx-10 mt-10 mb-20">
+          <div className="w-full">
+            <div className="bg-[#e2e2e2] px-4 py-5">
+              <div className="flex items-center text-sm justify-between">
+                <div className="font-semibold">Related Search</div>
+                <Link className='text-primary hover:text-secondary' to='/service'>View All</Link>
               </div>
-            </div>
-            <div className="mt-4 md:w-[30%]">
-              <div className="md:h-[30rem] md:w-[22rem] py-5 px-5 rounded-xl bg-[#e2e2e2]">
-                <div className="text-xl pt-5 pb-3 font-semibold">Payment Summary </div>
-                <div className="">
-                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
-                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
-                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
-                  <div className="flex mb-4 itemsc justify-between">price <span className="font-medium">$120</span></div>
-                </div>
-                <div className="">
-                  <p className="">Payment Method</p>
-                </div>
-                <div className="flex mb-4 itemsc justify-between">Total amount <span className="font-medium">$120</span></div>
+              <div className="flex gap-5 w-full scrollsdown my-4 overflow-x-auto">
+                {services.map((item, index) => (
+                  <div key={item.id || index}>
+                    <LazyLoadImage
+                      effect="blur"
+                      src={item.banner_image[0]}
+                      className="h-[16rem] md:w-[30rem] object-cover object-top"
+                    />
+                    <div className="py-4 px-5 md:w-[25rem] w-[15rem] h-[] bg-white rounded-b-3xl shadow-xl -mt-3">
+                      <div className="font-medium text-sm">{item.name}</div>
+                      <div className="text-xs capitalize text-slate-500 mt-1">{item.description}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

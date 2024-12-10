@@ -11,6 +11,7 @@ import Layout from '../../../Components/User/Layout';
 const Booking = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [view, setView] = useState(1);
     const [selectedDateTime, setSelectedDateTime] = useState({ date: null, time: null });
     const [cartegory, setCategory] = useState([]);
     const [image, setImage] = useState({ main: null, preview: null });
@@ -152,12 +153,12 @@ const Booking = () => {
                                 <div className="mb-5">
                                     <label className="text-xs font-semibold">Job Description</label>
                                     <input
-                                        {...register('jobDescription', { required: 'Job description is required' })}
+                                        {...register('description', { required: 'Job description is required' })}
                                         type="text"
                                         placeholder="Job Description"
-                                        className={`inputs border ${errors.jobDescription ? 'border-red-600' : 'border'}`}
+                                        className={`inputs border ${errors.description ? 'border-red-600' : 'border'}`}
                                     />
-                                    {errors.jobDescription && <div className="text-red-600">{errors.jobDescription.message}</div>}
+                                    {errors.description && <div className="text-red-600">{errors.description.message}</div>}
                                 </div>
 
                                 <div className="mb-5">
