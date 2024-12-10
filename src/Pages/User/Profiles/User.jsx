@@ -10,6 +10,7 @@ import EditUser from "./EditUser";
 import ChangePassword from "./ChangePassword";
 import Settings from "./Settings";
 import FundWallet from "./Funds/FundWallet";
+import KycForm from "../Provider/KycForm";
 
 const User = () => {
   const { user } = useSelector((state) => state.data);
@@ -23,11 +24,9 @@ const User = () => {
   const [fundWallet, SetFundwallet] = useState(false);
 
   useEffect(() => {
-    // Call the function to get the address when the component mounts
     getUserGeoAddress();
   }, []);
 
-  // Function to get user's geographic address
   const getUserGeoAddress = async () => {
     if (!navigator.geolocation) {
       console.error("Geolocation is not supported by your browser.");
@@ -130,10 +129,7 @@ const User = () => {
                 <MdOutlineMyLocation />
               </div>
             </div>
-
-            <div className="bg-secondary px-5 py-1 w-fit text-white font-semibold my-3">
-              <Link to="/provider">Provider</Link>
-            </div>
+            { user.kyclevel === 0 &&  <Link to='/provider-kyc'></Link>}
 
             <div className="border-t pt-5">
               <div className="flex items-center text-primary gap-3 justify-between"></div>

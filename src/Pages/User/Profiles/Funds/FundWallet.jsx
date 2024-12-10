@@ -15,8 +15,7 @@ const FundWallet = ({ closeview }) => {
     const res = await AuthPosturl(Apis.users.fund_wallet, datatosend);
     
     if (res.status === true) {
-      // Redirect to the Stripe Checkout URL
-      window.location.href = res.text; // Navigate to the generated Stripe Checkout link
+      window.location.href = res.text; 
     } else {
       // Handle error (optional)
       console.error("Error funding wallet:", res.error);

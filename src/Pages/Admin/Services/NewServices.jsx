@@ -83,13 +83,13 @@ const NewServices = () => {
 
     return (
         <AdminLayout>
-            <div className="bg-[#5a5a5a] h-[40.8rem] w-full py-6">
-            <div className=" my-3 mx-9">
+            <div className="bg-[#5a5a5a] md:h-[40.8rem]  w-full py-6">
+            <div className=" my-3 mx-2 md:mx-9">
                     <Link to='/auth/admin/service' className="bg-white py-2 px-5 font-semibold text-lg rounded-lg w-fit">Back</Link>
                 </div>
-                <div className="bg-white w-[95%] mx-auto text-primary h-[37rem] px-10 pt-10 overflow-hidden">
+                <div className="bg-white w-[95%] mx-auto text-primary md:h-[37rem] md:px-10 px-2 py-2 pt-10 md:overflow-hidden">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="grid grid-cols-3 mb-5 gap-12">
+                        <div className="md:grid md:grid-cols-3 mb-5 gap-12">
                             <div>
                                 <label className="text-xs">Name</label>
                                 <input
@@ -121,7 +121,7 @@ const NewServices = () => {
                         </div>
 
                         {/* Category, Status, Feature Inputs */}
-                        <div className="grid grid-cols-3 mb-5 gap-12">
+                        <div className="md:grid md:grid-cols-3 mb-5 gap-12">
                             <div>
                                 <label className="text-xs">Categories</label>
                                 <select className="admininput" {...register('category')}>
@@ -160,8 +160,8 @@ const NewServices = () => {
                         </div>
 
                         {/* Image Inputs (Banner & Gallery) */}
-                        <div className="flex gap-5 items-center mt-5">
-                            <div className="relative w-[50%]">
+                        <div className="md:flex gap-5 items-center mt-5">
+                            <div className="relative md:w-[50%]">
                                 <label className="text-xs">Banner Image</label>
                                 <input
                                     type="file"
@@ -178,7 +178,7 @@ const NewServices = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="relative w-[50%]">
+                            <div className="relative md:w-[50%]">
                                 <label className="text-xs">Gallery Image</label>
                                 <input
                                     type="file"

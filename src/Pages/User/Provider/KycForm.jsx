@@ -74,7 +74,6 @@ const KycForm = ({ closeView }) => {
     };
 
     return (
-        <Modal height="h-[36rem]" width="w-[40rem]" closeView={closeView}>
             <div className="text-black">
                 <h2 className="text-xl font-bold mb-4">KYC Form</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -271,7 +270,6 @@ const KycForm = ({ closeView }) => {
                     </div>
                 </form>
             </div>
-        </Modal>
     );
 };
 
