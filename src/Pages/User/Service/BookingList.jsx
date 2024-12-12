@@ -47,7 +47,7 @@ const BookingList = () => {
 
   const SingleItem = (val) => {
     setSingles(val);
-    setEditBooking(true); 
+    setEditBooking(true);
   };
 
   // Handle search input change
@@ -62,23 +62,26 @@ const BookingList = () => {
 
   // Handle filter: Payment status checkbox
   const handleCheckboxChange = (status) => {
-    setSelectedPayment(selectedPayment === status ? null : status);
+    setSelectedPayment((prev) => (prev === status ? null : status));
   };
-
+  
   // Filter items based on search term, status, and payment status
   const filteredItems = items.filter((item) => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = selectedStatus ? item.status === selectedStatus : true;
-    const matchesPayment = selectedPayment ? item.paymentStatus === selectedPayment : true;
+    const matchesPayment = selectedPayment
+      ? item.paid_with?.toLowerCase() === selectedPayment.toLowerCase()
+      : true;
 
     return matchesSearch && matchesStatus && matchesPayment;
   });
- 
+
+
   return (
     <Layout>
       {editbookings && (
         <EditBooking
-          singles={singles} 
+          singles={singles}
           closeView={handleCloseEdit}
         />
       )}
@@ -188,7 +191,7 @@ const BookingList = () => {
               </div>
 
               <div className="mt-5">
-                <div className="border-t border-[#EBEBEB] py-3 font-[500] text-lg">Status</div>
+                <div className="border-t border-[#EBEBEB] font-[500] text-lg">Status</div>
                 <div className="flex flex-col text-base text-primary gap-2">
                   <label className="flex items-center">
                     <input
@@ -202,20 +205,38 @@ const BookingList = () => {
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={selectedStatus === 'In Process'}
-                      onChange={() => statusHandleCheckboxChange('In Process')}
+                      checked={selectedStatus === 'Ongoing'}
+                      onChange={() => statusHandleCheckboxChange('Ongoing')}
                       className="mr-2 my-2"
                     />
-                    In Progress
+                    Ongoing
                   </label>
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={selectedStatus === 'Done'}
-                      onChange={() => statusHandleCheckboxChange('Done')}
+                      checked={selectedStatus === 'Completed'}
+                      onChange={() => statusHandleCheckboxChange('Completed')}
                       className="mr-2 my-2"
                     />
-                    Complete
+                    Completed
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedStatus === 'Accepted'}
+                      onChange={() => statusHandleCheckboxChange('Accepted')}
+                      className="mr-2 my-2"
+                    />
+                    Accepted
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedStatus === 'Cancle'}
+                      onChange={() => statusHandleCheckboxChange('Cancle')}
+                      className="mr-2 my-2"
+                    />
+                    Cancel
                   </label>
                 </div>
               </div>
@@ -226,29 +247,29 @@ const BookingList = () => {
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={selectedPayment === 'Pending'}
-                      onChange={() => handleCheckboxChange('Pending')}
+                      checked={selectedPayment === 'wallet'}
+                      onChange={() => handleCheckboxChange('wallet')}
                       className="mr-2 my-2"
                     />
-                    Pending
+                    wallet
                   </label>
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={selectedPayment === 'In Process'}
-                      onChange={() => handleCheckboxChange('In Process')}
+                      checked={selectedPayment === 'card'}
+                      onChange={() => handleCheckboxChange('card')}
                       className="mr-2 my-2"
                     />
-                    In Progress
+                    Card
                   </label>
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={selectedPayment === 'Done'}
-                      onChange={() => handleCheckboxChange('Done')}
+                      checked={selectedPayment === 'not paid'}
+                      onChange={() => handleCheckboxChange('not paid')}
                       className="mr-2 my-2"
                     />
-                    Complete
+                    Not Paid
                   </label>
                 </div>
               </div>
