@@ -83,7 +83,7 @@ const KycForm = ({ closeView }) => {
                             <input
                                 {...register('firstname', { required: 'First name is required' })}
                                 type="text"
-                                className={`input ${errors.firstname ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.firstname ? 'border-red-600' : 'border'}`}
                             />
                             {errors.firstname && <div className="text-red-600">{errors.firstname.message}</div>}
                         </div>
@@ -92,7 +92,7 @@ const KycForm = ({ closeView }) => {
                             <input
                                 {...register('lastname', { required: 'Last name is required' })}
                                 type="text"
-                                className={`input ${errors.lastname ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.lastname ? 'border-red-600' : 'border'}`}
                             />
                             {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
                         </div>
@@ -103,7 +103,7 @@ const KycForm = ({ closeView }) => {
                             <input
                                 {...register('middlename', { required: 'Middle name is required' })}
                                 type="text"
-                                className={`input ${errors.middlename ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.middlename ? 'border-red-600' : 'border'}`}
                             />
                             {errors.middlename && <div className="text-red-600">{errors.middlename.message}</div>}
                         </div>
@@ -118,7 +118,7 @@ const KycForm = ({ closeView }) => {
                                     },
                                 })}
                                 type="email"
-                                className={`input ${errors.email ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.email ? 'border-red-600' : 'border'}`}
                             />
                             {errors.email && <div className="text-red-600">{errors.email.message}</div>}
                         </div>
@@ -144,7 +144,7 @@ const KycForm = ({ closeView }) => {
                                     }
                                 })}
                                 type="text"
-                                className={`input ${errors.phone ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.phone ? 'border-red-600' : 'border'}`}
                             />
                             {errors.phone && <div className="text-red-600">{errors.phone.message}</div>}
                         </div>
@@ -153,7 +153,7 @@ const KycForm = ({ closeView }) => {
                             <input
                                 {...register('state_tid', { required: 'State is required' })}
                                 type="text"
-                                className={`input ${errors.state_tid ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.state_tid ? 'border-red-600' : 'border'}`}
                             />
                             {errors.state_tid && <div className="text-red-600">{errors.state_tid.message}</div>}
                         </div>
@@ -164,7 +164,7 @@ const KycForm = ({ closeView }) => {
                             <input
                                 {...register('companyname', { required: 'Company name is required' })}
                                 type="text"
-                                className={`input ${errors.companyname ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.companyname ? 'border-red-600' : 'border'}`}
                             />
                             {errors.companyname && <div className="text-red-600">{errors.companyname.message}</div>}
                         </div>
@@ -172,7 +172,7 @@ const KycForm = ({ closeView }) => {
                             <label>Identity Type</label>
                             <select
                                 {...register('identitytype', { required: 'Identity type is required' })}
-                                className={`input ${errors.identitytype ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.identitytype ? 'border-red-600' : 'border'}`}
                             >
                                 <option value="">Select</option>
                                 <option value="Individual">Individual</option>
@@ -188,7 +188,7 @@ const KycForm = ({ closeView }) => {
                             <input
                                 {...register('security_number', { required: 'Security number is required' })}
                                 type="text"
-                                className={`input ${errors.security_number ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.security_number ? 'border-red-600' : 'border'}`}
                             />
                             {errors.security_number && <div className="text-red-600">{errors.security_number.message}</div>}
                         </div>
@@ -198,7 +198,7 @@ const KycForm = ({ closeView }) => {
                                 {...register('sostype', { required: 'Security number type is required' })}
                                 type="text"
                                 placeholder="SSN/ITIN/EIN"
-                                className={`input ${errors.sostype ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.sostype ? 'border-red-600' : 'border'}`}
                             />
                             {errors.sostype && <div className="text-red-600">{errors.sostype.message}</div>}
                         </div>
@@ -209,7 +209,7 @@ const KycForm = ({ closeView }) => {
                             <input
                                 {...register('dob', { required: 'Date of Birth is required' })}
                                 type="date"
-                                className={`input ${errors.dob ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.dob ? 'border-red-600' : 'border'}`}
                             />
                             {errors.dob && <div className="text-red-600">{errors.dob.message}</div>}
                         </div>
@@ -217,7 +217,7 @@ const KycForm = ({ closeView }) => {
                             <label>Gender</label>
                             <select
                                 {...register('gender', { required: 'Gender is required' })}
-                                className={`input ${errors.gender ? 'border-red-600' : 'border'}`}
+                                className={`input border ${errors.gender ? 'border-red-600' : 'border'}`}
                             >
                                 <option value="">Select</option>
                                 <option value="Male">Male</option>
@@ -232,7 +232,7 @@ const KycForm = ({ closeView }) => {
                         <input
                             {...register('address', { required: 'Address is required' })}
                             type="text"
-                            className={`input ${errors.address ? 'border-red-600' : 'border'}`}
+                            className={`input border ${errors.address ? 'border-red-600' : 'border'}`}
                         />
                         {errors.address && <div className="text-red-600">{errors.address.message}</div>}
                     </div>

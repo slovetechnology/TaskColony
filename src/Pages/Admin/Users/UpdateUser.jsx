@@ -58,7 +58,7 @@ const UpateUser = ({ closeView, singles, resendSignal }) => {
                             <label className="text-xs">Status</label>
                             <select
                                 {...register('status', { required: 'Status is required' })}
-                                className={`input ${errors.status ? 'border-red-600' : 'border-gray-300'}`}
+                                className={`input border ${errors.status ? 'border-red-600' : 'border-gray-300'}`}
                             >
                                 {statusOptions.map((option) => (
                                     <option key={option.value} value={option.value}>

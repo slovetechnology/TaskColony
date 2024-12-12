@@ -59,7 +59,7 @@ const EditUser = ({ closeView, singles }) => {
                         <input
                             {...register('state', { required: 'State is required' })}
                             type="text"
-                            className={`input ${errors.state ? 'border-red-600' : 'border'}`}
+                            className={`input border ${errors.state ? 'border-red-600' : 'border'}`}
                         />
                         {errors.state && <div className="text-red-600">{errors.state.message}</div>}
                     </div>
@@ -69,7 +69,7 @@ const EditUser = ({ closeView, singles }) => {
                         <input
                             {...register('address', { required: 'address is required' })}
                             type="text"
-                            className={`input ${errors.address ? 'border-red-600' : 'border'}`}
+                            className={`input border ${errors.address ? 'border-red-600' : 'border'}`}
                         />
                         {errors.address && <div className="text-red-600">{errors.address.message}</div>}
                     </div>
@@ -78,7 +78,7 @@ const EditUser = ({ closeView, singles }) => {
                         <input
                             {...register('city', { required: 'city is required' })}
                             type="text"
-                            className={`input ${errors.city ? 'border-red-600' : 'border'}`}
+                            className={`input border ${errors.city ? 'border-red-600' : 'border'}`}
                         />
                         {errors.city && <div className="text-red-600">{errors.city.message}</div>}
                     </div>
@@ -88,7 +88,7 @@ const EditUser = ({ closeView, singles }) => {
                         <input
                             {...register('postalcode', { required: 'Zip code is required' })}
                             type="text"
-                            className={`input ${errors.postalcode ? 'border-red-600' : 'border'}`}
+                            className={`input border ${errors.postalcode ? 'border-red-600' : 'border'}`}
                         />
                         {errors.postalcode && <div className="text-red-600">{errors.postalcode.message}</div>}
                     </div>
@@ -103,7 +103,7 @@ const EditUser = ({ closeView, singles }) => {
                                 pattern: { value: /^[0-9]*$/, message: 'Only numbers are allowed' },
                             })}
                             type="text"
-                            className={`input ${errors.phoneno ? 'border-red-600' : 'border'}`}
+                            className={`input border ${errors.phoneno ? 'border-red-600' : 'border'}`}
                         />
                         {errors.phoneno && <div className="text-red-600">{errors.phoneno.message}</div>}
                     </div>

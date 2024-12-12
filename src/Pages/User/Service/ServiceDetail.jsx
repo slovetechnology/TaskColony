@@ -14,7 +14,9 @@ const ServiceDetail = () => {
   const [error, setError] = useState(null);
   const [services, setServices] = useState([]);
   const [cartegory, setCategory] = useState([]);
+  const [cities, setCities] = useState([]);
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [image, setImage] = useState({
     main: null,
@@ -79,6 +81,7 @@ const ServiceDetail = () => {
       if (res.status === true) {
         setServices(res.data.random_services);
         setCategory(res.data.categories);
+        setCities(res.data.cities);
       } else {
         console.log(error);
       }
@@ -93,8 +96,54 @@ const ServiceDetail = () => {
     fetchAllHome();
   }, [fetchAllHome]);
 
-  const handleDateSelect = () => {
-    // Implementation for date selection...
+  const handleDateSelect = (selectedDate) => {
+    setSelectedDateTime(prev => ({
+        date: selectedDate,
+        time: prev.time
+    }));
+};
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append('job_title', data.job_title);
+    formData.append('service_tid', 'DF59Q');
+    formData.append('state_tid', 'SBM67');
+    formData.append('description', data.description);
+    formData.append('address', data.address);
+    formData.append('location_long', 6.11223322);
+    formData.append('location_lat', 6.11223322);
+    formData.append('time', convertTimeTo12HourFormat(data.time))
+    formData.append('price', data.price);
+    formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('YYYY-MM-DD') : data.date);
+
+    if (image.main) {
+      const binaryImage = await image.main.arrayBuffer();
+      formData.append('images[]', new Blob([binaryImage]), image.main.name);
+    }
+
+    formData.append('zipcode', 'zipcode');
+    formData.append('urgent', 0);
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await AuthPosturl(Apis.users.create_bookings, formData);
+      if (res.status === true && res.data[0].paid === true) {
+        console.log(res.text);
+        ToastAlert('Booking successful!');
+        navigate('/booking-list');
+      } else {
+        ErrorAlert('You do not have enough funds to complete this booking. You will be redirected to fund your account.');
+
+        setTimeout(() => {
+          window.location.href = res.text;
+        }, 5000); 
+      }
+    } catch (error) {
+      ErrorAlert('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -194,97 +243,121 @@ const ServiceDetail = () => {
             )}
           </div>
           <div className="">
-            <div className="h-[55rem] md:w-[22rem] px-5 rounded-xl bg-[#e2e2e2]">
+            <div className="h-auto py-5 lg:w-[24rem]  px-5 rounded-xl bg-[#e2e2e2]">
               <div className="text-xl pt-5 pb-3 font-semibold">Booking Information</div>
-              <form action="">
-                <div className="mb-5">
-                  <label className='text-xs font-semibold'>Job Title</label>
-                  <input
-                    {...register('jobTitle', { required: 'Job title is required' })}
-                    type="text" placeholder='Job Title'
-                    className={`inputs border ${errors.jobTitle ? 'border-red-600' : 'border'}`}
-                  />
-                  {errors.jobTitle && <div className="text-red-600">{errors.jobTitle.message}</div>}
-                </div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="text-sm text-[#374151]">
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Job Title</label>
+                    <input
+                      {...register('job_title', { required: 'Job title is required' })}
+                      type="text"
+                      placeholder="Job Title"
+                      className={`inputs border ${errors.job_title ? 'border-red-600' : 'border'}`}
+                    />
+                    {errors.job_title && <div className="text-red-600">{errors.job_title.message}</div>}
+                  </div>
 
-                <div className="mb-5">
-                  <label className='text-xs font-semibold'>Job Description</label>
-                  <input
-                    {...register('jobDescription', { required: 'Job description is required' })}
-                    type="text" placeholder='Job Description'
-                    className={`inputs border ${errors.jobDescription ? 'border-red-600' : 'border'}`}
-                  />
-                  {errors.jobDescription && <div className="text-red-600">{errors.jobDescription.message}</div>}
-                </div>
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Job Description</label>
+                    <input
+                      {...register('description', { required: 'Job description is required' })}
+                      type="text"
+                      placeholder="Job Description"
+                      className={`inputs border ${errors.description ? 'border-red-600' : 'border'}`}
+                    />
+                    {errors.description && <div className="text-red-600">{errors.description.message}</div>}
+                  </div>
 
-                <div className="mb-5">
-                  <label className='text-xs font-semibold'>Select Category</label>
-                  <select className="inputs" {...register('category')}>
-                    {cartegory.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Select Category</label>
+                    <select className="inputs" {...register('category')}>
+                      {cartegory.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                <div className="mb-5 mt-5">
-                  <label className='text-xs font-semibold'>Date Required</label>
-                  <div className="overflow-x-auto scrollsdown mb-4">
-                    <div className="flex space-x-2">
-                      <CalendarDays onSelectDate={handleDateSelect} />
+                  <div className="mb-5 mt-5">
+                    <label className="text-xs font-semibold">Date Required</label>
+                    <div className="overflow-x-auto scrollsdown mb-4">
+                      <div className="flex space-x-2">
+                        <CalendarDays onSelectDate={handleDateSelect} />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="mb-5">
-                  <label className='text-xs font-semibold'>Time Service</label>
-                  <input
-                    {...register('serviceTime', { required: 'Service time is required' })}
-                    type="time"
-                    placeholder='Time'
-                    className={`inputs border ${errors.serviceTime ? 'border-red-600' : 'border'}`}
-                  />
-                  {errors.serviceTime && <div className="text-red-600">{errors.serviceTime.message}</div>}
-                </div>
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Time Service</label>
+                    <input
+                      {...register('time', { required: 'Time is required' })}
+                      type="time"
+                      className={`inputs border ${errors.time ? 'border-red-600' : 'border'}`}
+                      onChange={(e) => setSelectedDateTime(prev => ({ ...prev, time: e.target.value }))}
+                    />
+                    {errors.time && <div className="text-red-600">{errors.time.message}</div>}
+                  </div>
 
-                <div className="mb-5">
-                  <label className='text-xs font-semibold'>Address</label>
-                  <input
-                    {...register('address', { required: 'Address is required' })}
-                    type="text"
-                    placeholder='Enter Address'
-                    className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
-                  />
-                  {errors.address && <div className="text-red-600">{errors.address.message}</div>}
-                </div>
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Address</label>
+                    <input
+                      {...register('address', { required: 'Address is required' })}
+                      type="text"
+                      placeholder="Enter Address"
+                      className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
+                    />
+                    {errors.address && <div className="text-red-600">{errors.address.message}</div>}
+                  </div>
 
-                <div className="mb-5">
-                  <label className='text-xs font-semibold'>Price Offering</label>
-                  <input
-                    {...register('price', { required: 'Price is required' })}
-                    type="text"
-                    placeholder='Price'
-                    className={`inputs border ${errors.price ? 'border-red-600' : 'border'}`}
-                  />
-                  {errors.price && <div className="text-red-600">{errors.price.message}</div>}
-                </div>
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Price Offering</label>
+                    <input
+                      {...register('price', { required: 'Price is required' })}
+                      type="text"
+                      placeholder="Price"
+                      className={`inputs border ${errors.price ? 'border-red-600' : 'border'}`}
+                    />
+                    {errors.price && <div className="text-red-600">{errors.price.message}</div>}
+                  </div>
 
-                <div className="my-4">
-                  <label>
-                    {image.preview === null ? (
-                      <div className="w-full h-32 bg-slate-200 cursor-pointer mx-auto flex items-center justify-center text-slate-600">
-                        <FaPlus />
-                      </div>
-                    ) : (
-                      <img
-                        src={image.preview}
-                        alt="Preview"
-                        className="w-full h-40 mx-auto border rounded-md object-cover"
-                      />
-                    )}
-                    <input onChange={handleUpload} type="file" hidden />
-                  </label>
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Zip Code</label>
+                    <input
+                      {...register('zipcode', { required: 'Zip Code is required' })}
+                      type="text"
+                      placeholder="Zip Code"
+                      className={`inputs border ${errors.zipcode ? 'border-red-600' : 'border'}`}
+                    />
+                    {errors.zipcode && <div className="text-red-600">{errors.zipcode.message}</div>}
+                  </div>
+
+                  <div className="my-4">
+                    <label>
+                      {image.preview === null ? (
+                        <div className="w-full h-32 bg-slate-200 cursor-pointer mx-auto flex items-center justify-center text-slate-600">
+                          <FaPlus />
+                        </div>
+                      ) : (
+                        <img
+                          src={image.preview}
+                          alt="Preview"
+                          className="w-full h-40 mx-auto border rounded-md object-cover"
+                        />
+                      )}
+                      <input onChange={handleUpload} type="file" hidden />
+                    </label>
+                  </div>
+
+                  <div className="mt-6 mb-3">
+                    <button
+                      type="submit"
+                      className="bg-secondary w-full py-3 rounded-full text-white"
+                    >
+                      {isSubmitting ? 'Processing...' : 'Book Now'}
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

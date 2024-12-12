@@ -118,7 +118,7 @@ const VerifyEmail = ({ email: initialEmail, token }) => {
                                         validate: (value) => value.includes('@') || 'Enter a valid email address'
                                     })}
                                     type="email"
-                                    className={`input ${errors.email ? 'border-red-600' : 'border'}`}
+                                    className={`input border ${errors.email ? 'border-red-600' : 'border'}`}
                                     value={email} // Bind to state
                                     onChange={(e) => setEmail(e.target.value)} // Update state on change
                                 />

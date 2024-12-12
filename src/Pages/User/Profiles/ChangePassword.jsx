@@ -72,7 +72,7 @@ const ChangePassword = ({ isOpen, closeview }) => {
               minLength: { value: 6, message: 'Password must be at least 6 characters' }
             })}
             type={pass1Visible ? 'text' : 'password'}
-            className={`input ${errors.old_password ? 'border-red-600' : 'border'}`}
+            className={`input border ${errors.old_password ? 'border-red-600' : 'border'}`}
           />
           {errors.old_password && <div className="text-red-600">{errors.old_password.message}</div>}
         </div>
@@ -88,7 +88,7 @@ const ChangePassword = ({ isOpen, closeview }) => {
               minLength: { value: 6, message: 'Password must be at least 6 characters' }
             })}
             type={pass1Visible ? 'text' : 'password'}
-            className={`input ${errors.new_password ? 'border-red-600' : 'border'}`}
+            className={`input border ${errors.new_password ? 'border-red-600' : 'border'}`}
           />
           {errors.new_password && <div className="text-red-600">{errors.new_password.message}</div>}
         </div>
@@ -101,7 +101,7 @@ const ChangePassword = ({ isOpen, closeview }) => {
           <input
             {...register('confirm_password', { required: 'Confirm your password' })}
             type={pass2Visible ? 'text' : 'password'}
-            className={`input ${errors.confirm_password ? 'border-red-600' : 'border'}`}
+            className={`input border ${errors.confirm_password ? 'border-red-600' : 'border'}`}
           />
           {errors.confirm_password && <div className="text-red-600">{errors.confirm_password.message}</div>}
         </div>

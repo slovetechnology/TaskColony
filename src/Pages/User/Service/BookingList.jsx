@@ -4,10 +4,9 @@ import { FaEdit, FaSearch } from 'react-icons/fa';
 import { SlArrowLeft } from 'react-icons/sl';
 import Layout from '../../../Components/User/Layout';
 import { Apis, AuthGeturl } from '../../../Components/General/Api';
-import image from '../../../assets/new/img18.svg'
-import notfound from '../../../assets/404.png'
 import EditBooking from './EditBooking';
-import Booking from './NewBooking';
+import notfound from '../../../assets/404.png';
+import ConfirmCancelBooking from './CancelBooking';
 
 const BookingList = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -17,8 +16,9 @@ const BookingList = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editbookings, setEditBooking] = useState(false);
+  const [singles, setSingles] = useState({}); // Store the selected single booking
 
-  // Fetch bookings
+  // Fetch all bookings from the API
   const fetchAllBookings = useCallback(async () => {
     setLoading(true);
     try {
@@ -39,12 +39,15 @@ const BookingList = () => {
     fetchAllBookings();
   }, [fetchAllBookings]);
 
-  const statusHandleCheckboxChange = (status) => {
-    setSelectedStatus(selectedStatus === status ? null : status);
+  // Close the EditBooking modal
+  const handleCloseEdit = () => {
+    setEditBooking(false);
   };
 
-  const handleCheckboxChange = (status) => {
-    setSelectedPayment(selectedPayment === status ? null : status);
+
+  const SingleItem = (val) => {
+    setSingles(val);
+    setEditBooking(true); 
   };
 
   // Handle search input change
@@ -52,30 +55,33 @@ const BookingList = () => {
     setSearchTerm(e.target.value);
   };
 
-  // Filter items based on search term and selected statuses
-  const filteredItems = items.filter(item => {
+  // Handle filter: Status checkbox
+  const statusHandleCheckboxChange = (status) => {
+    setSelectedStatus(selectedStatus === status ? null : status);
+  };
+
+  // Handle filter: Payment status checkbox
+  const handleCheckboxChange = (status) => {
+    setSelectedPayment(selectedPayment === status ? null : status);
+  };
+
+  // Filter items based on search term, status, and payment status
+  const filteredItems = items.filter((item) => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = selectedStatus ? item.status === selectedStatus : true;
     const matchesPayment = selectedPayment ? item.paymentStatus === selectedPayment : true;
 
     return matchesSearch && matchesStatus && matchesPayment;
   });
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const handleOpenEdit = () => {
-    setEditBooking(true);
-  };
-
-  const handleCloseEdit = () => {
-    setEditBooking(false);
-  };
+ 
   return (
     <Layout>
-      {editbookings && <EditBooking closeView={handleCloseEdit} />}
+      {editbookings && (
+        <EditBooking
+          singles={singles} 
+          closeView={handleCloseEdit}
+        />
+      )}
 
       <div className="bg-gray w-full xl:h-[20rem]">
         <div className="text-center py-10 xl:pt-24">
@@ -89,26 +95,26 @@ const BookingList = () => {
       </div>
 
       <div className="w-[90%] mx-auto">
-        <div className="flex lg:w-[68%] items-center justify-between">
-          <div className="font-[500] flex items-center my-7 text-xl gap-1">
+        <div className="flex w-full items-center justify-between">
+          <div className="font-[500] flex items-center my-7 md:text-xl gap-1">
             <SlArrowLeft size={10} /> Booking List
           </div>
-          <div className="">
-            <Link className="bg-secondary py-2 px-4 rounded-md text-white" to='/new-booking'>New Booking</Link>
+          <div>
+            <Link className="bg-secondary py-2 md:px-4 px-2 md:text-xl rounded-md text-white" to="/new-booking">
+              New Booking
+            </Link>
           </div>
         </div>
 
         <div className="gap-10 xl:flex">
+          {/* Booking List */}
           <div className="mb-10 overflow-y-auto scrollsdown w-full h-[35rem]">
             {filteredItems.length > 0 ? (
               filteredItems.map((item, i) => (
-                <div
-                  key={i}
-                  className="w-full xl:flex mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl flex-grow"
-                >
+                <div key={i} className="w-full md:flex mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl flex-grow">
                   <div className="w-full xl:w-[20rem]">
                     <img
-                      src={item.imageslink?.[0]}
+                      src={item.imageslink?.[0] || notfound} // Show an image or fallback to notfound
                       alt={item.title}
                       className="w-full h-[14rem] xl:h-[14rem] mb-3 xl:mb-0 rounded-xl object-cover"
                     />
@@ -116,59 +122,56 @@ const BookingList = () => {
                   <div className="flex-grow">
                     <div className="flex items-start w-full justify-between">
                       <p className="text-lg font-[500]">{item.title}</p>
-                      <div onClick={handleOpenEdit} className="flex items-center text-xs font-[500] cursor-pointer gap-2 text-secondary">
+                      <div
+                        onClick={() => SingleItem(item)} // Pass the selected booking to SingleItem
+                        className="flex items-center text-xs font-[500] cursor-pointer gap-2 text-secondary"
+                      >
                         Edit Booking <span className="text-primary"><FaEdit /></span>
                       </div>
                     </div>
-                    <div className="border-b pt-5 pb-10">
+                    <div className="border-b pt-5 md:pb-10 pb-3">
                       <p className="text-primary text-xs">
-                        <span className="font-[500] text-sm text-black">Location</span> :{' '}
-                        {item.address}
+                        <span className="font-[500] text-sm text-black">Location</span>: {item.address}
                       </p>
-                      <div className="grid grid-cols-2 text-primary text-xs mt-2 gap-2">
-                        <p>
-                          <span className="font-[500] text-sm text-black">Date</span> :{' '}
-                          {item.the_date}
+                      <div className="md:grid md:grid-cols-2 text-primary text-xs mt-2 gap-2">
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Date</span>: {item.the_date}
                         </p>
-                        <p>
-                          <span className="font-[500] text-sm text-black">Service Status</span> :{' '}
-                          {item.status}
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Time</span>: {item.the_time}
                         </p>
-                        <p>
-                          <span className="font-[500] text-sm text-black">Provider</span> :{' '}
-                          {item.pfname} {item.plname}
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Payment Status</span>: {item.paid_with}
                         </p>
-                        <p>
-                          <span className="font-[500] text-sm text-black">Time</span> :{' '}
-                          {item.the_time}
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Service Status</span>: {item.status}
                         </p>
-                        <p>
-                          <span className="font-[500] text-sm text-black">Payment Status</span> :{' '}
-                          {item.paymentStatus}
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Provider</span>: {item.pfname} {item.plname}
                         </p>
-                        <p className="flex text-secondary items-center gap-2">
-                          <span className="font-[500] text-sm text-black">Rating</span> :{' '}
-                          {item.rating}
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Rating </span>: {item.status}
                         </p>
                       </div>
                     </div>
                     <div className="flex font-[500] pt-8 gap-3">
-                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to={`/booking-detail/${item.id}`}                     >View</Link>
+                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to={`/booking-detail/${item.id}`}>
+                        View
+                      </Link>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="">
-                <div className="text-center text-gray-500 font-[500] mt-"></div>
-                <img src={notfound} alt="" className="h-[30rem] object-contain w-full" />
+              <div>
+                <img src={notfound} alt="Not Found" className="h-[30rem] object-contain w-full" />
               </div>
             )}
           </div>
 
-
+          {/* Filters */}
           <div className="bg-gray h-[35rem] xl:w-[40%] rounded-xl overflow-y-auto flex flex-col mb-10 justify-between">
-            <form onSubmit={handleSubmit} className="w-full h-full px-6 py-5">
+            <form className="w-full h-full px-6 py-5">
               <div className="my-5 font-[500] text-xl">Filter By</div>
 
               <div className="mb-5">
@@ -214,15 +217,6 @@ const BookingList = () => {
                     />
                     Complete
                   </label>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={selectedStatus === 'hold'}
-                      onChange={() => statusHandleCheckboxChange('hold')}
-                      className="mr-2 my-2"
-                    />
-                    Hold
-                  </label>
                 </div>
               </div>
 
@@ -260,7 +254,6 @@ const BookingList = () => {
               </div>
             </form>
           </div>
-
         </div>
       </div>
     </Layout>

@@ -29,8 +29,7 @@ const user_urls = {
     get_booking: `${user}/bookings/get_all_bookings.php`,
     update_bookings: `${user}/bookings/update_booking.php`,
     create_bookings: `${user}/bookings/create_booking.php`,
-    cancel_bookings: `${user}/bookings/assign_booking.php`,
-    delete_bookings: `${user}/bookings/delete_booking.php`,
+    cancel_bookings: `${user}/bookings/cancle_booking.php`,
     get_system: `${user}/system/get_system_data.php`,
 
     get_review: `${user}/reviews/get_all_reviews.php`,

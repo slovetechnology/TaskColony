@@ -127,7 +127,7 @@ const AdminForgetPassword = () => {
                                         validate: (value) => value.includes('@') || 'Enter a valid email address'
                                     })}
                                     type="email"
-                                    className={`input ${errors.email ? 'border-red-600' : 'border'}`}
+                                    className={`input border ${errors.email ? 'border-red-600' : 'border'}`}
                                 />
                                 {errors.email && <div className="text-red-600">{errors.email.message}</div>}
                             </div>
