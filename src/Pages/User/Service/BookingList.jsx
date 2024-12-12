@@ -106,12 +106,12 @@ const BookingList = () => {
           </div>
         </div>
 
-        <div className="gap-10 xl:flex">
+        <div className="gap-10 md:flex">
           {/* Booking List */}
           <div className="mb-10 overflow-y-auto scrollsdown w-full h-[35rem]">
             {filteredItems.length > 0 ? (
               filteredItems.map((item, i) => (
-                <div key={i} className="w-full md:flex mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl flex-grow">
+                <div key={i} className="w-full xl:flex flex-grow mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl">
                   <div className="w-full xl:w-[20rem]">
                     <img
                       src={item.imageslink?.[0] || notfound} // Show an image or fallback to notfound
@@ -119,7 +119,7 @@ const BookingList = () => {
                       className="w-full h-[14rem] xl:h-[14rem] mb-3 xl:mb-0 rounded-xl object-cover"
                     />
                   </div>
-                  <div className="flex-grow">
+                  <div className="w-full">
                     <div className="flex items-start w-full justify-between">
                       <p className="text-lg font-[500]">{item.title}</p>
                       <div

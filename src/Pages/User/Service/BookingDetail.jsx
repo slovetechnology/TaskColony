@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../../Components/User/Layout';
-import { FaRegStar, FaStar, FaUserCircle } from 'react-icons/fa';
+import { FaRegStar, FaStar, FaTrashAlt, FaUserCircle } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Apis, AuthGeturl, AuthPosturl } from '../../../Components/General/Api';
 import { ToastAlert } from '../../../Components/General/Utils';
 import EditReview from './EditReview';
+import ConfirmDeleteReview from './DeleteReview';
 
 const StarRating = ({ rating, setRating }) => {
     return (
@@ -33,6 +34,8 @@ const BookingDetail = () => {
     const [editReview, setEditReview] = useState(false);
     const [singles, setSingles] = useState({});
     const [view, setView] = useState(false);
+    const [del, setDel] = useState(false);
+    const [loads, setLoads] = useState(false);
 
     const fetchBooking = useCallback(async () => {
         setLoading(true);
@@ -98,7 +101,7 @@ const BookingDetail = () => {
             const res = await AuthPosturl(Apis.users.new_review, datatosend);
             if (res.status === true) {
                 ToastAlert('Review submitted successfully!');
-                setReviews(prev => [...prev, { ...datatosend, id: res.data.id }]); // Add new review to state
+                setReviews(prev => [...prev, { ...datatosend, id: res.data.id }]);
                 setRating(0); // Reset rating
                 setReviewText(''); // Reset review text
             } else {
@@ -127,6 +130,36 @@ const BookingDetail = () => {
         );
         setEditReview(false);
     };
+    const DeleteItem = (review) => {
+        setSingles(review); // Set the selected review with its trackid
+        setDel(true);
+    };
+
+    const confirmAction = async () => {
+        if (!singles.trackid) { // Use trackid from the selected review
+            ToastAlert('No review selected.');
+            return;
+        }
+
+        const data = { data_tid: singles.trackid }; // Use the correct trackid
+        setLoads(true);
+        try {
+            const res = await AuthPosturl(Apis.users.delete_review, data);
+            setLoads(false);
+            if (res.status === true) {
+                setDel(false);
+                setReviews(prev => prev.filter(review => review.id !== singles.id)); // Update state
+                ToastAlert('Review deleted successfully.');
+            } else {
+                ToastAlert(res.text || 'Failed to delete review.');
+            }
+        } catch (error) {
+            setLoads(false);
+            ToastAlert('Error deleting review.');
+        }
+    };
+
+
 
     return (
         <Layout>
@@ -138,7 +171,13 @@ const BookingDetail = () => {
                     onUpdateReview={handleUpdateReview}
                 />
             )}
-
+            {del && (
+                <ConfirmDeleteReview
+                    confirmAction={confirmAction}
+                    closeView={() => setDel(false)}
+                    isLoading={loads}
+                />
+            )}
             <div>
                 {loading ? (
                     <p className='flex items-center justify-center h-[10rem] w-full'>Loading...</p>
@@ -235,7 +274,10 @@ const BookingDetail = () => {
                                                                                             <div className=""> {item.rating} </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div onClick={() => SingleItem(item)} className="text-secondary cursor-pointer text-sm">Edit</div>
+                                                                                    <div className="flex items-center gap-2 text-secondary cursor-pointer md:text-sm">
+                                                                                        <div onClick={() => SingleItem(item)} className="">Edit</div>
+                                                                                        <div onClick={() => DeleteItem(item)} className=""><FaTrashAlt /></div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
 
