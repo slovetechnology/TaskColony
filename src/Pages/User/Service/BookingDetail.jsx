@@ -122,7 +122,7 @@ const BookingDetail = () => {
     };
 
     const handleUpdateReview = (updatedReview) => {
-        setReviews(prev => 
+        setReviews(prev =>
             prev.map(review => review.id === updatedReview.id ? updatedReview : review)
         );
         setEditReview(false);
@@ -131,11 +131,11 @@ const BookingDetail = () => {
     return (
         <Layout>
             {editReview && (
-                <EditReview 
-                    singles={singles} 
-                    closeView={handleCloseEdit} 
-                    reviewData={singles} 
-                    onUpdateReview={handleUpdateReview} 
+                <EditReview
+                    singles={singles}
+                    closeView={handleCloseEdit}
+                    reviewData={singles}
+                    onUpdateReview={handleUpdateReview}
                 />
             )}
 
@@ -156,8 +156,8 @@ const BookingDetail = () => {
                                 </div>
                             </div>
                             <div className="lg:flex mt-5 mb-10 mx-2 lg:mx-10">
-                                <div className="lg:w-[90%]">
-                                    <div className="px-5">
+                                <div className="md:w-[70%]">
+                                    <div className="md:px-5">
                                         <img src={item.imageslink?.[0]} alt="" className="w-full h-[15rem] rounded-3xl object-cover lg:h-[23rem]" />
                                         <div>
                                             <div className="flex justify-between mt-10 mb-3 font-[500]">
@@ -181,7 +181,7 @@ const BookingDetail = () => {
                                                 </div>
                                             </div>
                                             <div className="">
-                                                <div className="px-5">
+                                                <div className="md:px-5">
                                                     <p className="font-[500] py-5 text-2xl">Add Review</p>
                                                     <div>
                                                         <div className="bg-gray flex h-20 rounded-xl px-5 items-center gap-2">
@@ -210,21 +210,21 @@ const BookingDetail = () => {
                                                             <div className="" key={i}>
                                                                 <div className="my-5">
                                                                     <div key={item.id} className="border-b py-4">
-                                                                        <div className="flex gap-4 ">
-                                                                            <div className="">
-                                                                                <FaUserCircle className='text-5xl' />
-                                                                            </div>
-                                                                            <div>
+                                                                        <div className="">
+                                                                            <div className="flex gap-4">
+                                                                                <div className="">
+                                                                                    <FaUserCircle className='text-5xl' />
+                                                                                </div>
                                                                                 <div className="flex items-start w-full justify-between">
                                                                                     <div className="">
-                                                                                        <div className="flex gap-4">
+                                                                                        <div className="flex text-sm md:text-base gap-4">
                                                                                             <p className="font-[500]">
                                                                                                 {item.ufname} {item.ulname}
                                                                                             </p>
                                                                                             <p className="text-primary text-xs">{item.created_at}</p>
                                                                                         </div>
-                                                                                        <div className="flex">
-                                                                                            <div className="flex items-center text-star gap-2">
+                                                                                        <div className="flex text-xs md:text-base gap-2">
+                                                                                            <div className="flex  items-center text-star gap-2">
                                                                                                 {[...Array(5)].map((_, starIndex) => (
                                                                                                     <FaStar
                                                                                                         key={starIndex}
@@ -237,11 +237,11 @@ const BookingDetail = () => {
                                                                                     </div>
                                                                                     <div onClick={() => SingleItem(item)} className="text-secondary cursor-pointer text-sm">Edit</div>
                                                                                 </div>
-                                                                                
                                                                             </div>
-                                                                            <div className="mt-5 text-sm text-primary">
-                                                                                    {item.review}
-                                                                                </div>
+
+                                                                            <div className="mt-5 text-sm truncate overflow-hidden ... text-primary">
+                                                                                {item.review}
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -255,7 +255,7 @@ const BookingDetail = () => {
                                 </div>
 
                                 {booking.length > 0 && (
-                                    <div className="bg-gray h-[18rem] lg:w-[30%] p-4">
+                                    <div className="bg-gray h-[18rem] md:w-[30%] p-4">
                                         <div>
                                             <p className="font-[500] text-xl">Payment Summary</p>
                                             <div className="h-[28rem] px-6">
