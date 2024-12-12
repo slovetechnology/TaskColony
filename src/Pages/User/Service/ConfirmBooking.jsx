@@ -35,6 +35,12 @@ const navigate = useNavigate()
     setSingles(member);
   };
 
+  const confirmBooking = () => {
+    ToastAlert('Booking Created successfully')
+    setTimeout(() => {
+      window.location.href = '/booking-list'
+    }, 2000);
+  }
   // Fetch all bookings
   const fetchAllBookings = useCallback(async () => {
     try {
@@ -142,7 +148,7 @@ const navigate = useNavigate()
 
           <div className="flex flex-col font-[500] md:mt-10 mt-5 items-center justify-center">
             <div className="bg-secondary w-full text-center text-white rounded-lg py-4">
-              <button onClick={confirmAction}>Confirm Booking</button>
+              <button onClick={confirmBooking}>Confirm Booking</button>
             </div>
             <div onClick={() => DeleteItem(bookingData)} className="mt-3 text-secondary">
               <button>Cancel Booking</button>
