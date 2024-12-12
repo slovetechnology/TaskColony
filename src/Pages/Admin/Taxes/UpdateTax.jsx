@@ -69,7 +69,7 @@ const UpateTax = ({ closeView, singles, resendSignal }) => {
                             <label className="text-xs">State</label>
                             <select
                                 {...register('name', { required: 'State is required' })}
-                                className={`input ${errors.name ? 'border-red-600' : 'border-gray-300'}`}
+                                className={`input border ${errors.name ? 'border-red-600' : 'border-gray-300'}`}
                             >
                                 {usStates.map((state) => (
                                     <option key={state} value={state}>{state}</option>
@@ -81,7 +81,7 @@ const UpateTax = ({ closeView, singles, resendSignal }) => {
                             <input
                                 {...register('commission', { required: 'Commission is required' })}
                                 type="number"
-                                className={`input ${errors.commission ? 'border-red-600' : 'border-gray-300'}`}
+                                className={`input border ${errors.commission ? 'border-red-600' : 'border-gray-300'}`}
                                 step="0.01" // Optional: allows decimals
                             />
                         </div>
@@ -89,7 +89,7 @@ const UpateTax = ({ closeView, singles, resendSignal }) => {
                             <label className="text-xs">Status</label>
                             <select
                                 {...register('status', { required: 'Status is required' })}
-                                className={`input ${errors.status ? 'border-red-600' : 'border-gray-300'}`}
+                                className={`input border ${errors.status ? 'border-red-600' : 'border-gray-300'}`}
                             >
                                 {statusOptions.map((option) => (
                                     <option key={option.value} value={option.value}>

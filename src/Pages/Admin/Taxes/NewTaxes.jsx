@@ -4,6 +4,7 @@ import AdminDropdown from '../../../Components/Admin/AdminDropdown';
 import { Apis, AuthPosturl } from '../../../Components/General/Api';
 import { useForm } from 'react-hook-form';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
+import { Link } from 'react-router-dom';
 
 // List of U.S. states
 const usStates = [
@@ -82,7 +83,7 @@ const NewTax = () => {
                                 <select
                                     {...register('name', { required: 'State is required' })}
                                     onChange={(e) => handleStateChange(e.target.value)} // Update status on state change
-                                    className={`input ${errors.name ? 'border-red-600' : 'border-gray-300'}`}
+                                    className={`input border ${errors.name ? 'border-red-600' : 'border-gray-300'}`}
                                 >
                                     {usStates.map((state) => (
                                         <option key={state} value={state}>{state}</option>
@@ -94,7 +95,7 @@ const NewTax = () => {
                                 <input
                                     {...register('commission', { required: 'Commission is required' })}
                                     type="number"
-                                    className={`input ${errors.commission ? 'border-red-600' : 'border-gray-300'}`}
+                                    className={`input border ${errors.commission ? 'border-red-600' : 'border-gray-300'}`}
                                     step="0.01" // Optional: allows decimals
                                 />
                             </div>

@@ -68,7 +68,7 @@ export const NavLinks = [
 export const FooterLinks = [
     { title: 'About us', link: '/about' },
     { title: 'Contact us', link: '/contact' },
-    { title: 'Privacy', link: '/prvacy' },
+    { title: 'Privacy', link: '/privacy' },
     { title: 'Terms and Condition', link: '/terms' },
     { title: 'Career', link: '' },
     { title: 'Team', link: '/team' },

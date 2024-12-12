@@ -66,7 +66,7 @@ const AdminLogin = () => {
                     validate: (value) => value.includes('@') || 'Enter a valid email address'
                   })}
                   type="email"
-                  className={`input ${errors.email ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.email ? 'border-red-600' : 'border'}`}
                 />
                 {errors.email && <div className="text-red-600">{errors.email.message}</div>}
               </div>
@@ -82,7 +82,7 @@ const AdminLogin = () => {
                 <input
                   {...register('password', { required: 'Password is required' })}
                   type={showPassword ? 'text' : 'password'}
-                  className={`input ${errors.password ? 'border-red-600' : 'border'}`}
+                  className={`input border ${errors.password ? 'border-red-600' : 'border'}`}
                 />
                 {errors.password && <div className="text-red-600">{errors.password.message}</div>}
               </div>
