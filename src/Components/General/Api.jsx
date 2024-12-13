@@ -27,7 +27,7 @@ const user_urls = {
     otp_verify: `${user}/auth/verify_email_or_pno_verification_code.php`,
 
     get_booking: `${user}/bookings/get_all_bookings.php`,
-    update_bookings: `${user}/bookings/update_booking.php`,
+    update_bookings: `${user}/bookings/edit_booking.php`,
     create_bookings: `${user}/bookings/create_booking.php`,
     cancel_bookings: `${user}/bookings/cancle_booking.php`,
     get_system: `${user}/system/get_system_data.php`,
