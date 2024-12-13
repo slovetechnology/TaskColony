@@ -281,7 +281,7 @@ const BookingDetail = () => {
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div className="mt-5 text-sm truncate overflow-hidden ... text-primary">
+                                                                            <div className="mt-5 text-sm md:truncate overflow-hidden ... text-primary">
                                                                                 {item.review}
                                                                             </div>
                                                                         </div>

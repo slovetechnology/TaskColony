@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FaPlus, FaStar } from 'react-icons/fa';
+import { FaPlus, FaStar, FaUserCircle } from 'react-icons/fa';
 import Layout from '../../../Components/User/Layout';
 import { Apis, AuthGeturl, Geturl } from '../../../Components/General/Api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useForm } from 'react-hook-form';
 import CalendarDays from '../../../Components/General/CalendarDays';
+import { useSelector } from 'react-redux';
 
 const ServiceDetail = () => {
   const { userid } = useParams();
@@ -17,6 +18,7 @@ const ServiceDetail = () => {
   const [cities, setCities] = useState([]);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { userloggedin, user } = useSelector(state => state.data); // Pulling from Redux
 
   const [image, setImage] = useState({
     main: null,
@@ -98,10 +100,10 @@ const ServiceDetail = () => {
 
   const handleDateSelect = (selectedDate) => {
     setSelectedDateTime(prev => ({
-        date: selectedDate,
-        time: prev.time
+      date: selectedDate,
+      time: prev.time
     }));
-};
+  };
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -137,7 +139,7 @@ const ServiceDetail = () => {
 
         setTimeout(() => {
           window.location.href = res.text;
-        }, 5000); 
+        }, 5000);
       }
     } catch (error) {
       ErrorAlert('An unexpected error occurred. Please try again.');
@@ -212,7 +214,10 @@ const ServiceDetail = () => {
                       service.reviews.map((review) => (
                         <div key={review.id} className="border-b py-4">
                           <div className="flex gap-4 font-medium">
-                            <img src={review.profile_pic} alt="" className="w-20 h-20" />
+                            {/* <img src={review.profile_pic} alt="" className="w-20 h-20" /> */}
+                            <div className="">
+                              <FaUserCircle className='text-5xl' />
+                            </div>
                             <div>
                               <div className="flex gap-4">
                                 <p className="font-[500]">
@@ -228,6 +233,8 @@ const ServiceDetail = () => {
                                   />
                                 ))}
                               </div>
+
+                              <div className="mt-4">{review.review}</div>
                             </div>
                           </div>
                         </div>
