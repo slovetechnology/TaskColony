@@ -300,7 +300,7 @@ const Booking = () => {
                                             type="submit"
                                             className="bg-secondary w-full py-3 rounded-full text-white"
                                         >
-                                            {isSubmitting ? 'Processing...' : 'Book Now'}
+                                            {isSubmitting ? 'Processing...' : 'Upload Booking'}
                                         </button>
                                     </div>
                                 </div>
