@@ -98,7 +98,7 @@ const navigate = useNavigate()
           isLoading={loads}
         />
       )}
-      <div className="md:w-[80%]">
+      <div className="">
         <img
           src={bookingData.image}
           alt="Service"
