@@ -28,20 +28,40 @@ const AllAdmin = () => {
     const [loads, setLoads] = useState(false);
     const [view, setView] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-
     const fetchUsers = useCallback(async () => {
+        let allAdmins = [];
+        let pageNo = 1;
+        const perPage = 15; // Match backend's default page size
+        let totalPages = 1; // Initialize totalPages
+
         try {
-            const res = await AuthGeturl(Apis.admins.get_admin);
-            if (res.status === true) {
-                setItems(res.data.data);
-                setFilteredItems(res.data.data);
-            } else {
-                throw new Error('Failed to fetch data');
+            while (pageNo <= totalPages) {
+                const res = await AuthGeturl(`${Apis.admins.get_admin}?page_no=${pageNo}&no_perpage=${perPage}`);
+                if (res.status === true) {
+                    const fetchedItems = res.data.data;
+                    totalPages = res.data.totalpage || 1; // Update total pages from response
+
+                    if (Array.isArray(fetchedItems)) {
+                        allAdmins = [...allAdmins, ...fetchedItems];
+                    } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
+                        allAdmins.push(fetchedItems);
+                    } else {
+                        console.error('Unexpected data structure');
+                    }
+                } else {
+                    throw new Error('Failed to fetch data');
+                }
+
+                pageNo++; // Move to the next page
             }
+
+            setItems(allAdmins);
+            setFilteredItems(allAdmins);
         } catch (err) {
             setError(err.message);
         }
     }, []);
+
 
     useEffect(() => {
         fetchUsers();

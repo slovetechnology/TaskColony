@@ -62,26 +62,62 @@ const AllTaxes = () => {
         }
     };
 
-    const getAllTaxes = useCallback(async () => {
-        try {
-            const res = await AuthGeturl(Apis.admins.get_admin_taxes);
-            if (res.status === true) {
-                const fetchedItems = res.data.data;
+    // const getAllTaxes = useCallback(async () => {
+    //     try {
+    //         const res = await AuthGeturl(Apis.admins.get_admin_taxes);
+    //         if (res.status === true) {
+    //             const fetchedItems = res.data.data;
 
-                if (Array.isArray(fetchedItems)) {
-                    setItems(fetchedItems);
-                    setFilteredItems(fetchedItems);
-                    setTotal(fetchedItems.length);
-                } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
-                    setItems([fetchedItems]);
-                    setFilteredItems([fetchedItems]);
-                    setTotal(1);
+    //             if (Array.isArray(fetchedItems)) {
+    //                 setItems(fetchedItems);
+    //                 setFilteredItems(fetchedItems);
+    //                 setTotal(fetchedItems.length);
+    //             } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
+    //                 setItems([fetchedItems]);
+    //                 setFilteredItems([fetchedItems]);
+    //                 setTotal(1);
+    //             } else {
+    //                 console.error('Unexpected data structure');
+    //             }
+    //         } else {
+    //             throw new Error('Failed to fetch data');
+    //         }
+    //     } catch (err) {
+    //         console.error(err.message);
+    //     }
+    // }, []);
+
+    const getAllTaxes = useCallback(async () => {
+        let allTaxes = [];
+        let pageNo = 1;
+        const perPage = 15; // Match the backend's fixed page size
+        let totalPage = 1; // Initial guess
+
+        try {
+            while (pageNo <= totalPage) {
+                const res = await AuthGeturl(`${Apis.admins.get_admin_taxes}?page_no=${pageNo}&no_perpage=${perPage}`);
+                if (res.status === true) {
+                    const fetchedItems = res.data.data;
+                    totalPage = res.data.totalpage; // Get total pages from API response
+
+                    if (Array.isArray(fetchedItems)) {
+                        allTaxes = [...allTaxes, ...fetchedItems];
+                    } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
+                        allTaxes.push(fetchedItems);
+                    } else {
+                        console.error('Unexpected data structure');
+                    }
                 } else {
-                    console.error('Unexpected data structure');
+                    throw new Error('Failed to fetch data');
                 }
-            } else {
-                throw new Error('Failed to fetch data');
+
+                pageNo++;
             }
+
+            // Set combined data after fetching all pages
+            setItems(allTaxes);
+            setFilteredItems(allTaxes);
+            setTotal(allTaxes.length);
         } catch (err) {
             console.error(err.message);
         }

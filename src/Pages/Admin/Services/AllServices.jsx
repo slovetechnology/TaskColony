@@ -77,28 +77,41 @@ const AllServices = () => {
     };
 
     const getAllServices = useCallback(async () => {
+        let allServices = [];
+        let pageNo = 1;
+        const perPage = 15; // Match backend's page size
+        let totalPage = 1; // Initialize totalPage
+
         try {
-            const res = await AuthGeturl(Apis.admins.get_admin_services);
-            if (res.status === true) {
-                const fetchedItems = res.data.data;
-                if (Array.isArray(fetchedItems)) {
-                    setItems(fetchedItems);
-                    setFilteredItems(fetchedItems); // Initialize filteredItems
-                    setTotal(fetchedItems.length);
-                } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
-                    setItems([fetchedItems]);
-                    setFilteredItems([fetchedItems]); // Initialize filteredItems
-                    setTotal(1);
+            while (pageNo <= totalPage) {
+                const res = await AuthGeturl(`${Apis.admins.get_admin_services}?page_no=${pageNo}&no_perpage=${perPage}`);
+                if (res.status === true) {
+                    const fetchedItems = res.data.data;
+                    totalPage = res.data.totalpage; // Update total pages from response
+
+                    if (Array.isArray(fetchedItems)) {
+                        allServices = [...allServices, ...fetchedItems];
+                    } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
+                        allServices.push(fetchedItems);
+                    } else {
+                        console.error('Unexpected data structure');
+                    }
                 } else {
-                    console.error('Unexpected data structure');
+                    throw new Error('Failed to fetch data');
                 }
-            } else {
-                throw new Error('Failed to fetch data');
+
+                pageNo++; // Increment to next page
             }
+
+            // Set combined data
+            setItems(allServices);
+            setFilteredItems(allServices);
+            setTotal(allServices.length);
         } catch (err) {
             console.error(err.message);
         }
     }, []);
+
 
     useEffect(() => {
         GetAllCat();
@@ -188,11 +201,12 @@ const AllServices = () => {
                             <Link to='/auth/admin/new-service' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
                                 <button>Add Services</button>
                             </Link>
+                            <PaginationButton
+                                pageCount={pageCount}
+                                onPageChange={handlePageChange}
+                            />
                         </div>
-                        <PaginationButton
-                            pageCount={pageCount}
-                            onPageChange={handlePageChange}
-                        />
+
                     </Table>
                 </div>
             </div>

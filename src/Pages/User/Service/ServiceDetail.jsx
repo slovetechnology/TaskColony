@@ -184,7 +184,7 @@ const ServiceDetail = () => {
 
         setView(2);
       } else {
-        ErrorAlert('You do not have enough funds to carry out this booking.');
+        ErrorAlert(res.text);
         setTimeout(() => {
           if (res.data[0].paid === false) {
             window.location.href = res.text;
