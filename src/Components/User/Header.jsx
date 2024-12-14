@@ -67,6 +67,7 @@ const Header = () => {
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}
+            {userloggedin && <Link className='uppercase text-xs py-3 px-4 truncate' to='/user'>Profile</Link>}
           </div>
           <div className="flex items-center gap-3">
             <Link to='/user' className="">
