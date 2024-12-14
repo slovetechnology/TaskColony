@@ -90,7 +90,7 @@ const navigate = useNavigate()
   };
 
   return (
-    <div className="gap-10 mt-10 mb-40 mx-5 md:mx-10 md:flex">
+    <div className="gap-10 mt-10 mb-40 mx-10 lg:flex">
       {del && (
         <ConfirmCancelBooking
           confirmAction={confirmAction}
@@ -98,11 +98,11 @@ const navigate = useNavigate()
           isLoading={loads}
         />
       )}
-      <div className="">
+      <div className="lg:w-[70%]">
         <img
           src={bookingData.image}
           alt="Service"
-          className="w-full rounded-3xl object-cover md:h-[23rem]"
+          className="w-full rounded-3xl object-cover h-[15rem] md:h-[23rem]"
         />
         <div>
           <div className="flex justify-between mt-10 mb-3 font-[500]">
@@ -128,7 +128,7 @@ const navigate = useNavigate()
         </div>
       </div>
 
-      <div className="bg-gray md:w-[30%] md:p-10 p-4 rounded-xl">
+      <div className="bg-gray lg:w-[30%] p-10 rounded-xl">
         <div>
           <p className="font-[500] text-2xl">Price Detail</p>
           <div className="bg-white rounded-xl py-2 mt-2 h-[15rem]">
