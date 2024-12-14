@@ -9,6 +9,7 @@ const user = 'user';
 const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user.php`,
+    fund_history: `${user}/profile/get_fund_history.php`,
     top_provider: `${user}/system/get_top_providers.php`,
     forget_password: `${user}/auth/forgot_password.php`,
     reset_password: `${user}/auth/reset_password.php`,

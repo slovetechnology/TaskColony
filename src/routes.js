@@ -40,6 +40,7 @@ import Booking from "./Pages/User/Service/NewBooking"
 import KycForm from "./Pages/User/Provider/KycForm"
 import BookingDetail from "./Pages/User/Service/BookingDetail"
 import Gallery from "./Pages/General/Gallery"
+import TranscationHistory from "./Pages/General/TranscationHistory"
 
 
 export const GeneralNoAuth = [
@@ -66,6 +67,7 @@ export const GeneralNoAuth = [
 export const GeneralRoutes = [
     { path: 'user', element: User },
     { path: 'notification', element: Notification },
+    { path: 'fund-history', element: TranscationHistory  },
     { path: 'confirm-booking', element: ConfirmBooking },
     { path: 'booking-detail/:bookingid', element: BookingDetail },
     { path: 'booking', element: BookingList },
