@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaPlus, FaStar, FaUserCircle } from 'react-icons/fa';
 import Layout from '../../../Components/User/Layout';
 import { Apis, AuthGeturl, AuthPosturl, Geturl } from '../../../Components/General/Api';
@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 import { ErrorAlert } from '../../../Components/General/Utils';
 import ConfirmBooking from './ConfirmBooking';
 import moment from 'moment';
-
 const ServiceDetail = () => {
   const { userid } = useParams();
   const [service, setService] = useState(null);
@@ -27,8 +26,9 @@ const ServiceDetail = () => {
   const [bookingData, setBookingData] = useState(null);
   const [image, setImage] = useState({
     main: null,
-    preview: null,
+    preview: null, // Start with no preview
   });
+  const navigate = useNavigate();
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -43,13 +43,13 @@ const ServiceDetail = () => {
         return;
       }
       const reader = new FileReader();
-      reader.readAsDataURL(file);
       reader.onload = () => {
         setImage({
           main: file,
-          preview: reader.result,
+          preview: reader.result, // Set the preview to the uploaded image
         });
       };
+      reader.readAsDataURL(file);
     }
   };
   const fetchService = useCallback(async () => {
@@ -62,7 +62,7 @@ const ServiceDetail = () => {
           // Set default image
           setImage({
             main: null, // No uploaded file yet
-            preview: filteredService.banner_image?.[0] || null, // Default image
+            preview: null, // Start with no preview
           });
         } else {
           setError('Service not found for this user.');
@@ -103,6 +103,7 @@ const ServiceDetail = () => {
   useEffect(() => {
     fetchAllHome();
   }, [fetchAllHome]);
+
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     defaultValues: {
       job_title: service?.name || '',
@@ -121,7 +122,6 @@ const ServiceDetail = () => {
   const fetchAllData = useCallback(async () => {
     setLoading(true);
     try {
-
       const stateResponse = await Geturl(Apis.users.get_system);
       if (stateResponse.status === true) {
         setStates(stateResponse.data.cities);
@@ -148,7 +148,17 @@ const ServiceDetail = () => {
     const ampm = hour < 12 ? 'AM' : 'PM';
     return `${hourIn12}:${minute} ${ampm}`;
   };
+
   const onSubmit = async (data) => {
+    if (!userloggedin) {
+      // If the user is not logged in, show an error and redirect
+      ErrorAlert('You must be logged in to complete the booking.');
+      setTimeout(() => {
+        navigate('/login'); // Redirect to login page
+      }, 2000); // Redirect after 2 seconds
+      return;
+    }
+
     const formData = new FormData();
     formData.append('job_title', data.job_title);
     formData.append('service_tid', data.service_tid);
@@ -159,11 +169,13 @@ const ServiceDetail = () => {
     formData.append('location_lat', 6.11223322);
     formData.append('time', convertTimeTo12HourFormat(data.time));
     formData.append('price', data.price);
-    formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('YYYY-MM-DD') : data.date);
+    formData.append(
+      'date',
+      selectedDateTime.date ? moment(selectedDateTime.date).format('YYYY-MM-DD') : data.date
+    );
 
     if (image.main) {
-      const binaryImage = await image.main.arrayBuffer();
-      formData.append('images[]', new Blob([binaryImage]), image.main.name);
+      formData.append('images[]', image.main, image.main.name);
     }
 
     formData.append('zipcode', data.zipcode);
@@ -175,7 +187,6 @@ const ServiceDetail = () => {
       const res = await AuthPosturl(Apis.users.create_bookings, formData);
 
       if (res.status === true && res.data[0].paid === true) {
-        // Set booking data for confirmation page
         setBookingData({
           ...data,
           price: data.price,
@@ -184,7 +195,7 @@ const ServiceDetail = () => {
 
         setView(2);
       } else {
-        ErrorAlert(res.text);
+        ErrorAlert('you do not have enough fund to complete this request, you will be redirect to pay');
         setTimeout(() => {
           if (res.data[0].paid === false) {
             window.location.href = res.text;
@@ -197,13 +208,13 @@ const ServiceDetail = () => {
       setIsSubmitting(false);
     }
   };
+
   const handleDateSelect = (selectedDate) => {
     setSelectedDateTime((prev) => ({
       date: selectedDate,
       time: prev.time,
     }));
   };
-
 
   return (
     <Layout>
