@@ -1,21 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
-import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
+import { IoIosLogOut } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import Lottie from 'react-lottie';
 import animationData from '../../Lotties/task-colony';
-import { SlBell, SlMagnifier, SlMenu } from 'react-icons/sl';
+import { SlBell, SlMenu } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
+import { AuthGeturl, Apis } from '../../Components/General/Api'; // Assuming this is the API service
 
 const Header = () => {
-  const { userloggedin, user } = useSelector(state => state.data); // Pulling from Redux
+  const { userloggedin, user } = useSelector((state) => state.data); // Pulling from Redux
   const navigate = useNavigate();
-  const [mobile, setMobile] = useState(false)
-  const MobileIcon = mobile ? FaTimes : SlMenu
-  const [topNav, setTopNav] = useState(false)
-  const TopNavIcon = topNav ? FaTimes : SlMenu
+  const [mobile, setMobile] = useState(false);
+  const MobileIcon = mobile ? FaTimes : SlMenu;
+  const [topNav, setTopNav] = useState(false);
+  const TopNavIcon = topNav ? FaTimes : SlMenu;
+
+  const [notificationCount, setNotificationCount] = useState(0); // State for notification count
+
+  // Fetch notifications count
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const res = await AuthGeturl(Apis.users.all_notification);
+        if (res.status === true && res.data.records) {
+          setNotificationCount(res.data.records.length);
+        }
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+    fetchNotifications();
+  }, []);
 
   const defaultOptions = {
     loop: true,
@@ -25,13 +43,13 @@ const Header = () => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
+
   const handleLogout = () => {
     Cookies.remove('taskcolony');
     sessionStorage.clear();
     navigate('/login');
     window.location.reload();
   };
-
 
   return (
     <div className='relative'>
@@ -44,12 +62,12 @@ const Header = () => {
             <Link to="/" className="lg:hidden block">
               <Lottie options={defaultOptions} height={40} width={125} />
             </Link>
-
           </div>
           <div className="lg:flex flex-row items-center gap-4 hidden">
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}
+            {userloggedin && <Link className='uppercase text-xs py-3 px-4 truncate' to='/user'>Profile</Link>}
           </div>
           <div className="flex items-center gap-3">
             <Link to='/user' className="">
@@ -84,7 +102,6 @@ const Header = () => {
                     >
                       <FaUserPlus /> Login/Register
                     </div>
-
                   </div>
                   <div onClick={() => navigate('/user')} className="block text-3xl mx-5 xl:hidden">
                     <FaUserCircle />
@@ -100,7 +117,6 @@ const Header = () => {
         </div>
         {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
           <div className="flex flex-col">
-
             {TopNavsLinks.map((item, index) => (
               <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
             ))}
@@ -117,9 +133,18 @@ const Header = () => {
           {NavLinks.map((item, index) => (
             <Link to={`${item.link}`} key={index} className='text-xs hover:text-white transition-all truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
           ))}
-          {mobile ?
+          {mobile ? (
             <Link to={``} className='text-xs truncate uppercase hover:text-white transition-all text-orange-100 py-3 px-3'>notifications</Link>
-            : <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>}
+          ) : (
+            <Link to="" className='text-white relative text-sm'>
+              <SlBell />
+              {notificationCount > 0 && (
+                <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">
+                  {notificationCount}
+                </div>
+              )}
+            </Link>
+          )}
         </div>
       </div>
     </div>
@@ -127,45 +152,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-{/* <div className="z-10 relative">
-<div className=" py-5 bg-secondary-light">
-    <div className="flex items-center justify-between lg:justify-center gap-8 w-11/12 lg:w-10/12 mx-auto">
-        <div className="">
-            <Link to="">
-                <LazyLoadImage
-                    effect="blur"
-                    src={logo}
-                    className='h-full w-32'
-                />
-            </Link>
-        </div>
-        <div className="lg:flex flex-row items-center gap-4 hidden">
-            <div className="border border-slate-500 w-[15rem] rounded-md p-2 flex items-center gap-1">
-                <input type="text" placeholder='What are you looking for today?' className="outline-none w-full text-xs bg-transparent" />
-                <SlMagnifier className='text-zinc-400 text-xs' />
-            </div>
-            {TopNavsLinks.map((item, index) => (
-                <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
-            ))}
-        </div>
-        <div className="">
-            <Link to="">
-                <div className='text-white bg-secondary truncate py-1.5 px-4 flex items-center gap-1 rounded-md text-xs'> <img src={img2} alt="" className="size-3" /> Login/Register</div>
-            </Link>
-        </div>
-    </div>
-</div>
-<div className="bg-secondary">
-    <div className="lg:hidden ml-auto py-3 w-fit mr-10">
-        <SlMenu className='text-white text-2xl cursor-pointer' />
-    </div>
-    <div className="hidden lg:flex flex-row gap-1 items-center justify-center w-11/12 lg:w-10/12 mx-auto py-2">
-        {NavLinks.map((item, index) => (
-            <Link to={`${item.link}`} key={index} className='text-xs truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
-        ))}
-        <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>
-    </div>
-</div>
-</div> */}

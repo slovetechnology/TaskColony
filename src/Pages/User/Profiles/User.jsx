@@ -100,7 +100,7 @@ const User = () => {
             alt="Gradient"
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
-          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[35rem] shadow-2xl">
+          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[37rem] shadow-2xl">
             <div className="md:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="flex items-center gap-4">
                 <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
@@ -129,7 +129,7 @@ const User = () => {
                 <MdOutlineMyLocation />
               </div>
             </div>
-            { user.kyclevel === 0 &&  <Link to='/provider-kyc'></Link>}
+            {user.kyclevel === 0 && <Link to='/provider-kyc'></Link>}
 
             <div className="border-t pt-5">
               <div className="flex items-center text-primary gap-3 justify-between"></div>
@@ -179,6 +179,13 @@ const User = () => {
                 to="/terms"
               >
                 Terms & Conditions <FaChevronRight />
+              </Link>
+
+              <Link
+                className="border py-3 px-2 items-center justify-between flex w-full"
+                to="/fund-history"
+              >
+                Transaction History <FaChevronRight />
               </Link>
 
               <div

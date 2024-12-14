@@ -9,10 +9,10 @@ const NewServices = () => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [categories, setCategories] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [bannerImageName, setBannerImageName] = useState(''); // For banner image name
-    const [galleryImageName, setGalleryImageName] = useState(''); // For gallery image name
+    const [bannerImageName, setBannerImageName] = useState('');
+    const [galleryImages, setGalleryImages] = useState([]); // Store gallery images
 
-    // Fetch categories when the component mounts
+    // Fetch categories on mount
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -32,21 +32,23 @@ const NewServices = () => {
         event.preventDefault();
 
         const formData = new FormData();
-        formData.append('name', data.name); // Name of the service
-        formData.append('duration', data.min_duration); // Duration
-        formData.append('commission', data.commission); // Commission
-        formData.append('category_tid', data.category); // Category ID
-        formData.append('status', data.status); // Status (active/inactive)
-        formData.append('featured', data.feature_front_page); // Featured (yes/no)
-        formData.append('description', data.description); // Description
+        formData.append('name', data.name);
+        formData.append('duration', data.min_duration);
+        formData.append('commission', data.commission);
+        formData.append('category_tid', data.category);
+        formData.append('status', data.status);
+        formData.append('featured', data.feature_front_page);
+        formData.append('description', data.description);
 
-        // Adding the images if they are selected
+        // Add banner image
         if (data.banner_image[0]) {
-            formData.append('images[]', data.banner_image[0]); // Banner Image
+            formData.append('images[]', data.banner_image[0]);
         }
-        if (data.gallery_image[0]) {
-            formData.append('gallery[]', data.gallery_image[0]); // Gallery Image
-        }
+
+        // Add all gallery images
+        galleryImages.forEach((image, index) => {
+            formData.append(`gallery[]`, image.file); // Append each file
+        });
 
         setIsSubmitting(true);
 
@@ -56,40 +58,51 @@ const NewServices = () => {
             });
 
             if (res.status === true) {
-                ToastAlert(res.text); // Success alert
+                ToastAlert(res.text);
             } else {
-                ErrorAlert(res.text); // Error alert
+                ErrorAlert(res.text);
             }
         } catch (error) {
-            ErrorAlert('An unexpected error occurred. Please try again.'); // General error
+            ErrorAlert('An unexpected error occurred. Please try again.');
         } finally {
-            setIsSubmitting(false); // Reset submitting state
+            setIsSubmitting(false);
         }
     };
 
-    // Handle file change for banner image
+    // Handle banner image selection
     const handleBannerImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            setBannerImageName(e.target.files[0].name); 
+            setBannerImageName(e.target.files[0].name);
         }
     };
 
-    // Handle file change for gallery image
+    // Handle gallery image selection
     const handleGalleryImageChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            setGalleryImageName(e.target.files[0].name)
+        if (e.target.files) {
+            const files = Array.from(e.target.files); // Convert to array
+            const updatedImages = files.map(file => ({
+                file,
+                preview: URL.createObjectURL(file), // Generate preview URL
+            }));
+            setGalleryImages(prev => [...prev, ...updatedImages]);
         }
+    };
+
+    // Remove gallery image from preview
+    const removeGalleryImage = (index) => {
+        setGalleryImages(prev => prev.filter((_, i) => i !== index));
     };
 
     return (
         <AdminLayout>
-            <div className="bg-[#5a5a5a] md:h-[40.8rem]  w-full py-6">
-            <div className=" my-3 mx-2 md:mx-9">
-                    <Link to='/auth/admin/service' className="bg-white py-2 px-5 font-semibold text-lg rounded-lg w-fit">Back</Link>
+            <div className="bg-[#5a5a5a] h-[49rem] w-full pt-6">
+                <div className=" mx-2 mb-3 md:mx-9">
+                    <Link to='/auth/admin/service' className="bg-white py-2 px-5  font-semibold text-lg rounded-lg w-fit">Back</Link>
                 </div>
-                <div className="bg-white w-[95%] mx-auto text-primary md:h-[37rem] md:px-10 px-2 py-2 pt-10 md:overflow-hidden">
+                <div className="bg-white w-[95%] mx-auto text-primary h-auto md:px-10 px-2 py-2 pt-10">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="md:grid md:grid-cols-3 mb-5 gap-12">
+                            {/* Service Name */}
                             <div>
                                 <label className="text-xs">Name</label>
                                 <input
@@ -100,6 +113,7 @@ const NewServices = () => {
                                 />
                                 {errors.name && <span className="text-red-500">{errors.name.message}</span>}
                             </div>
+                            {/* Duration */}
                             <div>
                                 <label className="text-xs">Minimum Duration</label>
                                 <input
@@ -109,6 +123,7 @@ const NewServices = () => {
                                     {...register('min_duration')}
                                 />
                             </div>
+                            {/* Commission */}
                             <div>
                                 <label className="text-xs">Commission</label>
                                 <input
@@ -120,8 +135,8 @@ const NewServices = () => {
                             </div>
                         </div>
 
-                        {/* Category, Status, Feature Inputs */}
                         <div className="md:grid md:grid-cols-3 mb-5 gap-12">
+                            {/* Category */}
                             <div>
                                 <label className="text-xs">Categories</label>
                                 <select className="admininput" {...register('category')}>
@@ -133,6 +148,7 @@ const NewServices = () => {
                                     ))}
                                 </select>
                             </div>
+                            {/* Status */}
                             <div>
                                 <label className="text-xs">Status</label>
                                 <select className="admininput" {...register('status')}>
@@ -140,6 +156,7 @@ const NewServices = () => {
                                     <option value="inactive">Inactive</option>
                                 </select>
                             </div>
+                            {/* Feature on Front Page */}
                             <div>
                                 <label className="text-xs">Feature on Front Page</label>
                                 <select className="admininput" {...register('feature_front_page')}>
@@ -149,7 +166,7 @@ const NewServices = () => {
                             </div>
                         </div>
 
-                        {/* Description Input */}
+                        {/* Description */}
                         <div>
                             <label className="text-xs mb-2 block">Description</label>
                             <textarea
@@ -159,41 +176,61 @@ const NewServices = () => {
                             />
                         </div>
 
-                        {/* Image Inputs (Banner & Gallery) */}
-                        <div className="md:flex gap-5 items-center mt-5">
-                            <div className="relative md:w-[50%]">
-                                <label className="text-xs">Banner Image</label>
-                                <input
-                                    type="file"
-                                    {...register('banner_image')}
-                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                    onChange={handleBannerImageChange}
-                                />
-                                <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
-                                    <div className="w-full px-4 py-2 text-gray-500">
-                                        {bannerImageName || 'Choose Image'}
-                                    </div>
-                                    <div className="bg-gray-200 border-l border-gray-300 text-gray-700 px-4 py-2 cursor-pointer">
-                                        Browse
-                                    </div>
+                        {/* Banner Image */}
+                        <div className="relative md:w-[50%] mt-5">
+                            <label className="text-xs">Banner Image</label>
+                            <input
+                                type="file"
+                                {...register('banner_image')}
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                onChange={handleBannerImageChange}
+                            />
+                            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
+                                <div className="w-full px-4 py-2 text-gray-500">
+                                    {bannerImageName || 'Choose Image'}
+                                </div>
+                                <div className="bg-gray-200 border-l border-gray-300 text-gray-700 px-4 py-2 cursor-pointer">
+                                    Browse
                                 </div>
                             </div>
-                            <div className="relative md:w-[50%]">
-                                <label className="text-xs">Gallery Image</label>
-                                <input
-                                    type="file"
-                                    {...register('gallery_image')}
-                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                    onChange={handleGalleryImageChange}
-                                />
-                                <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
-                                    <div className="w-full px-4 py-2 text-gray-500">
-                                        {galleryImageName || 'Choose Image'}
-                                    </div>
-                                    <div className="bg-gray-200 border-l border-gray-300 text-gray-700 px-4 py-2 cursor-pointer">
-                                        Browse
-                                    </div>
+                        </div>
+
+                        {/* Gallery Images */}
+                        <div className="relative mt-5">
+                            <label className="text-xs">Gallery Images</label>
+                            <input
+                                type="file"
+                                multiple
+                                {...register('gallery_image')}
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                onChange={handleGalleryImageChange}
+                            />
+                            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
+                                <div className="w-full px-4 py-2 text-gray-500">
+                                    Select multiple images
                                 </div>
+                                <div className="bg-gray-200 border-l border-gray-300 text-gray-700 px-4 py-2 cursor-pointer">
+                                    Browse
+                                </div>
+                            </div>
+                            {/* Gallery Preview */}
+                            <div className="mt-5 flex gap-4 flex-wrap">
+                                {galleryImages.map((img, index) => (
+                                    <div key={index} className="relative">
+                                        <img
+                                            src={img.preview}
+                                            alt={`Gallery ${index + 1}`}
+                                            className="w-20 h-20 object-cover border rounded-md"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => removeGalleryImage(index)}
+                                            className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
+                                        >
+                                            x
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
@@ -201,7 +238,6 @@ const NewServices = () => {
                         <div className="flex items-start justify-start mt-8">
                             <button
                                 type="submit"
-                                disabled={isSubmitting}
                                 className="bg-pink px-10 py-2 text-white rounded-md"
                             >
                                 {isSubmitting ? 'Saving...' : 'Save'}

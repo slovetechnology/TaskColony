@@ -197,7 +197,7 @@ const AllServices = () => {
                                 </TableData>
                             </TableRow>
                         ))}
-                        <div className="mt-10 mx-10">
+                        <div className="mt-10 mb-5 mx-10">
                             <Link to='/auth/admin/new-service' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
                                 <button>Add Services</button>
                             </Link>

@@ -259,21 +259,29 @@ const ServiceDetail = () => {
                       <div className="flex justify-between">
                         <div className="font-[500] text-base py-3">Gallery</div>
                       </div>
+                      {/* <div className="flex overflow-x-auto items-center space-x-3">
+                        <div className="flex-shrink-0">
+                          <img
+                            src={service.gallery?.[0]}
+                            alt={``}
+                            className="w-24 h-28 object-cover rounded-lg"
+                          />
+                        </div>
+
+                      </div> */}
+
                       <div className="flex overflow-x-auto items-center space-x-3">
-                        {service.gallery?.length > 0 ? (
-                          service.gallery.map((image, index) => (
-                            <div key={image.id || index} className="flex-shrink-0">
-                              <img
-                                src={image[0]}
-                                alt={`Gallery ${index}`}
-                                className="w-24 h-28 object-cover rounded-lg"
-                              />
-                            </div>
-                          ))
-                        ) : (
-                          <p className="text-gray-500">No images in gallery.</p>
-                        )}
+                        {service.gallery?.map((image, index) => (
+                          <div key={index} className="flex-shrink-0">
+                            <img
+                              src={image}
+                              alt={`Gallery image ${index + 1}`}
+                              className="w-24 h-28 object-cover rounded-lg"
+                            />
+                          </div>
+                        ))}
                       </div>
+
                     </div>
                     <div className="mt-10 mb-20">
                       <h3 className="font-[500] text-xl">Reviews</h3>
