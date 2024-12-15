@@ -163,7 +163,7 @@ const Service = () => {
                   <LazyLoadImage
                     effect="blur"
                     src={item.banner_image[0]}
-                    className="w-[40rem] md:w-[30rem] h-[10rem] object-top object-cover"
+                    className="w-[20rem] md:w-[30rem] h-[10rem] object-top object-cover"
                   />
                 </div>
                 <div className="py-4 px-5 shadow-2xl lg:h-[9rem] w-full bg-white rounded-b-3xl -mt-3">

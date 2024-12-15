@@ -80,7 +80,14 @@ const Header = () => {
                       <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                     </div>
                   </div>
-
+                  <Link to="" className='text-secondary text-xl lg:text-2xl relative '>
+                    <SlBell />
+                    {notificationCount > 0 && (
+                      <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">
+                        {notificationCount}
+                      </div>
+                    )}
+                  </Link>
                   <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
                     <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
                       <IoIosLogOut />
@@ -126,27 +133,16 @@ const Header = () => {
       <br />
       <br />
       <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
-        <div className="lg:hidden ml-auto py-3 w-fit mr-10">
-          <MobileIcon onClick={() => setMobile(!mobile)} className='text-white text-2xl cursor-pointer' />
-        </div>
-        <div className={` ${mobile ? 'flex flex-col' : 'flex-row hidden lg:flex items-center justify-center'} gap-1 w-11/12 lg:w-10/12 mx-auto py-3`}>
-          {NavLinks.map((item, index) => (
-            <Link to={`${item.link}`} key={index} className='text-xs hover:text-white transition-all truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
-          ))}
-          {mobile ? (
-            <Link to={``} className='text-xs truncate uppercase hover:text-white transition-all text-orange-100 py-3 px-3'>notifications</Link>
-          ) : (
-            <Link to="" className='text-white relative text-sm'>
-              <SlBell />
-              {notificationCount > 0 && (
-                <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">
-                  {notificationCount}
-                </div>
-              )}
-            </Link>
-          )}
+        <div className="overflow-hidden h-full relative">
+          <p className="text-end marquee pt-4 text-white whitespace-nowrap">
+            I want this text to go from right to left for infinity
+          </p>
         </div>
       </div>
+
+
+
+
     </div>
   );
 };
