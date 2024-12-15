@@ -75,15 +75,16 @@ function Home() {
         fetchAllHome();
     }, [fetchAllHome]);
 
+
     const fetchTopProvider = useCallback(async () => {
         setLoading(true);
         try {
             const res = await Posturl(Apis.users.top_provider);
-            console.log(res.data.data.data)
+            console.log(res.data); // Debug the response
             if (res.data.status === true && Array.isArray(res.data.data)) {
-                setProvider(res.data.data.data[0]);
+                setProvider(res.data.data.data); // Set the array directly
             } else {
-                throw new Error('Failed to fetch data');
+                throw new Error('Failed to fetch provider data');
             }
         } catch (err) {
             setError(err.message);
@@ -193,8 +194,8 @@ function Home() {
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
                             <h1>
-                                <div className="text-secondary text-4xl md:text-5xl font-bold">A One-Stop Place </div>
-                                <div className="font-bold text-4xl md:text-5xl">For Home Repair</div>
+                                <div className="text-secondary text-3xl md:text-5xl font-bold">A One-Stop Place </div>
+                                <div className="font-bold text-3xl md:text-5xl">For Home Repair</div>
                             </h1>
                             <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
                         </div>
@@ -224,6 +225,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+
             <div className="w-11/12 lg:w-10/12 mx-auto mt-28">
                 <div className="grid grid-cols-1 lg:grid-cols-7">
                     <div className="lg:col-span-4">
@@ -239,9 +241,10 @@ function Home() {
                             />
                         </div>
                     </div>
+
                     <div className="lg:col-span-3">
                         <div className="mt-10">
-                            <div className="font-bold text-3xl w-4/5 mb-8">A whole world of services
+                            <div className="font-bold text-2xl w-4/5 mb-8">A whole world of services
                                 at your door step</div>
                             {HomeServices.map((item, index) => (
                                 <div className="flex gap-2" key={index}>
@@ -271,43 +274,52 @@ function Home() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 lg:gap-y-16 gap-x-4">
-                    {category.map((item, index) => (
+                    {category.slice(0, 6).map((item, index) => (
                         <div className="bg-white shadow-2xl rounded-xl p-4" key={index}>
-                            <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14"><img src={item.icon} alt="" className="size-8" /></div>
+                            <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14">
+                                <img src={item.icon} alt="" className="size-8 object-contain" />
+                            </div>
                             <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
                         </div>
                     ))}
                 </div>
+
                 <div className="flex items-center justify-between mt-20">
                     <div className="font-medium text-2xl">Our Services</div>
                     <div className="">
                         <Link to='/service' className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
-                    {services.map((item, index) => (
-                        <div className="w-11/12 mx-auto" key={index}>
-                            <div className="relative">
 
-                                <LazyLoadImage
-                                    effect="blur"
-                                    src={item.banner_image[0]}
-                                    className="w-[40rem] h-[10rem] object-top md:w-[30rem] object-cover"
-                                />
-                            </div>
-                            <div className="py-4 px-5 bg-white rounded-b-3xl shadow-xl -mt-3">
-                                <div className="font-medium">{item.name}</div>
-                                <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
+                    {services.slice(0, 6).map((item, index) => (
+                        <div className="w-11/12 mx-auto" key={index}>
+                            <div className="w-full">
+                                <div className="relative w-full">
+                                    <LazyLoadImage
+                                        effect="blur"
+                                        src={item.banner_image[0]}
+                                        className="w-[20rem] h-[10rem] object-top md:w-[30rem] object-cover"
+                                    />
+                                    <div className="py-4 px-5 md:h-[7rem] bg-white rounded-b-3xl shadow-xl -mt-3">
+                                        <div className="font-medium">{item.name}</div>
+                                        <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
+
+
+
                 <div className="flex  items-center justify-between mt-10">
                     <div className="font-medium text-2xl">Best Offers</div>
                     <div className="">
                     </div>
                 </div>
             </div>
+
             <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-">
                 <div className="w-fit flex items-center gap-5">
                     {HomeBestOffers.map((item, index) => (
@@ -326,16 +338,17 @@ function Home() {
                     ))}
                 </div>
             </div>
+
             <div className="w-11/12 mx-auto lg:w-10/12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
                     <div className="flex flex-col justify-center">
-                        <div className="font-medium text-4xl mb-6">What our customers says</div>
+                        <div className="font-medium md:text-4xl text-3xl mb-6">What our customers says</div>
                         <div className="">
                             {HomeTestimonials.map((item, index) => (
                                 <div className="w-11/12" key={index}>
                                     <div className="font-medium text-xl">{item.title}</div>
                                     <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">{item.content}</div>
-                                    <div className="flex items-center mt-10 justify-between">
+                                    <div className="md:flex items-center mt-10 justify-between">
                                         <div className="flex items-center gap-2">
                                             <div className="">
                                                 <LazyLoadImage src={item.img} effect='blur' className='size-12' />
@@ -350,7 +363,7 @@ function Home() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex flex-row items-center gap-3">
+                                        <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
                                             <button className="bg-secondary rounded-full size-10 text-white items-center justify-center flex"> <FaArrowLeft /> </button>
                                             <button className="border border-white rounded-full size-10 text-white items-center justify-center flex"> <FaArrowRight /> </button>
                                         </div>
@@ -368,6 +381,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+
             <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>
                     <div className="lg:col-span-3 w-fit mx-auto -mb-1.5 lg:ml-auto order-2 lg:order-1">
@@ -405,6 +419,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+
             <div className="bg-zinc-200 py-10 mt-20">
                 <div className="w-11/12 mx-auto lg:w-10/12">
                     <div className="flex items-center justify-between">
@@ -422,6 +437,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+
             <div className="w-11/12 mx-auto lg:w-10/12 mb-20">
                 <div className="flex  items-center justify-between mt-20">
                     <div className="font-medium text-2xl capitalize">our best providers</div>
@@ -429,20 +445,29 @@ function Home() {
                         <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
                     </div>
                 </div>
-                <div className="mt-8">
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                        {provider.map((item, index) => (
-                            <div key={index} className="bg-white border shadow-lg rounded-3xl">
-                                <LazyLoadImage src={item.profile_pic} className='w-[40rem] md:w-[30rem] object-cover' effect='blur' />
-                                <div className="px-4 py-5 -mt-5 rounded-b-2xl ">
-                                    <div className="text-center text-xl font-semibold">{item.fname} {item.lname}</div>
-                                    <div className="text-center text-secondary text-xs">{item.email}</div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {provider.slice(0, 6).map((item, index) => (
+                        <div key={index} className="bg-white border shadow-lg rounded-3xl">
+                            <LazyLoadImage
+                                src={item.profile_pic}
+                                className="w-[40rem] md:w-[30rem] object-cover"
+                                effect="blur"
+                                alt={`${item.fname} ${item.lname}`}
+                            />
+                            <div className="px-4 py-5 -mt-5 rounded-b-2xl">
+                                <div className="text-center text-xl font-semibold">
+                                    {item.fname} {item.lname}
+                                </div>
+                                <div className="text-center text-secondary text-xs">
+                                    {item.email}
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
+
             <Footer />
         </>
     )

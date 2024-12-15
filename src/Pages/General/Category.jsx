@@ -44,10 +44,7 @@ const Category = () => {
           <div className="lg:col-span-2"></div>
           <div className="flex  lg:col-span-3 items-center justify-between">
             <div className="font-medium text-2xl">Categories</div>
-            <div className="">
-              <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
-            </div>
-          </div>
+          s</div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 lg:gap-y-16 gap-x-4">
           {items.map((item, index) => (

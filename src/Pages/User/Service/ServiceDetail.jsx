@@ -458,8 +458,9 @@ const ServiceDetail = () => {
                     <div className="my-4">
                       <label>
                         {image.preview === null ? (
-                          <div className="w-full h-32 bg-slate-200 cursor-pointer mx-auto flex items-center justify-center text-slate-600">
+                          <div className="w-full h-32 bg-slate-200 cursor-pointer mx-auto flex flex-col items-center justify-center text-slate-600">
                             <FaPlus />
+                            <div className="text-sm">Upload Image</div>
                           </div>
                         ) : (
                           <img
