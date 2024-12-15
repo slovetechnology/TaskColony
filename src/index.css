@@ -26,7 +26,6 @@ body {
   border-left-color: white;
 }
 
-
 .scrollsdown::-webkit-scrollbar {
   height: 0px;
 }
@@ -66,7 +65,40 @@ body {
   font-size: 0.9rem;
   outline: none;
   border-radius: 0.3rem;
-  border: 1px solid #6C757D;
+  border: 1px solid #6c757d;
+}
+.marquee {
+  display: inline-block;
+  position: relative;
+  animation: scrollMarquee 10s linear infinite;
+  white-space: nowrap; /* Prevent text wrapping */
+  transform: translateX(
+    100%
+  ); /* Ensure the text starts fully off-screen on the right */
+}
+
+@keyframes scrollMarquee {
+  0% {
+    transform: translateX(100%); /* Start off-screen on the right */
+  }
+  100% {
+    transform: translateX(-100%); 
+  }
+}
+
+@media (min-width: 1024px) {
+  .marquee {
+    animation: scrollMarqueeLarge 12s linear infinite;
+  }
+}
+
+@keyframes scrollMarqueeLarge {
+  0% {
+    transform: translateX(100%); 
+  }
+  100% {
+    transform: translateX(-100%); 
+  }
 }
 
 .inputs {
@@ -106,6 +138,6 @@ body {
 
 @media screen and (min-width: 570px) {
   .hmbanner::after {
-    height:  95%;
+    height: 95%;
   }
 }
