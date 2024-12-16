@@ -7,6 +7,7 @@ import { FaPlus } from 'react-icons/fa';
 import moment from 'moment';
 import Layout from '../../../Components/User/Layout';
 import ConfirmBooking from './ConfirmBooking';
+import Popups from '../../../Components/General/Popups';
 
 const Booking = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,9 +17,14 @@ const Booking = () => {
     const [categories, setCategories] = useState([]);
     const [states, setStates] = useState([]);
     const [services, setServices] = useState([]);
-    const [image, setImage] = useState({ main: null, preview: null });
+    const [images, setImages] = useState([]);
     const [bookingData, setBookingData] = useState(null);
-
+    const [location, setLocation] = useState({
+        address: '',
+        latitude: null,
+        longitude: null,
+    });
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const fetchAllData = useCallback(async () => {
@@ -45,17 +51,44 @@ const Booking = () => {
         }
     }, []);
 
+    const getUserGeoAddress = async () => {
+        if (!navigator.geolocation) {
+            ErrorAlert('Geolocation is not supported by your browser.');
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
+                try {
+                    const response = await fetch(
+                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+                    );
+                    const data = await response.json();
+                    if (data.status === "OK" && data.results.length > 0) {
+                        setLocation({
+                            address: data.results[0].formatted_address,
+                            latitude,
+                            longitude,
+                        });
+                        ToastAlert('Location retrieved successfully.');
+                    } else {
+                        ErrorAlert('Unable to retrieve address. Please enter it manually.');
+                    }
+                } catch (error) {
+                    ErrorAlert('Failed to fetch address. Try again later.');
+                }
+            },
+            (error) => {
+                ErrorAlert(`Error fetching location: ${error.message}`);
+            }
+        );
+    };
+
     useEffect(() => {
         fetchAllData();
     }, [fetchAllData]);
-
-    const convertTimeTo12HourFormat = (time) => {
-        const [hour, minute] = time.split(':');
-        const hourIn12 = hour % 12 || 12;
-        const ampm = hour < 12 ? 'AM' : 'PM';
-        return `${hourIn12}:${minute} ${ampm}`;
-    };
-
 
     const onSubmit = async (data) => {
         const formData = new FormData();
@@ -63,41 +96,41 @@ const Booking = () => {
         formData.append('service_tid', data.service_tid);
         formData.append('state_tid', data.state_tid);
         formData.append('description', data.description);
-        formData.append('address', data.address);
-        formData.append('location_long', 6.11223322);
-        formData.append('location_lat', 6.11223322);
-        formData.append('time', convertTimeTo12HourFormat(data.time));
+        formData.append('address', location.address || data.address);
+        formData.append('location_long', location.longitude || 0);
+        formData.append('location_lat', location.latitude || 0);
+        formData.append('time', moment(data.time, 'HH:mm').format('hh:mm A'));
         formData.append('price', data.price);
-        formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('YYYY-MM-DD') : data.date);
+        formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('MM-DD-YYYY') : moment().format('MM-DD-YYYY'));
 
-        if (image.main) {
-            const binaryImage = await image.main.arrayBuffer();
-            formData.append('images[]', new Blob([binaryImage]), image.main.name);
-        }
+        images.forEach(image => {
+            formData.append('images[]', image);
+        });
 
         formData.append('zipcode', data.zipcode);
         formData.append('urgent', 0);
 
         setIsSubmitting(true);
+        setIsModalOpen(true); // Open the modal to confirm the 10% commission
 
+        // Handle the actual submission in the modal confirmation
         try {
             const res = await AuthPosturl(Apis.users.create_bookings, formData);
-
             if (res.status === true && res.data[0].paid === true) {
                 setBookingData({
                     ...data,
                     price: data.price,
                     paymentUrl: res.text,
-                    image: image.preview,
+                    images: images.map(img => URL.createObjectURL(img)),
                 });
                 setView(2);
             } else {
-                ErrorAlert('You don not have enough funds to carry out this booking.');
-                setTimeout(() => {
-                    if (res.data[0].paid === false) {
-                        window.location.href = res.text
-                    }   
-                }, 2000);
+                ErrorAlert('You do not have enough funds to carry out this booking.');
+                if (res.data[0].paid === false) {
+                    setTimeout(() => {
+                        window.location.href = res.text;
+                    }, 2000);
+                }
             }
         } catch (error) {
             ErrorAlert('An unexpected error occurred. Please try again.');
@@ -114,26 +147,22 @@ const Booking = () => {
     };
 
     const handleUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        const files = Array.from(e.target.files);
+        const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+        const newImages = files.filter(file => {
             if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPEG/PNG).');
-                return;
+                alert('Please upload valid images (JPEG/PNG).');
+                return false;
             }
             if (file.size > 2 * 1024 * 1024) {
                 alert('File size should not exceed 2MB.');
-                return;
+                return false;
             }
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                setImage({
-                    main: file,
-                    preview: reader.result,
-                });
-            };
-        }
+            return true;
+        });
+
+        setImages(prevImages => [...prevImages, ...newImages]);
     };
 
     return (
@@ -154,6 +183,7 @@ const Booking = () => {
                         <div className="bg-[#e2e2e2] md:w-[30rem] py-5 px-4">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="text-sm text-[#374151]">
+                                    {/* Job Title */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Job Title</label>
                                         <input
@@ -167,6 +197,7 @@ const Booking = () => {
                                         )}
                                     </div>
 
+                                    {/* Job Description */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Job Description</label>
                                         <input
@@ -180,6 +211,7 @@ const Booking = () => {
                                         )}
                                     </div>
 
+                                    {/* Select Service */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Select Service</label>
                                         <select
@@ -198,6 +230,7 @@ const Booking = () => {
                                         )}
                                     </div>
 
+                                    {/* Select State */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Select State</label>
                                         <select
@@ -216,6 +249,7 @@ const Booking = () => {
                                         )}
                                     </div>
 
+                                    {/* Date Required */}
                                     <div className="mb-5 mt-5">
                                         <label className="text-xs font-semibold">Date Required</label>
                                         <div className="overflow-x-auto scrollsdown mb-4">
@@ -225,6 +259,7 @@ const Booking = () => {
                                         </div>
                                     </div>
 
+                                    {/* Time Service */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Time Service</label>
                                         <input
@@ -240,19 +275,26 @@ const Booking = () => {
                                         )}
                                     </div>
 
+                                    {/* Address */}
                                     <div className="mb-5">
-                                        <label className="text-xs font-semibold">Address</label>
+                                        <div className="flex justify-between">
+                                            <label className="text-xs font-semibold">Address</label>
+                                            <button className="text-xs text-secondary font-semibold" type="button" onClick={getUserGeoAddress}>Get Location</button>
+                                        </div>
                                         <input
                                             {...register('address', { required: 'Address is required' })}
                                             type="text"
                                             placeholder="Enter Address"
                                             className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
+                                            value={location.address}
+                                            onChange={(e) => setLocation({ ...location, address: e.target.value })}
                                         />
                                         {errors.address && (
                                             <div className="text-red-600">{errors.address.message}</div>
                                         )}
                                     </div>
 
+                                    {/* Price Offering */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Price Offering</label>
                                         <input
@@ -266,6 +308,7 @@ const Booking = () => {
                                         )}
                                     </div>
 
+                                    {/* Zip Code */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Zip Code</label>
                                         <input
@@ -279,22 +322,30 @@ const Booking = () => {
                                         )}
                                     </div>
 
-                                    <div className="my-4">
-                                        <label>
-                                            {image.preview === null ? (
-                                                <div className="w-full h-32 bg-slate-200 cursor-pointer mx-auto flex items-center justify-center text-slate-600">
-                                                    <FaPlus />
-                                                </div>
-                                            ) : (
+                                    {/* Image Upload Section */}
+                                    <div className="my-4 w-full overflow-x-auto">
+                                        <div className="flex gap-2">
+                                            {images.map((image, index) => (
                                                 <img
-                                                    src={image.preview}
-                                                    alt="Preview"
-                                                    className="w-full h-40 mx-auto border rounded-md object-cover"
+                                                    key={index}
+                                                    src={URL.createObjectURL(image)}
+                                                    alt={`Preview ${index}`}
+                                                    className="w-20 h-20 border rounded-md object-cover"
                                                 />
-                                            )}
-                                            <input onChange={handleUpload} type="file" hidden />
-                                        </label>
+                                            ))}
+                                            <label className="w-20 h-20 bg-slate-200 cursor-pointer flex items-center justify-center rounded-md flex-shrink-0">
+                                                <FaPlus className="text-slate-600" />
+                                                <input
+                                                    onChange={handleUpload}
+                                                    type="file"
+                                                    multiple
+                                                    hidden
+                                                />
+                                            </label>
+                                        </div>
                                     </div>
+
+                                    {/* Submit Button */}
                                     <div className="mt-6 mb-3">
                                         <button
                                             type="submit"
@@ -313,6 +364,9 @@ const Booking = () => {
             {view === 2 && bookingData && (
                 <ConfirmBooking bookingData={bookingData} />
             )}
+            <Popups isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Commission Fee">
+                <p>Task Colony will take a 10% commission on any payment made.</p>
+            </Popups>
         </Layout>
     );
 };
