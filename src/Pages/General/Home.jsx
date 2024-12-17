@@ -420,24 +420,7 @@ function Home() {
                 </div>
             </div>
 
-            <div className="bg-zinc-200 py-10 mt-20">
-                <div className="w-11/12 mx-auto lg:w-10/12">
-                    <div className="flex items-center justify-between">
-                        <div className="font-medium text-2xl capitalize">Our Work Gallery</div>
-                        <div className="">
-                            <Link to='/gallery' className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /></Link>
-                        </div>
-                    </div>
-                    <div className="mt-8 overflow-x-auto">
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                            {gallery.slice(0, 4).map((item, index) => (
-                                <LazyLoadImage key={index} src={item} className='md:h-[22rem] h-[10rem] object-cover' effect='blur' />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        
             <div className="w-11/12 mx-auto lg:w-10/12 mb-20">
                 <div className="flex  items-center justify-between mt-20">
                     <div className="font-medium text-2xl capitalize">our best providers</div>
@@ -447,20 +430,20 @@ function Home() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {provider.slice(0, 6).map((item, index) => (
+                    {HomeProviders.slice(0, 6).map((item, index) => (
                         <div key={index} className="bg-white border shadow-lg rounded-3xl">
                             <LazyLoadImage
-                                src={item.profile_pic}
+                                src={item.img}
                                 className="w-[40rem] md:w-[30rem] object-cover"
                                 effect="blur"
                                 alt={`${item.fname} ${item.lname}`}
                             />
                             <div className="px-4 py-5 -mt-5 rounded-b-2xl">
                                 <div className="text-center text-xl font-semibold">
-                                    {item.fname} {item.lname}
+                                    {item.title}
                                 </div>
                                 <div className="text-center text-secondary text-xs">
-                                    {item.email}
+                                    {item.tag}
                                 </div>
                             </div>
                         </div>
