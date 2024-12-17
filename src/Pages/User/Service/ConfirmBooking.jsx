@@ -28,6 +28,7 @@ const ConfirmBooking = ({ bookingData }) => {
   const [amountPaid, setAmountPaid] = useState(null);
   const [mainpriceis, setMainpriceis] = useState(null);
   const [price, setPrice] = useState(null);
+  const [commisssion, setCommission] = useState(null);
   const navigate = useNavigate()
   // Format date and time (e.g., December 12th, 2024)
   const formattedDate = moment(bookingData.date).format('MMMM Do YYYY');
@@ -52,6 +53,9 @@ const ConfirmBooking = ({ bookingData }) => {
         setItems(res.data.data);
         if (res.data.data && res.data.data.length > 0) {
           setTrackid(res.data.data[0].trackid);
+          setMainpriceis(res.data.data[0].mainpriceis); // Get the main price for the first booking
+          setPrice(res.data.data[0].price); // Get the price for the first booking
+          setAmountPaid(res.data.data[0].amt_paid); // Get the amount paid for the first booking
         }
       } else {
         throw new Error('Failed to fetch data');
@@ -60,7 +64,6 @@ const ConfirmBooking = ({ bookingData }) => {
       ToastAlert(err.message);
     }
   }, []);
-
   // Call fetchAllBookings on component mount
   useEffect(() => {
     fetchAllBookings();
@@ -91,78 +94,8 @@ const ConfirmBooking = ({ bookingData }) => {
     }
   };
 
-  // return (
-  //   <div className="gap-10 mt-10 mb-40 mx-10 lg:flex">
-  //     {del && (
-  //       <ConfirmCancelBooking
-  //         confirmAction={confirmAction}
-  //         closeView={() => setDel(false)}
-  //         isLoading={loads}
-  //       />
-  //     )}
-  //     <div className="lg:w-[70%]">
-  //       <img
-  //         src={bookingData.image}
-  //         alt="Service"
-  //         className="w-full rounded-3xl object-cover h-[15rem] md:h-[23rem]"
-  //       />
-  //       <div>
-  //         <div className="flex justify-between mt-10 mb-3 font-[500]">
-  //           <p className="md:text-3xl">{bookingData.job_title}</p>
-  //         </div>
-  //         <div>
-  //           <p className="text-primary text-xs">
-  //             <span className="font-[500] text-sm text-black">Location</span>: {bookingData.address}
-  //           </p>
-  //           <div className="md:flex gap-10 mt-2">
-  //             <p className="text-primary text-xs">
-  //               <span className="font-[500] text-sm text-black">Time</span>: {formattedTime}
-  //             </p>
-  //             <p className="text-primary text-xs">
-  //               <span className="font-[500] text-sm text-black">Date</span>: {formattedDate}
-  //             </p>
-  //           </div>
-  //           <div className="mt-6 mb-8">
-  //             <span className="font-[500] pb-1 w-full text-sm text-black">Description</span>
-  //             <p className="text-primary text-xs">{bookingData.description}</p>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-
-  //     <div className="bg-gray lg:w-[30%] p-10 rounded-xl">
-  //       <div>
-  //         <p className="font-[500] text-2xl">Price Detail</p>
-  //         <div className="bg-white rounded-xl py-2 mt-2 h-[15rem]">
-  //           <div className="h-[28rem] px-6">
-  //             <div className="text-xs">
-  //               <div className="flex border-b items-center justify-between gap-5 my-5">
-  //                 <div className="font-medium text-base">Price</div>
-  //                 <div className="">${bookingData.price}</div>
-  //               </div>
-  //               <div className="flex items-center justify-between gap-5 my-5">
-  //                 <div className="font-medium text-base">Total Amount</div>
-  //                 <div className="text-secondary">${bookingData.price}</div>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-
-  //         <div className="flex flex-col font-[500] md:mt-10 mt-5 items-center justify-center">
-  //           <div className="bg-secondary w-full text-center text-white rounded-lg py-4">
-  //             <button onClick={confirmBooking}>Confirm Booking</button>
-  //           </div>
-  //           <div onClick={() => DeleteItem(bookingData)} className="mt-3 text-secondary">
-  //             <button>Cancel Booking</button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-
   return (
-    <div className="gap-10 mt-10 mb-40 mx-10 lg:flex">
+    <div className="gap-10 mt-10 mb-40  lg:mx-10 lg:flex">
       {del && (
         <ConfirmCancelBooking
           confirmAction={confirmAction}
@@ -203,7 +136,7 @@ const ConfirmBooking = ({ bookingData }) => {
         </div>
       </div>
 
-      <div className="bg-gray lg:w-[30%] p-10 rounded-xl">
+      <div className="bg-gray lg:w-[30%] p-5 rounded-xl">
         <div>
           <p className="font-[500] text-2xl">Price Detail</p>
           <div className="bg-white rounded-xl py-2 mt-2 h-[15rem]">
@@ -215,7 +148,7 @@ const ConfirmBooking = ({ bookingData }) => {
                 </div>
                 <div className="flex items-center justify-between gap-5 my-5">
                   <div className="font-medium text-base">Total Amount</div>
-                  <div className="text-secondary">${bookingData.price}</div>
+                  <div className="text-secondary">${amountPaid}</div>
                 </div>
               </div>
             </div>
