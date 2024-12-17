@@ -67,7 +67,7 @@ const AllBookings = () => {
     let allBookings = [];
     let pageNo = 1;
     const perPage = 15; // Match backend page size
-    let totalPages = 1; 
+    let totalPages = 1;
 
     try {
       while (pageNo <= totalPages) {
@@ -75,7 +75,7 @@ const AllBookings = () => {
 
         if (res.status === true) {
           const fetchedItems = res.data.data;
-          totalPages = res.data.totalpage; 
+          totalPages = res.data.totalpage;
 
           // Combine results into `allBookings`
           if (Array.isArray(fetchedItems)) {
@@ -124,7 +124,12 @@ const AllBookings = () => {
       setLoads(false);
       if (res.status === true) {
         setDel(false);
-        getAllBooking();
+
+        // Remove the deleted item from items and filteredItems
+        setItems((prevItems) => prevItems.filter(item => item.trackid !== singles.trackid));
+        setFilteredItems((prevFilteredItems) => prevFilteredItems.filter(item => item.trackid !== singles.trackid));
+
+        ToastAlert('Booking deleted successfully.');
       } else {
         ToastAlert('Failed to delete booking.');
       }

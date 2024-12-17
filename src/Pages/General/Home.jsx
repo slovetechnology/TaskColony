@@ -313,7 +313,7 @@ function Home() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
-                    {services.slice(0, 6).map((item, index) => (
+                    {services.slice(0, 8).map((item, index) => (
                         <div className="w-11/12 mx-auto" key={index}>
                             <div className="w-full">
                                 <div className="relative w-full">
@@ -351,9 +351,6 @@ function Home() {
                             <div className="w-[25rem]">
                                 <div className="text-sm text-slate-500">{item.tag}</div>
                                 <div className="font-medium text-lg">{item.title}</div>
-                                <div className="text-slate-600 text-xs my-3"> {item.deal && <span className='text-secondary'>{item.deal}% off </span>} {item.sub} </div>
-
-                                <button className="bg-secondary py-2 px-6 rounded-full text-white text-xs">From ${item.price}</button>
                             </div>
                         </div>
                     ))}

@@ -72,12 +72,10 @@ const Booking = () => {
                             latitude,
                             longitude,
                         });
-                        ToastAlert('Location retrieved successfully.');
                     } else {
-                        ErrorAlert('Unable to retrieve address. Please enter it manually.');
                     }
                 } catch (error) {
-                    ErrorAlert('Failed to fetch address. Try again later.');
+
                 }
             },
             (error) => {
@@ -97,8 +95,8 @@ const Booking = () => {
         formData.append('state_tid', data.state_tid);
         formData.append('description', data.description);
         formData.append('address', location.address || data.address);
-        formData.append('location_long', location.longitude || 0);
-        formData.append('location_lat', location.latitude || 0);
+        formData.append('location_long', location.longitude || 6.11223322);
+        formData.append('location_lat', location.latitude || 6.11223322);
         formData.append('time', moment(data.time, 'HH:mm').format('hh:mm A'));
         formData.append('price', data.price);
         formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('MM-DD-YYYY') : moment().format('MM-DD-YYYY'));
@@ -184,7 +182,6 @@ const Booking = () => {
                         <div className="bg-[#e2e2e2] md:w-[30rem] py-5 px-4">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="text-sm text-[#374151]">
-                                    {/* Job Title */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Job Title</label>
                                         <input
@@ -352,7 +349,7 @@ const Booking = () => {
                                             type="submit"
                                             className="bg-secondary w-full py-3 rounded-full text-white"
                                         >
-                                            {isSubmitting ? 'Processing...' : 'Upload Booking'}
+                                            {isSubmitting ? 'Processing...' : 'Post'}
                                         </button>
                                     </div>
                                 </div>
