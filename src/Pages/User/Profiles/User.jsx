@@ -101,7 +101,7 @@ const User = () => {
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
           <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[37rem] shadow-2xl">
-            <div className="md:flex items-center justify-between mb-3 gap-4 pb-3">
+            <div className="lg:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="flex items-center gap-4">
                 <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
                 <span className="flex-1">
@@ -118,9 +118,12 @@ const User = () => {
                 </span>
               </div>
 
+
               <div className="flex justify-center items-center my-5 gap-2">
                 <div className="text-primary text-sm font-medium">Wallet Balance</div>
-                <div className="text-secondary text-2xl">${user.user_wallets[0].walletbal}</div>
+                <div className="text-secondary text-2xl">
+                  ${parseFloat(user.user_wallets[0].walletbal).toLocaleString()}
+                </div>
               </div>
 
               <div className=" flex items-center justify-between md:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">

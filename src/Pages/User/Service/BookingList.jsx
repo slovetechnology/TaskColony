@@ -64,7 +64,7 @@ const BookingList = () => {
   const handleCheckboxChange = (status) => {
     setSelectedPayment((prev) => (prev === status ? null : status));
   };
-  
+
   // Filter items based on search term, status, and payment status
   const filteredItems = items.filter((item) => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -112,7 +112,7 @@ const BookingList = () => {
         <div className="gap-10 md:flex">
           {/* Booking List */}
           <div className="mb-10 overflow-y-auto scrollsdown w-full h-[35rem]">
-            {filteredItems.length > 0 ? (
+            {/* {filteredItems.length > 0 ? (
               filteredItems.map((item, i) => (
                 <div key={i} className="w-full xl:flex flex-grow mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl">
                   <div className="w-full xl:w-[20rem]">
@@ -155,6 +155,66 @@ const BookingList = () => {
                         <p className='mb-2 md:mb-0'>
                           <span className="font-[500] text-sm text-black">Rating </span>: {item.status}
                         </p>
+                      </div>
+                    </div>
+                    <div className="flex font-[500] pt-8 gap-3">
+                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to={`/booking-detail/${item.id}`}>
+                        View
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div>
+                <img src={notfound} alt="Not Found" className="h-[30rem] object-contain w-full" />
+              </div>
+            )} */}
+
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item, i) => (
+                <div key={i} className="w-full xl:flex flex-grow mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl">
+                  <div className="w-full xl:w-[20rem]">
+                    <img
+                      src={item.imageslink?.[0] || notfound}
+                      alt={item.title}
+                      className="w-full h-[14rem] xl:h-[14rem] mb-3 xl:mb-0 rounded-xl object-cover"
+                    />
+                  </div>
+                  <div className="w-full">
+                    <div className="flex items-start w-full justify-between">
+                      <p className="text-lg font-[500]">{item.title}</p>
+                      {/* Conditional rendering for Edit Booking */}
+                      {item.status !== 'Accepted' && (
+                        <div
+                          onClick={() => SingleItem(item)}
+                          className="flex items-center text-xs font-[500] cursor-pointer gap-2 text-secondary"
+                        >
+                          Edit Booking <span className="text-primary"><FaEdit /></span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="border-b pt-5 md:pb-10 pb-3">
+                      <p className="text-primary text-xs">
+                        <span className="font-[500] text-sm text-black">Location</span>: {item.address}
+                      </p>
+                      <div className="md:grid md:grid-cols-2 text-primary text-xs mt-2 gap-2">
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Date</span>: {item.the_date}
+                        </p>
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Time</span>: {item.the_time}
+                        </p>
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Payment Status</span>: {item.paid_with}
+                        </p>
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Service Status</span>: {item.status}
+                        </p>
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Provider</span>: {item.pfname} {item.plname}
+                        </p>
+                        
                       </div>
                     </div>
                     <div className="flex font-[500] pt-8 gap-3">
@@ -232,11 +292,11 @@ const BookingList = () => {
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={selectedStatus === 'Cancle'}
-                      onChange={() => statusHandleCheckboxChange('Cancle')}
+                      checked={selectedStatus === 'Cancled'}
+                      onChange={() => statusHandleCheckboxChange('Cancled')}
                       className="mr-2 my-2"
                     />
-                    Cancel
+                    Canceled
                   </label>
                 </div>
               </div>
