@@ -67,7 +67,7 @@ const AllBookings = () => {
     let allBookings = [];
     let pageNo = 1;
     const perPage = 15; // Match backend page size
-    let totalPages = 1; // Initial guess for pages
+    let totalPages = 1; 
 
     try {
       while (pageNo <= totalPages) {
@@ -75,7 +75,7 @@ const AllBookings = () => {
 
         if (res.status === true) {
           const fetchedItems = res.data.data;
-          totalPages = res.data.totalpage; // Dynamically update total pages from the response
+          totalPages = res.data.totalpage; 
 
           // Combine results into `allBookings`
           if (Array.isArray(fetchedItems)) {
