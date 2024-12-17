@@ -4,7 +4,7 @@ import { img1, img3, img4 } from 'utils/utils';
 import { HomeBestOffers, HomeCategories, HomeGallery, HomeOurServices, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
 import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaStar } from 'react-icons/fa';
 import Layout from '../../Components/User/Layout';
-import { Apis, Geturl, Posturl } from '../../Components/General/Api';
+import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
 
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
 import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
@@ -44,6 +44,23 @@ function Home() {
             preserveAspectRatio: 'xMidYMid slice',
         },
     };
+
+    const [notificationCount, setNotificationCount] = useState(0); 
+
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            try {
+                const res = await AuthGeturl(Apis.users.all_notification);
+                if (res.status === true && res.data.records) {
+                    setNotificationCount(res.data.records.length);
+                }
+            } catch (error) {
+                console.error('Error fetching notifications:', error);
+            }
+        };
+        fetchNotifications();
+    }, []);
+
     const handleLogout = () => {
         Cookies.remove('taskcolony');
         sessionStorage.clear();
@@ -100,6 +117,7 @@ function Home() {
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
         <>
+ 
             <div className='relative'>
                 <div className={`fixed w-full bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[16rem]' : 'h-[4.6rem]'} transition-all`}>
                     <div className='flex items-center justify-between px-5 lg:px-10'>
@@ -110,12 +128,12 @@ function Home() {
                             <Link to="/" className="lg:hidden block">
                                 <Lottie options={defaultOptions} height={40} width={125} />
                             </Link>
-
                         </div>
                         <div className="lg:flex flex-row items-center gap-4 hidden">
                             {TopNavsLinks.map((item, index) => (
                                 <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
                             ))}
+                            {userloggedin && <Link className='uppercase text-xs py-3 px-4 truncate' to='/user'>Profile</Link>}
                         </div>
                         <div className="flex items-center gap-3">
                             <Link to='/user' className="">
@@ -128,7 +146,14 @@ function Home() {
                                                 <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                                             </div>
                                         </div>
-
+                                        <Link to="" className='text-secondary text-xl lg:text-2xl relative '>
+                                            <SlBell />
+                                            {notificationCount > 0 && (
+                                                <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
+                                                    {notificationCount}
+                                                </div>
+                                            )}
+                                        </Link>
                                         <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
                                             <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
                                                 <IoIosLogOut />
@@ -150,7 +175,6 @@ function Home() {
                                             >
                                                 <FaUserPlus /> Login/Register
                                             </div>
-
                                         </div>
                                         <div onClick={() => navigate('/user')} className="block text-3xl mx-5 xl:hidden">
                                             <FaUserCircle />
@@ -166,7 +190,6 @@ function Home() {
                     </div>
                     {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
                         <div className="flex flex-col">
-
                             {TopNavsLinks.map((item, index) => (
                                 <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
                             ))}
@@ -176,18 +199,16 @@ function Home() {
                 <br />
                 <br />
                 <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
-                    <div className="lg:hidden ml-auto py-3 w-fit mr-10">
-                        <MobileIcon onClick={() => setMobile(!mobile)} className='text-white text-2xl cursor-pointer' />
-                    </div>
-                    <div className={` ${mobile ? 'flex flex-col' : 'flex-row hidden lg:flex items-center justify-center'} gap-1 w-11/12 lg:w-10/12 mx-auto py-3`}>
-                        {NavLinks.map((item, index) => (
-                            <Link to={`${item.link}`} key={index} className='text-xs hover:text-white transition-all truncate uppercase text-orange-100 py-3 px-3'>{item.title}</Link>
-                        ))}
-                        {mobile ?
-                            <Link to={``} className='text-xs truncate uppercase hover:text-white transition-all text-orange-100 py-3 px-3'>notifications</Link>
-                            : <Link to="" className='text-white relative text-sm'> <SlBell /> <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">1</div> </Link>}
+                    <div className="overflow-hidden h-full relative">
+                        <p className="text-end marquee pt-4 text-white whitespace-nowrap">
+                            I want this text to go from right to left for infinity
+                        </p>
                     </div>
                 </div>
+
+
+
+
             </div>
             <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
@@ -420,7 +441,7 @@ function Home() {
                 </div>
             </div>
 
-        
+
             <div className="w-11/12 mx-auto lg:w-10/12 mb-20">
                 <div className="flex  items-center justify-between mt-20">
                     <div className="font-medium text-2xl capitalize">our best providers</div>

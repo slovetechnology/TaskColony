@@ -121,7 +121,7 @@ const Booking = () => {
                     ...data,
                     price: data.price,
                     paymentUrl: res.text,
-                    images: images.map(img => URL.createObjectURL(img)),
+                    firstImage: images[0] ? URL.createObjectURL(images[0]) : null, // Add this line
                 });
                 setView(2);
             } else {

@@ -83,7 +83,7 @@ const Header = () => {
                   <Link to="" className='text-secondary text-xl lg:text-2xl relative '>
                     <SlBell />
                     {notificationCount > 0 && (
-                      <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-4 rounded-full text-[0.7rem]">
+                      <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
                         {notificationCount}
                       </div>
                     )}
