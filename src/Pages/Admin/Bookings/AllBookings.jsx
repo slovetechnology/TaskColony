@@ -64,24 +64,38 @@ const AllBookings = () => {
   };
 
   const getAllBooking = useCallback(async () => {
+    let allBookings = [];
+    let pageNo = 1;
+    const perPage = 15; // Match backend page size
+    let totalPages = 1; // Initial guess for pages
+
     try {
-      const res = await AuthGeturl(Apis.admins.get_booking);
-      if (res.status === true) {
-        let fetchedItems = res.data.data;
-        if (Array.isArray(fetchedItems)) {
-          setItems(fetchedItems);
-          setFilteredItems(fetchedItems);
-          setTotal(fetchedItems.length);
-        } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
-          setItems([fetchedItems]);
-          setFilteredItems([fetchedItems]);
-          setTotal(1);
+      while (pageNo <= totalPages) {
+        const res = await AuthGeturl(`${Apis.admins.get_booking}?page_no=${pageNo}&no_perpage=${perPage}`);
+
+        if (res.status === true) {
+          const fetchedItems = res.data.data;
+          totalPages = res.data.totalpage; // Dynamically update total pages from the response
+
+          // Combine results into `allBookings`
+          if (Array.isArray(fetchedItems)) {
+            allBookings = [...allBookings, ...fetchedItems];
+          } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
+            allBookings.push(fetchedItems);
+          } else {
+            console.error('Unexpected data structure');
+          }
         } else {
-          console.error('Unexpected data structure');
+          throw new Error('Failed to fetch bookings.');
         }
-      } else {
-        throw new Error('Failed to fetch data');
+
+        pageNo++;
       }
+
+      // Set combined data to state
+      setItems(allBookings);
+      setFilteredItems(allBookings);
+      setTotal(allBookings.length);
     } catch (err) {
       console.error(err.message);
       ToastAlert('Error fetching bookings.');

@@ -24,7 +24,10 @@ const ConfirmBooking = ({ bookingData }) => {
   const [singles, setSingles] = useState({});
   const [loads, setLoads] = useState(false);
   const [items, setItems] = useState([]);
-  const [trackid, setTrackid] = useState(null); // State to store trackid of a specific booking
+  const [trackid, setTrackid] = useState(null);
+  const [amountPaid, setAmountPaid] = useState(null);
+  const [mainpriceis, setMainpriceis] = useState(null);
+  const [price, setPrice] = useState(null);
   const navigate = useNavigate()
   // Format date and time (e.g., December 12th, 2024)
   const formattedDate = moment(bookingData.date).format('MMMM Do YYYY');
@@ -48,7 +51,6 @@ const ConfirmBooking = ({ bookingData }) => {
       if (res.status === true) {
         setItems(res.data.data);
         if (res.data.data && res.data.data.length > 0) {
-          // Select the trackid of the first booking (or you can choose a specific one)
           setTrackid(res.data.data[0].trackid);
         }
       } else {

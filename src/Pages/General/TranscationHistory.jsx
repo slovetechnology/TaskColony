@@ -7,16 +7,16 @@ import { FaUserCircle } from 'react-icons/fa';
 const TranscationHistory = () => {
     const [items, setItems] = useState([])
     const GetNotify = async () => {
-      try {
-        const res = await AuthGeturl(Apis.users.fund_history)
-        if (res.status === true) {
-          setItems(res.data.records)
+        try {
+            const res = await AuthGeturl(Apis.users.fund_history)
+            if (res.status === true) {
+                setItems(res.data.records)
+            }
+        } catch (error) {
+
         }
-      } catch (error) {
-  
-      }
     }
-    useEffect(() => {GetNotify()}, [])
+    useEffect(() => { GetNotify() }, [])
     return (
         <Layout>
             <div className="bg-gray w-full xl:h-[20rem]">
@@ -39,7 +39,8 @@ const TranscationHistory = () => {
                                 <div className="text-4xl"> <FaUserCircle /> </div>
                                 <span className="flex-1">
                                     <h5 className="font-[500] text-sm xl:text-base">{item.transtype}</h5>
-                                    <p className="text-sm text-primary">{item.amount}</p>
+                                    ${parseFloat(item.amount).toLocaleString()}
+
                                     <p className="text-sm text-primary">{item.created_at}</p>
                                     {/* <div className="flex gap-7 text-sm mt-4">
                                         <div className="text-primary cursor-pointer">Dismiss</div>

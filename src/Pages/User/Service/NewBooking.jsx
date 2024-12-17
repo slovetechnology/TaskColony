@@ -111,7 +111,7 @@ const Booking = () => {
         formData.append('urgent', 0);
 
         setIsSubmitting(true);
-        setIsModalOpen(true); // Open the modal to confirm the 10% commission
+        setIsModalOpen(true);
 
         // Handle the actual submission in the modal confirmation
         try {
@@ -125,26 +125,27 @@ const Booking = () => {
                 });
                 setView(2);
             } else {
-                ErrorAlert('You do not have enough funds to carry out this booking.');
                 if (res.data[0].paid === false) {
                     setTimeout(() => {
                         window.location.href = res.text;
                     }, 2000);
                 }
+                ErrorAlert('You do not have enough funds to carry out this booking.');
+
             }
         } catch (error) {
-            ErrorAlert('An unexpected error occurred. Please try again.');
+
         } finally {
             setIsSubmitting(false);
         }
     };
-
-    const handleDateSelect = (selectedDate) => {
+    const handleDateSelect = useCallback((selectedDate) => {
         setSelectedDateTime((prev) => ({
             date: selectedDate,
             time: prev.time,
         }));
-    };
+    }, []);
+
 
     const handleUpload = (e) => {
         const files = Array.from(e.target.files);

@@ -24,7 +24,7 @@ const AppWrapper = ({ children }) => {
         };
 
         fetchUserData();
-    }, [dispatch]);
+    }, []);
 
     return <>{children}</>;
 };

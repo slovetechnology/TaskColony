@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from '../../../../Components/General/Modal';
 import { useForm } from 'react-hook-form';
 import { Apis, AuthPosturl } from '../../../../Components/General/Api';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const FundWallet = ({ closeview }) => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const [buttonText, setButtonText] = useState("Fund Wallet");
 
   const onSubmit = async (data) => {
     const datatosend = {
       amount: data.amount
     };
+    setButtonText("Funding...");
+
     const res = await AuthPosturl(Apis.users.fund_wallet, datatosend);
     
     if (res.status === true) {
       window.location.href = res.text; 
     } else {
-      // Handle error (optional)
       console.error("Error funding wallet:", res.error);
+      setButtonText("Try Again"); 
     }
   };
 
@@ -36,7 +39,12 @@ const FundWallet = ({ closeview }) => {
             />
             {errors.amount && <div className="text-red-600">{errors.amount.message}</div>}
           </div>
-          <button type="submit" className="bg-secondary text-white py-1 px-2 rounded-md mt-5">Fund Wallet</button>
+          <button 
+            type="submit" 
+            className="bg-secondary text-white py-1 px-2 rounded-md mt-5"
+          >
+            {buttonText}
+          </button>
         </form>
       </div>
     </Modal>
