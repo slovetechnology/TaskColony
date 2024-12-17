@@ -577,6 +577,7 @@ import { ErrorAlert } from '../../../Components/General/Utils';
 import ConfirmBooking from './ConfirmBooking';
 import moment from 'moment';
 import Popups from '../../../Components/General/Popups';
+import toast from 'react-hot-toast';
 
 const ServiceDetail = () => {
   const { userid } = useParams();
@@ -696,9 +697,13 @@ const ServiceDetail = () => {
     }
   }, []);
 
+  const [locationButtonText, setLocationButtonText] = useState('Get Location');
+
   const getUserGeoAddress = async () => {
+    setLocationButtonText('Getting your location...'); // Change button text
     if (!navigator.geolocation) {
       ErrorAlert('Geolocation is not supported by your browser.');
+      setLocationButtonText('Get Location'); // Reset button text
       return;
     }
 
@@ -719,11 +724,14 @@ const ServiceDetail = () => {
             });
           }
         } catch (error) {
-          console.error('Error fetching geolocation data:', error);
+          console.error('Error fetching geolocation:', error);
+        } finally {
+          setLocationButtonText('Get Location'); // Reset button text
         }
       },
       (error) => {
         ErrorAlert(`Error fetching location: ${error.message}`);
+        setLocationButtonText('Get Location'); // Reset button text
       }
     );
   };
@@ -732,12 +740,6 @@ const ServiceDetail = () => {
     fetchAllData();
   }, [fetchAllData]);
 
-  const convertTimeTo12HourFormat = (time) => {
-    const [hour, minute] = time.split(':');
-    const hourIn12 = hour % 12 || 12;
-    const ampm = hour < 12 ? 'AM' : 'PM';
-    return `${hourIn12}:${minute} ${ampm}`;
-  };
 
   const handleDateSelect = useCallback((selectedDate) => {
     setSelectedDateTime((prev) => ({
@@ -748,11 +750,11 @@ const ServiceDetail = () => {
 
   const handleUpload = (e) => {
     const files = Array.from(e.target.files);
-    const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/svg+xml'];
 
     const newImages = files.filter(file => {
       if (!validTypes.includes(file.type)) {
-        alert('Please upload valid images (JPEG/PNG).');
+        alert('Please upload valid images (JPEG/PNG/SVG).');
         return false;
       }
       if (file.size > 2 * 1024 * 1024) {
@@ -804,21 +806,27 @@ const ServiceDetail = () => {
           paymentUrl: res.text,
           firstImage: images[0] ? URL.createObjectURL(images[0]) : null, // Add this line
         });
+
         setView(2);
       } else {
-        if (res.data[0].paid === false) {
-          setTimeout(() => {
-            window.location.href = res.text;
-          }, 2000);
-        }
+        ErrorAlert(res.text)
         ErrorAlert('You do not have enough funds to carry out this booking.');
-
+        setTimeout(() => {
+          ErrorAlert(res.text);
+          if (res.data[0].paid === false) {
+            window.location.href = res.text;
+          }
+        }, 2000);
       }
     } catch (error) {
 
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleDelete = (index) => {
+    setImages(prevImages => prevImages.filter((_, i) => i !== index));
   };
   return (
     <Layout>
@@ -936,6 +944,7 @@ const ServiceDetail = () => {
                       )}
                     </div>
 
+                    {/* Job Description */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Job Description</label>
                       <input
@@ -949,6 +958,7 @@ const ServiceDetail = () => {
                       )}
                     </div>
 
+                    {/* Select Service */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Select Service</label>
                       <select
@@ -966,7 +976,21 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.service_tid.message}</div>
                       )}
                     </div>
-
+                    <div className="mb-5">
+                      <label className="text-xs font-semibold">Select Categories</label>
+                      <select
+                        className={`inputs border`}
+                        {...register('category', { required: false })} // Dummy field
+                      >
+                        <option value="">Select Categories</option>
+                        {categories.map((category) => (
+                          <option key={category.trackid} value={category.trackid}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {/* Select State */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Select State</label>
                       <select
@@ -985,6 +1009,7 @@ const ServiceDetail = () => {
                       )}
                     </div>
 
+                    {/* Date Required */}
                     <div className="mb-5 mt-5">
                       <label className="text-xs font-semibold">Date Required</label>
                       <div className="overflow-x-auto scrollsdown mb-4">
@@ -994,6 +1019,7 @@ const ServiceDetail = () => {
                       </div>
                     </div>
 
+                    {/* Time Service */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Time Service</label>
                       <input
@@ -1008,10 +1034,14 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.time.message}</div>
                       )}
                     </div>
+
+                    {/* Address */}
                     <div className="mb-5">
                       <div className="flex justify-between">
                         <label className="text-xs font-semibold">Address</label>
-                        <button className="text-xs text-secondary font-semibold" type="button" onClick={getUserGeoAddress}>Get Location</button>
+                        <button className="text-xs text-secondary font-semibold" type="button" onClick={getUserGeoAddress}>
+                          {locationButtonText}
+                        </button>
                       </div>
                       <input
                         {...register('address', { required: 'Address is required' })}
@@ -1025,6 +1055,7 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.address.message}</div>
                       )}
                     </div>
+                    {/* Price Offering */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Price Offering</label>
                       <input
@@ -1038,6 +1069,7 @@ const ServiceDetail = () => {
                       )}
                     </div>
 
+                    {/* Zip Code */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Zip Code</label>
                       <input
@@ -1051,35 +1083,65 @@ const ServiceDetail = () => {
                       )}
                     </div>
 
+                    {/* Image Upload Section */}
                     <div className="my-4 w-full overflow-x-auto">
                       <div className="flex gap-2">
-                        {images.map((image, index) => (
-                          <img
-                            key={index}
-                            src={URL.createObjectURL(image)}
-                            alt={`Preview ${index}`}
-                            className="w-20 h-20 border rounded-md object-cover"
-                          />
-                        ))}
-                        <label className="w-20 h-20 bg-slate-200 cursor-pointer flex items-center justify-center rounded-md flex-shrink-0">
-                          <FaPlus className="text-slate-600" />
-                          <input
-                            onChange={handleUpload}
-                            type="file"
-                            multiple
-                            hidden
-                          />
-                        </label>
+                        {images.length === 0 ? (
+                          <label className="w-full h-40 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center rounded-md cursor-pointer">
+                            <FaPlus className="text-gray-500 mb-2" size={24} />
+                            <span className="text-gray-500">Choose from gallery</span>
+                            <span className="text-xs text-gray-400">(PNG, JPG, JPEG or SVG - max. 2MB)</span>
+                            <input
+                              onChange={handleUpload}
+                              type="file"
+                              multiple
+                              accept=".png,.jpg,.jpeg,.svg" // Allow SVGs
+                              hidden
+                            />
+                          </label>
+                        ) : (
+                          <>
+                            <div className="flex gap-2 overflow-x-auto items-start">
+                              {images.map((image, index) => (
+                                <div key={index} className="relative w-20 h-20">
+                                  <img
+                                    src={URL.createObjectURL(image)}
+                                    alt={`Preview ${index}`}
+                                    className="w-full h-full border rounded-md object-cover"
+                                  />
+                                  <button
+                                    onClick={() => handleDelete(index)}
+                                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                                    aria-label="Delete image"
+                                  >
+                                    <FaTimes />
+                                  </button>
+                                </div>
+                              ))}
+                              <label className="w-20 h-20 bg-slate-200 cursor-pointer flex items-center justify-center rounded-md flex-shrink-0">
+                                <FaPlus className="text-slate-600" size={24} />
+                                <input
+                                  onChange={handleUpload}
+                                  type="file"
+                                  multiple
+                                  accept=".png,.jpg,.jpeg,.svg" // Allow SVGs
+                                  hidden
+                                />
+                              </label>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
-                    <div className="mt-6 mb-3">
-                      <button
-                        type="submit"
-                        className="bg-secondary w-full py-3 rounded-full text-white"
-                      >
-                        {isSubmitting ? 'Processing...' : 'Post'}
-                      </button>
-                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="bg-secondary mt-6 mb-3 w-full py-3 rounded-full text-white"
+                    >
+                      {isSubmitting ? 'Processing...' : 'Post'}
+                    </button>
                   </div>
                 </form>
               </div>
@@ -1088,12 +1150,14 @@ const ServiceDetail = () => {
         </div>
       )}
 
+
+
       {view === 2 && bookingData && (
-        <ConfirmBooking
-          data={bookingData}
-          onClose={() => setView(1)}
-        />
+        <ConfirmBooking bookingData={bookingData} />
       )}
+      <Popups isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Commission Fee">
+        <p>Task Colony will take a 10% commission on any payment made.</p>
+      </Popups>
     </Layout>
   );
 };
