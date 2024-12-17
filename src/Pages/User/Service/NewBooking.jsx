@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Apis, AuthPosturl, Geturl } from '../../../Components/General/Api';
-import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
+import { ErrorAlert } from '../../../Components/General/Utils';
 import CalendarDays from '../../../Components/General/CalendarDays';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTimes } from 'react-icons/fa';
 import moment from 'moment';
 import Layout from '../../../Components/User/Layout';
 import ConfirmBooking from './ConfirmBooking';
@@ -25,7 +25,45 @@ const Booking = () => {
         longitude: null,
     });
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const [locationButtonText, setLocationButtonText] = useState('Get Location');
+
+    const getUserGeoAddress = async () => {
+        setLocationButtonText('Getting your location...'); // Change button text
+        if (!navigator.geolocation) {
+            ErrorAlert('Geolocation is not supported by your browser.');
+            setLocationButtonText('Get Location'); // Reset button text
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
+                try {
+                    const response = await fetch(
+                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+                    );
+                    const data = await response.json();
+                    if (data.status === "OK" && data.results.length > 0) {
+                        setLocation({
+                            address: data.results[0].formatted_address,
+                            latitude,
+                            longitude,
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error fetching geolocation:', error);
+                } finally {
+                    setLocationButtonText('Get Location'); // Reset button text
+                }
+            },
+            (error) => {
+                ErrorAlert(`Error fetching location: ${error.message}`);
+                setLocationButtonText('Get Location'); // Reset button text
+            }
+        );
+    };
 
     const fetchAllData = useCallback(async () => {
         setLoading(true);
@@ -51,41 +89,6 @@ const Booking = () => {
         }
     }, []);
 
-    const getUserGeoAddress = async () => {
-        if (!navigator.geolocation) {
-            ErrorAlert('Geolocation is not supported by your browser.');
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const { latitude, longitude } = position.coords;
-                const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
-                try {
-                    const response = await fetch(
-                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
-                    );
-                    const data = await response.json();
-                    if (data.status === "OK" && data.results.length > 0) {
-                        setLocation({
-                            address: data.results[0].formatted_address,
-                            latitude,
-                            longitude,
-                        });
-                        ToastAlert('Location retrieved successfully.');
-                    } else {
-                        ErrorAlert('Unable to retrieve address. Please enter it manually.');
-                    }
-                } catch (error) {
-                    ErrorAlert('Failed to fetch address. Try again later.');
-                }
-            },
-            (error) => {
-                ErrorAlert(`Error fetching location: ${error.message}`);
-            }
-        );
-    };
-
     useEffect(() => {
         fetchAllData();
     }, [fetchAllData]);
@@ -97,8 +100,8 @@ const Booking = () => {
         formData.append('state_tid', data.state_tid);
         formData.append('description', data.description);
         formData.append('address', location.address || data.address);
-        formData.append('location_long', location.longitude || 0);
-        formData.append('location_lat', location.latitude || 0);
+        formData.append('location_long', location.longitude || 6.11223322);
+        formData.append('location_lat', location.latitude || 6.11223322);
         formData.append('time', moment(data.time, 'HH:mm').format('hh:mm A'));
         formData.append('price', data.price);
         formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('MM-DD-YYYY') : moment().format('MM-DD-YYYY'));
@@ -113,7 +116,6 @@ const Booking = () => {
         setIsSubmitting(true);
         setIsModalOpen(true);
 
-        // Handle the actual submission in the modal confirmation
         try {
             const res = await AuthPosturl(Apis.users.create_bookings, formData);
             if (res.status === true && res.data[0].paid === true) {
@@ -121,7 +123,7 @@ const Booking = () => {
                     ...data,
                     price: data.price,
                     paymentUrl: res.text,
-                    firstImage: images[0] ? URL.createObjectURL(images[0]) : null, // Add this line
+                    firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
                 });
                 setView(2);
             } else {
@@ -131,14 +133,14 @@ const Booking = () => {
                     }, 2000);
                 }
                 ErrorAlert('You do not have enough funds to carry out this booking.');
-
             }
         } catch (error) {
-
+            console.error('Error submitting booking:', error);
         } finally {
             setIsSubmitting(false);
         }
     };
+
     const handleDateSelect = useCallback((selectedDate) => {
         setSelectedDateTime((prev) => ({
             date: selectedDate,
@@ -146,14 +148,13 @@ const Booking = () => {
         }));
     }, []);
 
-
     const handleUpload = (e) => {
         const files = Array.from(e.target.files);
-        const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/svg+xml'];
 
         const newImages = files.filter(file => {
             if (!validTypes.includes(file.type)) {
-                alert('Please upload valid images (JPEG/PNG).');
+                alert('Please upload valid images (JPEG/PNG/SVG).');
                 return false;
             }
             if (file.size > 2 * 1024 * 1024) {
@@ -165,7 +166,9 @@ const Booking = () => {
 
         setImages(prevImages => [...prevImages, ...newImages]);
     };
-
+    const handleDelete = (index) => {
+        setImages(prevImages => prevImages.filter((_, i) => i !== index));
+    };
     return (
         <Layout>
             <div className="bg-gray w-full xl:h-[20rem]">
@@ -184,7 +187,6 @@ const Booking = () => {
                         <div className="bg-[#e2e2e2] md:w-[30rem] py-5 px-4">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="text-sm text-[#374151]">
-                                    {/* Job Title */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Job Title</label>
                                         <input
@@ -231,6 +233,22 @@ const Booking = () => {
                                         )}
                                     </div>
 
+                                    {/* Select Categories */}
+                                    <div className="mb-5">
+                                        <label className="text-xs font-semibold">Select Categories</label>
+                                        <select
+                                            className={`inputs border`}
+                                            {...register('category', { required: false })} // Dummy field
+                                        >
+                                            <option value="">Select Categories</option>
+                                            {categories.map((category) => (
+                                                <option key={category.trackid} value={category.trackid}>
+                                                    {category.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
                                     {/* Select State */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Select State</label>
@@ -267,9 +285,12 @@ const Booking = () => {
                                             {...register('time', { required: 'Time is required' })}
                                             type="time"
                                             className={`inputs border ${errors.time ? 'border-red-600' : 'border'}`}
-                                            onChange={(e) =>
-                                                setSelectedDateTime((prev) => ({ ...prev, time: e.target.value }))
-                                            }
+                                            value={selectedDateTime.time || ''}
+                                            onChange={(e) => {
+                                                const newTime = e.target.value;
+                                                setSelectedDateTime((prev) => ({ ...prev, time: newTime }));
+                                                setValue('time', newTime, { shouldValidate: true }); // Sync with react-hook-form
+                                            }}
                                         />
                                         {errors.time && (
                                             <div className="text-red-600">{errors.time.message}</div>
@@ -280,7 +301,16 @@ const Booking = () => {
                                     <div className="mb-5">
                                         <div className="flex justify-between">
                                             <label className="text-xs font-semibold">Address</label>
-                                            <button className="text-xs text-secondary font-semibold" type="button" onClick={getUserGeoAddress}>Get Location</button>
+                                            <button
+                                                className="text-xs text-secondary font-semibold"
+                                                type="button"
+                                                onClick={async () => {
+                                                    await getUserGeoAddress();
+                                                    setValue('address', location.address, { shouldValidate: true }); // Update form value
+                                                }}
+                                            >
+                                                {locationButtonText}
+                                            </button>
                                         </div>
                                         <input
                                             {...register('address', { required: 'Address is required' })}
@@ -288,7 +318,11 @@ const Booking = () => {
                                             placeholder="Enter Address"
                                             className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
                                             value={location.address}
-                                            onChange={(e) => setLocation({ ...location, address: e.target.value })}
+                                            onChange={(e) => {
+                                                const newAddress = e.target.value;
+                                                setLocation({ ...location, address: newAddress });
+                                                setValue('address', newAddress, { shouldValidate: true }); // Sync with react-hook-form
+                                            }}
                                         />
                                         {errors.address && (
                                             <div className="text-red-600">{errors.address.message}</div>
@@ -323,38 +357,65 @@ const Booking = () => {
                                         )}
                                     </div>
 
-                                    {/* Image Upload Section */}
+
                                     <div className="my-4 w-full overflow-x-auto">
                                         <div className="flex gap-2">
-                                            {images.map((image, index) => (
-                                                <img
-                                                    key={index}
-                                                    src={URL.createObjectURL(image)}
-                                                    alt={`Preview ${index}`}
-                                                    className="w-20 h-20 border rounded-md object-cover"
-                                                />
-                                            ))}
-                                            <label className="w-20 h-20 bg-slate-200 cursor-pointer flex items-center justify-center rounded-md flex-shrink-0">
-                                                <FaPlus className="text-slate-600" />
-                                                <input
-                                                    onChange={handleUpload}
-                                                    type="file"
-                                                    multiple
-                                                    hidden
-                                                />
-                                            </label>
+                                            {images.length === 0 ? (
+                                                <label className="w-full h-40 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center rounded-md cursor-pointer">
+                                                    <FaPlus className="text-gray-500 mb-2" size={24} />
+                                                    <span className="text-gray-500">Choose from gallery</span>
+                                                    <span className="text-xs text-gray-400">(PNG, JPG, JPEG or SVG - max. 2MB)</span>
+                                                    <input
+                                                        onChange={handleUpload}
+                                                        type="file"
+                                                        multiple
+                                                        accept=".png,.jpg,.jpeg,.svg" // Allow SVGs
+                                                        hidden
+                                                    />
+                                                </label>
+                                            ) : (
+                                                <>
+                                                    <div className="flex gap-2 overflow-x-auto items-start">
+                                                        {images.map((image, index) => (
+                                                            <div key={index} className="relative w-20 h-20">
+                                                                <img
+                                                                    src={URL.createObjectURL(image)}
+                                                                    alt={`Preview ${index}`}
+                                                                    className="w-full h-full border rounded-md object-cover"
+                                                                />
+                                                                <button
+                                                                    onClick={() => handleDelete(index)}
+                                                                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                                                                    aria-label="Delete image"
+                                                                >
+                                                                    <FaTimes />
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                        <label className="w-20 h-20 bg-slate-200 cursor-pointer flex items-center justify-center rounded-md flex-shrink-0">
+                                                            <FaPlus className="text-slate-600" size={24} />
+                                                            <input
+                                                                onChange={handleUpload}
+                                                                type="file"
+                                                                multiple
+                                                                accept=".png,.jpg,.jpeg,.svg" // Allow SVGs
+                                                                hidden
+                                                            />
+                                                        </label>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
 
                                     {/* Submit Button */}
-                                    <div className="mt-6 mb-3">
-                                        <button
-                                            type="submit"
-                                            className="bg-secondary w-full py-3 rounded-full text-white"
-                                        >
-                                            {isSubmitting ? 'Processing...' : 'Upload Booking'}
-                                        </button>
-                                    </div>
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="bg-secondary mt-6 mb-3 w-full py-3 rounded-full text-white"
+                                    >
+                                        {isSubmitting ? 'Processing...' : 'Post'}
+                                    </button>
                                 </div>
                             </form>
                         </div>
