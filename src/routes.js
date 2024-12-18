@@ -41,6 +41,7 @@ import KycForm from "./Pages/User/Provider/KycForm"
 import BookingDetail from "./Pages/User/Service/BookingDetail"
 import Gallery from "./Pages/General/Gallery"
 import TranscationHistory from "./Pages/General/TranscationHistory"
+import Marquee from "./Pages/Admin/Marquee"
 
 
 export const GeneralNoAuth = [
@@ -94,6 +95,7 @@ export const AdminRoutes = [
     { path: 'new-tax', element: NewTax },
     { path: 'new-coupon', element: NewCoupon },
     { path: 'coupon', element: AllCoupon },
+    { path: 'marquee', element: Marquee },
 ]
 export const AdminNoRoutes = [
     { path: 'login', element: AdminLogin },

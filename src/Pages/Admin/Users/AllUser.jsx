@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from '../../../Components/Admin/AdminLayout';
 import { FaSearch } from 'react-icons/fa';
 import { GiCancel } from 'react-icons/gi';
@@ -14,6 +14,7 @@ import { PiPencilSimpleLine } from 'react-icons/pi';
 import { ImCancelCircle } from 'react-icons/im';
 import { IoEyeSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import { debounce } from 'lodash'; // Make sure to install lodash
 
 const TABLE_HEADERS = ['Full Name', 'Email', 'Contact', 'Booking', "Balance", "Verification", 'User Type', "", ""];
 const DEFAULT_PER_PAGE = 10;
@@ -29,6 +30,50 @@ const AllUser = () => {
     const [view, setView] = useState(false);
     const [total, setTotal] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(false); // Loading state
+
+    const fetchUsers = useCallback(async () => {
+        setLoading(true); // Start loading
+        let allUsers = [];
+        let pageNo = 1;
+        let totalPages = 10;
+
+        try {
+            while (pageNo <= totalPages) {
+                const res = await AuthGeturl(`${Apis.admins.get_provider}?page_no=${pageNo}&no_perpage=${DEFAULT_PER_PAGE}`);
+                if (res.status === true) {
+                    const fetchedItems = res.data.data;
+                    allUsers = [...allUsers, ...fetchedItems];
+                    totalPages = res.data.totalpage;
+                    pageNo++;
+                } else {
+                    throw new Error('Failed to fetch users.');
+                }
+            }
+            setItems(allUsers);
+            setFilteredItems(allUsers);
+            setTotal(allUsers.length);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false); // End loading
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]);
+
+    useEffect(() => {
+        const filtered = items.filter(item =>
+            item.fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.lname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.phoneno.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredItems(filtered);
+        setCurrentPage(0); // Reset to the first page when searching
+    }, [searchTerm, items]);
 
     const DeleteItem = (member) => {
         setDel(true);
@@ -45,8 +90,7 @@ const AllUser = () => {
         setLoads(true);
         try {
             const res = await AuthPosturl(Apis.admins.delete_providers, data);
-            setLoads(false);
-            if (res.status === true) {
+            if (res.status) {
                 setDel(false);
                 setItems(prevItems => prevItems.filter(item => item.trackid !== singles.trackid));
                 setFilteredItems(prevItems => prevItems.filter(item => item.trackid !== singles.trackid));
@@ -56,6 +100,7 @@ const AllUser = () => {
             }
         } catch (error) {
             console.error('Network request failed:', error);
+        } finally {
             setLoads(false);
         }
     };
@@ -64,34 +109,6 @@ const AllUser = () => {
         setSingles(val);
         setView(!view);
     };
-
-    const fetchUsers = useCallback(async () => {
-        try {
-            const res = await AuthGeturl(Apis.admins.get_provider);
-            if (res.status === true) {
-                setItems(res.data.data);
-                setFilteredItems(res.data.data);
-            } else {
-                throw new Error('Failed to fetch data');
-            }
-        } catch (err) {
-            setError(err.message);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchUsers();
-    }, [fetchUsers]);
-
-    useEffect(() => {
-        const filtered = items.filter(item =>
-            item.fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.lname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.phoneno.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredItems(filtered);
-    }, [searchTerm, items]);
 
     const totalItems = filteredItems.length;
     const pageCount = Math.ceil(totalItems / DEFAULT_PER_PAGE);
@@ -105,9 +122,9 @@ const AllUser = () => {
         setCurrentPage(val.selected);
     };
 
-    const handleSearch = (e) => {
+    const handleSearch = debounce((e) => {
         setSearchTerm(e.target.value);
-    };
+    }, 300);
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -128,7 +145,6 @@ const AllUser = () => {
                                     type="text"
                                     placeholder="Search"
                                     className="w-[16rem] bg-transparent placeholder:text-[16px] placeholder:text-primary outline-none"
-                                    value={searchTerm}
                                     onChange={handleSearch}
                                 />
                                 <FaSearch size={16} />
@@ -156,10 +172,7 @@ const AllUser = () => {
                                     <div className="flex gap-4 text-primary">
                                         <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
                                         <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
-                                        <Link
-                                            to={`/auth/admin/user/single/${member.id}`}
-                                            className="cursor-pointer"
-                                        >
+                                        <Link to={`/auth/admin/user/single/${member.id}`} className="cursor-pointer">
                                             <IoEyeSharp />
                                         </Link>
                                     </div>
@@ -180,4 +193,4 @@ const AllUser = () => {
     );
 };
 
-export default AllUser;
+export default AllUser; 

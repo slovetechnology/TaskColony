@@ -20,7 +20,7 @@ const AdminLayout = ({ children }) => {
     return (
         <div className="relative h-screen overflow-hidden">
             <div className="flex items-center h-full">
-                <div className={`h-full ${mobile ? 'w-[55vw]' : 'w-0'} border-r shadow-2xl transition-all xl:w-[15%] scrollsdown overflow-y-auto`}>
+                <div className={`h-full ${mobile ? 'w-[20vw]' : 'w-0'} border-r shadow-2xl transition-all xl:w-[15%] scrollsdown overflow-y-auto`}>
                     <AdminSidebar handleLogs={handleLogs} />
                 </div>
                 <div className={`h-full ${mobile ? 'w-[80vw]' : 'w-full'} ml-auto transition-all overflow-hidden xl:w-[90%] relative`}>

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { img1, img3, img4 } from 'utils/utils';
-import { HomeBestOffers, HomeCategories, HomeGallery, HomeOurServices, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
+import { HomeBestOffers,  HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
 import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaStar } from 'react-icons/fa';
 import Layout from '../../Components/User/Layout';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
@@ -23,6 +23,7 @@ const ActiveTabOptions = [
 
 function Home() {
     const [offers, setOffers] = useState([]);
+    const [message, setMessage] = useState();
     const [services, setServices] = useState([]);
     const [category, setCategory] = useState([]);
     const [error, setError] = useState(null);
@@ -78,6 +79,7 @@ function Home() {
                 setServices(res.data.random_services);
                 setGallery(res.data.gallery_images);
                 setCategory(res.data.categories);
+                setMessage(res.data.home_message);
             } else {
                 throw new Error('Failed to fetch data');
             }
@@ -201,7 +203,7 @@ function Home() {
                 <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
                     <div className="overflow-hidden h-full relative">
                         <p className="text-end marquee pt-4 text-white whitespace-nowrap">
-                            I want this text to go from right to left for infinity
+                        <div className="" dangerouslySetInnerHTML={{__html: message}} />
                         </p>
                     </div>
                 </div>
