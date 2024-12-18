@@ -84,11 +84,11 @@ const Provider = () => {
     <Layout>
       <div className="bg-gray w-full xl:h-[20rem]">
         <div className="text-center py-10 xl:pt-24">
-          <p className="font-[500] xl:text-4xl text-xl mb-3">User Profile</p>
+          <p className="font-[500] xl:text-4xl text-xl mb-3">Provider Profile</p>
           <span className="flex items-center gap-4 font-[500] justify-center">
             <p className="text-primary">Home</p>
             <span className="bg-[#6C757D] w-3 py-0.5"></span>
-            <p className="text-secondary">User Profile</p>
+            <p className="text-secondary">Provider Profile</p>
           </span>
         </div>
       </div>
@@ -131,7 +131,7 @@ const Provider = () => {
             </div>
 
             <div className="bg-secondary px-5 py-1 w-fit text-white font-semibold my-3">
-              <Link to="/provider">Provider</Link>
+              <Link to="/user">Switch To User</Link>
             </div>
 
             <div className="border-t pt-5">
@@ -143,16 +143,9 @@ const Provider = () => {
                 onClick={handleFundWalletOpen}
                 className="border flex items-center justify-between py-3 px-2 cursor-pointer"
               >
-                <Link to="#">Fund Wallet</Link>
+                <Link to="#">Withdraw Earning</Link>
                 <FaChevronRight />
               </div>
-
-              <Link
-                to="/notification"
-                className="border py-3 px-2 items-center justify-between flex w-full"
-              >
-                Notification <FaChevronRight />
-              </Link>
 
               <Link
                 to="/faq"
@@ -160,22 +153,12 @@ const Provider = () => {
               >
                 FAQs <FaChevronRight />
               </Link>
-
-              <div
-                onClick={handleChangePasswordOpen}
-                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
+              <Link
+                to="/provider-settings"
+                className="border py-3 px-2 items-center justify-between flex w-full"
               >
-                <Link to="#">Change Password</Link>
-                <FaChevronRight />
-              </div>
-
-              <div
-                onClick={handleSettingsOpen}
-                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
-              >
-                <Link to="#">Settings</Link>
-                <FaChevronRight />
-              </div>
+                Settings <FaChevronRight />
+              </Link>
 
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"
@@ -183,14 +166,6 @@ const Provider = () => {
               >
                 Terms & Conditions <FaChevronRight />
               </Link>
-
-              <div
-                onClick={handleModalOpen}
-                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
-              >
-                <Link to="#">Favourite Service</Link>
-                <FaChevronRight />
-              </div>
 
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"

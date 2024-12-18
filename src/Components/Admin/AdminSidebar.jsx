@@ -25,7 +25,7 @@ const AdminSidebar = () => {
 
     // Function to handle logout
     const handleLogout = () => {
-        Cookies.remove('taskcolony');   
+        Cookies.remove('taskcolony');
         sessionStorage.clear();
 
         navigate('/auth/admin/login');
@@ -85,8 +85,11 @@ const AdminSidebar = () => {
                     <div onClick={() => handleNavigation('/auth/admin/coupon')} className="flex cursor-pointer items-center pb-3 gap-2">
                         <IoGridOutline /> Coupon
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/tax')} className="flex cursor-pointer items-center gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/tax')} className="flex cursor-pointer items-center pb-3 gap-2">
                         <IoGridOutline /> Taxes
+                    </div>
+                    <div onClick={() => handleNavigation('/auth/admin/marquee')} className="flex cursor-pointer items-center gap-2">
+                        <IoGridOutline /> Marquee
                     </div>
                 </div>
 

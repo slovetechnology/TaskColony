@@ -3,7 +3,7 @@ import Layout from "../../../Components/User/Layout";
 import gradient from "../../../assets/gradient.jpeg";
 import { MdOutlineLocationOn, MdOutlineMyLocation } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaChevronRight, FaUserCircle } from "react-icons/fa";
 import FavouriteService from "./FavouriteService";
 import EditUser from "./EditUser";
@@ -11,18 +11,20 @@ import ChangePassword from "./ChangePassword";
 import Settings from "./Settings";
 import FundWallet from "./Funds/FundWallet";
 import KycForm from "../Provider/KycForm";
+import Popups from "../../../Components/General/Popups";
+import KycPopups from "../../../Components/General/KycPopup";
 
 const User = () => {
   const { user } = useSelector((state) => state.data);
   const [location, setLocation] = useState("Fetching location...");
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditUserOpen, setIsEditUserOpen] = useState(false);
   const [changePass, SetChangePass] = useState(false);
   const [settings, SetSettings] = useState(false);
   const [fundWallet, SetFundwallet] = useState(false);
+  const [isKycFormOpen, setIsKycFormOpen] = useState(false); // State for KYC form
 
+  const navigate = useNavigate()
   useEffect(() => {
     getUserGeoAddress();
   }, []);
@@ -64,6 +66,24 @@ const User = () => {
       }
     );
   };
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleKycSubmit = () => {
+    if (user.kyclevel === 0) {
+      setIsPopupOpen(true); // Show popup if kyclevel is 0
+    } else {
+      navigate('/provider'); // Navigate to provider if kyclevel is 1
+    }
+  };
+
+  const handleSwitchToProvider = () => {
+    if (user.kyclevel === 0) {
+      setIsPopupOpen(true); // Show popup if kyclevel is 0
+    } else {
+      navigate('/provider'); // Navigate if kyclevel is 1
+    }
+  };
+
 
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
@@ -79,9 +99,21 @@ const User = () => {
 
   const handleSettingsOpen = () => SetSettings(true);
   const handleSettingsClose = () => SetSettings(false);
-
+  const handleCancel = () => setIsPopupOpen(false);
+  const handleKycFormClose = () => setIsKycFormOpen(false);
   return (
     <Layout>
+      <KycPopups
+        isOpen={isPopupOpen}
+        title="Not Registered Provider Yet"
+        onClose={handleCancel}
+        onRegister={handleKycSubmit}
+      >
+        Please proceed to register as a provider.
+      </KycPopups>
+
+      <KycForm closeView={handleKycFormClose} isOpen={isKycFormOpen} />
+
       <div className="bg-gray w-full xl:h-[20rem]">
         <div className="text-center py-10 xl:pt-24">
           <p className="font-[500] xl:text-4xl text-xl mb-3">User Profile</p>
@@ -100,7 +132,7 @@ const User = () => {
             alt="Gradient"
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
-          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[37rem] shadow-2xl">
+          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[40rem] shadow-2xl">
             <div className="lg:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="flex items-center gap-4">
                 <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
@@ -133,7 +165,9 @@ const User = () => {
               </div>
             </div>
             {user.kyclevel === 0 && <Link to='/provider-kyc'></Link>}
-
+            <div className="bg-secondary cursor-pointer rounded-full mb-4 p-2 w-fit text-white" onClick={handleSwitchToProvider}>
+              Switch to provider
+            </div>
             <div className="border-t pt-5">
               <div className="flex items-center text-primary gap-3 justify-between"></div>
             </div>

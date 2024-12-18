@@ -4,7 +4,8 @@ import Modal from '../../../Components/General/Modal';
 import { Apis, AuthPosturl } from '../../../Components/General/Api';
 import { FaPlus } from 'react-icons/fa';
 
-const KycForm = ({ closeView }) => {
+const KycForm = ({ closeView, isOpen }) => {
+    
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [image, setImage] = useState({
@@ -74,6 +75,8 @@ const KycForm = ({ closeView }) => {
     };
 
     return (
+        <Modal height='h-[40rem]' closeView={closeView}>
+
             <div className="text-black">
                 <h2 className="text-xl font-bold mb-4">KYC Form</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -270,6 +273,8 @@ const KycForm = ({ closeView }) => {
                     </div>
                 </form>
             </div>
+        </Modal>
+
     );
 };
 
