@@ -623,7 +623,7 @@ function Home() {
                                                 <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                                             </div>
                                         </div>
-                                        <Link to="" className='text-secondary text-xl lg:text-2xl relative '>
+                                        <Link to="/notification" className='text-secondary text-xl lg:text-2xl relative '>
                                             <SlBell />
                                             {notificationCount > 0 && (
                                                 <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
@@ -693,7 +693,7 @@ function Home() {
                             <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
                         </div>
                         <div className="md:mt-10 mt-40 gap-2">
-                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
+                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="/new-booking">Book Now</Link>
                         </div>
                         <div className="flex md:-mt-0 gap-2 items-center -mt-32">
                             <LazyLoadImage
@@ -794,6 +794,8 @@ function Home() {
                                     <div className="py-4 px-5 md:h-[7rem] bg-white rounded-b-3xl shadow-xl -mt-3">
                                         <div className="font-medium">{item.name}</div>
                                         <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
+                                        <Link to={`/service-detail/${item.id}`} className='text-xs font-medium text-secondary'>View Details</Link>
+
                                     </div>
                                 </div>
                             </div>
