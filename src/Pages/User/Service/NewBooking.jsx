@@ -10,6 +10,7 @@ import ConfirmBooking from './ConfirmBooking';
 import Popups from '../../../Components/General/Popups';
 
 const Booking = () => {
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [loading, setLoading] = useState(false);
     const [view, setView] = useState(1); // 1 = Booking Form, 2 = Confirm Booking
@@ -17,7 +18,6 @@ const Booking = () => {
     const [categories, setCategories] = useState([]);
     const [states, setStates] = useState([]);
     const [services, setServices] = useState([]);
-    const [filteredServices, setFilteredServices] = useState([]); // New state for filtered services
     const [images, setImages] = useState([]);
     const [bookingData, setBookingData] = useState(null);
     const [location, setLocation] = useState({
@@ -28,7 +28,6 @@ const Booking = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [locationButtonText, setLocationButtonText] = useState('Get Location');
-    const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
 
     const getUserGeoAddress = async () => {
         setLocationButtonText('Getting your location...'); // Change button text
@@ -41,7 +40,7 @@ const Booking = () => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const { latitude, longitude } = position.coords;
-                const apiKey = "YOUR_API_KEY"; // Replace with your API key
+                const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
                 try {
                     const response = await fetch(
                         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
@@ -94,17 +93,6 @@ const Booking = () => {
     useEffect(() => {
         fetchAllData();
     }, [fetchAllData]);
-
-    const handleCategoryChange = (e) => {
-        const selected = e.target.value;
-        setSelectedCategory(selected);
-        setValue('category', selected, { shouldValidate: true }); // Sync with react-hook-form
-
-        // Filter services based on the selected category
-        const filtered = services.filter(service => service.category_id === selected);
-        setFilteredServices(filtered);
-        setValue('service_tid', ''); // Reset service selection
-    };
 
     const onSubmit = async (data) => {
         const formData = new FormData();
@@ -179,11 +167,9 @@ const Booking = () => {
 
         setImages(prevImages => [...prevImages, ...newImages]);
     };
-
     const handleDelete = (index) => {
         setImages(prevImages => prevImages.filter((_, i) => i !== index));
     };
-
     return (
         <Layout>
             <div className="bg-gray w-full xl:h-[20rem]">
@@ -234,8 +220,8 @@ const Booking = () => {
                                         <label className="text-xs font-semibold">Select Categories</label>
                                         <select
                                             className={`inputs border`}
-                                            onChange={handleCategoryChange}
                                             {...register('category', { required: false })} // Dummy field
+                                            onChange={(e) => setSelectedCategory(e.target.value)} // Update selected category
                                         >
                                             <option value="">Select Categories</option>
                                             {categories.map((category) => (
@@ -254,11 +240,13 @@ const Booking = () => {
                                             {...register('service_tid', { required: 'Service is required' })}
                                         >
                                             <option value="">Select Service</option>
-                                            {filteredServices.map((service) => (
-                                                <option key={service.trackid} value={service.trackid}>
-                                                    {service.name}
-                                                </option>
-                                            ))}
+                                            {services
+                                                .filter((service) => service.cat_tid === selectedCategory) // Filter services by selected category
+                                                .map((service) => (
+                                                    <option key={service.trackid} value={service.trackid}>
+                                                        {service.name}
+                                                    </option>
+                                                ))}
                                         </select>
                                         {errors.service_tid && (
                                             <div className="text-red-600">{errors.service_tid.message}</div>
@@ -317,14 +305,7 @@ const Booking = () => {
                                     <div className="mb-5">
                                         <div className="flex justify-between">
                                             <label className="text-xs font-semibold">Address</label>
-                                            <button
-                                                className="text-xs text-secondary font-semibold"
-                                                type="button"
-                                                onClick={async () => {
-                                                    await getUserGeoAddress();
-                                                    setValue('address', location.address, { shouldValidate: true }); // Update form value
-                                                }}
-                                            >
+                                            <button className="text-xs text-secondary font-semibold" type="button" onClick={getUserGeoAddress}>
                                                 {locationButtonText}
                                             </button>
                                         </div>
@@ -334,11 +315,7 @@ const Booking = () => {
                                             placeholder="Enter Address"
                                             className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
                                             value={location.address}
-                                            onChange={(e) => {
-                                                const newAddress = e.target.value;
-                                                setLocation({ ...location, address: newAddress });
-                                                setValue('address', newAddress, { shouldValidate: true }); // Sync with react-hook-form
-                                            }}
+                                            onChange={(e) => setLocation({ ...location, address: e.target.value })}
                                         />
                                         {errors.address && (
                                             <div className="text-red-600">{errors.address.message}</div>
@@ -372,6 +349,7 @@ const Booking = () => {
                                             <div className="text-red-600">{errors.zipcode.message}</div>
                                         )}
                                     </div>
+
 
                                     <div className="my-4 w-full overflow-x-auto">
                                         <div className="flex gap-2">

@@ -580,6 +580,7 @@ import Popups from '../../../Components/General/Popups';
 import toast from 'react-hot-toast';
 
 const ServiceDetail = () => {
+  const [selectedCategory, setSelectedCategory] = useState('');
   const { userid } = useParams();
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -957,6 +958,21 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.description.message}</div>
                       )}
                     </div>
+                    <div className="mb-5">
+                      <label className="text-xs font-semibold">Select Categories</label>
+                      <select
+                        className={`inputs border`}
+                        {...register('category', { required: false })} // Dummy field
+                        onChange={(e) => setSelectedCategory(e.target.value)} // Update selected category
+                      >
+                        <option value="">Select Categories</option>
+                        {categories.map((category) => (
+                          <option key={category.trackid} value={category.trackid}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
                     {/* Select Service */}
                     <div className="mb-5">
@@ -966,29 +982,17 @@ const ServiceDetail = () => {
                         {...register('service_tid', { required: 'Service is required' })}
                       >
                         <option value="">Select Service</option>
-                        {services.map((service) => (
-                          <option key={service.trackid} value={service.trackid}>
-                            {service.name}
-                          </option>
-                        ))}
+                        {services
+                          .filter((service) => service.cat_tid === selectedCategory) // Filter services by selected category
+                          .map((service) => (
+                            <option key={service.trackid} value={service.trackid}>
+                              {service.name}
+                            </option>
+                          ))}
                       </select>
                       {errors.service_tid && (
                         <div className="text-red-600">{errors.service_tid.message}</div>
                       )}
-                    </div>
-                    <div className="mb-5">
-                      <label className="text-xs font-semibold">Select Categories</label>
-                      <select
-                        className={`inputs border`}
-                        {...register('category', { required: false })} // Dummy field
-                      >
-                        <option value="">Select Categories</option>
-                        {categories.map((category) => (
-                          <option key={category.trackid} value={category.trackid}>
-                            {category.name}
-                          </option>
-                        ))}
-                      </select>
                     </div>
                     {/* Select State */}
                     <div className="mb-5">
@@ -1055,6 +1059,7 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.address.message}</div>
                       )}
                     </div>
+                    
                     {/* Price Offering */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Price Offering</label>
