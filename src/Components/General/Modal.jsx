@@ -15,14 +15,14 @@ const Modal = ({
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
-        closeView();
+        closeView(); // Ensure this function is called
       }
     };
 
     // Disable body scroll
     document.body.style.overflow = 'hidden';
     window.addEventListener('click', handleClickOutside, true);
-    
+
     return () => {
       // Re-enable body scroll
       document.body.style.overflow = 'unset';

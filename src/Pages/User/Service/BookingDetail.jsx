@@ -82,11 +82,6 @@ const BookingDetail = () => {
             ToastAlert('Please select a star rating before submitting.');
             return;
         }
-        const wordCount = reviewText.trim().split(/\s+/).length;
-        if (wordCount <= 20) {
-            ToastAlert('Your review must contain more than 20 words.');
-            return;
-        }
 
         const datatosend = {
             service_tid: booking[0]?.service_tid || "",
@@ -102,8 +97,8 @@ const BookingDetail = () => {
             if (res.status === true) {
                 ToastAlert('Review submitted successfully!');
                 setReviews(prev => [...prev, { ...datatosend, id: res.data.id }]);
-                setRating(0); // Reset rating
-                setReviewText(''); // Reset review text
+                setRating(0);
+                setReviewText('');
             } else {
                 ToastAlert(res.text || 'Failed to submit review');
             }
@@ -130,25 +125,26 @@ const BookingDetail = () => {
         );
         setEditReview(false);
     };
+
     const DeleteItem = (review) => {
-        setSingles(review); // Set the selected review with its trackid
+        setSingles(review);
         setDel(true);
     };
 
     const confirmAction = async () => {
-        if (!singles.trackid) { // Use trackid from the selected review
+        if (!singles.trackid) {
             ToastAlert('No review selected.');
             return;
         }
 
-        const data = { data_tid: singles.trackid }; // Use the correct trackid
+        const data = { data_tid: singles.trackid };
         setLoads(true);
         try {
             const res = await AuthPosturl(Apis.users.delete_review, data);
             setLoads(false);
             if (res.status === true) {
                 setDel(false);
-                setReviews(prev => prev.filter(review => review.id !== singles.id)); // Update state
+                setReviews(prev => prev.filter(review => review.id !== singles.id));
                 ToastAlert('Review deleted successfully.');
             } else {
                 ToastAlert(res.text || 'Failed to delete review.');
@@ -157,9 +153,7 @@ const BookingDetail = () => {
             setLoads(false);
             ToastAlert('Error deleting review.');
         }
-    };
-
-
+    };;
 
     return (
         <Layout>
@@ -219,85 +213,88 @@ const BookingDetail = () => {
                                                     <p className="text-primary text-xs">{item.description}</p>
                                                 </div>
                                             </div>
-                                            <div className="">
-                                                <div className="md:px-5">
-                                                    <p className="font-[500] py-5 text-2xl">Add Review</p>
-                                                    <div>
-                                                        <div className="bg-gray flex h-20 rounded-xl px-5 items-center gap-2">
-                                                            <p className="text-primary">Give Rate:</p>
-                                                            <StarRating rating={rating} setRating={setRating} />
-                                                        </div>
-                                                        <div className="mt-5">
-                                                            <textarea
-                                                                className="w-full h-44 bg-gray rounded-xl outline-none p-5"
-                                                                placeholder="Enter your review here"
-                                                                value={reviewText}
-                                                                onChange={(e) => setReviewText(e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="bg-secondary w-fit px-8 py-3 text-white font-medium rounded-xl mt-4">
-                                                            <button onClick={onSubmit} disabled={isSubmitting}>
-                                                                {isSubmitting ? 'Submitting...' : 'Submit'}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-10">
-                                                    <p className="font-[500] py-5 border-b text-2xl">Reviews</p>
-                                                    <div className="">
-                                                        {reviews.map((item, i) => (
-                                                            <div className="" key={i}>
-                                                                <div className="my-5">
-                                                                    <div key={item.id} className="border-b py-4">
-                                                                        <div className="">
-                                                                            <div className="flex gap-4">
-                                                                                <div className="">
-                                                                                    <FaUserCircle className='text-5xl' />
-                                                                                </div>
-                                                                                <div className="flex items-start w-full justify-between">
-                                                                                    <div className="">
-                                                                                        <div className="flex text-sm md:text-base gap-4">
-                                                                                            <p className="font-[500]">
-                                                                                                {item.ufname} {item.ulname}
-                                                                                            </p>
-                                                                                            <p className="text-primary text-xs">{item.created_at}</p>
-                                                                                        </div>
-                                                                                        <div className="flex text-xs md:text-base gap-2">
-                                                                                            <div className="flex  items-center text-star gap-2">
-                                                                                                {[...Array(5)].map((_, starIndex) => (
-                                                                                                    <FaStar
-                                                                                                        key={starIndex}
-                                                                                                        color={starIndex < item.rating ? '#FFD700' : '#ddd'}
-                                                                                                    />
-                                                                                                ))}
-                                                                                            </div>
-                                                                                            <div className=""> {item.rating} </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className="flex items-center gap-2 text-secondary cursor-pointer md:text-sm">
-                                                                                        <div onClick={() => SingleItem(item)} className="">Edit</div>
-                                                                                        <div onClick={() => DeleteItem(item)} className=""><FaTrashAlt /></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
 
-                                                                            <div className="mt-5 text-sm md:truncate overflow-hidden ... text-primary">
-                                                                                {item.review}
+                                            <div className="">
+                                                {item.status === 'Completed' && (
+                                                    <>
+                                                        <p className="font-[500] py-5 text-2xl">Add Review</p>
+                                                        <div>
+                                                            <div className="bg-gray flex h-20 rounded-xl px-5 items-center gap-2">
+                                                                <p className="text-primary">Give Rate:</p>
+                                                                <StarRating rating={rating} setRating={setRating} />
+                                                            </div>
+                                                            <div className="mt-5">
+                                                                <textarea
+                                                                    className="w-full h-44 bg-gray rounded-xl outline-none p-5"
+                                                                    placeholder="Enter your review here"
+                                                                    value={reviewText}
+                                                                    onChange={(e) => setReviewText(e.target.value)}
+                                                                />
+                                                            </div>
+                                                            <div className="bg-secondary w-fit px-8 py-3 text-white font-medium rounded-xl mt-4">
+                                                                <button onClick={onSubmit} disabled={isSubmitting}>
+                                                                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div className="mt-10">
+                                                            <p className="font-[500] py-5 border-b text-2xl">Reviews</p>
+                                                            <div className="">
+                                                                {reviews.map((review, i) => (
+                                                                    <div className="" key={i}>
+                                                                        <div className="my-5">
+                                                                            <div key={review.id} className="border-b py-4">
+                                                                                <div className="">
+                                                                                    <div className="flex gap-4">
+                                                                                        <div className="">
+                                                                                            <FaUserCircle className='text-5xl' />
+                                                                                        </div>
+                                                                                        <div className="flex items-start w-full justify-between">
+                                                                                            <div className="">
+                                                                                                <div className="flex text-sm md:text-base gap-4">
+                                                                                                    <p className="font-[500]">
+                                                                                                        {review.ufname} {review.ulname}
+                                                                                                    </p>
+                                                                                                    <p className="text-primary text-xs">{review.created_at}</p>
+                                                                                                </div>
+                                                                                                <div className="flex text-xs md:text-base gap-2">
+                                                                                                    <div className="flex items-center text-star gap-2">
+                                                                                                        {[...Array(5)].map((_, starIndex) => (
+                                                                                                            <FaStar
+                                                                                                                key={starIndex}
+                                                                                                                color={starIndex < review.rating ? '#FFD700' : '#ddd'}
+                                                                                                            />
+                                                                                                        ))}
+                                                                                                    </div>
+                                                                                                    <div>{review.rating}</div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div className="flex items-center gap-2 text-secondary cursor-pointer md:text-sm">
+                                                                                                <div onClick={() => SingleItem(review)} className="">Edit</div>
+                                                                                                <div onClick={() => DeleteItem(review)} className=""><FaTrashAlt /></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div className="mt-5 text-sm md:truncate overflow-hidden text-primary">
+                                                                                        {review.review}
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
+                                                        </div>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 {booking.length > 0 && (
-                                    <div className="bg-gray h-[18rem] md:w-[30%] p-4">
+                                    <div className="bg-gray rounded-md h-[18rem] md:w-[30%] p-4">
                                         <div>
                                             <p className="font-[500] text-xl">Payment Summary</p>
                                             <div className="h-[28rem] px-6">
@@ -311,13 +308,14 @@ const BookingDetail = () => {
                                                         <div className="font-medium">{item.paid_with}</div>
                                                     </div>
                                                     <div className="flex items-center justify-between gap-5 my-5">
-                                                        <div className="text-sm text-primary">Discount</div>
-                                                        <div className="font-medium">10%</div>
+                                                        <div className="text-sm text-primary">Commission</div>
+                                                        <div className="font-medium">{item.commission_percent}%</div>
                                                     </div>
                                                     <div className="flex items-center border-t justify-between gap-5 my-5">
                                                         <div>Total Amount</div>
                                                         <div className="text-secondary font-medium ">${new Intl.NumberFormat().format(item.amt_paid)}</div>
                                                     </div>
+                                                   
                                                 </div>
                                             </div>
                                         </div>

@@ -39,14 +39,15 @@ const TranscationHistory = () => {
                                 <div className="text-4xl"> <FaUserCircle /> </div>
                                 <span className="flex-1">
                                     <h5 className="font-[500] text-sm xl:text-base">{item.transtype}</h5>
-                                    ${parseFloat(item.amount).toLocaleString()}
 
+
+                                    <p className="text-sm text-primary">{item.orderid}</p>
                                     <p className="text-sm text-primary">{item.created_at}</p>
-                                    {/* <div className="flex gap-7 text-sm mt-4">
-                                        <div className="text-primary cursor-pointer">Dismiss</div>
-                                        <div className="text-secondary cursor-pointer">View</div>
-                                    </div> */}
+
                                 </span>
+                                <div className={`${item.transtype == 'Credit' ? 'text-white py-1 rounded-full px-4 bg-green-500' : 'text-white py-1 rounded-full px-4 bg-red-500'}`}>
+                                    ${parseFloat(item.amount).toLocaleString()}
+                                </div>
                             </div>
                         ))}
                     </div>

@@ -60,7 +60,7 @@ export const GeneralNoAuth = [
     { path: 'service-detail/:userid', element: ServiceDetail },
     { path: 'booking-list', element: BookingList },
     { path: 'category', element: Category },
-    { path: 'sub-category', element: Subcategory },
+    { path: 'sub-category/:trackid', element: Subcategory },
     { path: 'gallery', element: Gallery },
 
 
@@ -68,7 +68,7 @@ export const GeneralNoAuth = [
 export const GeneralRoutes = [
     { path: 'user', element: User },
     { path: 'notification', element: Notification },
-    { path: 'fund-history', element: TranscationHistory  },
+    { path: 'fund-history', element: TranscationHistory },
     { path: 'confirm-booking', element: ConfirmBooking },
     { path: 'booking-detail/:bookingid', element: BookingDetail },
     { path: 'booking', element: BookingList },
