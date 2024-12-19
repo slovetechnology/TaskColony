@@ -593,8 +593,6 @@ function Home() {
     useEffect(() => {
         fetchTopProvider();
     }, [fetchTopProvider]);
-
-    const [activeTab, setActiveTab] = useState(ActiveTabOptions[0]);
     return (
         <>
             <div className='relative'>
@@ -684,7 +682,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
+            <div className="h-fit lg:h-[84dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
@@ -692,29 +690,27 @@ function Home() {
                                 <div className="text-secondary text-3xl md:text-5xl font-bold">A One-Stop Place </div>
                                 <div className="font-bold text-3xl md:text-5xl">For Home Repair</div>
                             </h1>
-                            <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.</div>
-                        </div>
-                        <div className="mt-10">
-                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
+                            <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
                         </div>
                         <div className="md:mt-10 mt-40 gap-2">
-                            <div className="flex md:-mt-0 gap-2 items-center -mt-32">
-                                <LazyLoadImage
-                                    effect="blur"
-                                    className='size-5'
-                                    src={img3}
-                                />
-                                <div className="text-sm">
-                                    <div className="font-medium">Have any Questions?</div>
-                                    <div className="text-slate-500">+0 123 888 555</div>
-                                </div>
+                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
+                        </div>
+                        <div className="flex md:-mt-0 gap-2 items-center -mt-32">
+                            <LazyLoadImage
+                                effect="blur"
+                                className='size-5'
+                                src={img3}
+                            />
+                            <div className="text-sm">
+                                <div className="font-medium">Have any Questions?</div>
+                                <div className="text-slate-500">+0 123 888 555</div>
                             </div>
                         </div>
                     </div>
-                    <div className="lg:col-span-4 relative -mt-32 lg:-mt-0">
+                    <div className="lg:col-span-4 -mt-32 lg:-mt-0">
                         <LazyLoadImage
                             effect="blur"
-                            className='w-full object-contain lg:h-[51rem]'
+                            className='w-full object-contain lg:h-[41rem]'
                             src={img1}
                         />
                     </div>
