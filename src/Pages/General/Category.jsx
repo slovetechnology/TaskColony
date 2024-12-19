@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../Components/User/Layout';
-import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { Apis, AuthGeturl, Geturl } from '../../Components/General/Api';
-import { HomeCategories } from '../../utils/utils';
+import { Apis, Geturl } from '../../Components/General/Api';
 
 const Category = () => {
   const [items, setItems] = useState([]);
@@ -42,16 +40,20 @@ const Category = () => {
       <div className="w-11/12 lg:w-10/12 mx-auto my-28">
         <div className="grid grid-cols-1 lg:grid-cols-5 mt-20 mb-20">
           <div className="lg:col-span-2"></div>
-          <div className="flex  lg:col-span-3 items-center justify-between">
+          <div className="flex lg:col-span-3 items-center justify-between">
             <div className="font-medium text-2xl">Categories</div>
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 lg:gap-y-16 gap-x-4">
           {items.map((item, index) => (
-            <div className="bg-white shadow-2xl rounded-xl p-4" key={index}>
-              <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14"><img src={item.icon} alt="" className="size-8" /></div>
-              <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
+          <Link to={`/sub-category/${item.trackid}`} key={index}>
+          <div className="bg-white shadow-2xl rounded-xl p-4">
+            <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14">
+              <img src={item.icon} alt="" className="size-8" />
             </div>
+            <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
+          </div>
+        </Link>
           ))}
         </div>
       </div>

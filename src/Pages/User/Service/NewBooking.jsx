@@ -17,6 +17,7 @@ const Booking = () => {
     const [categories, setCategories] = useState([]);
     const [states, setStates] = useState([]);
     const [services, setServices] = useState([]);
+    const [filteredServices, setFilteredServices] = useState([]); // New state for filtered services
     const [images, setImages] = useState([]);
     const [bookingData, setBookingData] = useState(null);
     const [location, setLocation] = useState({
@@ -27,6 +28,7 @@ const Booking = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [locationButtonText, setLocationButtonText] = useState('Get Location');
+    const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
 
     const getUserGeoAddress = async () => {
         setLocationButtonText('Getting your location...'); // Change button text
@@ -39,7 +41,7 @@ const Booking = () => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const { latitude, longitude } = position.coords;
-                const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
+                const apiKey = "YOUR_API_KEY"; // Replace with your API key
                 try {
                     const response = await fetch(
                         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
@@ -92,6 +94,17 @@ const Booking = () => {
     useEffect(() => {
         fetchAllData();
     }, [fetchAllData]);
+
+    const handleCategoryChange = (e) => {
+        const selected = e.target.value;
+        setSelectedCategory(selected);
+        setValue('category', selected, { shouldValidate: true }); // Sync with react-hook-form
+
+        // Filter services based on the selected category
+        const filtered = services.filter(service => service.category_id === selected);
+        setFilteredServices(filtered);
+        setValue('service_tid', ''); // Reset service selection
+    };
 
     const onSubmit = async (data) => {
         const formData = new FormData();
@@ -166,9 +179,11 @@ const Booking = () => {
 
         setImages(prevImages => [...prevImages, ...newImages]);
     };
+
     const handleDelete = (index) => {
         setImages(prevImages => prevImages.filter((_, i) => i !== index));
     };
+
     return (
         <Layout>
             <div className="bg-gray w-full xl:h-[20rem]">
@@ -214,30 +229,12 @@ const Booking = () => {
                                         )}
                                     </div>
 
-                                    {/* Select Service */}
-                                    <div className="mb-5">
-                                        <label className="text-xs font-semibold">Select Service</label>
-                                        <select
-                                            className={`inputs border ${errors.service_tid ? 'border-red-600' : 'border'}`}
-                                            {...register('service_tid', { required: 'Service is required' })}
-                                        >
-                                            <option value="">Select Service</option>
-                                            {services.map((service) => (
-                                                <option key={service.trackid} value={service.trackid}>
-                                                    {service.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {errors.service_tid && (
-                                            <div className="text-red-600">{errors.service_tid.message}</div>
-                                        )}
-                                    </div>
-
                                     {/* Select Categories */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Select Categories</label>
                                         <select
                                             className={`inputs border`}
+                                            onChange={handleCategoryChange}
                                             {...register('category', { required: false })} // Dummy field
                                         >
                                             <option value="">Select Categories</option>
@@ -247,6 +244,25 @@ const Booking = () => {
                                                 </option>
                                             ))}
                                         </select>
+                                    </div>
+
+                                    {/* Select Service */}
+                                    <div className="mb-5">
+                                        <label className="text-xs font-semibold">Select Service</label>
+                                        <select
+                                            className={`inputs border ${errors.service_tid ? 'border-red-600' : 'border'}`}
+                                            {...register('service_tid', { required: 'Service is required' })}
+                                        >
+                                            <option value="">Select Service</option>
+                                            {filteredServices.map((service) => (
+                                                <option key={service.trackid} value={service.trackid}>
+                                                    {service.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        {errors.service_tid && (
+                                            <div className="text-red-600">{errors.service_tid.message}</div>
+                                        )}
                                     </div>
 
                                     {/* Select State */}
@@ -356,7 +372,6 @@ const Booking = () => {
                                             <div className="text-red-600">{errors.zipcode.message}</div>
                                         )}
                                     </div>
-
 
                                     <div className="my-4 w-full overflow-x-auto">
                                         <div className="flex gap-2">

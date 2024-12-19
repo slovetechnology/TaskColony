@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaSearch } from 'react-icons/fa';
 import { SlArrowLeft } from 'react-icons/sl';
 import Layout from '../../../Components/User/Layout';
-import { Apis, AuthGeturl } from '../../../Components/General/Api';
+import { Apis, AuthGeturl, AuthPosturl } from '../../../Components/General/Api';
 import EditBooking from './EditBooking';
 import notfound from '../../../assets/404.png';
-import ConfirmCancelBooking from './CancelBooking';
+import { ToastAlert } from '../../../Components/General/Utils';
 
 const BookingList = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -17,6 +17,8 @@ const BookingList = () => {
   const [loading, setLoading] = useState(true);
   const [editbookings, setEditBooking] = useState(false);
   const [singles, setSingles] = useState({}); // Store the selected single booking
+  const [loads, setLoads] = useState(false);
+
 
   // Fetch all bookings from the API
   const fetchAllBookings = useCallback(async () => {
@@ -38,7 +40,29 @@ const BookingList = () => {
   useEffect(() => {
     fetchAllBookings();
   }, [fetchAllBookings]);
+  const BookingCompleted = async (bookingId) => {
+    if (!bookingId) {
+      ToastAlert('No Booking found.');
+      return;
+    }
 
+    const data = { booking_id: bookingId };
+    setLoads(true);
+    try {
+      const res = await AuthPosturl(Apis.users.complete_gig, data);
+      setLoads(false);
+      if (res.status === true) {
+        // Update the booking state to reflect the change
+        setItems(prev => prev.map(b => b.id === bookingId ? { ...b, status: 'Completed' } : b));
+        ToastAlert('Task updated successfully.');
+      } else {
+        ToastAlert(res.text);
+      }
+    } catch (error) {
+      setLoads(false);
+      ToastAlert('Error updating task');
+    }
+  };
   // Close the EditBooking modal
   const handleCloseEdit = () => {
     setEditBooking(false);
@@ -98,79 +122,18 @@ const BookingList = () => {
       </div>
 
       <div className="w-[90%] mx-auto">
-        <div className="flex w-full items-center justify-between">
-          <div className="font-[500] flex items-center my-7 md:text-xl gap-1">
-            <SlArrowLeft size={10} /> Booking List
-          </div>
-          <div>
-            <Link className="bg-secondary py-2 md:px-4 px-2 md:text-xl rounded-md text-white" to="/new-booking">
+        <div className="flex w-full items-center justify-end">
+          <div className="font-[500] flex items-center my-7 gap-1">
+            <Link className="bg-secondary py-2 md:px-4 px-2 rounded-md text-white" to="/new-booking">
               New Booking
             </Link>
+          </div>
+          <div>
           </div>
         </div>
 
         <div className="gap-10 md:flex">
-          {/* Booking List */}
           <div className="mb-10 overflow-y-auto scrollsdown w-full h-[35rem]">
-            {/* {filteredItems.length > 0 ? (
-              filteredItems.map((item, i) => (
-                <div key={i} className="w-full xl:flex flex-grow mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl">
-                  <div className="w-full xl:w-[20rem]">
-                    <img
-                      src={item.imageslink?.[0] || notfound} // Show an image or fallback to notfound
-                      alt={item.title}
-                      className="w-full h-[14rem] xl:h-[14rem] mb-3 xl:mb-0 rounded-xl object-cover"
-                    />
-                  </div>
-                  <div className="w-full">
-                    <div className="flex items-start w-full justify-between">
-                      <p className="text-lg font-[500]">{item.title}</p>
-                      <div
-                        onClick={() => SingleItem(item)} // Pass the selected booking to SingleItem
-                        className="flex items-center text-xs font-[500] cursor-pointer gap-2 text-secondary"
-                      >
-                        Edit Booking <span className="text-primary"><FaEdit /></span>
-                      </div>
-                    </div>
-                    <div className="border-b pt-5 md:pb-10 pb-3">
-                      <p className="text-primary text-xs">
-                        <span className="font-[500] text-sm text-black">Location</span>: {item.address}
-                      </p>
-                      <div className="md:grid md:grid-cols-2 text-primary text-xs mt-2 gap-2">
-                        <p className='mb-2 md:mb-0'>
-                          <span className="font-[500] text-sm text-black">Date</span>: {item.the_date}
-                        </p>
-                        <p className='mb-2 md:mb-0'>
-                          <span className="font-[500] text-sm text-black">Time</span>: {item.the_time}
-                        </p>
-                        <p className='mb-2 md:mb-0'>
-                          <span className="font-[500] text-sm text-black">Payment Status</span>: {item.paid_with}
-                        </p>
-                        <p className='mb-2 md:mb-0'>
-                          <span className="font-[500] text-sm text-black">Service Status</span>: {item.status}
-                        </p>
-                        <p className='mb-2 md:mb-0'>
-                          <span className="font-[500] text-sm text-black">Provider</span>: {item.pfname} {item.plname}
-                        </p>
-                        <p className='mb-2 md:mb-0'>
-                          <span className="font-[500] text-sm text-black">Rating </span>: {item.status}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex font-[500] pt-8 gap-3">
-                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to={`/booking-detail/${item.id}`}>
-                        View
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div>
-                <img src={notfound} alt="Not Found" className="h-[30rem] object-contain w-full" />
-              </div>
-            )} */}
-
             {filteredItems.length > 0 ? (
               filteredItems.map((item, i) => (
                 <div key={i} className="w-full xl:flex flex-grow mb-4 gap-5 p-3 border xl:h-[19rem] rounded-xl">
@@ -185,7 +148,7 @@ const BookingList = () => {
                     <div className="flex items-start w-full justify-between">
                       <p className="text-lg font-[500]">{item.title}</p>
                       {/* Conditional rendering for Edit Booking */}
-                      {item.status !== 'Accepted' && (
+                      {item.status === 'Pending' && (
                         <div
                           onClick={() => SingleItem(item)}
                           className="flex items-center text-xs font-[500] cursor-pointer gap-2 text-secondary"
@@ -214,13 +177,21 @@ const BookingList = () => {
                         <p className='mb-2 md:mb-0'>
                           <span className="font-[500] text-sm text-black">Provider</span>: {item.pfname} {item.plname}
                         </p>
-                        
+
                       </div>
                     </div>
                     <div className="flex font-[500] pt-8 gap-3">
-                      <Link className="bg-secondary py-1 px-4 rounded-md text-white" to={`/booking-detail/${item.id}`}>
-                        View
-                      </Link>
+                      <div className="bg-secondary py-1 px-4 rounded-md text-white">
+                        <Link className="" to={`/booking-detail/${item.id}`}>
+                          View
+                        </Link>
+                      </div>
+                      {/* Show "Mark as Completed" only if the status is "Done" */}
+                      {item.status === 'Done' && (
+                        <div className="bg-secondary py-1 cursor-pointer px-4 rounded-md text-white" onClick={() => BookingCompleted(item.id)}>
+                          Mark as Completed
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -233,7 +204,7 @@ const BookingList = () => {
           </div>
 
           {/* Filters */}
-          <div className="bg-gray h-[35rem] xl:w-[40%] rounded-xl overflow-y-auto flex flex-col mb-10 justify-between">
+          <div className="bg-gray h-[37rem] xl:w-[40%] rounded-xl overflow-y-auto flex flex-col mb-10 justify-between">
             <form className="w-full h-full px-6 py-5">
               <div className="my-5 font-[500] text-xl">Filter By</div>
 
@@ -292,8 +263,17 @@ const BookingList = () => {
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={selectedStatus === 'Cancled'}
-                      onChange={() => statusHandleCheckboxChange('Cancled')}
+                      checked={selectedStatus === 'Done'}
+                      onChange={() => statusHandleCheckboxChange('Done')}
+                      className="mr-2 my-2"
+                    />
+                    Done
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedStatus === 'Canceled'}
+                      onChange={() => statusHandleCheckboxChange('Canceled')}
                       className="mr-2 my-2"
                     />
                     Canceled
