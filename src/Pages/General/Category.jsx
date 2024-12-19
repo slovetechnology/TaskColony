@@ -46,14 +46,14 @@ const Category = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 lg:gap-y-16 gap-x-4">
           {items.map((item, index) => (
-          <Link to={`/sub-category/${item.trackid}`} key={index}>
-          <div className="bg-white shadow-2xl rounded-xl p-4">
-            <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14">
-              <img src={item.icon} alt="" className="size-8" />
-            </div>
-            <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
-          </div>
-        </Link>
+            <Link to={`/sub-category/${item.trackid}`} key={index}>
+              <div className="bg-white shadow-2xl rounded-xl p-4">
+                <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14">
+                  <img src={item.icon} alt="" className="size-8" />
+                </div>
+                <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
