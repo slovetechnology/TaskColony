@@ -10,6 +10,9 @@ const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user.php`,
     fund_history: `${user}/profile/get_fund_history.php`,
+    withdraw_funds: `${user}/profile/withdrawfund.php`,
+    update_fav_service: `${user}/profile/update_profile_favorite_service.php`,
+    update_bank_info: `${user}/profile/update_profile_bankinfo.php`,
     top_provider: `${user}/system/get_top_providers.php`,
     forget_password: `${user}/auth/forgot_password.php`,
     reset_password: `${user}/auth/reset_password.php`,
@@ -123,7 +126,7 @@ export const Apis = {
 // Unauthenticated POST request
 export const Posturl = async (endpoint, data) => {
     const urlEncodedData = new URLSearchParams(data).toString();
-    const apiKey = 'AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o'; // Your API key
+ const apiKey = 'AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o'; // Your API key
 
     try {
         const response = await axios.post(`${offline}/${endpoint}`, urlEncodedData, {

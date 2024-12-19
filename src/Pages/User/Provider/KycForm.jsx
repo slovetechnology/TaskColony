@@ -1,38 +1,91 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from '../../../Components/General/Modal';
-import { Apis, AuthPosturl } from '../../../Components/General/Api';
+import { Apis, AuthPosturl, Geturl } from '../../../Components/General/Api';
 import { FaPlus } from 'react-icons/fa';
 
 const KycForm = ({ closeView, isOpen }) => {
-    
+    const [loading, setLoading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const [image, setImage] = useState({
-        main: null,
-        preview: null,
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const [image, setImage] = useState(null);
+    const [location, setLocation] = useState({
+        address: '',
+        latitude: null,
+        longitude: null,
     });
+    const [states, setStates] = useState([]);
+    const [locationButtonText, setLocationButtonText] = useState('Get Location');
+
+    const getUserGeoAddress = async () => {
+        setLocationButtonText('Getting your location...');
+        if (!navigator.geolocation) {
+            alert('Geolocation is not supported by your browser.');
+            setLocationButtonText('Get Location');
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
+                try {
+                    const response = await fetch(
+                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+                    );
+                    const data = await response.json();
+                    if (data.status === "OK" && data.results.length > 0) {
+                        setLocation({
+                            address: data.results[0].formatted_address,
+                            latitude,
+                            longitude,
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error fetching geolocation:', error);
+                } finally {
+                    setLocationButtonText('Get Location');
+                }
+            },
+            (error) => {
+                alert(`Error fetching location: ${error.message}`);
+                setLocationButtonText('Get Location');
+            }
+        );
+    };
+
+    const fetchAllData = useCallback(async () => {
+        setLoading(true);
+        try {
+            const stateResponse = await Geturl(Apis.users.get_system);
+            if (stateResponse.status === true) {
+                setStates(stateResponse.data.cities);
+            }
+        } catch (err) {
+            console.error(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchAllData();
+    }, [fetchAllData]);
 
     const handleUpload = (e) => {
         const file = e.target.files[0];
+        const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/svg+xml'];
+
         if (file) {
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
             if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPEG/PNG).');
+                alert('Please upload a valid image (JPEG/PNG/SVG).');
                 return;
             }
             if (file.size > 2 * 1024 * 1024) {
                 alert('File size should not exceed 2MB.');
                 return;
             }
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                setImage({
-                    main: file, // Store the actual file for binary upload
-                    preview: reader.result, // Display the image preview
-                });
-            };
+            setImage(file);
         }
     };
 
@@ -41,11 +94,12 @@ const KycForm = ({ closeView, isOpen }) => {
         setIsSubmitting(true);
 
         try {
-            // Prepare the form data for binary upload
             const formData = new FormData();
             formData.append('firstname', data.firstname);
             formData.append('lastname', data.lastname);
-            formData.append('middlename', data.middlename);
+            if (data.middlename) {
+                formData.append('middlename', data.middlename);
+            }
             formData.append('address', data.address);
             formData.append('email', data.email);
             formData.append('companyname', data.companyname);
@@ -56,8 +110,8 @@ const KycForm = ({ closeView, isOpen }) => {
             formData.append('phone', data.phone);
             formData.append('gender', data.gender);
             formData.append('dob', data.dob);
-            if (image.main) {
-                formData.append('images[]', image.main); // Append the binary file
+            if (image) {
+                formData.append('images[]', image);
             }
 
             const response = await AuthPosturl(Apis.users.kyc_form, formData, {
@@ -67,6 +121,7 @@ const KycForm = ({ closeView, isOpen }) => {
             });
 
             console.log('Response:', response.data);
+            closeView(); // Close KYC form on successful submission
         } catch (error) {
             console.error('Error submitting KYC form:', error);
         } finally {
@@ -74,44 +129,48 @@ const KycForm = ({ closeView, isOpen }) => {
         }
     };
 
-    return (
-        <Modal height='h-[40rem]' closeView={closeView}>
+    if (!isOpen) return null;
 
+    return (
+        <Modal height='h-[40rem]' width='w-[40rem]' closeView={closeView}>
             <div className="text-black">
                 <h2 className="text-xl font-bold mb-4">KYC Form</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-2 gap-3">
                         <div className="mb-3">
-                            <label>First Name</label>
+                            <label className="text-xs font-semibold">First Name</label>
                             <input
                                 {...register('firstname', { required: 'First name is required' })}
                                 type="text"
                                 className={`input border ${errors.firstname ? 'border-red-600' : 'border'}`}
+                                placeholder='Enter your first name'
                             />
-                            {errors.firstname && <div className="text-red-600">{errors.firstname.message}</div>}
+                            {errors.firstname && <div className="text-red-600 text-xs">{errors.firstname.message}</div>}
                         </div>
                         <div className="mb-3">
-                            <label>Last Name</label>
+                            <label className="text-xs font-semibold">Last Name</label>
                             <input
                                 {...register('lastname', { required: 'Last name is required' })}
                                 type="text"
                                 className={`input border ${errors.lastname ? 'border-red-600' : 'border'}`}
+                                placeholder='Enter your last name'
                             />
-                            {errors.lastname && <div className="text-red-600">{errors.lastname.message}</div>}
+                            {errors.lastname && <div className="text-red-600 text-xs">{errors.lastname.message}</div>}
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                         <div className="mb-3">
-                            <label>Middle Name</label>
+                            <label className="text-xs font-semibold">Middle Name (Optional)</label>
                             <input
-                                {...register('middlename', { required: 'Middle name is required' })}
+                                {...register('middlename')}
                                 type="text"
+                                placeholder='Enter your middle name'
                                 className={`input border ${errors.middlename ? 'border-red-600' : 'border'}`}
                             />
-                            {errors.middlename && <div className="text-red-600">{errors.middlename.message}</div>}
+                            {errors.middlename && <div className="text-red-600 text-xs">{errors.middlename.message}</div>}
                         </div>
                         <div className="mb-3">
-                            <label>Email</label>
+                            <label className="text-xs font-semibold">Email</label>
                             <input
                                 {...register('email', {
                                     required: 'Email is required',
@@ -121,15 +180,16 @@ const KycForm = ({ closeView, isOpen }) => {
                                     },
                                 })}
                                 type="email"
+                                placeholder='Enter your email address'
                                 className={`input border ${errors.email ? 'border-red-600' : 'border'}`}
                             />
-                            {errors.email && <div className="text-red-600">{errors.email.message}</div>}
+                            {errors.email && <div className="text-red-600 text-xs">{errors.email.message}</div>}
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                         <div className="mb-3">
-                            <label>Phone Number</label>
+                            <label className="text-xs font-semibold">Enter Your Phone Number</label>
                             <input
                                 {...register('phone', {
                                     required: 'Phone number is required',
@@ -147,32 +207,42 @@ const KycForm = ({ closeView, isOpen }) => {
                                     }
                                 })}
                                 type="text"
+                                placeholder='Enter your phone number'
                                 className={`input border ${errors.phone ? 'border-red-600' : 'border'}`}
                             />
-                            {errors.phone && <div className="text-red-600">{errors.phone.message}</div>}
+                            {errors.phone && <div className="text-red-600 text-xs">{errors.phone.message}</div>}
                         </div>
-                        <div className="mb-3">
-                            <label>State</label>
-                            <input
+                        <div className="mb-5">
+                            <label className="text-xs font-semibold">City</label>
+                            <select
+                                className={`inputs border ${errors.state_tid ? 'border-red-600' : 'border'}`}
                                 {...register('state_tid', { required: 'State is required' })}
-                                type="text"
-                                className={`input border ${errors.state_tid ? 'border-red-600' : 'border'}`}
-                            />
-                            {errors.state_tid && <div className="text-red-600">{errors.state_tid.message}</div>}
+                            >
+                                <option value="">Select City</option>
+                                {states.map((state) => (
+                                    <option key={state.trackid} value={state.trackid}>
+                                        {state.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.state_tid && (
+                                <div className="text-red-600 text-xs">{errors.state_tid.message}</div>
+                            )}
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                         <div className="mb-3">
-                            <label>Company Name</label>
+                            <label className="text-xs font-semibold">Company Name</label>
                             <input
                                 {...register('companyname', { required: 'Company name is required' })}
                                 type="text"
+                                placeholder='Enter your company name'
                                 className={`input border ${errors.companyname ? 'border-red-600' : 'border'}`}
                             />
-                            {errors.companyname && <div className="text-red-600">{errors.companyname.message}</div>}
+                            {errors.companyname && <div className="text-red-600 text-xs">{errors.companyname.message}</div>}
                         </div>
                         <div className="mb-3">
-                            <label>Identity Type</label>
+                            <label className="text-xs font-semibold">What’s your identity?</label>
                             <select
                                 {...register('identitytype', { required: 'Identity type is required' })}
                                 className={`input border ${errors.identitytype ? 'border-red-600' : 'border'}`}
@@ -181,100 +251,92 @@ const KycForm = ({ closeView, isOpen }) => {
                                 <option value="Individual">Individual</option>
                                 <option value="Company">Company</option>
                             </select>
-                            {errors.identitytype && <div className="text-red-600">{errors.identitytype.message}</div>}
+                            {errors.identitytype && <div className="text-red-600 text-xs">{errors.identitytype.message}</div>}
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                         <div className="mb-3">
-                            <label>Security Number</label>
+                            <label className="text-xs font-semibold">Social Security Number</label>
                             <input
                                 {...register('security_number', { required: 'Security number is required' })}
                                 type="text"
                                 className={`input border ${errors.security_number ? 'border-red-600' : 'border'}`}
+                                placeholder='SSN/ITIN/EIN'
                             />
-                            {errors.security_number && <div className="text-red-600">{errors.security_number.message}</div>}
+                            {errors.security_number && <div className="text-red-600 text-xs">{errors.security_number.message}</div>}
                         </div>
                         <div className="mb-3">
-                            <label>Security Number Type</label>
+                            <label className="text-xs font-semibold">Date Of Birth</label>
                             <input
-                                {...register('sostype', { required: 'Security number type is required' })}
-                                type="text"
-                                placeholder="SSN/ITIN/EIN"
-                                className={`input border ${errors.sostype ? 'border-red-600' : 'border'}`}
-                            />
-                            {errors.sostype && <div className="text-red-600">{errors.sostype.message}</div>}
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="mb-3">
-                            <label>Date of Birth</label>
-                            <input
-                                {...register('dob', { required: 'Date of Birth is required' })}
+                                {...register('dob', { required: 'Date of birth is required' })}
                                 type="date"
                                 className={`input border ${errors.dob ? 'border-red-600' : 'border'}`}
                             />
-                            {errors.dob && <div className="text-red-600">{errors.dob.message}</div>}
-                        </div>
-                        <div className="mb-3">
-                            <label>Gender</label>
-                            <select
-                                {...register('gender', { required: 'Gender is required' })}
-                                className={`input border ${errors.gender ? 'border-red-600' : 'border'}`}
-                            >
-                                <option value="">Select</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                            {errors.gender && <div className="text-red-600">{errors.gender.message}</div>}
+                            {errors.dob && <div className="text-red-600 text-xs">{errors.dob.message}</div>}
                         </div>
                     </div>
-                    <div className="mb-3">
-                        <label>Address</label>
+                    <div className="mb-5">
+                        <div className="flex justify-between">
+                            <label className="text-xs font-semibold">Address</label>
+                            <button
+                                className="text-xs text-secondary font-semibold"
+                                type="button"
+                                onClick={async () => {
+                                    await getUserGeoAddress();
+                                    setValue('address', location.address, { shouldValidate: true });
+                                }}
+                            >
+                                {locationButtonText}
+                            </button>
+                        </div>
                         <input
                             {...register('address', { required: 'Address is required' })}
                             type="text"
-                            className={`input border ${errors.address ? 'border-red-600' : 'border'}`}
+                            placeholder="Enter Address"
+                            className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
+                            value={location.address}
+                            onChange={(e) => {
+                                const newAddress = e.target.value;
+                                setLocation({ ...location, address: newAddress });
+                                setValue('address', newAddress, { shouldValidate: true });
+                            }}
                         />
-                        {errors.address && <div className="text-red-600">{errors.address.message}</div>}
+                        {errors.address && (
+                            <div className="text-red-600 text-xs">{errors.address.message}</div>
+                        )}
                     </div>
-                    <div className="my-4">
-                        <label>
-                            {image.preview === null ? (
-                                <div className="w-full h-32 bg-slate-200 cursor-pointer mx-auto flex items-center justify-center text-slate-600">
-                                    <FaPlus />
-                                </div>
+                    <div className="my-4 w-full overflow-x-auto">
+                        <div className="flex gap-2">
+                            {!image ? (
+                                <label className="w-full h-40 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center rounded-md cursor-pointer">
+                                    <FaPlus className="text-gray-500 mb-2" size={24} />
+                                    <span className="text-gray-500">Choose from gallery</span>
+                                    <span className="text-xs text-gray-400">(PNG, JPG, JPEG or SVG - max. 2MB)</span>
+                                    <input
+                                        onChange={handleUpload}
+                                        type="file"
+                                        accept=".png,.jpg,.jpeg,.svg"
+                                        hidden
+                                    />
+                                </label>
                             ) : (
-                                <img
-                                    src={image.preview}
-                                    alt="Preview"
-                                    className="w-full h-40 mx-auto border rounded-md object-cover"
-                                />
+                                <div className="relative">
+                                    <img
+                                        src={URL.createObjectURL(image)}
+                                        alt="Preview"
+                                        className="w-screen h-40 border rounded-md object-cover"
+                                    />
+                                </div>
                             )}
-                            <input onChange={handleUpload} type="file" hidden />
-                        </label>
+                        </div>
                     </div>
-                    <div className="flex mt-10 justify-end gap-3">
-                        <button
-                            type="button"
-                            onClick={closeView}
-                            className="px-4 py-2 bg-gray-200 rounded"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className={`px-4 py-2 bg-blue-500 text-white rounded ${isSubmitting ? 'opacity-50' : ''}`}
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? 'Saving...' : 'Save'}
-                        </button>
-                    </div>
+                    <button type="submit" className="bg-secondary px-4 py-1 rounded-md text-white" disabled={isSubmitting}>
+                        Submit
+                    </button>
                 </form>
             </div>
         </Modal>
-
     );
 };
 

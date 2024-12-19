@@ -7,19 +7,18 @@ import { Link } from "react-router-dom";
 import { FaChevronRight, FaUserCircle } from "react-icons/fa";
 import FavouriteService from "../Profiles/FavouriteService";
 import ChangePassword from "../Profiles/ChangePassword";
-import FundWallet from "../Profiles/Funds/FundWallet";
 import Settings from "../Profiles/Settings";
+import ProviderWithdraw from "./ProviderWithdraw";
+import EditUser from "../Profiles/EditUser"; // Import the EditUser component
 
 const Provider = () => {
   const { user } = useSelector((state) => state.data);
   const [location, setLocation] = useState("Fetching location...");
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditUserOpen, setIsEditUserOpen] = useState(false);
   const [changePass, SetChangePass] = useState(false);
   const [settings, SetSettings] = useState(false);
-  const [fundWallet, SetFundwallet] = useState(false);
+  const [fundWithdraw, SetFundwithdraw] = useState(false);
 
   useEffect(() => {
     // Call the function to get the address when the component mounts
@@ -39,8 +38,7 @@ const Provider = () => {
         console.log("Latitude:", latitude, "Longitude:", longitude);
 
         try {
-          // Replace with your actual Google Maps API key
-          const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o";
+          const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Use your actual API key here
           const response = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
           );
@@ -67,16 +65,12 @@ const Provider = () => {
 
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
-
   const handleEditUserOpen = () => setIsEditUserOpen(true);
   const handleEditUserClose = () => setIsEditUserOpen(false);
-
   const handleChangePasswordOpen = () => SetChangePass(true);
   const handleChangePasswordClose = () => SetChangePass(false);
-
-  const handleFundWalletOpen = () => SetFundwallet(true);
-  const handleFundWalletClose = () => SetFundwallet(false);
-
+  const handlefundWithdrawOpen = () => SetFundwithdraw(true);
+  const handlefundWithdrawClose = () => SetFundwithdraw(false);
   const handleSettingsOpen = () => SetSettings(true);
   const handleSettingsClose = () => SetSettings(false);
 
@@ -100,7 +94,7 @@ const Provider = () => {
             alt="Gradient"
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
-          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[35rem] shadow-2xl">
+          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[30rem] shadow-2xl">
             <div className="md:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="flex items-center gap-4">
                 <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
@@ -123,10 +117,10 @@ const Provider = () => {
                 <div className="text-secondary text-2xl">${user.user_wallets[0].walletbal}</div>
               </div>
 
-              <div className=" flex items-center justify-between md:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">
-                <MdOutlineLocationOn />
+              <div className="flex items-center justify-between  px-1 text-sm py-3 gap-10 text-primary md:w-[30rem] bg-white shadow-2xl">
+                <div className=""><MdOutlineLocationOn /></div>
                 <div>{location}</div>
-                <MdOutlineMyLocation />
+                <div className=""> <MdOutlineMyLocation /></div>
               </div>
             </div>
 
@@ -140,7 +134,7 @@ const Provider = () => {
 
             <div className="flex flex-col gap-10 lg:grid-cols-2 lg:grid">
               <div
-                onClick={handleFundWalletOpen}
+                onClick={handlefundWithdrawOpen}
                 className="border flex items-center justify-between py-3 px-2 cursor-pointer"
               >
                 <Link to="#">Withdraw Earning</Link>
@@ -173,6 +167,12 @@ const Provider = () => {
               >
                 Privacy Policy <FaChevronRight />
               </Link>
+              <Link
+                className="border py-3 px-2 items-center justify-between flex w-full"
+                to="/fund-history"
+              >
+                Transaction History <FaChevronRight />
+              </Link>
             </div>
           </div>
         </div>
@@ -191,7 +191,7 @@ const Provider = () => {
 
       {isModalOpen && <FavouriteService closeview={handleModalClose} />}
       {changePass && <ChangePassword closeview={handleChangePasswordClose} />}
-      {fundWallet && <FundWallet closeview={handleFundWalletClose} />}
+      {fundWithdraw && <ProviderWithdraw closeView={handlefundWithdrawClose} />}
       {settings && <Settings closeview={handleSettingsClose} />}
     </Layout>
   );

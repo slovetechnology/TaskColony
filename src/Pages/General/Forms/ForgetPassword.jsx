@@ -31,7 +31,7 @@ const ForgetPassword = () => {
                 setToken(res.data.token); // Assuming the API returns a token
                 setView(2); // Move to OTP view
             } else {
-                ErrorAlert(res.data.text);
+                ErrorAlert(res.text);
             }
         } catch (error) {
             console.error("Error in email submission:", error);

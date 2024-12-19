@@ -23,8 +23,10 @@ const User = () => {
   const [settings, SetSettings] = useState(false);
   const [fundWallet, SetFundwallet] = useState(false);
   const [isKycFormOpen, setIsKycFormOpen] = useState(false); // State for KYC form
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     getUserGeoAddress();
   }, []);
@@ -41,8 +43,7 @@ const User = () => {
         console.log("Latitude:", latitude, "Longitude:", longitude);
 
         try {
-          // Replace with your actual Google Maps API key
-          const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o";
+          const apiKey = "YOUR_GOOGLE_MAPS_API_KEY"; // Replace with your actual API key
           const response = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
           );
@@ -66,11 +67,10 @@ const User = () => {
       }
     );
   };
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleKycSubmit = () => {
     if (user.kyclevel === 0) {
-      setIsPopupOpen(true); // Show popup if kyclevel is 0
+      setIsKycFormOpen(true); // Open the KYC form if kyclevel is 0
     } else {
       navigate('/provider'); // Navigate to provider if kyclevel is 1
     }
@@ -84,23 +84,19 @@ const User = () => {
     }
   };
 
-
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
-
   const handleEditUserOpen = () => setIsEditUserOpen(true);
   const handleEditUserClose = () => setIsEditUserOpen(false);
-
   const handleChangePasswordOpen = () => SetChangePass(true);
   const handleChangePasswordClose = () => SetChangePass(false);
-
   const handleFundWalletOpen = () => SetFundwallet(true);
   const handleFundWalletClose = () => SetFundwallet(false);
-
   const handleSettingsOpen = () => SetSettings(true);
   const handleSettingsClose = () => SetSettings(false);
   const handleCancel = () => setIsPopupOpen(false);
-  const handleKycFormClose = () => setIsKycFormOpen(false);
+  const handleCloseKycForm = () => setIsKycFormOpen(false); // Close KYC Form
+
   return (
     <Layout>
       <KycPopups
@@ -112,8 +108,7 @@ const User = () => {
         Please proceed to register as a provider.
       </KycPopups>
 
-      <KycForm closeView={handleKycFormClose} isOpen={isKycFormOpen} />
-
+      <KycForm closeView={handleCloseKycForm} isOpen={isKycFormOpen} />
       <div className="bg-gray w-full xl:h-[20rem]">
         <div className="text-center py-10 xl:pt-24">
           <p className="font-[500] xl:text-4xl text-xl mb-3">User Profile</p>
@@ -150,7 +145,6 @@ const User = () => {
                 </span>
               </div>
 
-
               <div className="flex justify-center items-center my-5 gap-2">
                 <div className="text-primary text-sm font-medium">Wallet Balance</div>
                 <div className="text-secondary text-2xl">
@@ -158,7 +152,7 @@ const User = () => {
                 </div>
               </div>
 
-              <div className=" flex items-center justify-between md:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">
+              <div className="flex items-center justify-between md:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">
                 <MdOutlineLocationOn />
                 <div>{location}</div>
                 <MdOutlineMyLocation />
@@ -168,6 +162,7 @@ const User = () => {
             <div className="bg-secondary cursor-pointer rounded-full mb-4 p-2 w-fit text-white" onClick={handleSwitchToProvider}>
               Switch to provider
             </div>
+
             <div className="border-t pt-5">
               <div className="flex items-center text-primary gap-3 justify-between"></div>
             </div>
