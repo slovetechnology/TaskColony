@@ -566,7 +566,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { FaPlus, FaStar, FaUserCircle } from 'react-icons/fa';
+import { FaPlus, FaStar, FaTimes, FaUserCircle } from 'react-icons/fa';
 import Layout from '../../../Components/User/Layout';
 import { Apis, AuthGeturl, AuthPosturl, Geturl } from '../../../Components/General/Api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -846,7 +846,7 @@ const ServiceDetail = () => {
 
       {view === 1 && (
         <div className="">
-          <div className="lg:flex gap-10 mx-10 mt-5 items-start justify-center">
+          <div className="lg:flex gap-10 mx-5 md:mx-10 mt-5 items-start justify-center">
             <div className="w-full">
               {loading ? (
                 <div className="text-center">Loading...</div>
@@ -1059,7 +1059,7 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.address.message}</div>
                       )}
                     </div>
-                    
+
                     {/* Price Offering */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Price Offering</label>
@@ -1151,6 +1151,24 @@ const ServiceDetail = () => {
                 </form>
               </div>
             </div>
+          </div>
+
+          <div className="flex overflow-auto scrollsdown my-10 mx-5 gap-10">
+            {services.slice(0, 8).map((item, index) => (
+              <div className="flex-shrink-0" key={index}>
+                <div className="">
+                  <LazyLoadImage
+                    effect="blur"
+                    src={item.banner_image[0]}
+                    className="h-[15rem] w-[20rem] object-top object-cover" // Increased height and width
+                  />
+                  <div className="py-6 px-6 md:h-[8rem] bg-white rounded-b-3xl shadow-xl -mt-4"> {/* Increased padding and height */}
+                    <div className="font-medium text-lg">{item.name}</div> {/* Increased font size */}
+                    <div className="text-sm capitalize text-slate-500 mt-3">{item.description}</div> {/* Increased font size */}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

@@ -13,9 +13,9 @@ const FavouriteService = ({ isOpen, closeview, resendSignal }) => {
     // Fetch available services
     const fetchServices = useCallback(async () => {
         try {
-            const res = await AuthGeturl(Apis.users.get_all_services);
+            const res = await AuthGeturl(Apis.users.get_system);
             if (res.status === true) {
-                setItems(res.data.data); // Update state with fetched items
+                setItems(res.data.all_services); // Update state with fetched items
             } else {
                 throw new Error('Failed to fetch services.');
             }
@@ -98,7 +98,7 @@ const FavouriteService = ({ isOpen, closeview, resendSignal }) => {
                     <button
                         type="submit"
                         className={`px-4 py-2 text-sm rounded ${
-                            isSubmitting ? 'bg-gray-400' : 'bg-blue-500 text-white'
+                            isSubmitting ? 'bg-secondary/45 text-white' : 'bg-secondary text-white'
                         }`}
                         disabled={isSubmitting}
                     >

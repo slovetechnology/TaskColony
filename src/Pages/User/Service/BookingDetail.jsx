@@ -299,10 +299,7 @@ const BookingDetail = () => {
                                             <p className="font-[500] text-xl">Payment Summary</p>
                                             <div className="h-[28rem] px-6">
                                                 <div className="text-xs">
-                                                    <div className="flex items-center justify-between gap-5 my-5">
-                                                        <div className="text-sm text-primary">Payment Status</div>
-                                                        <div className="font-medium">{item.status}</div>
-                                                    </div>
+                                                
                                                     <div className="flex items-center justify-between gap-5 my-5">
                                                         <div className="text-sm text-primary">Payment Method</div>
                                                         <div className="font-medium">{item.paid_with}</div>

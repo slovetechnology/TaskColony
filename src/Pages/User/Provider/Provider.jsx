@@ -10,6 +10,7 @@ import ChangePassword from "../Profiles/ChangePassword";
 import Settings from "../Profiles/Settings";
 import ProviderWithdraw from "./ProviderWithdraw";
 import EditUser from "../Profiles/EditUser"; // Import the EditUser component
+import UpdateFavservice from "./UpdateFavservice";
 
 const Provider = () => {
   const { user } = useSelector((state) => state.data);
@@ -19,13 +20,13 @@ const Provider = () => {
   const [changePass, SetChangePass] = useState(false);
   const [settings, SetSettings] = useState(false);
   const [fundWithdraw, SetFundwithdraw] = useState(false);
+  const [kyc, setKyc] = useState(false);
 
   useEffect(() => {
     // Call the function to get the address when the component mounts
     getUserGeoAddress();
   }, []);
 
-  // Function to get user's geographic address
   const getUserGeoAddress = async () => {
     if (!navigator.geolocation) {
       console.error("Geolocation is not supported by your browser.");
@@ -63,15 +64,18 @@ const Provider = () => {
     );
   };
 
-  const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
   const handleEditUserOpen = () => setIsEditUserOpen(true);
+
   const handleEditUserClose = () => setIsEditUserOpen(false);
-  const handleChangePasswordOpen = () => SetChangePass(true);
   const handleChangePasswordClose = () => SetChangePass(false);
+
   const handlefundWithdrawOpen = () => SetFundwithdraw(true);
   const handlefundWithdrawClose = () => SetFundwithdraw(false);
-  const handleSettingsOpen = () => SetSettings(true);
+
+  const handleKycOpen = () => setKyc(true);
+  const handleKycClose = () => setKyc(false);
+
   const handleSettingsClose = () => SetSettings(false);
 
   return (
@@ -124,7 +128,7 @@ const Provider = () => {
               </div>
             </div>
 
-            <div className="bg-secondary px-5 py-1 w-fit text-white font-semibold my-3">
+            <div className="bg-secondary cursor-pointer rounded-full mb-4 p-2 w-fit text-white">
               <Link to="/user">Switch To User</Link>
             </div>
 
@@ -138,6 +142,13 @@ const Provider = () => {
                 className="border flex items-center justify-between py-3 px-2 cursor-pointer"
               >
                 <Link to="#">Withdraw Earning</Link>
+                <FaChevronRight />
+              </div>
+              <div
+                onClick={handleKycOpen}
+                className="border flex items-center justify-between py-3 px-2 cursor-pointer"
+              >
+                <Link to="#">KYC</Link>
                 <FaChevronRight />
               </div>
 
@@ -167,12 +178,6 @@ const Provider = () => {
               >
                 Privacy Policy <FaChevronRight />
               </Link>
-              <Link
-                className="border py-3 px-2 items-center justify-between flex w-full"
-                to="/fund-history"
-              >
-                Transaction History <FaChevronRight />
-              </Link>
             </div>
           </div>
         </div>
@@ -192,6 +197,7 @@ const Provider = () => {
       {isModalOpen && <FavouriteService closeview={handleModalClose} />}
       {changePass && <ChangePassword closeview={handleChangePasswordClose} />}
       {fundWithdraw && <ProviderWithdraw closeView={handlefundWithdrawClose} />}
+      {kyc && <UpdateFavservice closeView={handleKycClose} />}
       {settings && <Settings closeview={handleSettingsClose} />}
     </Layout>
   );
