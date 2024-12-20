@@ -42,6 +42,7 @@ import BookingDetail from "./Pages/User/Service/BookingDetail"
 import Gallery from "./Pages/General/Gallery"
 import TranscationHistory from "./Pages/General/TranscationHistory"
 import Marquee from "./Pages/Admin/Marquee"
+import Teams from "./Pages/General/Team"
 
 
 export const GeneralNoAuth = [
@@ -62,6 +63,7 @@ export const GeneralNoAuth = [
     { path: 'category', element: Category },
     { path: 'sub-category/:trackid', element: Subcategory },
     { path: 'gallery', element: Gallery },
+    { path: 'team', element: Teams },
 
 
 ]

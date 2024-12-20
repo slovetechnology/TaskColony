@@ -11,7 +11,7 @@ const KycPopups = ({ isOpen, onClose, title, onRegister }) => {
               className="bg-secondary text-white px-4 py-2 rounded" 
               onClick={onRegister}
             >
-              Register as Provider
+              Register as a Provider
             </button>
             <button 
               className="bg-secondary/45 text-white  px-4 py-2 rounded" 

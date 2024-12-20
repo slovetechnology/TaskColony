@@ -43,7 +43,7 @@ const User = () => {
         console.log("Latitude:", latitude, "Longitude:", longitude);
 
         try {
-          const apiKey = "YOUR_GOOGLE_MAPS_API_KEY"; // Replace with your actual API key
+          const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your actual API key
           const response = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
           );
@@ -152,10 +152,10 @@ const User = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between md:px-10 px-1 text-xs py-3 gap-10 text-primary bg-white shadow-2xl">
-                <MdOutlineLocationOn />
+              <div className="flex items-center justify-between  px-1 text-sm py-3 gap-10 text-primary md:w-[30rem] bg-white shadow-2xl">
+                <div className=""><MdOutlineLocationOn /></div>
                 <div>{location}</div>
-                <MdOutlineMyLocation />
+                <div className=""> <MdOutlineMyLocation /></div>
               </div>
             </div>
             {user.kyclevel === 0 && <Link to='/provider-kyc'></Link>}

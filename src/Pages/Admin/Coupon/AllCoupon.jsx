@@ -145,7 +145,7 @@ const AllCoupon = () => {
                                 filteredItems.slice(currentPage * DEFAULT_PER_PAGE, (currentPage + 1) * DEFAULT_PER_PAGE).map((member, index) => (
                                     <TableRow className=' mb-10' key={index}>
                                         <TableData className='flex gap-2 items-center'>
-                                            {member.trackid}
+                                            {member.coupoun_code}
                                         </TableData>
                                         <TableData>{member.coupon_value}</TableData>
                                         <TableData>{member.typetext}</TableData>
