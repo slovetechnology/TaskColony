@@ -129,7 +129,7 @@ const UserFavService = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[#e2e2e2] h-[25rem] py-5 px-4">
+        <div className="bg-[#e2e2e2] w-[40%] h-[25rem] py-5 px-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="text-sm mt text-[#374151]">
               <div className="text-xl font-semibold mb-3">Update Favorite Services</div>
