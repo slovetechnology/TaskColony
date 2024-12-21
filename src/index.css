@@ -70,7 +70,7 @@ body {
 .marquee {
   display: inline-block;
   position: relative;
-  animation: scrollMarquee 10s linear infinite;
+  animation: scrollMarquee 45s linear infinite;
   white-space: nowrap; /* Prevent text wrapping */
   transform: translateX(
     100%
@@ -88,7 +88,7 @@ body {
 
 @media (min-width: 1024px) {
   .marquee {
-    animation: scrollMarqueeLarge 12s linear infinite;
+    animation: scrollMarqueeLarge 45s linear infinite;
   }
 }
 

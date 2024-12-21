@@ -10,7 +10,7 @@ import ChangePassword from "../Profiles/ChangePassword";
 import Settings from "../Profiles/Settings";
 import ProviderWithdraw from "./ProviderWithdraw";
 import EditUser from "../Profiles/EditUser"; // Import the EditUser component
-import UpdateFavservice from "./UpdateFavservice";
+import Kyc from "./Kycverify";
 
 const Provider = () => {
   const { user } = useSelector((state) => state.data);
@@ -98,7 +98,7 @@ const Provider = () => {
             alt="Gradient"
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
-          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[30rem] shadow-2xl">
+          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[35rem] shadow-2xl">
             <div className="md:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="flex items-center gap-4">
                 <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
@@ -174,12 +174,20 @@ const Provider = () => {
 
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"
+                to="/favourite"
+              >
+                Favourite Service <FaChevronRight />
+              </Link>
+
+              <Link
+                className="border py-3 px-2 items-center justify-between flex w-full"
                 to="/privacy"
               >
                 Privacy Policy <FaChevronRight />
               </Link>
             </div>
           </div>
+          
         </div>
       </div>
 
@@ -197,7 +205,7 @@ const Provider = () => {
       {isModalOpen && <FavouriteService closeview={handleModalClose} />}
       {changePass && <ChangePassword closeview={handleChangePasswordClose} />}
       {fundWithdraw && <ProviderWithdraw closeView={handlefundWithdrawClose} />}
-      {kyc && <UpdateFavservice closeView={handleKycClose} />}
+      {kyc && <Kyc closeView={handleKycClose} />}
       {settings && <Settings closeview={handleSettingsClose} />}
     </Layout>
   );

@@ -43,6 +43,8 @@ import Gallery from "./Pages/General/Gallery"
 import TranscationHistory from "./Pages/General/TranscationHistory"
 import Marquee from "./Pages/Admin/Marquee"
 import Teams from "./Pages/General/Team"
+import FavService from "./Pages/User/Provider/FavService"
+import UserFavService from "./Pages/User/Profiles/FavouriteService"
 
 
 export const GeneralNoAuth = [
@@ -64,6 +66,8 @@ export const GeneralNoAuth = [
     { path: 'sub-category/:trackid', element: Subcategory },
     { path: 'gallery', element: Gallery },
     { path: 'team', element: Teams },
+    { path: 'favourite', element: FavService },
+    { path: 'user-favourite', element: UserFavService },
 
 
 ]
