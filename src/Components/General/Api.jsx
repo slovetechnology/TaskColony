@@ -9,6 +9,7 @@ const user = 'user';
 const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user.php`,
+    provider_favservice: `${user}/profile/update_profile_service.php`,
     complete_gig: `${user}/gigs/set_task_as_completed.php`,
     user_testimonials: `${user}/testimonials/get_all_testimonials.php`,
     fund_history: `${user}/profile/get_fund_history.php`,

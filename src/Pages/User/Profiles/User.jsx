@@ -11,13 +11,11 @@ import ChangePassword from "./ChangePassword";
 import Settings from "./Settings";
 import FundWallet from "./Funds/FundWallet";
 import KycForm from "../Provider/KycForm";
-import Popups from "../../../Components/General/Popups";
 import KycPopups from "../../../Components/General/KycPopup";
 
 const User = () => {
   const { user } = useSelector((state) => state.data);
   const [location, setLocation] = useState("Fetching location...");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditUserOpen, setIsEditUserOpen] = useState(false);
   const [changePass, SetChangePass] = useState(false);
   const [settings, SetSettings] = useState(false);
@@ -84,8 +82,6 @@ const User = () => {
     }
   };
 
-  const handleModalOpen = () => setIsModalOpen(true);
-  const handleModalClose = () => setIsModalOpen(false);
   const handleEditUserOpen = () => setIsEditUserOpen(true);
   const handleEditUserClose = () => setIsEditUserOpen(false);
   const handleChangePasswordOpen = () => SetChangePass(true);
@@ -128,7 +124,7 @@ const User = () => {
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
           <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[40rem] shadow-2xl">
-            <div className="lg:flex items-center justify-between mb-3 gap-4 pb-3">
+            <div className="md:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="flex items-center gap-4">
                 <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
                 <span className="flex-1">
@@ -147,9 +143,7 @@ const User = () => {
 
               <div className="flex justify-center items-center my-5 gap-2">
                 <div className="text-primary text-sm font-medium">Wallet Balance</div>
-                <div className="text-secondary text-2xl">
-                  ${parseFloat(user.user_wallets[0].walletbal).toLocaleString()}
-                </div>
+                <div className="text-secondary text-2xl">${user.user_wallets[0].walletbal}</div>
               </div>
 
               <div className="flex items-center justify-between  px-1 text-sm py-3 gap-10 text-primary md:w-[30rem] bg-white shadow-2xl">
@@ -220,13 +214,12 @@ const User = () => {
                 Transaction History <FaChevronRight />
               </Link>
 
-              <div
-                onClick={handleModalOpen}
-                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
+              <Link
+                className="border py-3 px-2 items-center justify-between flex w-full"
+                to="/user-favourite"
               >
-                <Link to="#">Favourite Service</Link>
-                <FaChevronRight />
-              </div>
+                Favourite Service <FaChevronRight />
+              </Link>
 
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"
@@ -250,7 +243,6 @@ const User = () => {
         />
       )}
 
-      {isModalOpen && <FavouriteService closeview={handleModalClose} />}
       {changePass && <ChangePassword closeview={handleChangePasswordClose} />}
       {fundWallet && <FundWallet closeview={handleFundWalletClose} />}
       {settings && <Settings closeview={handleSettingsClose} />}
