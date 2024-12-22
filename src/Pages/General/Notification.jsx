@@ -41,10 +41,10 @@ const Notification = () => {
                 <span className="flex-1">
                   <h5 className="font-[500] text-sm xl:text-base">{item.notificationtitle}</h5>
                   <p className="text-sm text-primary">{item.notificationtext}</p>
-                  <div className="flex gap-7 text-sm mt-4">
+                  {/* <div className="flex gap-7 text-sm mt-4">
                     <div className="text-primary cursor-pointer">Dismiss</div>
                     <div className="text-secondary cursor-pointer">View</div>
-                  </div>
+                  </div> */}
                 </span>
               </div>
             ))}

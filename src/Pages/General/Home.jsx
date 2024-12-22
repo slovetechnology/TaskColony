@@ -8,7 +8,7 @@ import { HomeBestOffers, HomeProviders, HomeServices, HomeTestimonials, img22, i
 import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaRegUserCircle, FaStar } from 'react-icons/fa';
 import Layout from '../../Components/User/Layout';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
-
+import he from 'he'
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
 import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
+import DOMPurify from 'dompurify';
 
 const ActiveTabOptions = [
     "mobile", "email"
@@ -223,7 +224,11 @@ function Home() {
                 <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
                     <div className="overflow-hidden h-full relative">
                         <p className="text-end marquee pt-4 text-white whitespace-nowrap">
-                            <div dangerouslySetInnerHTML={{ __html: message }} />
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: he.decode(message || ""),
+                                }}
+                            />
                         </p>
                     </div>
                 </div>
@@ -337,7 +342,7 @@ function Home() {
                 </div>
 
                 <div className="grid  items-center justify-center md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
-                {services.slice(0, 8).map((item, index) => (
+                    {services.slice(0, 8).map((item, index) => (
                         <div className="w-11/12 mx-auto" key={index}>
                             <div className="w-full">
                                 <div className="relative w-full">
@@ -411,7 +416,7 @@ function Home() {
                                             </div>
                                         </div>
                                     </div>
-                               
+
                                     <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
                                         <button
                                             onClick={handlePrevTestimonial}
