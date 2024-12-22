@@ -21,10 +21,10 @@ const Marquee = () => {
             if (res.status === true) {
                 setContent(''); // Clear the content after successful submission
             } else {
-               ErrorAlert(res.text);
+                ErrorAlert(res.text);
             }
         } catch (error) {
-            ErrorAlert(res.text);
+            ErrorAlert('An error occurred while submitting the marquee message.');
         } finally {
             setLoading(false);
         }
@@ -43,7 +43,10 @@ const Marquee = () => {
                         />
                         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
                     </div>
-                    <button type="submit" className="bg-secondary text-white p-2" disabled={loading}>
+                    <button 
+                        type="submit" 
+                        className={`bg-secondary text-white p-2 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={loading}>
                         {loading ? 'Submitting...' : 'Submit'}
                     </button>
                 </form>

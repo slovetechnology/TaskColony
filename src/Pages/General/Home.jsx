@@ -8,7 +8,7 @@ import { HomeBestOffers, HomeProviders, HomeServices, HomeTestimonials, img22, i
 import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaRegUserCircle, FaStar } from 'react-icons/fa';
 import Layout from '../../Components/User/Layout';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
-import he from 'he';
+import he from 'he'
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
 import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
@@ -159,7 +159,7 @@ function Home() {
                             {userloggedin && <Link className='uppercase text-xs py-3 px-4 truncate' to='/user'>Profile</Link>}
                         </div>
                         <div className="flex items-center gap-3">
-                            <Link to='/user'>
+                            <Link to='/user' className="">
                                 {userloggedin ? (
                                     <div className="flex items-center gap-4">
                                         <div className="flex items-center gap-2">
@@ -169,7 +169,7 @@ function Home() {
                                                 <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                                             </div>
                                         </div>
-                                        <Link to="" className='text-secondary text-xl lg:text-2xl relative'>
+                                        <Link to="" className='text-secondary text-xl lg:text-2xl relative '>
                                             <SlBell />
                                             {notificationCount > 0 && (
                                                 <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
@@ -177,51 +177,66 @@ function Home() {
                                                 </div>
                                             )}
                                         </Link>
-                                        <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer" onClick={handleLogout}>
-                                            <IoIosLogOut />
+                                        <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
+                                            <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
+                                                <IoIosLogOut />
+                                            </div>
                                         </div>
-                                        <div className="hidden xl:flex" onClick={handleLogout}>
-                                            <IoIosLogOut /> Logout
+
+                                        <div className="hidden xl:flex">
+                                            <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
+                                                <IoIosLogOut /> Logout
+                                            </div>
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="hidden xl:flex">
-                                        <div onClick={() => navigate('/login')} className="bg-secondary flex text-white gap-2 h-11 w-[9.5rem] justify-center rounded-md items-center cursor-pointer">
-                                            <FaUserPlus /> Login/Register
+                                    <div className="">
+                                        <div className="hidden xl:flex">
+                                            <div
+                                                onClick={() => navigate('/login')}
+                                                className="bg-secondary flex text-white gap-2 h-11 w-[9.5rem] justify-center rounded-md items-center cursor-pointer"
+                                            >
+                                                <FaUserPlus /> Login/Register
+                                            </div>
+                                        </div>
+                                        <div onClick={() => navigate('/user')} className="block text-3xl mx-5 xl:hidden">
+                                            <FaUserCircle />
                                         </div>
                                     </div>
                                 )}
                             </Link>
+
                             <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
                                 <TopNavIcon onClick={() => setTopNav(!topNav)} />
                             </div>
                         </div>
                     </div>
-                    {topNav && (
-                        <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
-                            <div className="flex flex-col">
-                                {TopNavsLinks.map((item, index) => (
-                                    <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
-                                ))}
-                            </div>
+                    {topNav && <div className="w-11/12 lg:w-10/12 mx-auto mt-6">
+                        <div className="flex flex-col">
+                            {TopNavsLinks.map((item, index) => (
+                                <Link to={item.link} key={index} className='uppercase text-xs py-3 px-4 truncate'>{item.title}</Link>
+                            ))}
                         </div>
-                    )}
+                    </div>}
                 </div>
-
+                <br />
+                <br />
                 <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
                     <div className="overflow-hidden h-full relative">
                         <p className="text-end marquee pt-4 text-white whitespace-nowrap">
-                            <span
+                            <div
                                 dangerouslySetInnerHTML={{
-                                    __html: DOMPurify.sanitize(he.decode(message || "")),
+                                    __html: he.decode(message || ""),
                                 }}
                             />
                         </p>
-
                     </div>
                 </div>
-            </div>
 
+
+
+
+            </div>
             <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
