@@ -54,6 +54,14 @@ import team6 from "assets/new/team6.svg"
 import team7 from "assets/new/team7.svg"
 import team8 from "assets/new/team8.svg"
 
+import newhome from "../assets/newhome.jpg"
+import pet from "../assets/pet.jpg"
+import home from "../assets/homeowner.jpeg"
+import student from "../assets/student.jpg"
+import Busy from "../assets/busy.png"
+import freelancer from "../assets/Freelancer.png"
+import Handyman from "../assets/handyman.jpg"
+
 export const NavLinks = [
     { title: 'Home', link: '/' },
     { title: 'AC service & repair', link: '' },
@@ -153,10 +161,65 @@ export const HomeBestOffers = [
     { img: img21, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35 },
 ]
 
-export const HomeTestimonials = [
-    { title: "“ Excellent Service by handyman“", content: `On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même.`, name: `Cameron Williamson`, img: img24 }
-]
 
+export const HomeTestimonials = [
+    {
+        title: "“Homeowner“",
+        content: `TaskRabbit made my life so much easier! I found a reliable handyman within minutes, and the service was top-notch. Highly recommend!`,
+        name: `Alex P.`,
+        img: home,
+        date: "One week ago",
+        rating: 5
+    },
+    {
+        title: "“Freelancer“",
+        content: `I was impressed by how quickly I could book a cleaner. The app is user-friendly, and my home has never looked better. Thank you, TaskRabbit!`,
+        name: `Mark J.`,
+        img: freelancer,
+        date: "Two weeks ago",
+        rating: 4
+    },
+    {
+        title: "“Busy Professional“",
+        content: `As a busy professional, I don’t have time for errands. TaskRabbit helped me find someone to handle my grocery shopping, and the experience was fantastic!`,
+        name: `Lisa K.`,
+        img: Busy,
+        date: "Three days ago",
+        rating: 5
+    },
+    {
+        title: "“Excellent Service by Handyman“",
+        content: `The flexibility of choosing my own Tasker is great! I felt comfortable knowing I could read reviews and pick the best person for the job.`,
+        name: `Tom W.`,
+        img: Handyman,
+        date: "Yesterday",
+        rating: 4
+    },
+    {
+        title: "“Student“",
+        content: `I needed help moving last minute, and TaskRabbit came through! The Tasker was punctual and extremely helpful. I’ll definitely use this service again!`,
+        name: `Sophie R.`,
+        img: student,
+        date: "Five days ago",
+        rating: 5
+    },
+    {
+        title: "“Pet Owner“",
+        content: `The web app is so easy to navigate! I booked a pet sitter in no time, and my dog loved her. Will definitely use TaskRabbit again!`,
+        name: `Emily S.`,
+        img: pet,
+        date: "Last week",
+        rating: 5
+    },
+    {
+        title: "“New Homeowner“",
+        content: `TaskRabbit saved me during a busy week. I had someone assemble my furniture quickly and efficiently. Great service!`,
+        name: `John D.`,
+        img: newhome,
+        date: "Last month",
+        rating: 4
+    },
+];
 export const StoreLinks = [
     { img: img27 },
     { img: img28 },
@@ -185,7 +248,7 @@ export const FooterSocials = [
 ]
 
 export const FooterContacts = [
-    { title: `Carreers`, content: `Jobs@taskcolony.com` },
+    { title: `Careers`, content: `Jobs@taskcolony.com` },
     { title: `Business Inquries`, content: `inquries@taskcolony.com` },
     { title: `Helpline Number`, content: `+144  1234 56789` },
 ]

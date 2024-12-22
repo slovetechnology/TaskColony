@@ -58,6 +58,11 @@ const admin_urls = {
     assign_bookings: `${admin}/bookings/assign_booking.php`,
     delete_bookings: `${admin}/bookings/delete_booking.php`,
 
+    //testemonials
+    get_testemonials: `${admin}/testimonials/get_all_testimonial.php`,
+    update_testemonials: `${admin}/testimonials/update_testimonial.php`,
+    delete_testemonials: `${admin}/testimonials/delete_testimonial.php`,
+
     //user
     get_user: `${admin}/users/get_all_users.php`,
     user_update: `${admin}/users/update_user.php`,
@@ -117,6 +122,7 @@ const admin_urls = {
     //admin
     login_admin: `${admin}/auth/login.php`,
     forgetpass_admin: `${admin}/auth/forgot_password.php`,
+    resetpass_admin: `${admin}/auth/reset_password.php`,
     create_admin: `${admin}/admins/create_admin.php`,
     marquee_message: `${admin}/system/update_banner_message.php`,
 };

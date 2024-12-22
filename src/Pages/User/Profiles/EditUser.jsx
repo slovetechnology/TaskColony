@@ -36,12 +36,12 @@ const EditUser = ({ closeView, singles }) => {
         try {
             const response = await AuthPosturl(Apis.users.edit_user_profile, payload,);
             if (response.status === true) {
-                ToastAlert(res.text)
+                ToastAlert(response.text)
             }
             console.log('Response:', response.data);
         } catch (error) {
             console.error('Error updating user:', error);
-            ErrorAlert(res.text)
+            ErrorAlert(response.text)
         } finally {
             setIsSubmitting(false);
         }

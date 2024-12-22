@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Apis, AuthPosturl } from "../../../Components/General/Api";
 import Modal from "../../../Components/General/Modal";
 import BankInfo from "./BankInfo";
+import { ErrorAlert } from "../../../Components/General/Utils";
 
 const ProviderWithdraw = ({ closeView }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const [buttonText, setButtonText] = useState("Request Withdraw");
-    const [view, setView] = useState(1); // Tracks the current view state
+    const [view, setView] = useState(1);  
 
     const onSubmit = async (data) => {
         const datatosend = {
@@ -20,17 +21,16 @@ const ProviderWithdraw = ({ closeView }) => {
         const res = await AuthPosturl(Apis.users.withdraw_funds, datatosend);
 
         if (res.status === true) {
-            setView(2); // Switch to BankInfo view
+            setView(2);
         } else {
-            console.error("Error funding wallet:", res.error);
+            ErrorAlert(res.text)
             setButtonText("Try Again");
         }
     };
 
-    // Handler to reset the state and close the modal
     const handleCloseView = () => {
-        setView(1); // Reset to initial view
-        closeView(); // Invoke parent closeView to close the modal
+        setView(1);
+        closeView(); 
     };
 
     return (

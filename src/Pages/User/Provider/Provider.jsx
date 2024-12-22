@@ -22,6 +22,10 @@ const Provider = () => {
   const [fundWithdraw, SetFundwithdraw] = useState(false);
   const [kyc, setKyc] = useState(false);
 
+  
+  const handleSettingsOpen = () => SetSettings(true);
+  const handleSettingsClose = () => SetSettings(false);
+
   useEffect(() => {
     // Call the function to get the address when the component mounts
     getUserGeoAddress();
@@ -76,7 +80,6 @@ const Provider = () => {
   const handleKycOpen = () => setKyc(true);
   const handleKycClose = () => setKyc(false);
 
-  const handleSettingsClose = () => SetSettings(false);
 
   return (
     <Layout>
@@ -158,13 +161,14 @@ const Provider = () => {
               >
                 FAQs <FaChevronRight />
               </Link>
-              <Link
-                to="/provider-settings"
-                className="border py-3 px-2 items-center justify-between flex w-full"
-              >
-                Settings <FaChevronRight />
-              </Link>
 
+              <div
+                onClick={handleSettingsOpen}
+                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
+              >
+                <Link to="#">Settings</Link>
+                <FaChevronRight />
+              </div>
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"
                 to="/terms"
@@ -187,7 +191,7 @@ const Provider = () => {
               </Link>
             </div>
           </div>
-          
+
         </div>
       </div>
 

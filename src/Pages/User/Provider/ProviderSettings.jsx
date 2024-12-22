@@ -1,21 +1,44 @@
 import React from 'react'
 import Layout from '../../../Components/User/Layout'
+import Modal from '../../../Components/General/Modal'
+import ToggleButton from '../../../Components/General/toggle-button'
+import { useForm } from 'react-hook-form'
 
-const ProviderSettings = () => {
+const ProviderSettings = ({ closeview, resendSignal }) => {
+    const { register, handleSubmit, setValue, watch } = useForm({})
+
     return (
-        <Layout>
-            <div className="bg-gray w-full xl:h-[20rem]">
-                <div className="text-center py-10 xl:pt-24">
-                    <p className='font-[500] text-4xl mb-3'>Settings</p>
-                    <span className='flex items-center gap-4 font-[500] justify-center'>
-                        <p className="text-primary">Home</p>
-                        <span className="bg-[#6C757D] w-3 py-0.5"></span>
-                        <p className="text-secondary">Setting</p>
-                    </span>
+        <Modal closeView={closeview}>
+            <div className="font-semibold text-lg mb-4">Settings</div>
+            <div className="">
+                <div className="">Notifications</div>
+                <div className="flex mt-5 justify-between">
+                    <div className="">
+                        <div className="font-medium">Push Notification</div>
+                        <div className="text-sm font-medium">Customize Push Notification</div>
+                    </div>
+                    <div className="flex items-center gap-4 mb-8">
+                        <ToggleButton
+                            checked={watch('displayonapp')}
+                            onChange={() => setValue('displayonapp', !watch('displayonapp'))}
+                        />
+                    </div>
                 </div>
-            </div>
+                <div className="flex mt-5 justify-between">
+                    <div className="">
+                        <div className="font-medium ">Push Notification</div>
+                        <div className="text-sm font-medium">Customize Push Notification</div>
+                    </div>
+                    <div className="flex items-center gap-4 mb-8">
+                        <ToggleButton
+                            checked={watch('displayonapp')}
+                            onChange={() => setValue('displayonapp', !watch('displayonapp'))}
+                        />
+                    </div>
+                </div>
 
-        </Layout>
+            </div>
+        </Modal>
     )
 }
 

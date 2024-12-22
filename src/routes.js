@@ -45,6 +45,9 @@ import Marquee from "./Pages/Admin/Marquee"
 import Teams from "./Pages/General/Team"
 import FavService from "./Pages/User/Provider/FavService"
 import UserFavService from "./Pages/User/Profiles/FavouriteService"
+import AllTestemonials from "./Pages/Admin/Testemonial.jsx/AllTestemonials"
+import ProviderSettings from "./Pages/User/Provider/ProviderSettings"
+import AdminForgetPassword from "./Pages/Admin/AdminForms/AdminForgetPassword"
 
 
 export const GeneralNoAuth = [
@@ -81,6 +84,8 @@ export const GeneralRoutes = [
     { path: 'new-booking', element: Booking },
     { path: 'provider', element: Provider },
     { path: 'provider-kyc', element: KycForm },
+    { path: 'provider-settings', element: ProviderSettings },
+
 ]
 
 export const AdminRoutes = [
@@ -93,6 +98,7 @@ export const AdminRoutes = [
     { path: 'user', element: AllUser },
     { path: 'user/single/:userId', element: SingleUser },
     { path: 'booking', element: AllBookings },
+    { path: 'testemonial', element: AllTestemonials },
     { path: 'category', element: AllCategories },
     { path: 'new-category', element: NewCategory },
     { path: 'slider', element: AllSlider },
@@ -102,8 +108,10 @@ export const AdminRoutes = [
     { path: 'new-coupon', element: NewCoupon },
     { path: 'coupon', element: AllCoupon },
     { path: 'marquee', element: Marquee },
+    
+
 ]
 export const AdminNoRoutes = [
     { path: 'login', element: AdminLogin },
-
+    { path: 'forgot-password', element: AdminForgetPassword },
 ]

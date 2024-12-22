@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { FaTimes } from 'react-icons/fa';
 
 const Modal = ({
@@ -49,6 +50,8 @@ const Modal = ({
         )}
         {children}
       </div>
+      <Toaster />
+
     </div>
   );
 };

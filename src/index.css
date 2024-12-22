@@ -71,10 +71,9 @@ body {
   display: inline-block;
   position: relative;
   animation: scrollMarquee 45s linear infinite;
-  white-space: nowrap; /* Prevent text wrapping */
-  transform: translateX(
-    100%
-  ); /* Ensure the text starts fully off-screen on the right */
+  white-space: nowrap;
+transform: translateX(    100%  );
+  -webkit-animation: scrollMarquee 45s linear infinite;
 }
 
 @keyframes scrollMarquee {

@@ -155,7 +155,7 @@ const Service = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
+        <div className="grid  items-center justify-center md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
           {(searchQuery || selectedCategory ? filteredItems : items).length > 0 ? (
             (searchQuery || selectedCategory ? filteredItems : items).map((item, index) => (
               <div className="w-11/12 mx-auto relative" key={index}>

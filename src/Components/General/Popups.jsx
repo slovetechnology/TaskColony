@@ -1,3 +1,5 @@
+import { Toaster } from "react-hot-toast";
+
 const Popups = ({ isOpen, onClose, title, children }) => {
     if (!isOpen) return null;
 
@@ -12,6 +14,8 @@ const Popups = ({ isOpen, onClose, title, children }) => {
                     </button>
                 </div>
             </div>
+            <Toaster />
+
         </div>
     );
 };

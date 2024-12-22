@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
 import { Link, useParams } from 'react-router-dom';
 import { Apis, AuthGeturl, AuthPosturl } from '../../../../Components/General/Api';
 import { Table } from '../../../../Components/Admin/Table/Table';
@@ -9,7 +8,6 @@ import { TableData } from '../../../../Components/Admin/Table/TableData';
 import { ImCancelCircle } from 'react-icons/im';
 import ConfirmDeleteReview from './DeleteReview';
 import { ToastAlert } from '../../../../Components/General/Utils';
-
 
 const TABLE_HEADERS = ['Id', 'User', 'Service', 'Review', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -46,6 +44,34 @@ const Reviews = () => {
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  const truncateText = (text, limit) => {
+    if (text.length > limit) {
+      return { truncated: true, text: text.slice(0, limit) + '...' };
+    }
+    return { truncated: false, text };
+  };
+
+  const ReviewWithReadMore = ({ review, characterLimit = 100 }) => {
+    const [expanded, setExpanded] = useState(false);
+    const { truncated, text } = truncateText(review, characterLimit);
+
+    return (
+      <div>
+        <p className='w-[20rem]'>
+          {expanded ? review : text}{' '}
+          {truncated && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="text-primary underline"
+            >
+              {expanded ? 'Read Less' : 'Read More'}
+            </button>
+          )}
+        </p>
+      </div>
+    );
+  };
 
   const pageCount = Math.ceil(total / DEFAULT_PER_PAGE);
   const handlePageChange = (val) => {
@@ -100,7 +126,9 @@ const Reviews = () => {
                 <TableData>{item.trackid}</TableData>
                 <TableData>{item.ulname}</TableData>
                 <TableData>{item.service_name}</TableData>
-                <TableData>{item.review}</TableData>
+                <TableData>
+                  <ReviewWithReadMore review={item.review || ''} />
+                </TableData>
                 <TableData>
                   <div className="text-lg text-primary">
                     <div className="cursor-pointer" onClick={() => DeleteItem(item)}>

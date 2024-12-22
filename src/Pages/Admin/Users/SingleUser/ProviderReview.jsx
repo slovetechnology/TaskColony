@@ -11,7 +11,7 @@ import ConfirmDeleteReview from './DeleteReview';
 import { ToastAlert } from '../../../../Components/General/Utils';
 
 
-const TABLE_HEADERS = ['Id', 'Provider Name', 'Service', 'Review', ''];
+const TABLE_HEADERS = ['Id', 'Provider Name',  'Service', 'Review', ''];
 const DEFAULT_PER_PAGE = 10;
 
 const ProviderReviews = () => {
@@ -79,6 +79,34 @@ const ProviderReviews = () => {
     }
   };
 
+  const truncateText = (text, limit) => {
+    if (text.length > limit) {
+      return { truncated: true, text: text.slice(0, limit) + '...' };
+    }
+    return { truncated: false, text };
+  };
+
+  const ReviewWithReadMore = ({ review, characterLimit = 100 }) => {
+    const [expanded, setExpanded] = useState(false);
+    const { truncated, text } = truncateText(review, characterLimit);
+
+    return (
+      <div>
+        <p className='w-[20rem]'>
+          {expanded ? review : text}{' '}
+          {truncated && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="text-primary underline"
+            >
+              {expanded ? 'Read Less' : 'Read More'}
+            </button>
+          )}
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="">
       {del && (
@@ -100,7 +128,10 @@ const ProviderReviews = () => {
                 <TableData>{item.trackid}</TableData>
                 <TableData>{item.pfname}</TableData>
                 <TableData>{item.service_name}</TableData>
-                <TableData>{item.review}</TableData>
+                <TableData>
+                  <ReviewWithReadMore review={item.review || ''} />
+
+                </TableData>
                 <TableData>
                   <div className="text-lg text-primary">
                     <div className="cursor-pointer" onClick={() => DeleteItem(item)}>

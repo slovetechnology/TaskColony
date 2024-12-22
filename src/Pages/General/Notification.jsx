@@ -36,7 +36,7 @@ const Notification = () => {
           <img src={gradient} alt="" className="h-16 w-full rounded-tl-xl rounded-tr-xl" />
           <div className="bg-white w-full px-10 py-5 h-[32rem] shadow-2xl overflow-y-auto scrollsdown">
             {items.map((item, i) => (
-              <div key={i} className="flex items-start mb-3 gap-4 pb-3 border-b last:border-none">
+              <div key={i} className="flex items-start mb-3 gap-4 pb-3 border-b">
                 <div className="text-4xl"> <FaUserCircle /> </div>
                 <span className="flex-1">
                   <h5 className="font-[500] text-sm xl:text-base">{item.notificationtitle}</h5>
