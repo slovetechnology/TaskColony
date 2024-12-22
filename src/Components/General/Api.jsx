@@ -122,6 +122,7 @@ const admin_urls = {
     //admin
     login_admin: `${admin}/auth/login.php`,
     forgetpass_admin: `${admin}/auth/forgot_password.php`,
+    resetpass_admin: `${admin}/auth/reset_password.php`,
     create_admin: `${admin}/admins/create_admin.php`,
     marquee_message: `${admin}/system/update_banner_message.php`,
 };

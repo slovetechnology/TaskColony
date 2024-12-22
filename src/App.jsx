@@ -14,19 +14,19 @@ function App() {
       <AppWrapper >
         <Routes>
           {GeneralRoutes.map((item, index) => (
-            <Route key={index} path={`/${item.path}`} element={<UserRoute> <Loader><item.element /> </Loader></UserRoute>} />
+            <Route key={index} path={`/${item.path}`} element={<UserRoute> <Loader><item.element /> </Loader> </UserRoute>} />
           ))}
           {GeneralNoAuth.map((item, index) => (
-            <Route key={index} path={`/${item.path}`} element={<> <Loader><item.element /> </Loader></>} />
+            <Route key={index} path={`/${item.path}`} element={<> <Loader> <item.element /> </Loader> </>} />
           ))}
 
           {AdminRoutes.map((item, index) => (
-            <Route key={index} path={`/auth/admin/${item.path}`} element={<AdminRoute> <Loader> <item.element /> </Loader></AdminRoute>} />
+            <Route key={index} path={`/auth/admin/${item.path}`} element={<AdminRoute> <Loader> <item.element /> </Loader> </AdminRoute>} />
           ))}
           {AdminNoRoutes.map((item, index) => (
-            <Route key={index} path={`/auth/admin/${item.path}`} element={<> <Loader> <item.element /> </Loader></>} />
+            <Route key={index} path={`/auth/admin/${item.path}`} element={<> <Loader> <item.element /> </Loader> </>} />
           ))}
-        </Routes>
+        </Routes> 
       </AppWrapper>
     </BrowserRouter>
   )

@@ -47,6 +47,7 @@ import FavService from "./Pages/User/Provider/FavService"
 import UserFavService from "./Pages/User/Profiles/FavouriteService"
 import AllTestemonials from "./Pages/Admin/Testemonial.jsx/AllTestemonials"
 import ProviderSettings from "./Pages/User/Provider/ProviderSettings"
+import AdminForgetPassword from "./Pages/Admin/AdminForms/AdminForgetPassword"
 
 
 export const GeneralNoAuth = [
@@ -107,8 +108,10 @@ export const AdminRoutes = [
     { path: 'new-coupon', element: NewCoupon },
     { path: 'coupon', element: AllCoupon },
     { path: 'marquee', element: Marquee },
+    
+
 ]
 export const AdminNoRoutes = [
     { path: 'login', element: AdminLogin },
-
+    { path: '/auth/admin/forgot-password', element: AdminForgetPassword },
 ]

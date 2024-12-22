@@ -96,7 +96,7 @@ const ForgetPassword = () => {
         <Layout>
             <div className="bg-gray w-full xl:h-[20rem]">
                 <div className="text-center py-10 xl:pt-24">
-                    <p className="font-[500] text-4xl mb-3">Forget Password</p>
+                    <p className="font-[500] text-4xl mb-3">Forgot Password</p>
                     <span className="flex items-center gap-4 font-[500] justify-center">
                         <p className="text-primary">Home</p>
                         <span className="bg-[#6C757D] w-3 py-0.5"></span>
@@ -108,7 +108,7 @@ const ForgetPassword = () => {
             {view === 1 && (
                 <div className="flex items-center mx-5 mt-16 mb-32 justify-center">
                     <div className="bg-white h-[20rem] w-[24rem] border shadow-xl rounded-lg px-8 py-4">
-                        <p className="font-[500] text-2xl lg:text-3xl text-[#1C1F34] mb-4">Forget Password</p>
+                        <p className="font-[500] text-2xl lg:text-3xl text-[#1C1F34] mb-4">Forgot Password</p>
                         <p className="text-xs text-[#828282]">
                             Enter your email for the verification process, we will send a 4-digit code to your email.
                         </p>
@@ -191,7 +191,6 @@ const ForgetPassword = () => {
                             <button className='bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg' disabled={isSubmitting}>
                                 {isSubmitting ? 'Continue...' : 'Continue'}
                             </button>
-                            <p className="text-xs text-[#828282]">If you didn’t receive a code! Resend</p>
                         </form>
                     </div>
                 </div>
