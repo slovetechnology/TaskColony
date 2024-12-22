@@ -165,7 +165,7 @@ export const HomeBestOffers = [
 export const HomeTestimonials = [
     {
         title: "“Homeowner“",
-        content: `TaskRabbit made my life so much easier! I found a reliable handyman within minutes, and the service was top-notch. Highly recommend!`,
+        content: `TaskColony made my life so much easier! I found a reliable handyman within minutes, and the service was top-notch. Highly recommend!`,
         name: `Alex P.`,
         img: home,
         date: "One week ago",
@@ -173,7 +173,7 @@ export const HomeTestimonials = [
     },
     {
         title: "“Freelancer“",
-        content: `I was impressed by how quickly I could book a cleaner. The app is user-friendly, and my home has never looked better. Thank you, TaskRabbit!`,
+        content: `I was impressed by how quickly I could book a cleaner. The app is user-friendly, and my home has never looked better. Thank you, TaskColony!`,
         name: `Mark J.`,
         img: freelancer,
         date: "Two weeks ago",
@@ -181,7 +181,7 @@ export const HomeTestimonials = [
     },
     {
         title: "“Busy Professional“",
-        content: `As a busy professional, I don’t have time for errands. TaskRabbit helped me find someone to handle my grocery shopping, and the experience was fantastic!`,
+        content: `As a busy professional, I don’t have time for errands. TaskColony helped me find someone to handle my grocery shopping, and the experience was fantastic!`,
         name: `Lisa K.`,
         img: Busy,
         date: "Three days ago",
@@ -197,7 +197,7 @@ export const HomeTestimonials = [
     },
     {
         title: "“Student“",
-        content: `I needed help moving last minute, and TaskRabbit came through! The Tasker was punctual and extremely helpful. I’ll definitely use this service again!`,
+        content: `I needed help moving last minute, and TaskColony came through! The Tasker was punctual and extremely helpful. I’ll definitely use this service again!`,
         name: `Sophie R.`,
         img: student,
         date: "Five days ago",
@@ -205,7 +205,7 @@ export const HomeTestimonials = [
     },
     {
         title: "“Pet Owner“",
-        content: `The web app is so easy to navigate! I booked a pet sitter in no time, and my dog loved her. Will definitely use TaskRabbit again!`,
+        content: `The web app is so easy to navigate! I booked a pet sitter in no time, and my dog loved her. Will definitely use TaskColony again!`,
         name: `Emily S.`,
         img: pet,
         date: "Last week",
@@ -213,7 +213,7 @@ export const HomeTestimonials = [
     },
     {
         title: "“New Homeowner“",
-        content: `TaskRabbit saved me during a busy week. I had someone assemble my furniture quickly and efficiently. Great service!`,
+        content: `TaskColony saved me during a busy week. I had someone assemble my furniture quickly and efficiently. Great service!`,
         name: `John D.`,
         img: newhome,
         date: "Last month",
