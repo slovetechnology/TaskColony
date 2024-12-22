@@ -336,8 +336,8 @@ function Home() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
-                    {services.slice(0, 8).map((item, index) => (
+                <div className="grid  items-center justify-center md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
+                {services.slice(0, 8).map((item, index) => (
                         <div className="w-11/12 mx-auto" key={index}>
                             <div className="w-full">
                                 <div className="relative w-full">
