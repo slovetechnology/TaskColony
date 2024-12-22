@@ -1,3 +1,5 @@
+import { Toaster } from "react-hot-toast";
+
 const KycPopups = ({ isOpen, onClose, title, onRegister }) => {
     if (!isOpen) return null;
   
@@ -21,6 +23,8 @@ const KycPopups = ({ isOpen, onClose, title, onRegister }) => {
             </button>
           </div>
         </div>
+        <Toaster />
+
       </div>
     );
   };

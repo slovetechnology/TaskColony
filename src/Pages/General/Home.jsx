@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { img1, img3, img4 } from 'utils/utils';
 import { HomeBestOffers, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
-import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaStar } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaRegUserCircle, FaStar } from 'react-icons/fa';
 import Layout from '../../Components/User/Layout';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
 
@@ -50,7 +50,23 @@ function Home() {
     };
 
     const [notificationCount, setNotificationCount] = useState(0);
+    const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
 
+    const [activeButton, setActiveButton] = useState(null); // Track the active button
+
+    const handlePrevTestimonial = () => {
+        setActiveButton("prev"); // Set active button to "prev"
+        setCurrentTestimonialIndex((prevIndex) =>
+            prevIndex === 0 ? HomeTestimonials.length - 1 : prevIndex - 1
+        );
+    };
+
+    const handleNextTestimonial = () => {
+        setActiveButton("next"); // Set active button to "next"
+        setCurrentTestimonialIndex((prevIndex) =>
+            prevIndex === HomeTestimonials.length - 1 ? 0 : prevIndex + 1
+        );
+    };
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
@@ -367,46 +383,56 @@ function Home() {
                 </div>
             </div>
 
+
+
             <div className="w-11/12 mx-auto lg:w-10/12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
                     <div className="flex flex-col justify-center">
-                        <div className="font-medium md:text-4xl text-3xl mb-6">What our customers says</div>
-                        <div className="">
-                            {HomeTestimonials.map((item, index) => (
-                                <div className="w-11/12" key={index}>
-                                    <div className="font-medium text-xl">{item.title}</div>
-                                    <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">{item.content}</div>
-                                    <div className="md:flex items-center mt-10 justify-between">
-                                        <div className="flex items-center gap-2">
-                                            <div className="">
-                                                <LazyLoadImage src={item.img} effect='blur' className='size-12' />
+                        <div className="flex items-center justify-between mt-10">
+                            <div className="font-medium text-2xl">What our customers say</div>
+                        </div>
+
+                        <div className="flex flex-col items-center">
+                            <div className="w-11/12">
+                                <div className="font-medium text-xl">{HomeTestimonials[currentTestimonialIndex]?.title}</div>
+                                <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">
+                                    {HomeTestimonials[currentTestimonialIndex]?.content}
+                                </div>
+                                <div className="md:flex items-center mt-10 justify-between">
+                                    <div className="flex items-center gap-">
+                                        <div className="text-4xl"><FaRegUserCircle /></div>
+                                        <div className="text-sm mx-4">
+                                            <div className="font-medium">{HomeTestimonials[currentTestimonialIndex]?.name}</div>
+                                            <div className="flex items-center gap-1 mt-2 text-slate-300 text-xs">
+                                                {new Array(HomeTestimonials[currentTestimonialIndex]?.rating).fill(0).map((_, i) => (
+                                                    <FaStar key={i} className={`text-secondary`} />
+                                                ))}
+                                                | {HomeTestimonials[currentTestimonialIndex]?.date}
                                             </div>
-                                            <div className="text-sm mx-4">
-                                                <div className="font-medium">{item.name}</div>
-                                                <div className="flex items-center mt-2 text-slate-300 text-xs">
-                                                    {new Array(5).fill(0).map((_, i) => (
-                                                        <FaStar key={i} className={`text-secondary`} />
-                                                    ))}
-                                                    | One week Ago
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
-                                            <button className="bg-secondary rounded-full size-10 text-white items-center justify-center flex"> <FaArrowLeft /> </button>
-                                            <button className="border border-white rounded-full size-10 text-white items-center justify-center flex"> <FaArrowRight /> </button>
                                         </div>
                                     </div>
+                               
+                                    <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
+                                        <button
+                                            onClick={handlePrevTestimonial}
+                                            className={`${activeButton === "prev" ? "bg-secondary" : "border border-white"
+                                                } rounded-full size-10 text-white items-center justify-center flex`}
+                                        >
+                                            <FaArrowLeft />
+                                        </button>
+                                        <button
+                                            onClick={handleNextTestimonial}
+                                            className={`${activeButton === "next" ? "bg-secondary" : "border border-white"
+                                                } rounded-full size-10 text-white items-center justify-center flex`}
+                                        >
+                                            <FaArrowRight />
+                                        </button>
+                                    </div>
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </div>
-                    <div className="">
-                        <LazyLoadImage
-                            src={img23}
-                            className='object-cover'
-                            effect='blur'
-                        />
-                    </div>
+                    <LazyLoadImage src={HomeTestimonials[currentTestimonialIndex].img} className="object-cover w-full object-top lg:w-[35rem] lg:h-[20rem]" effect="blur" />
                 </div>
             </div>
 
@@ -468,7 +494,7 @@ function Home() {
                             />
                             <div className="px-4 py-5 -mt-5 rounded-b-2xl">
                                 <div className="text-center text-xl font-semibold">
-                                    {item.title} 
+                                    {item.title}
                                 </div>
                                 <div className="text-center text-secondary text-xs">
                                     {item.tag}

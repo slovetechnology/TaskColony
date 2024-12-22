@@ -24,7 +24,7 @@ const DEFAULT_PER_PAGE = 10;
 
 const statusToVariant = {
   completed: 'success',
-  cancle: 'danger',
+  canceled: 'danger',
   pending: 'warn',
   accepted: 'primary',
   done: 'gold',
