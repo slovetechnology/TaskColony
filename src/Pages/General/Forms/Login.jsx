@@ -94,7 +94,7 @@ const Login = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <label>Password</label>
-                  <Link to='/auth/admin/forgot-password' className='text-[#6B7280]'>Forgot Password?</Link>
+                  <Link to='/reset-password' className='text-[#6B7280]'>Forget Password?</Link>
                 </div>
                 <input
                   {...register('password', {

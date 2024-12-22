@@ -113,5 +113,5 @@ export const AdminRoutes = [
 ]
 export const AdminNoRoutes = [
     { path: 'login', element: AdminLogin },
-    { path: '/auth/admin/forgot-password', element: AdminForgetPassword },
+    { path: 'forgot-password', element: AdminForgetPassword },
 ]
