@@ -49,7 +49,7 @@ const Contactus = () => {
 
               <span className="mb-1">
                 <h4 className='text-2xl font-bold my-2'>E-mail</h4>
-                <p className="text-lg font-medium">taskcolony@support.com</p>
+                <p className="text-lg font-medium">support@taskcolony.com</p>
               </span>
 
             </div>

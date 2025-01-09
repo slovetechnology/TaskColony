@@ -189,7 +189,7 @@ const BookingDetail = () => {
                                 </div>
                             </div>
                             <div className="lg:flex mt-5 mb-10 mx-2 lg:mx-10">
-                                <div className="md:w-[70%]">
+                                <div className="lg:w-[70%]">
                                     <div className="md:px-5">
                                         <img src={item.imageslink?.[0]} alt="" className="w-full h-[15rem] rounded-3xl object-cover lg:h-[23rem]" />
                                         <div>
@@ -294,7 +294,7 @@ const BookingDetail = () => {
                                 </div>
 
                                 {booking.length > 0 && (
-                                    <div className="bg-gray rounded-md h-[18rem] md:w-[30%] p-4">
+                                    <div className="bg-gray rounded-md h-[18rem] lg:w-[30%] p-4">
                                         <div>
                                             <p className="font-[500] text-xl">Payment Summary</p>
                                             <div className="h-[28rem] px-6">
@@ -306,7 +306,7 @@ const BookingDetail = () => {
                                                     </div>
                                                     <div className="flex items-center justify-between gap-5 my-5">
                                                         <div className="text-sm text-primary">Commission</div>
-                                                        <div className="font-medium">{item.commission_percent}%</div>
+                                                        <div className="font-medium">10%</div>
                                                     </div>
                                                     <div className="flex items-center border-t justify-between gap-5 my-5">
                                                         <div>Total Amount</div>

@@ -18,7 +18,8 @@ const FundWallet = ({ closeview }) => {
     const res = await AuthPosturl(Apis.users.fund_wallet, datatosend);
 
     if (res.status === true) {
-      ToastAlert(res.text);
+      ToastAlert('you will be redirected to our payment site.');
+      window.location.href = res.text
     } else {
       ErrorAlert(res.text)
       setButtonText("Try Again");

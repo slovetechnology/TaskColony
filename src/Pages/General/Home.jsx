@@ -5,8 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { img1, img3, img4 } from 'utils/utils';
 import { HomeBestOffers, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
-import { FaArrowLeft, FaArrowRight, FaCheck, FaHeart, FaRegUserCircle, FaStar } from 'react-icons/fa';
-import Layout from '../../Components/User/Layout';
+import { FaArrowLeft, FaArrowRight, FaRegUserCircle, FaStar } from 'react-icons/fa';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
 import he from 'he'
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
@@ -20,9 +19,10 @@ import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
 import DOMPurify from 'dompurify';
+import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
 
 const ActiveTabOptions = [
-    "mobile", "email"
+    "email"
 ]
 
 function Home() {
@@ -38,6 +38,7 @@ function Home() {
     const MobileIcon = mobile ? FaTimes : SlMenu
     const [topNav, setTopNav] = useState(false)
     const TopNavIcon = topNav ? FaTimes : SlMenu
+    const [email, setEmail] = useState('');
 
     const [providers, setProvider] = useState([]);
     const [gallery, setGallery] = useState([]);
@@ -137,6 +138,28 @@ function Home() {
         fetchTopProvider();
     }, [fetchTopProvider]);
 
+    const handleSubmission = async (e) => {
+        e.preventDefault();
+        if (!email) {
+            return ErrorAlert('Email address is required');
+        }
+
+        const data = new FormData();
+        data.append('email', email);
+
+        try {
+            const res = await Posturl(Apis.users.app_link, data);
+            if (res.status === true) {
+                ToastAlert(res.text)
+                setEmail(''); 
+            } else {
+                ErrorAlert(res.data.text);
+            }
+        } catch (error) {
+            ErrorAlert('An error occurred while verifying the booking.');
+            console.error(error);
+        }
+    };
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
         <>
@@ -224,11 +247,8 @@ function Home() {
                 <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
                     <div className="overflow-hidden h-full relative">
                         <p className="text-end marquee pt-4 text-white whitespace-nowrap">
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: he.decode(message || ""),
-                                }}
-                            />
+                        {/* <div dangerouslySetInnerHTML={{ __html: message }} /> */}
+
                         </p>
                     </div>
                 </div>
@@ -245,7 +265,7 @@ function Home() {
                                 <div className="text-secondary text-3xl md:text-5xl font-bold">A One-Stop Place </div>
                                 <div className="font-bold text-3xl md:text-5xl">For Home Repair</div>
                             </h1>
-                            <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
+                            <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
                         </div>
                         <div className="mt-10">
                             <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="/new-booking">Book Now</Link>
@@ -366,7 +386,7 @@ function Home() {
 
 
                 <div className="flex  items-center justify-between mt-10">
-                    <div className="font-medium text-2xl">Best Offers</div>
+                    <div className="font-medium text-2xl">Trending Services</div>
                     <div className="">
                     </div>
                 </div>
@@ -449,7 +469,7 @@ function Home() {
                     <div className="lg:col-span-4 order-1 lg:order-2">
                         <div className="flex flex-col justify-center">
                             <div className="text-[2.5rem] lg:text-[2.7rem] font-bold">Refer and get free services</div>
-                            <div className="my-10">Let’s enjoy handyman various services and get latest offer and deals by downloading application</div>
+                            <div className="my-10">Let’s enjoy Task Colony various services and get latest offer and deals by downloading application</div>
                             <div className="grid grid-cols-1 lg:grid-cols-7 gap-5">
                                 <div className="lg:col-span-5">
                                     <div className="flex items-center">
@@ -457,11 +477,13 @@ function Home() {
                                             <button key={index} onClick={() => setActiveTab(item)} className={`${activeTab === item ? 'bg-white/50 backdrop-blur-sm' : ''} capitalize rounded-full text-white py-1 px-4`}>{item}</button>
                                         ))}
                                     </div>
-                                    <div className="my-5">Enter your {activeTab === ActiveTabOptions[0] ? 'phone number' : 'email address'} to receive a text with a link to download the app.</div>
-                                    <div className="bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center">
-                                        <input placeholder={activeTab === ActiveTabOptions[0] ? '+91 Mobile Number' : 'yourmail@example.com'} type="text" className="outline-none placeholder:text-white bg-transparent p-2 w-full" />
-                                        <button className='bg-white text-secondary w-10/12 py-2 px-3 rounded-lg'>Search</button>
-                                    </div>
+                                    <div className="my-5">Enter your email address to receive a text with a link to download the app.</div>
+                                    <form action="" onSubmit={handleSubmission}>
+                                        <div className="bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center">
+                                            <input name='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder={'yourmail@example.com'} type="text" className="outline-none placeholder:text-white bg-transparent p-2 w-full" />
+                                            <button className='bg-white text-secondary w-10/12 py-2 px-3 rounded-lg'>Send</button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div className="lg:col-span-2 relative flex items-center gap-3">
                                     <img src={img22} alt="" className="" />

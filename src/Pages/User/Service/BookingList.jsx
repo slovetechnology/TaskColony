@@ -177,6 +177,9 @@ const BookingList = () => {
                         <p className='mb-2 md:mb-0'>
                           <span className="font-[500] text-sm text-black">Provider</span>: {item.pfname} {item.plname}
                         </p>
+                        <p className='mb-2 md:mb-0'>
+                          <span className="font-[500] text-sm text-black">Coupon</span>: ${item.couponvalue}
+                        </p>
 
                       </div>
                     </div>

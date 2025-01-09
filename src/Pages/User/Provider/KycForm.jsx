@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import Modal from '../../../Components/General/Modal';
 import { Apis, AuthPosturl, Geturl } from '../../../Components/General/Api';
 import { FaPlus } from 'react-icons/fa';
+import { ToastAlert } from '../../../Components/General/Utils';
 
 const KycForm = ({ closeView, isOpen }) => {
     const [loading, setLoading] = useState(false);
@@ -114,14 +115,13 @@ const KycForm = ({ closeView, isOpen }) => {
                 formData.append('images[]', image);
             }
 
-            const response = await AuthPosturl(Apis.users.kyc_form, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-
-            console.log('Response:', response.data);
-            closeView(); // Close KYC form on successful submission
+            const response = await AuthPosturl(Apis.users.kyc_form, formData,);
+            if (response.status === true) {
+                ToastAlert('')
+                setTimeout(() => {
+                    window.location.href = '/provider';
+                }, 200);
+            }
         } catch (error) {
             console.error('Error submitting KYC form:', error);
         } finally {
