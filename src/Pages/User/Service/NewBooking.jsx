@@ -99,6 +99,7 @@ const Booking = () => {
         formData.append('job_title', data.job_title);
         formData.append('service_tid', data.service_tid);
         formData.append('state_tid', data.state_tid);
+        formData.append('coupon_code', data.coupon_code);
         formData.append('description', data.description);
         formData.append('address', location.address || data.address);
         formData.append('location_long', location.longitude || 6.11223322);
@@ -334,6 +335,17 @@ const Booking = () => {
                                         {errors.price && (
                                             <div className="text-red-600">{errors.price.message}</div>
                                         )}
+                                    </div>
+
+                                    <div className="mb-5">
+                                        <label className="text-xs font-semibold">Coupon</label>
+                                        <input
+                                            {...register('coupon_code')}
+                                            type="text"
+                                            placeholder="coupon"
+                                            className={`inputs border ${errors.coupon_code ? 'border-red-600' : 'border'}`}
+                                        />
+                                       
                                     </div>
 
                                     {/* Zip Code */}

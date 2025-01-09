@@ -132,6 +132,7 @@ const User = () => {
                     {user.firstname} {user.lastname}
                   </h5>
                   <p className="text-sm text-primary">{user.email}</p>
+                  <p className="text-sm text-primary">{user.referralcode}</p>
                   <div
                     className="text-secondary cursor-pointer"
                     onClick={handleEditUserOpen}

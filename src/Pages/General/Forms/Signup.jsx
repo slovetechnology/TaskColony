@@ -43,6 +43,7 @@ const Signup = () => {
       hearfrom: "Social Media",
       username: data.username,
       userType: selected,
+      referedby: data.referedby,
     };
 
     try {
@@ -167,9 +168,18 @@ const Signup = () => {
                   </div>
 
                   <div className="mb-3">
+                    <label>Referral Code</label>
+                    <input
+                      {...register('referedby')}
+                      type="text"
+                      className={`input border ${errors.referedby ? 'border-red-600' : 'border'}`}
+                    />
+                  </div>
+
+                  <div className="mb-3">
                     <label>Company <span>(Optional)</span></label>
                     <input {...register('company')} type="text"
-                      className={`input border ${errors.lastname ? 'border-red-600' : 'border'}`} />
+                      className={`input border ${errors.company ? 'border-red-600' : 'border'}`} />
                   </div>
 
                   <div className="mb-3">

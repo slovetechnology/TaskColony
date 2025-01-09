@@ -43,6 +43,7 @@ import img40 from "assets/new/img40.svg"
 import img41 from "assets/new/img41.svg"
 import img42 from "assets/new/img42.svg"
 import img43 from "assets/new/img43.svg"
+import review from "../../src/assets/review.png"
 
 
 import team1 from "assets/new/team1.svg"
@@ -90,9 +91,9 @@ export const TopNavsLinks = [
 ]
 
 export const HomeServices = [
-    { img: img5, title: 'The Best For Every Budget', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
-    { img: img6, title: 'Quality Work Done Quickly', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
-    { img: img7, title: '24 Hours Customer Support', content: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ' },
+    { img: img5, title: 'The Best For Every Budget', content: 'Affordable, high-quality services tailored to meet your needs without compromising on excellence.' },
+    { img: img6, title: 'Quality Work Done Quickly', content: 'Efficient and reliable services delivered promptly without sacrificing quality.' },
+    { img: img7, title: '24 Hours Customer Support', content: `We're here for you anytime, providing prompt assistance and ensuring you're satisfied around the clock.` },
 ]
 export const HomeCategories = [
     { img: img8, title: 'handyman' },
@@ -156,9 +157,9 @@ export const HomeOurServices = [
 ]
 
 export const HomeBestOffers = [
-    { img: img16, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35 },
+    { img: img16, title: 'House Cleaning & Disinfecting', tag: '', deal: 75, sub: ' on all items', price: 35 },
     { img: img21, title: 'CCTV Installation', tag: 'Repair Service', deal: false, sub: 'Experts at your door in 1 hour', price: 35 },
-    { img: img21, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35 },
+    { img: review, title: 'House Cleaning & Disinfecting', tag: 'Best Deal Month', deal: 75, sub: ' on all items', price: 35 },
 ]
 
 

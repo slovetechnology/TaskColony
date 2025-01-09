@@ -56,6 +56,7 @@ const ConfirmBooking = ({ bookingData }) => {
           setMainpriceis(res.data.data[0].mainpriceis); // Get the main price for the first booking
           setPrice(res.data.data[0].price); // Get the price for the first booking
           setAmountPaid(res.data.data[0].amt_paid); // Get the amount paid for the first booking
+          setCommission(res.data.data[0].couponvalue); // Get the amount paid for the first booking
         }
       } else {
         throw new Error('Failed to fetch data');
@@ -95,7 +96,7 @@ const ConfirmBooking = ({ bookingData }) => {
   };
 
   return (
-    <div className="gap-10 mt-10 mb-40  lg:mx-10 lg:flex">
+    <div className="gap-10 mt-10 mb-40  mx-10 lg:flex">
       {del && (
         <ConfirmCancelBooking
           confirmAction={confirmAction}
@@ -142,9 +143,13 @@ const ConfirmBooking = ({ bookingData }) => {
           <div className="bg-white rounded-xl py-2 mt-2 h-[15rem]">
             <div className="h-[28rem] px-6">
               <div className="text-xs">
-                <div className="flex border-b items-center justify-between gap-5 my-5">
+                <div className="flex items-center justify-between gap-5 my-5">
                   <div className="font-medium text-base">Price</div>
                   <div className="">${bookingData.price}</div>
+                </div>
+                <div className="flex border-b items-center justify-between gap-5 my-5">
+                  <div className="font-medium text-base">Coupon</div>
+                  <div className="">-${commisssion}</div>
                 </div>
                 <div className="flex items-center justify-between gap-5 my-5">
                   <div className="font-medium text-base">Total Amount</div>

@@ -121,7 +121,7 @@ const Provider = () => {
 
               <div className="flex justify-center items-center my-5 gap-2">
                 <div className="text-primary text-sm font-medium">Wallet Balance</div>
-                <div className="text-secondary text-2xl">${user.user_wallets[0].walletbal}</div>
+                <div className="text-secondary text-2xl">${user.provider_bal}</div>
               </div>
 
               <div className="flex items-center justify-between  px-1 text-sm py-3 gap-10 text-primary md:w-[30rem] bg-white shadow-2xl">
@@ -180,7 +180,7 @@ const Provider = () => {
                 className="border py-3 px-2 items-center justify-between flex w-full"
                 to="/favourite"
               >
-                Favourite Service <FaChevronRight />
+                Registered Service <FaChevronRight />
               </Link>
 
               <Link
