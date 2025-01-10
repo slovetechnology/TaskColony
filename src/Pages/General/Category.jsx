@@ -26,8 +26,8 @@ const Category = () => {
 
   return (
     <Layout>
-      <div className="bg-gray w-full xl:h-[20rem]">
-        <div className="text-center py-10 xl:pt-24">
+      <div className="bg-gray w-full xl:h-[10rem]">
+        <div className="text-center py-1 pt-10">
           <p className='font-[500] text-4xl mb-3'>Categories</p>
           <span className='flex items-center gap-4 font-[500] justify-center'>
             <p className="text-primary">Home</p>
@@ -37,7 +37,7 @@ const Category = () => {
         </div>
       </div>
 
-      <div className="w-11/12 lg:w-10/12 mx-auto my-28">
+      <div className="w-11/12 lg:w-10/12 mx-auto my-10">
         <div className="grid grid-cols-1 lg:grid-cols-5 mt-20 mb-20">
           <div className="lg:col-span-2"></div>
           <div className="flex lg:col-span-3 items-center justify-between">

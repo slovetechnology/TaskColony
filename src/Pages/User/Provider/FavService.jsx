@@ -101,7 +101,7 @@ const FavService = () => {
                 <div className="bg-[#e2e2e2] md:w-[30rem] h-[25rem] py-5 px-4">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="text-sm mt text-[#374151]">
-                            <div className="text-xl font-semibold mb-3">Update Favorite Services</div>
+                            <div className="text-xl font-semibold mb-3">Update Registered Services</div>
                             <div className="mb-5">
                                 <label className="text-xs font-semibold">Select Categories</label>
                                 <select

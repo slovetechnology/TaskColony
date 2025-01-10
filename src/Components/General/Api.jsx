@@ -109,6 +109,7 @@ const admin_urls = {
 
     //provider
     get_provider: `${admin}/providers/get_all_providers.php`,
+    get_provider_detail: `${admin}/providers/get_user_detail.php`,
     get_provider_payout: `${admin}/providers/get_all_provider_payout.php`,
     update_providers: `${admin}/providers/update_provider.php`,
     update_providers_docs: `${admin}/providers/update_provider_doc_status.php`,

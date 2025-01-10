@@ -156,7 +156,7 @@ const [error, setError] = useState(false)
       <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
         <div className="overflow-hidden h-full relative">
           <p className="text-end marquee pt-4 text-white whitespace-nowrap">
-            {/* <div className="" dangerouslySetInnerHTML={{ __html: message }} /> */}
+            <div className="" dangerouslySetInnerHTML={{ __html: message }} />
           </p>
         </div>
       </div>

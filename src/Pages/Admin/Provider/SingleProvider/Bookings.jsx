@@ -24,7 +24,7 @@ const statusToVariant = {
   hold: 'secondary',
 };
 
-const MyGigs = () => {
+const Bookings = ({trackid}) => {
   const [view, setView] = useState(false);
   const [gigs, setGigs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +38,7 @@ const MyGigs = () => {
 
   const fetchGigs = useCallback(async () => {
     try {
-      const res = await AuthGeturl(`${Apis.admins.get_booking}`);
+      const res = await AuthGeturl(`${Apis.admins.get_booking}?&provider_tid=${trackid}`); // Use provider_tid here
       if (res.status === true) {
         setGigs(res.data.data);
         setTotal(res.data.total || res.data.data.length);
@@ -125,4 +125,4 @@ const MyGigs = () => {
   );
 };
 
-export default MyGigs;
+export default Bookings;
