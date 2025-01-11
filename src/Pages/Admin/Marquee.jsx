@@ -13,7 +13,10 @@ const Marquee = () => {
 
     const onSubmit = async () => {
         const formData = new FormData();
-        formData.append('message', content); // Save the HTML content
+        
+        // Extract plain text from the content
+        const plainTextContent = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
+        formData.append('message', plainTextContent); // Save plain text content
 
         setLoading(true);
         try {
