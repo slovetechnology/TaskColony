@@ -18,7 +18,6 @@ import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
-import DOMPurify from 'dompurify';
 import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
 
 const ActiveTabOptions = [
@@ -40,7 +39,7 @@ function Home() {
     const TopNavIcon = topNav ? FaTimes : SlMenu
     const [email, setEmail] = useState('');
 
-    const [providers, setProvider] = useState([]);
+    const [providers, setProvider] = useState(null);
     const [gallery, setGallery] = useState([]);
     const defaultOptions = {
         loop: true,
@@ -120,10 +119,9 @@ function Home() {
         setLoading(true);
         try {
             const res = await Posturl(Apis.users.top_provider);
-            console.log(res.data.status)
-            if (res.status === true) {
-                setProvider(res.data.data);
-                console.log(providers)
+            console.log(res); // Check the full response structure
+            if (res.data.status === true && res.data.data.data.length > 0) {
+                setProvider(res.data.data.data[0]); // Set the entire provider object
             } else {
                 throw new Error('Failed to fetch provider data');
             }
@@ -133,7 +131,6 @@ function Home() {
             setLoading(false);
         }
     }, []);
-
     useEffect(() => {
         fetchTopProvider();
     }, [fetchTopProvider]);
@@ -504,32 +501,33 @@ function Home() {
 
 
             <div className="w-11/12 mx-auto lg:w-10/12 mb-20">
-                <div className="flex  items-center justify-between mt-20">
-                    <div className="font-medium text-2xl capitalize">our best providers</div>
-                    <div className="">
-                        <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /> </Link>
+                <div className="flex items-center justify-between mt-20">
+                    <div className="font-medium text-2xl capitalize">Our Best Providers</div>
+                    <div>
+                        <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /></Link>
                     </div>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 gap-4 mt-7">
-                    {HomeProviders.slice(0, 6).map((item, index) => (
-                        <div key={index} className="bg-white  shadow-lg rounded-3xl">
+                    {providers ? (
+                        <div className="bg-white shadow-lg rounded-3xl">
                             <LazyLoadImage
-                                src={item.img}
+                                src={providers?.profile_pic}
                                 className="w-[20rem] h-[10rem] object-top md:w-[30rem] object-cover"
                                 effect="blur"
-                                alt={`${item.fname} ${item.lname}`}
+                                alt={`${providers?.fname} ${providers?.lname}`}
                             />
                             <div className="px-4 py-5 -mt-5 rounded-b-2xl">
                                 <div className="text-center text-xl font-semibold">
-                                    {item.title}
+                                    {providers?.fname} {providers?.lname}
                                 </div>
-                                <div className="text-center text-secondary text-xs">
-                                    {item.tag}
-                                </div>
+                                {/* <div className="text-center text-secondary text-xs">
+                                    {providers?.trackid}
+                                </div> */}
                             </div>
                         </div>
-                    ))}
+                    ) : (
+                        <div>Loading...</div>
+                    )}
                 </div>
             </div>
 
