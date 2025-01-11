@@ -8,7 +8,7 @@ const Kyc = ({ closeView }) => {
 
     return (
         <Modal closeView={closeView}>
-            <div className="font-semibold text-lg mb-4">Kyc Data</div>
+            <div className="font-semibold text-lg mb-4">KYC Data</div>
 
             <div className=" mt-16">
                 {user.kyclevel === 1 && (

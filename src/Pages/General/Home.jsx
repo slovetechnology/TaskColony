@@ -151,7 +151,7 @@ function Home() {
             const res = await Posturl(Apis.users.app_link, data);
             if (res.status === true) {
                 ToastAlert(res.text)
-                setEmail(''); 
+                setEmail('');
             } else {
                 ErrorAlert(res.data.text);
             }
@@ -247,7 +247,7 @@ function Home() {
                 <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
                     <div className="overflow-hidden h-full relative">
                         <p className="text-end marquee pt-4 text-white whitespace-nowrap">
-                        {/* <div dangerouslySetInnerHTML={{ __html: message }} /> */}
+                            {/* <div dangerouslySetInnerHTML={{ __html: message }} /> */}
 
                         </p>
                     </div>
@@ -257,6 +257,7 @@ function Home() {
 
 
             </div>
+
             <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">

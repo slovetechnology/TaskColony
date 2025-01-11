@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from '../../Components/User/Layout'
 import grid from '../../assets/grid.svg'
 import img1 from 'assets/brick.png'
 import img2 from 'assets/zinc.png'
-import { FaUsers, FaStar, FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import { FaUsers, FaStar, FaArrowLeft, FaArrowRight, FaRegUserCircle } from 'react-icons/fa'
 import profiles from '../../assets/profile.png'
 import review from '../../assets/review.png'
 import icon1 from '../../assets/icon11.png'
@@ -20,10 +20,28 @@ const about = [
 ]
 
 const Aboutus = () => {
+  const [notificationCount, setNotificationCount] = useState(0);
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+
+  const [activeButton, setActiveButton] = useState(null); // Track the active button
+
+  const handlePrevTestimonial = () => {
+    setActiveButton("prev"); // Set active button to "prev"
+    setCurrentTestimonialIndex((prevIndex) =>
+      prevIndex === 0 ? HomeTestimonials.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextTestimonial = () => {
+    setActiveButton("next"); // Set active button to "next"
+    setCurrentTestimonialIndex((prevIndex) =>
+      prevIndex === HomeTestimonials.length - 1 ? 0 : prevIndex + 1
+    );
+  };
   return (
     <Layout>
-      <div className="bg-gray w-full xl:h-[20rem]">
-        <div className="text-center py-10 xl:pt-24">
+      <div className="bg-gray w-full xl:h-[10rem]">
+        <div className="text-center py-10 pt-10">
           <p className='font-[500] text-4xl mb-3'>About Us</p>
           <span className='flex items-center gap-4 font-[500] justify-center'>
             <p className="text-primary">Home</p>
@@ -136,50 +154,55 @@ const Aboutus = () => {
             ))}
           </div>
         </div>
-        <div className="w-11/12 mx-auto lg:w-10/12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-10 py-14 text-white">
-            <div className="flex flex-col justify-center">
-              <div className="font-medium text-4xl mb-6">What our customers says</div>
-              <div className="">
-                {HomeTestimonials.map((item, index) => (
-                  <div className="w-11/12" key={index}>
-                    <div className="font-medium text-xl">{item.title}</div>
-                    <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">{item.content}</div>
 
-                    <div className="md:flex items-center mt-12 justify-between">
-                      <div className="flex items-start gap-2 md:gap-4">
-                        <img src={profiles} alt="" className="w-10 h-10 rounded-full object-cover" />
-                        <span className="">
-                          <h5 className="">Cameron Williamson</h5>
-                          <div className="md:flex items-center text-sm gap-3">
-                            <span className="flex text-secondary gap-1">
-                              <FaStar />
-                              <FaStar />
-                              <FaStar />
-                              <FaStar />
-                              <FaStar />
-                            </span>
-                            <div className="text-primary hidden md:block">|</div>
-                            <p className="text-primary">One week Ago</p>
-                          </div>
-                        </span>
-                      </div>
-                      <div className="flex justify-between xl:py-0  py-4 gap-3">
-                        <div className='bg-secondary rounded-full p-3'> <FaArrowLeft /> </div>
-                        <div className='border rounded-full p-3'> <FaArrowRight /> </div>
+        <div className="w-11/12 mx-auto lg:w-10/12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
+            <div className="flex flex-col justify-center">
+              <div className="flex items-center justify-between mt-10">
+                <div className="font-medium text-2xl">What our customers say</div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="w-11/12">
+                  <div className="font-medium text-xl">{HomeTestimonials[currentTestimonialIndex]?.title}</div>
+                  <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">
+                    {HomeTestimonials[currentTestimonialIndex]?.content}
+                  </div>
+                  <div className="md:flex items-center mt-10 justify-between">
+                    <div className="flex items-center gap-">
+                      <div className="text-4xl"><FaRegUserCircle /></div>
+                      <div className="text-sm mx-4">
+                        <div className="font-medium">{HomeTestimonials[currentTestimonialIndex]?.name}</div>
+                        <div className="flex items-center gap-1 mt-2 text-slate-300 text-xs">
+                          {new Array(HomeTestimonials[currentTestimonialIndex]?.rating).fill(0).map((_, i) => (
+                            <FaStar key={i} className={`text-secondary`} />
+                          ))}
+                          | {HomeTestimonials[currentTestimonialIndex]?.date}
+                        </div>
                       </div>
                     </div>
+
+                    <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
+                      <button
+                        onClick={handlePrevTestimonial}
+                        className={`${activeButton === "prev" ? "bg-secondary" : "border border-white"
+                          } rounded-full size-10 text-white items-center justify-center flex`}
+                      >
+                        <FaArrowLeft />
+                      </button>
+                      <button
+                        onClick={handleNextTestimonial}
+                        className={`${activeButton === "next" ? "bg-secondary" : "border border-white"
+                          } rounded-full size-10 text-white items-center justify-center flex`}
+                      >
+                        <FaArrowRight />
+                      </button>
+                    </div>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
-            <div className="">
-              <LazyLoadImage
-                src={review}
-                className='object-cover'
-                effect='blur'
-              />
-            </div>
+            <LazyLoadImage src={HomeTestimonials[currentTestimonialIndex].img} className="object-cover w-full object-top lg:w-[35rem] lg:h-[20rem]" effect="blur" />
           </div>
         </div>
 

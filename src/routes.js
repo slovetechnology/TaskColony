@@ -48,6 +48,8 @@ import UserFavService from "./Pages/User/Profiles/FavouriteService"
 import AllTestemonials from "./Pages/Admin/Testemonial.jsx/AllTestemonials"
 import ProviderSettings from "./Pages/User/Provider/ProviderSettings"
 import AdminForgetPassword from "./Pages/Admin/AdminForms/AdminForgetPassword"
+import AllProvider from "./Pages/Admin/Provider/AllProvider"
+import SingleProvider from "./Pages/Admin/Provider/SingleProvider/SingleProvider"
 
 
 export const GeneralNoAuth = [
@@ -96,7 +98,9 @@ export const AdminRoutes = [
     { path: 'new-service', element: NewServices },
     { path: 'Earning', element: AllEarning },
     { path: 'user', element: AllUser },
-    { path: 'user/single/:userId', element: SingleUser },
+    { path: 'provider', element: AllProvider },
+    { path: 'user/single/:userid', element: SingleUser },
+    { path: 'provider/single/:userid', element: SingleProvider },
     { path: 'booking', element: AllBookings },
     { path: 'testemonial', element: AllTestemonials },
     { path: 'category', element: AllCategories },

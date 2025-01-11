@@ -833,8 +833,8 @@ const ServiceDetail = () => {
   };
   return (
     <Layout>
-      <div className="bg-gray w-full xl:h-[20rem]">
-        <div className="text-center py-10 xl:pt-24">
+      <div className="bg-gray w-full xl:h-[10rem]">
+        <div className="text-center py-10 pt-10">
           <p className="font-[500] text-4xl mb-3">
             {service ? service.name : 'Loading Service...'}
           </p>
@@ -930,7 +930,7 @@ const ServiceDetail = () => {
             </div>
 
             <div className="">
-              <div className="h-auto py-5 lg:w-[24rem] px-5 rounded-xl bg-[#e2e2e2]">
+              <div className="h-auto py-5 lg:w-[37rem] px-5 rounded-xl bg-[#e2e2e2]">
                 <div className="text-xl pt-5 pb-3 font-semibold">Booking Information</div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="text-sm text-[#374151]">

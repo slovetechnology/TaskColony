@@ -14,7 +14,7 @@ import { ToastAlert } from '../../../../Components/General/Utils';
 const TABLE_HEADERS = ['Id', 'Provider Name',  'Service', 'Review', ''];
 const DEFAULT_PER_PAGE = 10;
 
-const ProviderReviews = () => {
+const ProviderReviews = ({trackid}) => {
   const { userId } = useParams();
   const [reviews, setReviews] = useState([]); // Initialize as an empty array
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ const ProviderReviews = () => {
 
   const fetchUser = useCallback(async () => {
     try {
-      const res = await AuthGeturl(Apis.admins.get_admin_reviews);
+      const res = await AuthGeturl(`${Apis.admins.get_admin_reviews}?&provider_tid=${trackid}`);
       if (res.status === true) {
         setReviews(res.data.data);
         setTotal(res.data.total || res.data.data.length); // Set total if available

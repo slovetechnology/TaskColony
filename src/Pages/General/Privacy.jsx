@@ -14,7 +14,7 @@ const Privacy = () => {
                     </span>
                 </div>
             </div>
-            <div className="mx-32 my-20">
+            <div className="lg:mx-32 mx-2 text-justify my-20">
                 <div>
                     <p>
                         This Privacy Policy ("Policy") applies to taskcolony, and taskcolony ("Company") and governs data

@@ -12,7 +12,7 @@ import { ToastAlert } from '../../../../Components/General/Utils';
 const TABLE_HEADERS = ['Id', 'User', 'Service', 'Review', ''];
 const DEFAULT_PER_PAGE = 10;
 
-const Reviews = ({ trackid }) => {
+const Reviews = ({trackid}) => {
   const { userId } = useParams();
   const [reviews, setReviews] = useState([]); // Initialize as an empty array
   const [loading, setLoading] = useState(true);
@@ -115,9 +115,9 @@ const Reviews = ({ trackid }) => {
         />
       )}
       <div className="flex items-start mb-1 justify-start">
-        {reviews.length === 0 ? (
-          <div className="text-center fle items-center justify-center text-lg font-semibold">
-            No Review found.
+        {loading ? (
+          <div className="text-center flex items-center justify-center w-full h-screen text-lg font-semibold">
+            Loading reviews...
           </div>
         ) : (
           <Table headers={TABLE_HEADERS} className="bg-white">
@@ -142,7 +142,7 @@ const Reviews = ({ trackid }) => {
         )}
       </div>
       <div className="w-full flex justify-start">
-        {total > 0 && <PaginationButton pageCount={pageCount} onPageChange={handlePageChange} />}
+        <PaginationButton pageCount={pageCount} onPageChange={handlePageChange} />
       </div>
     </div>
   );

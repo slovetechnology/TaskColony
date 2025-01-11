@@ -69,6 +69,9 @@ const AdminSidebar = () => {
                     <div onClick={() => handleNavigation('/auth/admin/user')} className="flex cursor-pointer items-center pb-3 gap-2">
                         <IoGridOutline /> All Users
                     </div>
+                    <div onClick={() => handleNavigation('/auth/admin/provider')} className="flex cursor-pointer items-center pb-3 gap-2">
+                        <IoGridOutline /> All Provider
+                    </div>
                     <div onClick={() => handleNavigation('/auth/admin/admin')} className="flex cursor-pointer items-center pb-3 gap-2">
                         <IoGridOutline /> All Admins
                     </div>

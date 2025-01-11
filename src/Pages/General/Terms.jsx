@@ -14,7 +14,7 @@ const Terms = () => {
                     </span>
                 </div>
             </div>
-            <div className="mx-28 my-20">
+            <div className="lg:mx-28 mx-2 text-justify my-20">
                 <div>
                     <h1 className="text-xl font-medium mb-6">Agreement between User and www.taskcolony.com
                     </h1>
