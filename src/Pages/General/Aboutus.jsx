@@ -21,34 +21,11 @@ const about = [
 ]
 
 const Aboutus = () => {
-  const [notificationCount, setNotificationCount] = useState(0);
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
 
   const [activeButton, setActiveButton] = useState(null); // Track the active button
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post('https://api.brevo.com/v3/contacts', {
-        email: email,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': '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',
-        },
-      });
-
-      if (response.status === 201) {
-        setMessage('Subscription successful!');
-        setEmail('');
-      }
-    } catch (error) {
-      setMessage('Subscription failed. Please try again.');
-    }
-  };
 
   const handlePrevTestimonial = () => {
     setActiveButton("prev"); // Set active button to "prev"

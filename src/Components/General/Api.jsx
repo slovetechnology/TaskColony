@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 export const frontendServer = 'http://localhost:5173';
 export const offlineServer = 'https://backend.taskcolony.com/';
 export const offline = 'https://backend.taskcolony.com/api';
-// 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
 const user = 'user';
 const admin = 'admin';
 const user_urls = {
