@@ -105,8 +105,8 @@ const User = () => {
       </KycPopups>
 
       <KycForm closeView={handleCloseKycForm} isOpen={isKycFormOpen} />
-      <div className="bg-gray w-full xl:h-[20rem]">
-        <div className="text-center py-10 xl:pt-24">
+      <div className="bg-gray w-full h-[10rem]">
+        <div className="text-center py-10 pt-10">
           <p className="font-[500] xl:text-4xl text-xl mb-3">User Profile</p>
           <span className="flex items-center gap-4 font-[500] justify-center">
             <p className="text-primary">Home</p>
@@ -155,7 +155,7 @@ const User = () => {
             </div>
             {user.kyclevel === 0 && <Link to='/provider-kyc'></Link>}
             <div className="bg-secondary cursor-pointer rounded-full mb-4 p-2 w-fit text-white" onClick={handleSwitchToProvider}>
-              Switch to provider
+              Switch to Provider
             </div>
 
             <div className="border-t pt-5">

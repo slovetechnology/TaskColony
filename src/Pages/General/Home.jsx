@@ -114,27 +114,6 @@ function Home() {
         fetchAllHome();
     }, [fetchAllHome]);
 
-
-    const fetchTopProvider = useCallback(async () => {
-        setLoading(true);
-        try {
-            const res = await Posturl(Apis.users.top_provider);
-            console.log(res); // Check the full response structure
-            if (res.data.status === true && res.data.data.data.length > 0) {
-                setProvider(res.data.data.data[0]); // Set the entire provider object
-            } else {
-                throw new Error('Failed to fetch provider data');
-            }
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-    useEffect(() => {
-        fetchTopProvider();
-    }, [fetchTopProvider]);
-
     const handleSubmission = async (e) => {
         e.preventDefault();
         if (!email) {
@@ -160,7 +139,6 @@ function Home() {
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
     return (
         <>
-
             <div className='relative'>
                 <div className={`fixed w-full bg-primary z-50 border-b shadow-xl lg:py-5 py-4 gap-10 ${topNav ? 'h-[16rem]' : 'h-[4.6rem]'} transition-all`}>
                     <div className='flex items-center justify-between px-5 lg:px-10'>
@@ -244,32 +222,26 @@ function Home() {
                 <div className={`bg-secondary z-10 relative mt-6 transition-all ${mobile ? 'h-[30rem]' : 'h-[3.5rem]'}`}>
                     <div className="overflow-hidden h-full relative">
                         <p className="text-end marquee pt-4 text-white whitespace-nowrap">
-                            {/* <div dangerouslySetInnerHTML={{ __html: message }} /> */}
+                            <div dangerouslySetInnerHTML={{ __html: message }} />
 
                         </p>
                     </div>
                 </div>
-
-
-
-
             </div>
 
-            <div className="h-fit lg:h-[50rem] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
+            <div className="h-fit lg:h-[81dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
                             <h1>
-                                <div className="text-secondary text-3xl md:text-5xl font-bold">A One-Stop Place </div>
-                                <div className="font-bold text-3xl md:text-5xl">For Home Repair</div>
+                                <div className="text-secondary text-2xl md:text-5xl font-bold">A One-Stop Place </div>
+                                <div className="font-bold text-2xl md:text-5xl">For Home Repair</div>
                             </h1>
-                            <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
+                            <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
                         </div>
-                        <div className="mt-10">
-                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="/new-booking">Book Now</Link>
-                        </div>
-                        <div className="md:mt-10 mt-40 gap-2">
-                            <div className="flex md:-mt-0 gap-2 items-center -mt-32">
+                        <div className="mt-10 mb-24">
+                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
+                            <div className="flex items-center mt-5 gap-2">
                                 <LazyLoadImage
                                     effect="blur"
                                     className='size-5'
@@ -281,11 +253,12 @@ function Home() {
                                 </div>
                             </div>
                         </div>
+
                     </div>
-                    <div className="lg:col-span-4 relative -mt-32 lg:-mt-0">
+                    <div className="lg:col-span-4 -mt-32 lg:-mt-0">
                         <LazyLoadImage
                             effect="blur"
-                            className='w-full object-contain lg:h-[51rem]'
+                            className='w-full object-contain lg:h-[41rem]'
                             src={img1}
                         />
                     </div>
@@ -459,7 +432,7 @@ function Home() {
                 </div>
             </div>
 
-            <div className="w-11/12 mx-auto lg:w-10/12 mt-20">
+            <div className="w-11/12 mx-auto lg:w-10/12 mb-10 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>
                     <div className="lg:col-span-3 w-fit mx-auto -mb-1.5 lg:ml-auto order-2 lg:order-1">
                         <LazyLoadImage src={img26} className='object-cover h-full w-full' effect='blur' />
@@ -500,36 +473,6 @@ function Home() {
             </div>
 
 
-            <div className="w-11/12 mx-auto lg:w-10/12 mb-20">
-                <div className="flex items-center justify-between mt-20">
-                    <div className="font-medium text-2xl capitalize">Our Best Providers</div>
-                    <div>
-                        <Link className='flex items-center gap-2 text-sm'>See All <FaArrowRight className='text-yellow' /></Link>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 gap-4 mt-7">
-                    {providers ? (
-                        <div className="bg-white shadow-lg rounded-3xl">
-                            <LazyLoadImage
-                                src={providers?.profile_pic}
-                                className="w-[20rem] h-[10rem] object-top md:w-[30rem] object-cover"
-                                effect="blur"
-                                alt={`${providers?.fname} ${providers?.lname}`}
-                            />
-                            <div className="px-4 py-5 -mt-5 rounded-b-2xl">
-                                <div className="text-center text-xl font-semibold">
-                                    {providers?.fname} {providers?.lname}
-                                </div>
-                                {/* <div className="text-center text-secondary text-xs">
-                                    {providers?.trackid}
-                                </div> */}
-                            </div>
-                        </div>
-                    ) : (
-                        <div>Loading...</div>
-                    )}
-                </div>
-            </div>
 
             <Footer />
         </>

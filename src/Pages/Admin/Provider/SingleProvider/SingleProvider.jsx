@@ -102,7 +102,7 @@ const SingleProvider = () => {
                                     <div className="h-[13rem] text-white rounded-xl bg-gradient-to-r px-6 py-14 from-[#FF3D3D] to-[#FFBC0A]">
                                         <p className="text-base">Total Reviews</p>
                                         <div className="flex mt-5 items-center justify-between">
-                                            <p className="md:text-5xl text-2xl font-medium">{user.total_review}</p>
+                                            <p className="md:text-5xl text-2xl font-medium">{user.total_reveiw}</p>
                                             <div className="bg-white p-3 rounded-full text-xl text-orange-500">
                                                 <GoArrowUpRight />
                                             </div>
@@ -112,7 +112,7 @@ const SingleProvider = () => {
                                 <div className="h-[13rem] text-white rounded-xl bg-gradient-to-r px-6 py-14 from-[#FFBC0A] to-[#FF3D3D]">
                                     <p className="text-base">Wallet Balance</p>
                                     <div className="flex mt-5 items-center justify-between">
-                                        <p className="md:text-5xl text-2xl font-medium">${user.user_wallets[0].walletbal}</p>
+                                        <p className="md:text-5xl text-2xl font-medium">${user.provider_bal}</p>
                                         <div className="bg-white p-3 rounded-full text-xl text-orange-500">
                                             <GoArrowUpRight />
                                         </div>
@@ -123,7 +123,7 @@ const SingleProvider = () => {
                             <div className="mt-10">
                                 <div className="bg-white px-6 py-6">
                                     <div className="flex flex-wrap items-center gap-3 text-primary font-medium border-b mb-5 pb-3">
-                                        {['about', 'my-gigs', 'bookings', 'reviews', 'providerReview', 'document', 'payout'].map(tab => (
+                                        {['about', 'my-gigs', 'my gigs', 'provider reviews', 'document', 'payout'].map(tab => (
                                             <button key={tab} onClick={() => setActiveTab(tab)} className={activeTab === tab ? 'text-secondary border-b px-10 border-secondary font-bold' : ''}>
                                                 {tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
                                             </button>

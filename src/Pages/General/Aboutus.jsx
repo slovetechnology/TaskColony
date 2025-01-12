@@ -13,6 +13,7 @@ import worker from '../../assets/about1.png'
 import { IoIosArrowDroprightCircle } from 'react-icons/io'
 import { HomeTestimonials, Team } from '../../utils/utils'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import axios from 'axios'
 const about = [
   { image: icon3, num: '250+', text: 'Authorized Team' },
   { image: icon1, num: '90+', text: 'Service Cites' },
@@ -24,6 +25,30 @@ const Aboutus = () => {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
 
   const [activeButton, setActiveButton] = useState(null); // Track the active button
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('https://api.brevo.com/v3/contacts', {
+        email: email,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': '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',
+        },
+      });
+
+      if (response.status === 201) {
+        setMessage('Subscription successful!');
+        setEmail('');
+      }
+    } catch (error) {
+      setMessage('Subscription failed. Please try again.');
+    }
+  };
 
   const handlePrevTestimonial = () => {
     setActiveButton("prev"); // Set active button to "prev"
@@ -38,6 +63,7 @@ const Aboutus = () => {
       prevIndex === HomeTestimonials.length - 1 ? 0 : prevIndex + 1
     );
   };
+
   return (
     <Layout>
       <div className="bg-gray w-full xl:h-[10rem]">
@@ -212,14 +238,16 @@ const Aboutus = () => {
               <p className="font-[500] text-2xl">Subscribe to our newsletter</p>
               <p className="text-xs text-primary">Subscribe to the newsletter to receive exclusive offers, latest news, and updates</p>
             </div>
-            <div className="flex flex-col xl:flex-row items-center w-full xl:w-auto"> {/* Stack in column on small, row on large */}
-              <label className='bg-white gap-[10px] flex items-center h-16 w-full xl:w-[24rem] px-3 border-primary rounded-tl-md rounded-bl-md'>
-                <input type="text" placeholder='Enter Your Email Address' className='w-full xl:w-[16rem] placeholder:text-xs placeholder:text-primary outline-none' />
-              </label>
-              <p className="bg-secondary px-7 text-white flex items-center h-16 w-full xl:w-auto justify-center xl:justify-start rounded-tr-md rounded-br-md mt-3 xl:mt-0">
-                Subscribe
-              </p>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col xl:flex-row items-center w-full xl:w-auto"> {/* Stack in column on small, row on large */}
+                <label className='bg-white gap-[10px] flex items-center h-16 w-full xl:w-[24rem] px-3 border-primary rounded-tl-md rounded-bl-md'>
+                  <input type="email" placeholder='Enter Your Email Address' value={email} onChange={(e) => setEmail(e.target.value)} className='w-full xl:w-[16rem] placeholder:text-xs placeholder:text-primary outline-none' />
+                </label>
+                <button type='submit' className="bg-secondary px-7 text-white flex items-center h-16 w-full xl:w-auto justify-center xl:justify-start rounded-tr-md rounded-br-md mt-3 xl:mt-0">
+                  Subscribe
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 
