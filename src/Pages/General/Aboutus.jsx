@@ -4,8 +4,6 @@ import grid from '../../assets/grid.svg'
 import img1 from 'assets/brick.png'
 import img2 from 'assets/zinc.png'
 import { FaUsers, FaStar, FaArrowLeft, FaArrowRight, FaRegUserCircle } from 'react-icons/fa'
-import profiles from '../../assets/profile.png'
-import review from '../../assets/review.png'
 import icon1 from '../../assets/icon11.png'
 import icon2 from '../../assets/icon12.png'
 import icon3 from '../../assets/icon13.png'
@@ -13,7 +11,6 @@ import worker from '../../assets/about1.png'
 import { IoIosArrowDroprightCircle } from 'react-icons/io'
 import { HomeTestimonials, Team } from '../../utils/utils'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import axios from 'axios'
 const about = [
   { image: icon3, num: '250+', text: 'Authorized Team' },
   { image: icon1, num: '90+', text: 'Service Cites' },
@@ -215,10 +212,10 @@ const Aboutus = () => {
               <p className="font-[500] text-2xl">Subscribe to our newsletter</p>
               <p className="text-xs text-primary">Subscribe to the newsletter to receive exclusive offers, latest news, and updates</p>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form >
               <div className="flex flex-col xl:flex-row items-center w-full xl:w-auto"> {/* Stack in column on small, row on large */}
                 <label className='bg-white gap-[10px] flex items-center h-16 w-full xl:w-[24rem] px-3 border-primary rounded-tl-md rounded-bl-md'>
-                  <input type="email" placeholder='Enter Your Email Address' value={email} onChange={(e) => setEmail(e.target.value)} className='w-full xl:w-[16rem] placeholder:text-xs placeholder:text-primary outline-none' />
+                  <input type="email" placeholder='Enter Your Email Address' className='w-full xl:w-[16rem] placeholder:text-xs placeholder:text-primary outline-none' />
                 </label>
                 <button type='submit' className="bg-secondary px-7 text-white flex items-center h-16 w-full xl:w-auto justify-center xl:justify-start rounded-tr-md rounded-br-md mt-3 xl:mt-0">
                   Subscribe
