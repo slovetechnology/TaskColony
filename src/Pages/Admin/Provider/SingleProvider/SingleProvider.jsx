@@ -78,9 +78,9 @@ const SingleProvider = () => {
                             <div className="grid lg:grid-cols-2 mt-8 gap-5">
                                 <div>
                                     <div className="h-[13rem] text-white rounded-xl bg-gradient-to-r px-6 py-14 from-[#4797BD] to-[#63C2AB]">
-                                        <p className="text-base">Total Earned</p>
+                                        <p className="text-base">Total Earning</p>
                                         <div className="flex mt-5 items-center justify-between">
-                                            <p className="md:text-5xl text-2xl font-medium">{user.total_earned}</p>
+                                        <p className="md:text-5xl text-2xl font-medium">${user.provider_bal}</p>
                                             <div className="bg-white p-3 rounded-full text-xl text-orange-500">
                                                 <GoArrowUpRight />
                                             </div>
@@ -109,21 +109,13 @@ const SingleProvider = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="h-[13rem] text-white rounded-xl bg-gradient-to-r px-6 py-14 from-[#FFBC0A] to-[#FF3D3D]">
-                                    <p className="text-base">Wallet Balance</p>
-                                    <div className="flex mt-5 items-center justify-between">
-                                        <p className="md:text-5xl text-2xl font-medium">${user.provider_bal}</p>
-                                        <div className="bg-white p-3 rounded-full text-xl text-orange-500">
-                                            <GoArrowUpRight />
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
 
                             <div className="mt-10">
                                 <div className="bg-white px-6 py-6">
                                     <div className="flex flex-wrap items-center gap-3 text-primary font-medium border-b mb-5 pb-3">
-                                        {['about', 'my-gigs', 'my gigs', 'provider reviews', 'document', 'payout'].map(tab => (
+                                        {['about', 'my-gigs', 'provider reviews', 'document', 'payout'].map(tab => (
                                             <button key={tab} onClick={() => setActiveTab(tab)} className={activeTab === tab ? 'text-secondary border-b px-10 border-secondary font-bold' : ''}>
                                                 {tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
                                             </button>

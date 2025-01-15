@@ -120,7 +120,7 @@ const Provider = () => {
               </div>
 
               <div className="flex justify-center items-center my-5 gap-2">
-                <div className="text-primary text-sm font-medium">Wallet Balance</div>
+                <div className="text-primary text-sm font-medium">Total Earning</div>
                 <div className="text-secondary text-2xl">${user.provider_bal}</div>
               </div>
 
