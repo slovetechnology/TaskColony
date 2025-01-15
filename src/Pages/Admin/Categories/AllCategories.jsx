@@ -149,7 +149,7 @@ const AllCategories = () => {
                 <TableData className='flex gap-2 items-center'>
                   <div className='w-16 h-16 bg-secondary p-4 rounded-full overflow-hidden'>
                     <img
-                      className='w-full h-full object-cover'
+                      className='w-full h-full object-contain'
                       src={member.icon_image}
                       alt={member.name}
                     />

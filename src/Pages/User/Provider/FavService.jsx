@@ -103,7 +103,7 @@ const FavService = () => {
                         <div className="text-sm mt text-[#374151]">
                             <div className="text-xl font-semibold mb-3">Update Registered Services</div>
                             <div className="mb-5">
-                                <label className="text-xs font-semibold">Select Categories</label>
+                                <label className="text-xs font-semibold">Select Category</label>
                                 <select
                                     className={`inputs border`}
                                     {...register('category', { required: false })}

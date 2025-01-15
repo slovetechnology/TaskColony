@@ -174,7 +174,7 @@ const Booking = () => {
     return (
         <Layout>
             <div className="bg-gray w-full xl:h-[10rem]">
-                <div className="text-center py-10 xl:pt-10">
+                <div className="text-center py-10 pt-10">
                     <p className="font-[500] text-3xl md:text-4xl mb-3">Booking Request</p>
                     <span className="flex items-center gap-4 font-[500] justify-center">
                         <p className="text-primary">Home</p>
@@ -186,7 +186,7 @@ const Booking = () => {
             {view === 1 && (
                 <div className="mx-3 md:flex items-center justify-center">
                     <div className="my-10">
-                        <div className="bg-[#e2e2e2] md:w-[30rem] py-5 px-4">
+                        <div className="bg-[#e2e2e2] md:w-[40rem] py-5 px-4">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="text-sm text-[#374151]">
                                     <div className="mb-5">

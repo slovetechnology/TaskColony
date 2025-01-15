@@ -83,8 +83,8 @@ const Provider = () => {
 
   return (
     <Layout>
-      <div className="bg-gray w-full xl:h-[20rem]">
-        <div className="text-center py-10 xl:pt-24">
+      <div className="bg-gray w-full h-[10rem]">
+        <div className="text-center py-10 pt-10">
           <p className="font-[500] xl:text-4xl text-xl mb-3">Provider Profile</p>
           <span className="flex items-center gap-4 font-[500] justify-center">
             <p className="text-primary">Home</p>
@@ -120,7 +120,7 @@ const Provider = () => {
               </div>
 
               <div className="flex justify-center items-center my-5 gap-2">
-                <div className="text-primary text-sm font-medium">Wallet Balance</div>
+                <div className="text-primary text-sm font-medium">Total Earning</div>
                 <div className="text-secondary text-2xl">${user.provider_bal}</div>
               </div>
 
