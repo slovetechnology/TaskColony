@@ -594,6 +594,7 @@ const ServiceDetail = () => {
   const [selectedDateTime, setSelectedDateTime] = useState({ date: null, time: null });
   const [view, setView] = useState(1); // 1 = Booking Form, 2 = Confirm Booking
   const [bookingData, setBookingData] = useState(null);
+  const [selectedState, setSelectedState] = useState(''); // State for selected state
 
   const [images, setImages] = useState([]);
   const [location, setLocation] = useState({
@@ -699,43 +700,68 @@ const ServiceDetail = () => {
   }, []);
 
   const [locationButtonText, setLocationButtonText] = useState('Get Location');
-
   const getUserGeoAddress = async () => {
     setLocationButtonText('Getting your location...'); // Change button text
     if (!navigator.geolocation) {
-      ErrorAlert('Geolocation is not supported by your browser.');
-      setLocationButtonText('Get Location'); // Reset button text
-      return;
+        ErrorAlert('Geolocation is not supported by your browser.');
+        setLocationButtonText('Get Location'); // Reset button text
+        return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
-        try {
-          const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
-          );
-          const data = await response.json();
-          if (data.status === "OK" && data.results.length > 0) {
-            setLocation({
-              address: data.results[0].formatted_address,
-              latitude,
-              longitude,
-            });
-          }
-        } catch (error) {
-          console.error('Error fetching geolocation:', error);
-        } finally {
-          setLocationButtonText('Get Location'); // Reset button text
+        async (position) => {
+            const { latitude, longitude } = position.coords;
+            const apiKey = "YOUR_API_KEY"; // Replace with your API key
+            try {
+                const response = await fetch(
+                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+                );
+                const data = await response.json();
+                if (data.status === "OK" && data.results.length > 0) {
+                    setLocation({
+                        address: data.results[0].formatted_address,
+                        latitude,
+                        longitude,
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching geolocation:', error);
+            } finally {
+                setLocationButtonText('Get Location'); // Reset button text
+            }
+        },
+        (error) => {
+            ErrorAlert(`Error fetching location: ${error.message}`);
+            setLocationButtonText('Get Location'); // Reset button text
         }
-      },
-      (error) => {
-        ErrorAlert(`Error fetching location: ${error.message}`);
-        setLocationButtonText('Get Location'); // Reset button text
-      }
     );
-  };
+};
+
+const fetchCoordinatesFromAddress = async (address) => {
+    const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
+    try {
+        const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
+        );
+        const data = await response.json();
+        if (data.status === "OK" && data.results.length > 0) {
+            const { lat, lng } = data.results[0].geometry.location;
+            setLocation((prev) => ({
+                ...prev,
+                latitude: lat,
+                longitude: lng,
+            }));
+        } else {
+            setLocation((prev) => ({
+                ...prev,
+                latitude: null,
+                longitude: null,
+            }));
+        }
+    } catch (error) {
+        console.error('Error fetching coordinates:', error);
+    }
+};
 
   useEffect(() => {
     fetchAllData();
@@ -768,23 +794,16 @@ const ServiceDetail = () => {
     setImages(prevImages => [...prevImages, ...newImages]);
   };
   const onSubmit = async (data) => {
-    if (!userloggedin) {
-      ErrorAlert('You must be logged in to complete the booking.');
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
-      return;
-    }
     const formData = new FormData();
     formData.append('job_title', data.job_title);
     formData.append('service_tid', data.service_tid);
     formData.append('state_tid', data.state_tid);
+    formData.append('city', selectedState); // Use selected state name for city
     formData.append('coupon_code', data.coupon_code);
-
     formData.append('description', data.description);
     formData.append('address', location.address || data.address);
-    formData.append('location_long', location.longitude || 6.11223322);
-    formData.append('location_lat', location.latitude || 6.11223322);
+    formData.append('location_long', location.longitude);
+    formData.append('location_lat', location.latitude);
     formData.append('time', moment(data.time, 'HH:mm').format('hh:mm A'));
     formData.append('price', data.price);
     formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('MM-DD-YYYY') : moment().format('MM-DD-YYYY'));
@@ -799,7 +818,6 @@ const ServiceDetail = () => {
     setIsSubmitting(true);
     setIsModalOpen(true);
 
-    // Handle the actual submission in the modal confirmation
     try {
       const res = await AuthPosturl(Apis.users.create_bookings, formData);
       if (res.status === true && res.data[0].paid === true) {
@@ -807,27 +825,23 @@ const ServiceDetail = () => {
           ...data,
           price: data.price,
           paymentUrl: res.text,
-          firstImage: images[0] ? URL.createObjectURL(images[0]) : null, // Add this line
+          firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
         });
-
         setView(2);
       } else {
-        ErrorAlert(res.text)
-        ErrorAlert('You do not have enough funds to carry out this booking.');
-        setTimeout(() => {
-          ErrorAlert(res.text);
-          if (res.data[0].paid === false) {
+        if (res.data[0].paid === false) {
+          setTimeout(() => {
             window.location.href = res.text;
-          }
-        }, 2000);
+          }, 2000);
+        }
+        ErrorAlert('You do not have enough funds to carry out this booking.');
       }
     } catch (error) {
-
+      console.error('Error submitting booking:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
-
   const handleDelete = (index) => {
     setImages(prevImages => prevImages.filter((_, i) => i !== index));
   };
@@ -934,6 +948,7 @@ const ServiceDetail = () => {
                 <div className="text-xl pt-5 pb-3 font-semibold">Booking Information</div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="text-sm text-[#374151]">
+                    {/* Job Title */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Job Title</label>
                       <input
@@ -960,6 +975,8 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.description.message}</div>
                       )}
                     </div>
+
+                    {/* Select Categories */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Select Categories</label>
                       <select
@@ -996,12 +1013,19 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.service_tid.message}</div>
                       )}
                     </div>
+
                     {/* Select State */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Select State</label>
                       <select
                         className={`inputs border ${errors.state_tid ? 'border-red-600' : 'border'}`}
                         {...register('state_tid', { required: 'State is required' })}
+                        onChange={(e) => {
+                          const selectedStateId = e.target.value;
+                          const state = states.find(state => state.trackid === selectedStateId);
+                          setSelectedState(state ? state.name : ''); // Set selected state name
+                          setValue('state_tid', selectedStateId); // Set the state ID in the form
+                        }}
                       >
                         <option value="">Select State</option>
                         {states.map((state) => (
@@ -1013,6 +1037,19 @@ const ServiceDetail = () => {
                       {errors.state_tid && (
                         <div className="text-red-600">{errors.state_tid.message}</div>
                       )}
+                    </div>
+
+                    {/* City Input */}
+                    <div className="mb-5">
+                      <label className="text-xs font-semibold">City</label>
+                      <input
+                        {...register('city')}
+                        type="text"
+                        placeholder="City"
+                        className={`inputs border ${errors.city ? 'border' : 'border'}`}
+                        value={selectedState} // Display selected state name
+                        onChange={(e) => setSelectedState(e.target.value)} // Allow user to edit
+                      />
                     </div>
 
                     {/* Date Required */}
@@ -1032,9 +1069,12 @@ const ServiceDetail = () => {
                         {...register('time', { required: 'Time is required' })}
                         type="time"
                         className={`inputs border ${errors.time ? 'border-red-600' : 'border'}`}
-                        onChange={(e) =>
-                          setSelectedDateTime((prev) => ({ ...prev, time: e.target.value }))
-                        }
+                        value={selectedDateTime.time || ''}
+                        onChange={(e) => {
+                          const newTime = e.target.value;
+                          setSelectedDateTime((prev) => ({ ...prev, time: newTime }));
+                          setValue('time', newTime, { shouldValidate: true }); // Sync with react-hook-form
+                        }}
                       />
                       {errors.time && (
                         <div className="text-red-600">{errors.time.message}</div>
@@ -1055,7 +1095,11 @@ const ServiceDetail = () => {
                         placeholder="Enter Address"
                         className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
                         value={location.address}
-                        onChange={(e) => setLocation({ ...location, address: e.target.value })}
+                        onChange={(e) => {
+                          const newAddress = e.target.value;
+                          setLocation({ ...location, address: newAddress });
+                          fetchCoordinatesFromAddress(newAddress); // Fetch coordinates
+                        }}
                       />
                       {errors.address && (
                         <div className="text-red-600">{errors.address.message}</div>
@@ -1075,6 +1119,7 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.price.message}</div>
                       )}
                     </div>
+
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Coupon</label>
                       <input
@@ -1083,8 +1128,8 @@ const ServiceDetail = () => {
                         placeholder="coupon"
                         className={`inputs border ${errors.coupon_code ? 'border-red-600' : 'border'}`}
                       />
-
                     </div>
+
                     {/* Zip Code */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Zip Code</label>
@@ -1099,7 +1144,6 @@ const ServiceDetail = () => {
                       )}
                     </div>
 
-                    {/* Image Upload Section */}
                     <div className="my-4 w-full overflow-x-auto">
                       <div className="flex gap-2">
                         {images.length === 0 ? (
@@ -1150,13 +1194,12 @@ const ServiceDetail = () => {
                       </div>
                     </div>
 
-                    {/* Submit Button */}
                     <button
                       type="submit"
+                      className={`w-full py-2 mt-5 text-white ${isSubmitting ? 'bg-secondary' : 'bg-secondary'} rounded-md`}
                       disabled={isSubmitting}
-                      className="bg-secondary mt-6 mb-3 w-full py-3 rounded-full text-white"
                     >
-                      {isSubmitting ? 'Processing...' : 'Post'}
+                      {isSubmitting ? 'Submitting...' : 'Submit Booking'}
                     </button>
                   </div>
                 </form>

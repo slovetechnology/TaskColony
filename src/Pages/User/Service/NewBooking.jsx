@@ -28,6 +28,7 @@ const Booking = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [locationButtonText, setLocationButtonText] = useState('Get Location');
+    const [selectedState, setSelectedState] = useState(''); // State for selected state
 
     const getUserGeoAddress = async () => {
         setLocationButtonText('Getting your location...'); // Change button text
@@ -66,9 +67,36 @@ const Booking = () => {
         );
     };
 
+    const fetchCoordinatesFromAddress = async (address) => {
+        const apiKey = "YOUR_API_KEY"; // Replace with your API key
+        try {
+            const response = await fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
+            );
+            const data = await response.json();
+            if (data.status === "OK" && data.results.length > 0) {
+                const { lat, lng } = data.results[0].geometry.location;
+                setLocation((prev) => ({
+                    ...prev,
+                    latitude: lat,
+                    longitude: lng,
+                }));
+            } else {
+                setLocation((prev) => ({
+                    ...prev,
+                    latitude: null,
+                    longitude: null,
+                }));
+            }
+        } catch (error) {
+            console.error('Error fetching coordinates:', error);
+        }
+    };
+
     const fetchAllData = useCallback(async () => {
         setLoading(true);
         try {
+            // Fetch categories, states, and services
             const categoryResponse = await Geturl(Apis.users.get_system);
             if (categoryResponse.status === true) {
                 setCategories(categoryResponse.data.categories);
@@ -99,11 +127,12 @@ const Booking = () => {
         formData.append('job_title', data.job_title);
         formData.append('service_tid', data.service_tid);
         formData.append('state_tid', data.state_tid);
+        formData.append('city', selectedState); // Use selected state name for city
         formData.append('coupon_code', data.coupon_code);
         formData.append('description', data.description);
         formData.append('address', location.address || data.address);
-        formData.append('location_long', location.longitude || 6.11223322);
-        formData.append('location_lat', location.latitude || 6.11223322);
+        formData.append('location_long', location.longitude);
+        formData.append('location_lat', location.latitude);
         formData.append('time', moment(data.time, 'HH:mm').format('hh:mm A'));
         formData.append('price', data.price);
         formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('MM-DD-YYYY') : moment().format('MM-DD-YYYY'));
@@ -168,9 +197,11 @@ const Booking = () => {
 
         setImages(prevImages => [...prevImages, ...newImages]);
     };
+
     const handleDelete = (index) => {
         setImages(prevImages => prevImages.filter((_, i) => i !== index));
     };
+
     return (
         <Layout>
             <div className="bg-gray w-full xl:h-[10rem]">
@@ -189,6 +220,7 @@ const Booking = () => {
                         <div className="bg-[#e2e2e2] md:w-[40rem] py-5 px-4">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="text-sm text-[#374151]">
+                                    {/* Job Title */}
                                     <div className="mb-5">
                                         <label className="text-xs font-semibold">Job Title</label>
                                         <input
@@ -260,6 +292,12 @@ const Booking = () => {
                                         <select
                                             className={`inputs border ${errors.state_tid ? 'border-red-600' : 'border'}`}
                                             {...register('state_tid', { required: 'State is required' })}
+                                            onChange={(e) => {
+                                                const selectedStateId = e.target.value;
+                                                const state = states.find(state => state.trackid === selectedStateId);
+                                                setSelectedState(state ? state.name : ''); // Set selected state name
+                                                setValue('state_tid', selectedStateId); // Set the state ID in the form
+                                            }}
                                         >
                                             <option value="">Select State</option>
                                             {states.map((state) => (
@@ -271,6 +309,19 @@ const Booking = () => {
                                         {errors.state_tid && (
                                             <div className="text-red-600">{errors.state_tid.message}</div>
                                         )}
+                                    </div>
+
+                                    {/* City Input */}
+                                    <div className="mb-5">
+                                        <label className="text-xs font-semibold">City</label>
+                                        <input
+                                            {...register('city')}
+                                            type="text"
+                                            placeholder="City"
+                                            className={`inputs border ${errors.city ? 'border' : 'border'}`}
+                                            value={selectedState} // Display selected state name
+                                            onChange={(e) => setSelectedState(e.target.value)} // Allow user to edit
+                                        />
                                     </div>
 
                                     {/* Date Required */}
@@ -316,7 +367,11 @@ const Booking = () => {
                                             placeholder="Enter Address"
                                             className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
                                             value={location.address}
-                                            onChange={(e) => setLocation({ ...location, address: e.target.value })}
+                                            onChange={(e) => {
+                                                const newAddress = e.target.value;
+                                                setLocation({ ...location, address: newAddress });
+                                                fetchCoordinatesFromAddress(newAddress); // Fetch coordinates
+                                            }}
                                         />
                                         {errors.address && (
                                             <div className="text-red-600">{errors.address.message}</div>
@@ -345,7 +400,6 @@ const Booking = () => {
                                             placeholder="coupon"
                                             className={`inputs border ${errors.coupon_code ? 'border-red-600' : 'border'}`}
                                         />
-                                       
                                     </div>
 
                                     {/* Zip Code */}
@@ -361,7 +415,6 @@ const Booking = () => {
                                             <div className="text-red-600">{errors.zipcode.message}</div>
                                         )}
                                     </div>
-
 
                                     <div className="my-4 w-full overflow-x-auto">
                                         <div className="flex gap-2">
@@ -413,13 +466,12 @@ const Booking = () => {
                                         </div>
                                     </div>
 
-                                    {/* Submit Button */}
                                     <button
                                         type="submit"
+                                        className={`w-full py-2 mt-5 text-white ${isSubmitting ? 'bg-secondary' : 'bg-secondary'} rounded-md`}
                                         disabled={isSubmitting}
-                                        className="bg-secondary mt-6 mb-3 w-full py-3 rounded-full text-white"
                                     >
-                                        {isSubmitting ? 'Processing...' : 'Post'}
+                                        {isSubmitting ? 'Submitting...' : 'Submit Booking'}
                                     </button>
                                 </div>
                             </form>
@@ -427,9 +479,12 @@ const Booking = () => {
                     </div>
                 </div>
             )}
-
             {view === 2 && bookingData && (
-                <ConfirmBooking bookingData={bookingData} />
+                <ConfirmBooking
+                    bookingData={bookingData}
+                    setView={setView}
+                    setImages={setImages}
+                />
             )}
             <Popups isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Commission Fee">
                 <p>Task Colony will take a 10% commission on any payment made.</p>

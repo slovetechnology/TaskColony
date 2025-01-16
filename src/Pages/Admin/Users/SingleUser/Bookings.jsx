@@ -38,7 +38,7 @@ const Bookings = ({trackid}) => {
 
   const fetchGigs = useCallback(async () => {
     try {
-      const res = await AuthGeturl(`${Apis.admins.get_booking}?&provider_tid=${trackid}`); // Use provider_tid here
+      const res = await AuthGeturl(`${Apis.admins.get_booking}?&user_tid=${trackid}`); // Use provider_tid here
       if (res.status === true) {
         setGigs(res.data.data);
         setTotal(res.data.total || res.data.data.length);

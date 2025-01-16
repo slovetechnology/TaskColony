@@ -293,8 +293,8 @@ function Home() {
                                         </div>
                                     </div>
                                     <div className="">
-                                        <div className="font-medium">{item.title}</div>
-                                        <div className="text-slate-500 text-xs w-11/12 lg:w-3/4 mt-2 mb-3">{item.content}</div>
+                                        <div className="font-[500] text-[17px]">{item.title}</div>
+                                        <div className=" w-11/12 lg:w-3/4 mt-2 mb-3 text-[14px] text-primary">{item.content}</div>
                                     </div>
                                 </div>
                             ))}

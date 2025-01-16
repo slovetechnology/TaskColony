@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../../../Components/User/Layout';
 import signup from '../../../assets/form.png';
-import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
-import { Apis, Posturl } from '../../../Components/General/Api';
+import { Apis, AuthPosturl, Posturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import VerifyEmail from './VerifyEmail';
 import Cookies from 'js-cookie';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import Signin from './Signin';
 
 const Signup = () => {
   const [selected, setSelected] = useState('User');
@@ -20,6 +17,7 @@ const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [token, setToken] = useState(null); // State to hold the token
   const [email, setEmail] = useState(null); // State to hold the email
+  const [googleLoginUrl, setGoogleLoginUrl] = useState(null); // State to hold Google login URL
   const Icon1 = pass1 ? FaEye : FaEyeSlash;
   const Icon2 = pass2 ? FaEye : FaEyeSlash;
   const navigate = useNavigate();
@@ -49,7 +47,6 @@ const Signup = () => {
     try {
       const res = await Posturl(Apis.users.register, dataToSend);
       if (res.data.status === true) {
-        console.log(res.data.status)
         const token = res.data.data[0].access_token;
         Cookies.set('taskcolony', token);
         setToken(token);
@@ -67,7 +64,36 @@ const Signup = () => {
     }
   };
 
+  // const GoogleLogin = async () => {
+  //   try {
+  //     const res = await AuthPosturl(Apis.users.google_verify);
+  //     console.log(res.data[0].url)
+  //     if (res.status === true) {
+  //       setGoogleLoginUrl(res.data.url); // Set the Google login URL
+  //     } else {
+  //       ErrorAlert('Failed to fetch Google login URL.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during Google login:', error);
+  //     ErrorAlert('An unexpected error occurred. Please try again.');
+  //   }
+  // };
 
+  const GoogleLogin = async () => {
+    try {
+      const res = await AuthPosturl(Apis.users.google_verify);
+      if (res.status === true) {
+        const url = res.data.url;
+        setGoogleLoginUrl(url); // Set the Google login URL
+        console.log(url); // Log the URL to the console
+      } else {
+        ErrorAlert('Failed to fetch Google login URL.');
+      }
+    } catch (error) {
+      console.error('Error during Google login:', error);
+      ErrorAlert('An unexpected error occurred. Please try again.');
+    }
+  };
   return (
     <Layout>
       <div className="bg-gray w-full h-[10rem]">
@@ -82,7 +108,7 @@ const Signup = () => {
       </div>
       {view === 1 && (
         <div className="flex items-center justify-center">
-          <div className="md:flex  my-14 mx-2">
+          <div className="md:flex my-14 mx-2">
             <img src={signup} alt="Signup" className="md:w-[27rem] rounded-tl-md rounded-bl-md object-cover" />
             <div className="bg-white rounded-tr-md md:w-[27rem] rounded-br-md shadow-2xl py-5 px-6">
               <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome to Task Colony</div>
@@ -244,9 +270,22 @@ const Signup = () => {
                       {isSubmitting ? 'Processing...' : 'Sign Up'}
                     </button>
                   </div>
-                  {/* <GoogleOAuthProvider>
-                <Signin />
-              </GoogleOAuthProvider>  */}
+
+                  <button
+                    type="button"
+                    onClick={GoogleLogin}
+                    className="bg-secondary w-full py-3 rounded-full text-white"
+                  >
+                    Sign in with Google
+                  </button>
+                  {googleLoginUrl && (
+                    <div className="mt-4">
+                      <a href={googleLoginUrl} target="_blank" rel="noopener noreferrer" className="text-secondary underline">
+                        Click here to sign in with Google
+                      </a>
+                    </div>
+                  )}
+
                   <div className="mt-4 text-center">
                     <span>Already have an account? </span>
                     <Link to="/login" className="text-secondary">Log In</Link>
@@ -262,4 +301,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signup;  

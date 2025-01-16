@@ -50,6 +50,7 @@ import ProviderSettings from "./Pages/User/Provider/ProviderSettings"
 import AdminForgetPassword from "./Pages/Admin/AdminForms/AdminForgetPassword"
 import AllProvider from "./Pages/Admin/Provider/AllProvider"
 import SingleProvider from "./Pages/Admin/Provider/SingleProvider/SingleProvider"
+import NewsLetter from "./Pages/Admin/NewsLetter"
 
 
 export const GeneralNoAuth = [
@@ -93,6 +94,7 @@ export const GeneralRoutes = [
 export const AdminRoutes = [
     { path: '', element: Dashboard },
     { path: 'admin', element: AllAdmin },
+    { path: 'news-letter', element: NewsLetter },
     { path: 'new-admin', element: CreateAdmin },
     { path: 'service', element: AllServices },
     { path: 'new-service', element: NewServices },
