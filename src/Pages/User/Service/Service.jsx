@@ -19,6 +19,12 @@ const Service = () => {
     setView(view !== tag ? tag : '');
   };
 
+  useEffect(() => {
+    if (view === 2) {
+        window.scrollTo(0, 0); // Scrolls to the top of the page
+    }
+}, [view]);
+
   const fetchServices = useCallback(async () => {
     try {
       const res = await Geturl(Apis.users.get_system);

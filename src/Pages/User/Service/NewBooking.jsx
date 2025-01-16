@@ -25,6 +25,11 @@ const Booking = () => {
         latitude: null,
         longitude: null,
     });
+    useEffect(() => {
+        if (view === 2) {
+            window.scrollTo(0, 0); // Scrolls to the top of the page
+        }
+    }, [view]);
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [locationButtonText, setLocationButtonText] = useState('Get Location');

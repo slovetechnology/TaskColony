@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../../../Components/User/Layout';
 import signup from '../../../assets/form.png';
@@ -78,6 +78,12 @@ const Signup = () => {
   //     ErrorAlert('An unexpected error occurred. Please try again.');
   //   }
   // };
+
+  useEffect(() => {
+    if (view === 2) {
+        window.scrollTo(0, 0); // Scrolls to the top of the page
+    }
+}, [view]);
 
   const GoogleLogin = async () => {
     try {

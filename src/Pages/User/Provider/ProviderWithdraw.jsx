@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Apis, AuthPosturl } from "../../../Components/General/Api";
@@ -11,6 +11,12 @@ const ProviderWithdraw = ({ closeView }) => {
     const navigate = useNavigate();
     const [buttonText, setButtonText] = useState("Request Withdraw");
     const [view, setView] = useState(1);  
+
+    useEffect(() => {
+        if (view === 2) {
+            window.scrollTo(0, 0); // Scrolls to the top of the page
+        }
+    }, [view]);
 
     const onSubmit = async (data) => {
         const datatosend = {

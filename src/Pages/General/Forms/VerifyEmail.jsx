@@ -20,7 +20,11 @@ const VerifyEmail = ({ email: initialEmail, token }) => {
             console.log("Token received in VerifyEmail component:", token);
         }
     }, [token]);
-
+    useEffect(() => {
+        if (view === 2) {
+            window.scrollTo(0, 0); // Scrolls to the top of the page
+        }
+    }, [view]);
     const onSubmit = async () => {
         setIsSubmitting(true);
         const dataToSend = {
