@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../../Components/User/Layout';
 import { FaRegStar, FaStar, FaTrashAlt, FaUserCircle } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Apis, AuthGeturl, AuthPosturl } from '../../../Components/General/Api';
 import { ToastAlert } from '../../../Components/General/Utils';
 import EditReview from './EditReview';
@@ -153,7 +153,15 @@ const BookingDetail = () => {
             setLoads(false);
             ToastAlert('Error deleting review.');
         }
-    };;
+    };
+
+    const formatPrice = (price) => {
+        const formattedPrice = Number(price).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+        return `$${formattedPrice}`;
+    };
 
     return (
         <Layout>
@@ -189,9 +197,14 @@ const BookingDetail = () => {
                                 </div>
                             </div>
                             <div className="lg:flex mt-5 mb-10 mx-2 lg:mx-10">
+
                                 <div className="lg:w-[70%]">
+
+                                    <div className="mb-4">
+                                        <Link to='/booking-list' className="bg-secondary w-fit px-4 py-2 mb-4 text-white">Back</Link>
+                                    </div>
                                     <div className="md:px-5">
-                                        <img src={item.imageslink?.[0]} alt="" className="w-full h-[15rem] rounded-3xl object-cover lg:h-[23rem]" />
+                                        <img src={item.imageslink?.[0]} alt="" className="w-full h-[15rem] border rounded-3xl object-cover lg:h-[23rem]" />
                                         <div>
                                             <div className="flex justify-between mt-10 mb-3 font-[500]">
                                                 <p className="lg:text-3xl">{item.service_name}</p>
@@ -299,7 +312,7 @@ const BookingDetail = () => {
                                             <p className="font-[500] text-xl">Payment Summary</p>
                                             <div className="h-[28rem] px-6">
                                                 <div className="text-xs">
-                                                
+
                                                     <div className="flex items-center justify-between gap-5 my-5">
                                                         <div className="text-sm text-primary">Payment Method</div>
                                                         <div className="font-medium">{item.paid_with}</div>
@@ -310,9 +323,9 @@ const BookingDetail = () => {
                                                     </div>
                                                     <div className="flex items-center border-t justify-between gap-5 my-5">
                                                         <div>Total Amount</div>
-                                                        <div className="text-secondary font-medium ">${new Intl.NumberFormat().format(item.amt_paid)}</div>
+                                                        <div className="text-secondary font-medium ">{formatPrice(item.price)}</div>
                                                     </div>
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
