@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Layout from '../../../Components/User/Layout';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import { useForm } from 'react-hook-form';
@@ -20,7 +20,11 @@ const ForgetPassword = () => {
     const Icon2 = pass2 ? FaEye : FaEyeSlash;
     const navigate = useNavigate();
 
-    // Step 1: Handle Email Submission
+    useEffect(() => {
+        if (view === 2) {
+            window.scrollTo(0, 0); // Scrolls to the top of the page
+        }
+    }, [view]);
     const handleEmailSubmit = async (data) => {
         setIsSubmitting(true);
         try {

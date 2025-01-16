@@ -61,7 +61,7 @@ const SingleProvider = () => {
         }
         if (activeTab === 'my-gigs') return <MyGigs trackid={trackid}  />;
         if (activeTab === 'bookings') return <Bookings trackid={trackid}  />;
-        if (activeTab === 'reviews') return <Reviews trackid={trackid}  />;
+        if (activeTab === 'providerreview') return <Reviews trackid={trackid}  />;
         if (activeTab === 'document') return <ProviderDocuments trackid={trackid}  />;
         if (activeTab === 'payout') return <Payouts trackid={trackid}  />;
         if (activeTab === 'providerreview') return <ProviderReviews trackid={trackid}  />;

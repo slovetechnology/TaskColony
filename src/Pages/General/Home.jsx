@@ -19,6 +19,8 @@ import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
 import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
+import bgsImage from "assets/bgs.png"
+
 
 const ActiveTabOptions = [
     "email"
@@ -228,8 +230,38 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <div className="h-[40rem] hidden lg:block w-full bgs">
+            <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
+                    <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
+                        <div className="">
+                            <h1>
+                                <div className="text-secondary mt-32 text-2xl md:text-5xl font-bold">A One-Stop Place </div>
+                                <div className="font-bold text-2xl md:text-5xl">For Home Repair</div>
+                            </h1>
+                            <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
+                        </div>
+                        <div className="mt-10 mb-24">
+                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
+                            <div className="flex items-center mt-5 gap-2">
+                                <LazyLoadImage
+                                    effect="blur"
+                                    className='size-5'
+                                    src={img3}
+                                />
+                                <div className="text-sm">
+                                    <div className="font-medium">Have any Questions?</div>
+                                    <div className="text-slate-500">+0 123 888 555</div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div className="h-fit lg:h-[81dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
+                    </div>
+                    <div className="lg:col-span-4">
+                    </div>
+                </div>
+            </div>
+
+            <div className="h-fit lg:hidden lg:h-[81dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
@@ -293,8 +325,8 @@ function Home() {
                                         </div>
                                     </div>
                                     <div className="">
-                                        <div className="font-medium">{item.title}</div>
-                                        <div className="text-slate-500 text-xs w-11/12 lg:w-3/4 mt-2 mb-3">{item.content}</div>
+                                        <div className="font-[500] text-[17px]">{item.title}</div>
+                                        <div className=" w-11/12 lg:w-3/4 mt-2 mb-3 text-[14px] text-primary">{item.content}</div>
                                     </div>
                                 </div>
                             ))}

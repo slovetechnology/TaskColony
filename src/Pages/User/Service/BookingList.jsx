@@ -146,7 +146,7 @@ const BookingList = () => {
                   </div>
                   <div className="w-full">
                     <div className="flex items-start w-full justify-between">
-                      <p className="text-lg font-[500]">{item.title}</p>
+                      <p className="text-lg font-[500]">{item.service_name}</p>
                       {/* Conditional rendering for Edit Booking */}
                       {item.status === 'Pending' && (
                         <div

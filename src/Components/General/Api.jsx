@@ -8,6 +8,7 @@ const user = 'user';
 const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user.php`,
+    google_verify: `${user}/auth/login_with_google_get_url.php`,
     app_link: `${user}/system/send_download_link.php`,
     provider_favservice: `${user}/profile/update_profile_service.php`,
     complete_gig: `${user}/gigs/set_task_as_completed.php`,
@@ -29,6 +30,7 @@ const user_urls = {
     favourite_services: `${user}/profile/update_profile_favorite_service.php`,
     all_notification: `${user}/profile/get_user_notifications.php`,
     kyc_form: `${user}/kyc/kyc_level_1_form.php`,
+    news_letter: `${user}/system/join_newsletter.php`,
 
     send_verify: `${user}/auth/send_email_or_pno_verification_code.php`,
     otp_verify: `${user}/auth/verify_email_or_pno_verification_code.php`,
@@ -45,12 +47,13 @@ const user_urls = {
     update_review: `${user}/reviews/update_review.php`,
 
     get_testimonial: `${user}/testimonials/get_all_testimonials.php`,
-    google_verify: `${user}/auth/login_with_google_verify.php?code=4%2F0AeanS0Y5KLHo2R9a2z93lEVFfmb7vGFjvHEuXlyi73c6OODYE0Rbo0fe9zvbFNNbsSFm_Q&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent&fromcode=2&registervia=1`,
+    google_verifing: `${user}/auth/login_with_google_verify.php?code=4%2F0AeanS0Y5KLHo2R9a2z93lEVFfmb7vGFjvHEuXlyi73c6OODYE0Rbo0fe9zvbFNNbsSFm_Q&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent&fromcode=2&registervia=1`,
 };
 const admin_urls = {
     get_admin_dashboard: `${admin}/dashboard/all_stat.php`,
     get_admin_earning: `${admin}/earning/earning_stat.php`,
     get_admin_profile: `${admin}/profile/get_user_details.php`,
+    get_newsletter_users: `${admin}/system/get_newsletter_users.php`,
 
     //booking
     get_booking: `${admin}/bookings/get_all_bookings.php`,

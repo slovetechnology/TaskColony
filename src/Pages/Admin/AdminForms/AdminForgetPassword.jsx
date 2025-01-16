@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import { useForm } from 'react-hook-form';
 import { Apis, Posturl } from '../../../Components/General/Api';
@@ -39,7 +39,11 @@ const AdminForgetPassword = () => {
             setIsSubmitting(false);
         }
     };
-
+    useEffect(() => {
+        if (view === 2) {
+            window.scrollTo(0, 0); // Scrolls to the top of the page
+        }
+    }, [view]);
     // Handle OTP Input Changes
     const handleChange = (element, index) => {
         if (isNaN(element.value)) return;

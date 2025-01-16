@@ -140,3 +140,10 @@ transform: translateX(    100%  );
     height: 95%;
   }
 }
+
+.bgs {
+  background: url(./assets/bgs.png);
+  background-position: bottom;
+  background-size: 100% 120%;
+  background-repeat: no-repeat;
+}

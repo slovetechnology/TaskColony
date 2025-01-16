@@ -19,6 +19,12 @@ const Service = () => {
     setView(view !== tag ? tag : '');
   };
 
+  useEffect(() => {
+    if (view === 2) {
+        window.scrollTo(0, 0); // Scrolls to the top of the page
+    }
+}, [view]);
+
   const fetchServices = useCallback(async () => {
     try {
       const res = await Geturl(Apis.users.get_system);
@@ -92,7 +98,7 @@ const Service = () => {
         </div>
       </div>
 
-      <div className="lg:w-[80%] gap-10 xl:mt-28 mt-10 mb-32 border-b pb-16 xl:flex mx-auto">
+      <div className="lg:w-[85%] gap-10 xl:mt-28 mt-10 mb-3 pb-16 xl:flex mx-auto">
         {/* Search Bar */}
         <div className="mx-3">
           <div className="border-b py-5">
@@ -155,7 +161,7 @@ const Service = () => {
           </div>
         </div>
 
-        <div className="grid  items-center justify-center md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
+        <div className="grid overflow-y-auto h-[40rem] scrollsdown overflow-x-hidden py-10 px-4 items-center justify-center md:grid-cols-2 lg:grid-cols-4 gap-y-5 mt-7">
           {(searchQuery || selectedCategory ? filteredItems : items).length > 0 ? (
             (searchQuery || selectedCategory ? filteredItems : items).map((item, index) => (
               <div className="w-11/12 mx-auto relative" key={index}>

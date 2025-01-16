@@ -1,568 +1,4 @@
-// import React, { useCallback, useEffect, useState } from 'react';
-// import { Link, useNavigate, useParams } from 'react-router-dom';
-// import { FaPlus, FaStar, FaUserCircle } from 'react-icons/fa';
-// import Layout from '../../../Components/User/Layout';
-// import { Apis, AuthGeturl, AuthPosturl, Geturl } from '../../../Components/General/Api';
-// import { LazyLoadImage } from 'react-lazy-load-image-component';
-// import { useForm } from 'react-hook-form';
-// import CalendarDays from '../../../Components/General/CalendarDays';
-// import { useSelector } from 'react-redux';
-// import { ErrorAlert } from '../../../Components/General/Utils';
-// import ConfirmBooking from './ConfirmBooking';
-// import moment from 'moment';
-// import Popups from '../../../Components/General/Popups';
-// const ServiceDetail = () => {
-//   const { userid } = useParams();
-//   const [service, setService] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [services, setServices] = useState([]);
-//   const [cartegory, setCategory] = useState([]);
-//   const [cities, setCities] = useState([]);
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const { userloggedin, user } = useSelector(state => state.data); // Pulling from Redux
-//   const [states, setStates] = useState([]);
-//   const [selectedDateTime, setSelectedDateTime] = useState({ date: null, time: null });
-//   const [view, setView] = useState(1); // 1 = Booking Form, 2 = Confirm Booking
-//   const [bookingData, setBookingData] = useState(null);
 
-//   const [images, setImages] = useState([]);
-//   const [location, setLocation] = useState({
-//     address: '',
-//     latitude: null,
-//     longitude: null,
-//   });
-//   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-//   const navigate = useNavigate();
-
-//   const fetchService = useCallback(async () => {
-//     try {
-//       const res = await Geturl(`${Apis.users.get_system}/${userid}`);
-//       if (res.status === true && res.data.all_services?.length > 0) {
-//         const filteredService = res.data.all_services.find((item) => String(item.id) === String(userid));
-//         if (filteredService) {
-//           setService(filteredService);
-//           // Set default image
-//           setImage({
-//             main: null, // No uploaded file yet
-//             preview: null, // Start with no preview
-//           });
-//         } else {
-//           setError('Service not found for this user.');
-//         }
-//       } else {
-//         setError('No services available.');
-//       }
-//     } catch (err) {
-//       console.error('Error fetching service details:', err);
-//       setError('Failed to fetch service details.');
-//     } finally {
-//       setLoading(false);
-//     }
-//   }, [userid]);
-
-//   useEffect(() => {
-//     fetchService();
-//   }, [fetchService]);
-
-//   const fetchAllHome = useCallback(async () => {
-//     setLoading(true);
-//     try {
-//       const res = await Geturl(Apis.users.get_system);
-//       if (res.status === true) {
-//         setServices(res.data.random_services);
-//         setCategory(res.data.categories);
-//         setCities(res.data.cities);
-//       } else {
-//         console.log(error);
-//       }
-//     } catch (err) {
-//       setError(err.message);
-//     } finally {
-//       setLoading(false);
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     fetchAllHome();
-//   }, [fetchAllHome]);
-
-//   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
-//     defaultValues: {
-//       job_title: service?.name || '',
-//       description: service?.description || '',
-//     },
-//   });
-
-//   // Pre-fill the form fields when the service data is fetched
-//   useEffect(() => {
-//     if (service) {
-//       setValue('job_title', service.name);
-//       setValue('description', service.description);
-//     }
-//   }, [service, setValue]);
-
-//   const fetchAllData = useCallback(async () => {
-//     setLoading(true);
-//     try {
-//       const categoryResponse = await Geturl(Apis.users.get_system);
-//       if (categoryResponse.status === true) {
-//         setCategories(categoryResponse.data.categories);
-//       }
-
-//       const stateResponse = await Geturl(Apis.users.get_system);
-//       if (stateResponse.status === true) {
-//         setStates(stateResponse.data.cities);
-//       }
-
-//       const serviceResponse = await Geturl(Apis.users.get_system);
-//       if (serviceResponse.status === true) {
-//         setServices(serviceResponse.data.all_services);
-//       }
-//     } catch (err) {
-//       console.error(err.message);
-//     } finally {
-//       setLoading(false);
-//     }
-//   }, []);
-
-//   const getUserGeoAddress = async () => {
-//     if (!navigator.geolocation) {
-//       ErrorAlert('Geolocation is not supported by your browser.');
-//       return;
-//     }
-
-//     navigator.geolocation.getCurrentPosition(
-//       async (position) => {
-//         const { latitude, longitude } = position.coords;
-//         const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
-//         try {
-//           const response = await fetch(
-//             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
-//           );
-//           const data = await response.json();
-//           if (data.status === "OK" && data.results.length > 0) {
-//             setLocation({
-//               address: data.results[0].formatted_address,
-//               latitude,
-//               longitude,
-//             });
-//           } else {
-//           }
-//         } catch (error) {
-
-//         }
-//       },
-//       (error) => {
-//         ErrorAlert(`Error fetching location: ${error.message}`);
-//       }
-//     );
-//   };
-//   useEffect(() => {
-//     fetchAllData();
-//   }, [fetchAllData]);
-
-//   const convertTimeTo12HourFormat = (time) => {
-//     const [hour, minute] = time.split(':');
-//     const hourIn12 = hour % 12 || 12;
-//     const ampm = hour < 12 ? 'AM' : 'PM';
-//     return `${hourIn12}:${minute} ${ampm}`;
-//   };
-
-//   const onSubmit = async (data) => {
-//     if (!userloggedin) {
-//       // If the user is not logged in, show an error and redirect
-//       ErrorAlert('You must be logged in to complete the booking.');
-//       setTimeout(() => {
-//         navigate('/login'); // Redirect to login page
-//       }, 2000); // Redirect after 2 seconds
-//       return;
-//     }
-
-//     const formData = new FormData();
-//     formData.append('job_title', data.job_title);
-//     formData.append('service_tid', data.service_tid);
-//     formData.append('state_tid', data.state_tid);
-//     formData.append('description', data.description);
-//     formData.append('address', data.address);
-//     formData.append('location_long', 6.11223322);
-//     formData.append('location_lat', 6.11223322);
-//     formData.append('time', convertTimeTo12HourFormat(data.time));
-//     formData.append('price', data.price);
-//     formData.append(
-//       'date',
-//       selectedDateTime.date ? moment(selectedDateTime.date).format('YYYY-MM-DD') : data.date
-//     );
-
-//     if (image.main) {
-//       formData.append('images[]', image.main, image.main.name);
-//     }
-
-//     formData.append('zipcode', data.zipcode);
-//     formData.append('urgent', 0);
-
-//     setIsSubmitting(true);
-
-//     try {
-//       const res = await AuthPosturl(Apis.users.create_bookings, formData);
-
-//       if (res.status === true && res.data[0].paid === true) {
-//         setBookingData({
-//           ...data,
-//           price: data.price,
-//           image: image.preview,
-//         });
-
-//         setView(2);
-//       } else {
-//         ErrorAlert('you do not have enough fund to complete this request, you will be redirect to pay');
-//         setTimeout(() => {
-//           if (res.data[0].paid === false) {
-//             window.location.href = res.text;
-//           }
-//         }, 2000);
-//       }
-//     } catch (error) {
-//       ErrorAlert('An unexpected error occurred. Please try again.');
-//     } finally {
-//       setIsSubmitting(false);
-//     }
-//   };
-
-//   const handleDateSelect = useCallback((selectedDate) => {
-//     setSelectedDateTime((prev) => ({
-//       date: selectedDate,
-//       time: prev.time,
-//     }));
-//   }, []);
-
-
-//   const handleUpload = (e) => {
-//     const files = Array.from(e.target.files);
-//     const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-
-//     const newImages = files.filter(file => {
-//       if (!validTypes.includes(file.type)) {
-//         alert('Please upload valid images (JPEG/PNG).');
-//         return false;
-//       }
-//       if (file.size > 2 * 1024 * 1024) {
-//         alert('File size should not exceed 2MB.');
-//         return false;
-//       }
-//       return true;
-//     });
-
-//     setImages(prevImages => [...prevImages, ...newImages]);
-//   };
-
-//   return (
-//     <Layout>
-//       <div className="bg-gray w-full xl:h-[20rem]">
-//         <div className="text-center py-10 xl:pt-24">
-//           <p className="font-[500] text-4xl mb-3">
-//             {service ? service.name : 'Loading Service...'}
-//           </p>
-//           <span className="flex items-center gap-4 font-[500] justify-center">
-//             <p className="text-primary">Home</p>
-//             <span className="bg-[#6C757D] w-3 py-0.5"></span>
-//             <p className="text-secondary">Service Detail</p>
-//           </span>
-//         </div>
-//       </div>
-
-//       {view === 1 && (
-//         <div className="">
-//           <div className="lg:flex gap-10 mx-10 mt-5 items-start justify-center">
-//             <div className="w-full">
-//               {loading ? (
-//                 <div className="text-center">Loading...</div>
-//               ) : error ? (
-//                 <div className="text-center text-red-500">{error}</div>
-//               ) : service ? (
-//                 <>
-//                   <LazyLoadImage
-//                     effect="blur"
-//                     className="w-screen object-center object-cover h-[20rem]"
-//                     src={service.banner_image?.[0]}
-//                   />
-//                   <div className="mt-4">
-//                     <div className="flex justify-between mb-3 font-[500]">
-//                       <p className="lg:text-3xl text-xl">{service.name}</p>
-//                     </div>
-
-//                     <div className="mt-6 mb-8">
-//                       <span className="font-[500] pb-1 text-sm text-black">Description</span>
-//                       <p className="text-primary text-xs">{service.description}</p>
-//                     </div>
-//                     <div className="bg-cart w-full mb-10 rounded-lg lg:px-7 px-3 h-[12rem]">
-//                       <div className="flex justify-between">
-//                         <div className="font-[500] text-base py-3">Gallery</div>
-//                       </div>
-
-
-//                       <div className="flex overflow-x-auto items-center space-x-3">
-//                         {service.gallery?.map((image, index) => (
-//                           <div key={index} className="flex-shrink-0">
-//                             <img
-//                               src={image}
-//                               alt={`Gallery image ${index + 1}`}
-//                               className="w-24 h-28 object-cover rounded-lg"
-//                             />
-//                           </div>
-//                         ))}
-//                       </div>
-
-//                     </div>
-//                     <div className="mt-10 mb-20">
-//                       <h3 className="font-[500] text-xl">Reviews</h3>
-//                       {service.reviews?.length > 0 ? (
-//                         service.reviews.map((review) => (
-//                           <div key={review.id} className="border-b py-4">
-//                             <div className="flex gap-4 font-medium">
-//                               <div className="">
-//                                 <FaUserCircle className='text-5xl' />
-//                               </div>
-//                               <div>
-//                                 <div className="flex gap-4">
-//                                   <p className="font-[500]">
-//                                     {review.ufname} {review.ulname}
-//                                   </p>
-//                                   <p className="text-primary text-xs">{review.created_at}</p>
-//                                 </div>
-//                                 <div className="flex text-star gap-2">
-//                                   {[...Array(5)].map((_, starIndex) => (
-//                                     <FaStar
-//                                       key={starIndex}
-//                                       color={starIndex < review.rating ? '#FFD700' : '#ddd'}
-//                                     />
-//                                   ))}
-//                                 </div>
-
-//                                 <div className="mt-4">{review.review}</div>
-//                               </div>
-//                             </div>
-//                           </div>
-//                         ))
-//                       ) : (
-//                         <p className="text-gray-500">No reviews yet.</p>
-//                       )}
-//                     </div>
-//                   </div>
-//                 </>
-//               ) : (
-//                 <div className="text-center">No service details available.</div>
-//               )}
-//             </div>
-
-//             <div className="">
-//               <div className="h-auto py-5 lg:w-[24rem]  px-5 rounded-xl bg-[#e2e2e2]">
-//                 <div className="text-xl pt-5 pb-3 font-semibold">Booking Information</div>
-//                 <form onSubmit={handleSubmit(onSubmit)}>
-//                   <div className="text-sm text-[#374151]">
-//                     <div className="mb-5">
-//                       <label className="text-xs font-semibold">Job Title</label>
-//                       <input
-//                         {...register('job_title', { required: 'Job title is required' })}
-//                         type="text"
-//                         placeholder="Job Title"
-//                         className={`inputs border ${errors.job_title ? 'border-red-600' : 'border'}`}
-//                       />
-//                       {errors.job_title && (
-//                         <div className="text-red-600">{errors.job_title.message}</div>
-//                       )}
-//                     </div>
-
-//                     <div className="mb-5">
-//                       <label className="text-xs font-semibold">Job Description</label>
-//                       <input
-//                         {...register('description', { required: 'Job description is required' })}
-//                         type="text"
-//                         placeholder="Job Description"
-//                         className={`inputs border ${errors.description ? 'border-red-600' : 'border'}`}
-//                       />
-//                       {errors.description && (
-//                         <div className="text-red-600">{errors.description.message}</div>
-//                       )}
-//                     </div>
-
-//                     <div className="mb-5">
-//                       <label className="text-xs font-semibold">Select Service</label>
-//                       <select
-//                         className={`inputs border ${errors.service_tid ? 'border-red-600' : 'border'}`}
-//                         {...register('service_tid', { required: 'Service is required' })}
-//                       >
-//                         <option value="">Select Service</option>
-//                         {services.map((service) => (
-//                           <option key={service.trackid} value={service.trackid}>
-//                             {service.name}
-//                           </option>
-//                         ))}
-//                       </select>
-//                       {errors.service_tid && (
-//                         <div className="text-red-600">{errors.service_tid.message}</div>
-//                       )}
-//                     </div>
-
-//                     <div className="mb-5">
-//                       <label className="text-xs font-semibold">Select State</label>
-//                       <select
-//                         className={`inputs border ${errors.state_tid ? 'border-red-600' : 'border'}`}
-//                         {...register('state_tid', { required: 'State is required' })}
-//                       >
-//                         <option value="">Select State</option>
-//                         {states.map((state) => (
-//                           <option key={state.trackid} value={state.trackid}>
-//                             {state.name}
-//                           </option>
-//                         ))}
-//                       </select>
-//                       {errors.state_tid && (
-//                         <div className="text-red-600">{errors.state_tid.message}</div>
-//                       )}
-//                     </div>
-
-
-
-//                     <div className="mb-5 mt-5">
-//                       <label className="text-xs font-semibold">Date Required</label>
-//                       <div className="overflow-x-auto scrollsdown mb-4">
-//                         <div className="flex space-x-2">
-//                           <CalendarDays onSelectDate={handleDateSelect} />
-//                         </div>
-//                       </div>
-//                     </div>
-
-//                     <div className="mb-5">
-//                       <label className="text-xs font-semibold">Time Service</label>
-//                       <input
-//                         {...register('time', { required: 'Time is required' })}
-//                         type="time"
-//                         className={`inputs border ${errors.time ? 'border-red-600' : 'border'}`}
-//                         onChange={(e) =>
-//                           setSelectedDateTime((prev) => ({ ...prev, time: e.target.value }))
-//                         }
-//                       />
-//                       {errors.time && (
-//                         <div className="text-red-600">{errors.time.message}</div>
-//                       )}
-//                     </div>
-//                     <div className="mb-5">
-//                       <div className="flex justify-between">
-//                         <label className="text-xs font-semibold">Address</label>
-//                         <button className="text-xs text-secondary font-semibold" type="button" onClick={getUserGeoAddress}>Get Location</button>
-//                       </div>
-//                       <input
-//                         {...register('address', { required: 'Address is required' })}
-//                         type="text"
-//                         placeholder="Enter Address"
-//                         className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
-//                         value={location.address}
-//                         onChange={(e) => setLocation({ ...location, address: e.target.value })}
-//                       />
-//                       {errors.address && (
-//                         <div className="text-red-600">{errors.address.message}</div>
-//                       )}
-//                     </div>
-//                     <div className="mb-5">
-//                       <label className="text-xs font-semibold">Price Offering</label>
-//                       <input
-//                         {...register('price', { required: 'Price is required' })}
-//                         type="text"
-//                         placeholder="Price"
-//                         className={`inputs border ${errors.price ? 'border-red-600' : 'border'}`}
-//                       />
-//                       {errors.price && (
-//                         <div className="text-red-600">{errors.price.message}</div>
-//                       )}
-//                     </div>
-
-//                     <div className="mb-5">
-//                       <label className="text-xs font-semibold">Zip Code</label>
-//                       <input
-//                         {...register('zipcode', { required: 'Zip Code is required' })}
-//                         type="text"
-//                         placeholder="Zip Code"
-//                         className={`inputs border ${errors.zipcode ? 'border-red-600' : 'border'}`}
-//                       />
-//                       {errors.zipcode && (
-//                         <div className="text-red-600">{errors.zipcode.message}</div>
-//                       )}
-//                     </div>
-
-//                     <div className="my-4 w-full overflow-x-auto">
-//                       <div className="flex gap-2">
-//                         {images.map((image, index) => (
-//                           <img
-//                             key={index}
-//                             src={URL.createObjectURL(image)}
-//                             alt={`Preview ${index}`}
-//                             className="w-20 h-20 border rounded-md object-cover"
-//                           />
-//                         ))}
-//                         <label className="w-20 h-20 bg-slate-200 cursor-pointer flex items-center justify-center rounded-md flex-shrink-0">
-//                           <FaPlus className="text-slate-600" />
-//                           <input
-//                             onChange={handleUpload}
-//                             type="file"
-//                             multiple
-//                             hidden
-//                           />
-//                         </label>
-//                       </div>
-//                     </div>
-//                     <div className="mt-6 mb-3">
-//                       <button
-//                         type="submit"
-//                         className="bg-secondary w-full py-3 rounded-full text-white"
-//                       >
-//                         {isSubmitting ? 'Processing...' : 'Post'}
-//                       </button>
-//                     </div>
-//                   </div>
-//                 </form>
-//               </div>
-//             </div>
-//           </div>
-
-
-//           <div className="mx-10 mt-10 mb-20">
-//             <div className="w-full">
-//               <div className="bg-[#e2e2e2] px-4 py-5">
-//                 <div className="flex items-center text-sm justify-between">
-//                   <div className="font-semibold">Related Search</div>
-//                   <Link className='text-primary hover:text-secondary' to='/service'>View All</Link>
-//                 </div>
-//                 <div className="flex gap-5 w-full scrollsdown my-4 overflow-x-auto">
-//                   {services.map((item, index) => (
-//                     <div key={item.id || index}>
-//                       <LazyLoadImage
-//                         effect="blur"
-//                         src={item.banner_image[0]}
-//                         className="h-[16rem] md:w-[30rem] object-cover object-top"
-//                       />
-//                       <div className="py-4 px-5 md:w-[25rem] w-[15rem] h-[] bg-white rounded-b-3xl shadow-xl -mt-3">
-//                         <div className="font-medium text-sm">{item.name}</div>
-//                         <div className="text-xs capitalize text-slate-500 mt-1">{item.description}</div>
-//                       </div>
-//                     </div>
-//                   ))}
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>)}
-//       {view === 2 && bookingData && (
-//         <ConfirmBooking bookingData={bookingData} />
-//       )}
-//       <Popups isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Commission Fee">
-//         <p>Task Colony will take a 10% commission on any payment made.</p>
-//       </Popups>
-//     </Layout>
-//   );
-// };
-
-// export default ServiceDetail;
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -594,7 +30,13 @@ const ServiceDetail = () => {
   const [selectedDateTime, setSelectedDateTime] = useState({ date: null, time: null });
   const [view, setView] = useState(1); // 1 = Booking Form, 2 = Confirm Booking
   const [bookingData, setBookingData] = useState(null);
+  const [selectedState, setSelectedState] = useState(''); // State for selected state
 
+  useEffect(() => {
+    if (view === 2) {
+      window.scrollTo(0, 0); // Scrolls to the top of the page
+    }
+  }, [view]);
   const [images, setImages] = useState([]);
   const [location, setLocation] = useState({
     address: '',
@@ -699,7 +141,6 @@ const ServiceDetail = () => {
   }, []);
 
   const [locationButtonText, setLocationButtonText] = useState('Get Location');
-
   const getUserGeoAddress = async () => {
     setLocationButtonText('Getting your location...'); // Change button text
     if (!navigator.geolocation) {
@@ -737,6 +178,36 @@ const ServiceDetail = () => {
     );
   };
 
+  const fetchCoordinatesFromAddress = async (address) => {
+    const apiKey = 'AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o'; // Your API key
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
+      );
+      const data = await response.json();
+      if (data.status === "OK" && data.results.length > 0) {
+        const { lat, lng } = data.results[0].geometry.location;
+        setLocation((prev) => ({
+          ...prev,
+          latitude: lat,
+          longitude: lng,
+        }));
+      } else {
+        setLocation((prev) => ({
+          ...prev,
+          latitude: null,
+          longitude: null,
+        }));
+      }
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
+    }
+  };
+  useEffect(() => {
+    if (view === 2) {
+      window.scrollTo(0, 0); // Scrolls to the top of the page
+    }
+  }, [view]);
   useEffect(() => {
     fetchAllData();
   }, [fetchAllData]);
@@ -768,23 +239,16 @@ const ServiceDetail = () => {
     setImages(prevImages => [...prevImages, ...newImages]);
   };
   const onSubmit = async (data) => {
-    if (!userloggedin) {
-      ErrorAlert('You must be logged in to complete the booking.');
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
-      return;
-    }
     const formData = new FormData();
     formData.append('job_title', data.job_title);
     formData.append('service_tid', data.service_tid);
     formData.append('state_tid', data.state_tid);
+    formData.append('city', selectedState); // Use selected state name for city
     formData.append('coupon_code', data.coupon_code);
-
     formData.append('description', data.description);
     formData.append('address', location.address || data.address);
-    formData.append('location_long', location.longitude || 6.11223322);
-    formData.append('location_lat', location.latitude || 6.11223322);
+    formData.append('location_long', location.longitude);
+    formData.append('location_lat', location.latitude);
     formData.append('time', moment(data.time, 'HH:mm').format('hh:mm A'));
     formData.append('price', data.price);
     formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('MM-DD-YYYY') : moment().format('MM-DD-YYYY'));
@@ -799,7 +263,6 @@ const ServiceDetail = () => {
     setIsSubmitting(true);
     setIsModalOpen(true);
 
-    // Handle the actual submission in the modal confirmation
     try {
       const res = await AuthPosturl(Apis.users.create_bookings, formData);
       if (res.status === true && res.data[0].paid === true) {
@@ -807,27 +270,23 @@ const ServiceDetail = () => {
           ...data,
           price: data.price,
           paymentUrl: res.text,
-          firstImage: images[0] ? URL.createObjectURL(images[0]) : null, // Add this line
+          firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
         });
-
         setView(2);
       } else {
-        ErrorAlert(res.text)
-        ErrorAlert('You do not have enough funds to carry out this booking.');
-        setTimeout(() => {
-          ErrorAlert(res.text);
-          if (res.data[0].paid === false) {
+        if (res.data[0].paid === false) {
+          setTimeout(() => {
             window.location.href = res.text;
-          }
-        }, 2000);
+          }, 2000);
+        }
+        ErrorAlert('You do not have enough funds to carry out this booking.');
       }
     } catch (error) {
-
+      console.error('Error submitting booking:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
-
   const handleDelete = (index) => {
     setImages(prevImages => prevImages.filter((_, i) => i !== index));
   };
@@ -934,6 +393,7 @@ const ServiceDetail = () => {
                 <div className="text-xl pt-5 pb-3 font-semibold">Booking Information</div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="text-sm text-[#374151]">
+                    {/* Job Title */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Job Title</label>
                       <input
@@ -960,6 +420,8 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.description.message}</div>
                       )}
                     </div>
+
+                    {/* Select Categories */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Select Categories</label>
                       <select
@@ -996,12 +458,19 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.service_tid.message}</div>
                       )}
                     </div>
+
                     {/* Select State */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Select State</label>
                       <select
                         className={`inputs border ${errors.state_tid ? 'border-red-600' : 'border'}`}
                         {...register('state_tid', { required: 'State is required' })}
+                        onChange={(e) => {
+                          const selectedStateId = e.target.value;
+                          const state = states.find(state => state.trackid === selectedStateId);
+                          setSelectedState(state ? state.name : ''); // Set selected state name
+                          setValue('state_tid', selectedStateId); // Set the state ID in the form
+                        }}
                       >
                         <option value="">Select State</option>
                         {states.map((state) => (
@@ -1013,6 +482,19 @@ const ServiceDetail = () => {
                       {errors.state_tid && (
                         <div className="text-red-600">{errors.state_tid.message}</div>
                       )}
+                    </div>
+
+                    {/* City Input */}
+                    <div className="mb-5">
+                      <label className="text-xs font-semibold">City</label>
+                      <input
+                        {...register('city')}
+                        type="text"
+                        placeholder="City"
+                        className={`inputs border ${errors.city ? 'border' : 'border'}`}
+                        value={selectedState} // Display selected state name
+                        onChange={(e) => setSelectedState(e.target.value)} // Allow user to edit
+                      />
                     </div>
 
                     {/* Date Required */}
@@ -1032,9 +514,12 @@ const ServiceDetail = () => {
                         {...register('time', { required: 'Time is required' })}
                         type="time"
                         className={`inputs border ${errors.time ? 'border-red-600' : 'border'}`}
-                        onChange={(e) =>
-                          setSelectedDateTime((prev) => ({ ...prev, time: e.target.value }))
-                        }
+                        value={selectedDateTime.time || ''}
+                        onChange={(e) => {
+                          const newTime = e.target.value;
+                          setSelectedDateTime((prev) => ({ ...prev, time: newTime }));
+                          setValue('time', newTime, { shouldValidate: true }); // Sync with react-hook-form
+                        }}
                       />
                       {errors.time && (
                         <div className="text-red-600">{errors.time.message}</div>
@@ -1055,7 +540,11 @@ const ServiceDetail = () => {
                         placeholder="Enter Address"
                         className={`inputs border ${errors.address ? 'border-red-600' : 'border'}`}
                         value={location.address}
-                        onChange={(e) => setLocation({ ...location, address: e.target.value })}
+                        onChange={(e) => {
+                          const newAddress = e.target.value;
+                          setLocation({ ...location, address: newAddress });
+                          fetchCoordinatesFromAddress(newAddress); // Fetch coordinates
+                        }}
                       />
                       {errors.address && (
                         <div className="text-red-600">{errors.address.message}</div>
@@ -1075,6 +564,7 @@ const ServiceDetail = () => {
                         <div className="text-red-600">{errors.price.message}</div>
                       )}
                     </div>
+
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Coupon</label>
                       <input
@@ -1083,8 +573,8 @@ const ServiceDetail = () => {
                         placeholder="coupon"
                         className={`inputs border ${errors.coupon_code ? 'border-red-600' : 'border'}`}
                       />
-
                     </div>
+
                     {/* Zip Code */}
                     <div className="mb-5">
                       <label className="text-xs font-semibold">Zip Code</label>
@@ -1099,7 +589,6 @@ const ServiceDetail = () => {
                       )}
                     </div>
 
-                    {/* Image Upload Section */}
                     <div className="my-4 w-full overflow-x-auto">
                       <div className="flex gap-2">
                         {images.length === 0 ? (
@@ -1150,13 +639,12 @@ const ServiceDetail = () => {
                       </div>
                     </div>
 
-                    {/* Submit Button */}
                     <button
                       type="submit"
+                      className={`w-full py-2 mt-5 text-white ${isSubmitting ? 'bg-secondary' : 'bg-secondary'} rounded-md`}
                       disabled={isSubmitting}
-                      className="bg-secondary mt-6 mb-3 w-full py-3 rounded-full text-white"
                     >
-                      {isSubmitting ? 'Processing...' : 'Post'}
+                      {isSubmitting ? 'Submitting...' : 'Submit Booking'}
                     </button>
                   </div>
                 </form>
