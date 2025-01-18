@@ -122,16 +122,17 @@ const Login = () => {
               <button className='bg-[#374151] w-full text-center py-3 rounded-md text-white text-lg' disabled={isSubmitting}>
                 {isSubmitting ? 'Logging in...' : 'Login'}
               </button>
+              <button
+                type="button"
+                onClick={GoogleLogin}
+                className="bg-white w-full py-3 mt-4 rounded-md border flex items-center justify-center"
+              >
+                <FcGoogle className="mr-2" /> Sign in with Google
+              </button>
               <div className="text-sm my-5 font-[500] text-center mt-2">DON'T HAVE AN ACCOUNT? <Link to='/signup' className='text-secondary'>SIGN UP</Link></div>
             </div>
           </form>
-          <button
-            type="button"
-            onClick={GoogleLogin}
-            className="bg-secondary w-full py-3 rounded-full text-white flex items-center justify-center"
-          >
-            <FcGoogle className="mr-2" /> Sign in with Google
-          </button>
+
         </div>
       </div>
     </Layout>

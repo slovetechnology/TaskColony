@@ -299,7 +299,7 @@ function Home() {
                     </div>
 
                 </div>
-                <div className=" md:-bottom-3.5 sm:-bottom-2  absolute lg:-bottom-5 w-full  ">
+                <div className=" md:-bottom-3.5 sm:-bottom-2  absolute lg:-bottom-5 w-full  border border-red-600">
                     <img src={vector} alt="" className=" w-full md:h-36" />
                 </div>
             </div>

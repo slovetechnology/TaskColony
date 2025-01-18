@@ -8,6 +8,7 @@ import { Apis, AuthPosturl, Posturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import VerifyEmail from './VerifyEmail';
 import Cookies from 'js-cookie';
+import { FcGoogle } from 'react-icons/fc';
 
 const Signup = () => {
   const [selected, setSelected] = useState('User');
@@ -258,7 +259,7 @@ const Signup = () => {
                   <div className="mt-6 mb-3">
                     <button
                       type="submit"
-                      className="bg-secondary w-full py-3 rounded-full text-white"
+                      className="bg-[#374151] w-full py-3 rounded-full text-white"
                     >
                       {isSubmitting ? 'Processing...' : 'Sign Up'}
                     </button>
@@ -267,9 +268,9 @@ const Signup = () => {
                   <button
                     type="button"
                     onClick={GoogleLogin}
-                    className="bg-secondary w-full py-3 rounded-full text-white"
+                    className="bg-white w-full py-3 rounded-md border flex items-center justify-center"
                   >
-                    Sign in with Google
+                    <FcGoogle className="mr-2" /> Sign in with Google
                   </button>
 
                   <div className="mt-4 text-center">
