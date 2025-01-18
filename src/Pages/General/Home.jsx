@@ -261,7 +261,7 @@ function Home() {
                 </div>
             </div> */}
 
-            <div className="">
+            <div className="relative">
                 <div className="bg-[#fff3e4] relative -z-50 h-auto">
                     <div className="grid grid-cols-1 pt-10 pb-4  -z-50 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                         <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
@@ -288,7 +288,7 @@ function Home() {
                             </div>
 
                         </div>
-                        <div className="lg:col-span-4 -mt-32 -z-30 lg:-mt-20">
+                        <div className="lg:col-span-4 -mt-32 -mb-3 -z-30 lg:-mt-20">
                             <LazyLoadImage
                                 effect="blur"
                                 className='w-full object-contain'
@@ -299,8 +299,8 @@ function Home() {
                     </div>
 
                 </div>
-                <div className="md:-mt-[8rem] -mt-28 w-full  ">
-                    <img src={vector} alt="" className="h-32 w-full md:h-36" />
+                <div className=" md:-bottom-3.5 sm:-bottom-2  absolute lg:-bottom-5 w-full  ">
+                    <img src={vector} alt="" className=" w-full md:h-36" />
                 </div>
             </div>
 
