@@ -4,10 +4,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { img1, img3, img4 } from 'utils/utils';
-import { HomeBestOffers, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
+import { HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
 import { FaArrowLeft, FaArrowRight, FaRegUserCircle, FaStar } from 'react-icons/fa';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
-import he from 'he'
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
 import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,6 +19,7 @@ import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
 import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
 import checked from '../../assets/check.png'
+import vector from '../../assets/Vector 10.png'
 
 const ActiveTabOptions = [
     "email"
@@ -230,10 +230,8 @@ function Home() {
                 </div>
             </div>
 
-            <div className="h-[40rem] hidden lg:block w-full bgs">
+            {/* <div className="h-[40rem]  w-full bgs">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
-                    {/* <div className=" absolute object-contain lg:bottom-[13.8rem]  lg:right-[5rem]"> <img src={checked} alt="" className="object-contain size-8" /> </div> */}
-
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
                             <h1>
@@ -261,49 +259,54 @@ function Home() {
                     <div className="lg:col-span-4">
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="h-fit lg:hidden lg:h-[81dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
-                    {/* <div className=" absolute object-contain bottom-[23.7rem] z-30 right-[4rem]"> <img src={checked} alt="" className="object-contain size-10" /> </div> */}
-
-                    <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
-                        <div className="">
-                            <h1>
-                                <div className="text-secondary text-2xl md:text-5xl font-bold">A One-Stop Place </div>
-                                <div className="font-bold text-2xl md:text-5xl">For Home Repair</div>
-                            </h1>
-                            <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
-                        </div>
-                        <div className="mt-10 mb-24">
-                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
-                            <div className="flex items-center mt-5 gap-2">
-                                <LazyLoadImage
-                                    effect="blur"
-                                    className='size-5'
-                                    src={img3}
-                                />
-                                <div className="text-sm">
-                                    <div className="font-medium">Have any Questions?</div>
-                                    <div className="text-slate-500">+1 281 760 6925</div>
+            <div className="relative">
+                <div className="bg-[#fff3e4] relative -z-50 h-auto">
+                    <div className="grid grid-cols-1 pt-10 pb-4  -z-50 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
+                        <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
+                            <div className="">
+                                <h1>
+                                    <div className="text-secondary text-2xl md:text-5xl font-bold">A One-Stop Place </div>
+                                    <div className="font-bold text-2xl md:text-5xl">For Home Repair</div>
+                                </h1>
+                                <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
+                            </div>
+                            <div className="mt-10 mb-24">
+                                <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
+                                <div className="flex items-center mt-5 gap-2">
+                                    <LazyLoadImage
+                                        effect="blur"
+                                        className='size-5'
+                                        src={img3}
+                                    />
+                                    <div className="text-sm">
+                                        <div className="font-medium">Have any Questions?</div>
+                                        <div className="text-slate-500">+1 281 760 6925</div>
+                                    </div>
                                 </div>
                             </div>
+
+                        </div>
+                        <div className="lg:col-span-4 -mt-32 -mb-3 -z-30 lg:-mt-20">
+                            <LazyLoadImage
+                                effect="blur"
+                                className='w-full object-contain'
+                                src={img1}
+                            />
                         </div>
 
                     </div>
-                    <div className="lg:col-span-4 -mt-32 lg:-mt-0">
-                        <LazyLoadImage
-                            effect="blur"
-                            className='w-full object-contain lg:h-[41rem]'
-                            src={img1}
-                        />
-                    </div>
+
+                </div>
+                <div className=" md:-bottom-3.5 sm:-bottom-2  absolute lg:-bottom-5 w-full  ">
+                    <img src={vector} alt="" className=" w-full md:h-36" />
                 </div>
             </div>
 
-            <div className="w-11/12 lg:w-10/12 mx-auto mt-28">
+            <div className="  mx-10 mt-10 lg:mt-28">
                 <div className="grid grid-cols-1 lg:grid-cols-7">
-                    <div className="lg:col-span-4">
+                    <div className="lg:col-span-4 hidden lg:block">
                         <div className="relative">
                             <div className="absolute top-0 left-0 bg-[#E73D17] size-[8.75rem] rounded-full -mt-20"></div>
                             <div className="absolute top-0 left-0 bg-[#F29D8A] size-[2rem] rounded-full -mt-16 ml-[10rem]"></div>
@@ -312,15 +315,14 @@ function Home() {
                             <LazyLoadImage
                                 src={img4}
                                 effect='blur'
-                                className='w-full h-full'
+                                className='w-full hidden lg:block h-full'
                             />
                         </div>
                     </div>
 
                     <div className="lg:col-span-3">
                         <div className="mt-10">
-                            <div className="font-bold text-2xl w-4/5 mb-8">A whole world of services
-                                at your door step</div>
+                            <div className="font-bold text-2xl  mb-8">A whole world of services at your door step</div>
                             {HomeServices.map((item, index) => (
                                 <div className="flex gap-2" key={index}>
                                     <div>
@@ -353,7 +355,7 @@ function Home() {
                         <Link to={`/sub-category/${item.trackid}`} key={index}>
                             <div className="bg-white shadow-2xl h-[7rem] rounded-xl p-4">
                                 <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14">
-                                <img src={item.icon} alt="" className="size-8 object-contain" />
+                                    <img src={item.icon} alt="" className="size-8 object-contain" />
                                 </div>
                                 <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
                             </div>
@@ -393,7 +395,7 @@ function Home() {
 
 
                 <div className="flex  items-center justify-between mt-10">
-                    <div className="font-medium text-2xl">Trending Services</div>
+                    <div className="font-medium text-2xl">Best Offers</div>
                     <div className="">
                     </div>
                 </div>
@@ -418,56 +420,56 @@ function Home() {
 
 
             <div className="w-11/12 mx-auto lg:w-10/12">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
-        <div className="flex flex-col justify-center">
-            <div className="flex items-center justify-between mt-10">
-                <div className="font-medium text-2xl">What our customers say</div>
-            </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
+                    <div className="flex flex-col justify-center">
+                        <div className="flex items-center justify-between mt-10">
+                            <div className="font-medium text-2xl">What our customers say</div>
+                        </div>
 
-            <div className="flex flex-col items-center">
-                <div className="w-11/12">
-                    <div className="font-medium text-xl">{HomeTestimonials[currentTestimonialIndex]?.title}</div>
-                    <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">
-                        {HomeTestimonials[currentTestimonialIndex]?.content}
-                    </div>
-                    <div className="md:flex items-center mt-10 justify-between">
-                        <div className="flex items-center gap-3">
-                            <div className="text-4xl"><FaRegUserCircle /></div>
-                            <div className="text-sm mx-4">
-                                <div className="font-medium">{HomeTestimonials[currentTestimonialIndex]?.name}</div>
-                                <div className="flex items-center gap-1 mt-2 text-slate-300 text-xs">
-                                    {new Array(HomeTestimonials[currentTestimonialIndex]?.rating).fill(0).map((_, i) => (
-                                        <FaStar key={i} className={`text-secondary`} />
-                                    ))}
-                                    | {HomeTestimonials[currentTestimonialIndex]?.date}
+                        <div className="flex flex-col items-center">
+                            <div className="w-11/12">
+                                <div className="font-medium text-xl">{HomeTestimonials[currentTestimonialIndex]?.title}</div>
+                                <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">
+                                    {HomeTestimonials[currentTestimonialIndex]?.content}
+                                </div>
+                                <div className="md:flex items-center mt-10 justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="text-4xl"><FaRegUserCircle /></div>
+                                        <div className="text-sm mx-4">
+                                            <div className="font-medium">{HomeTestimonials[currentTestimonialIndex]?.name}</div>
+                                            <div className="flex items-center gap-1 mt-2 text-slate-300 text-xs">
+                                                {new Array(HomeTestimonials[currentTestimonialIndex]?.rating).fill(0).map((_, i) => (
+                                                    <FaStar key={i} className={`text-secondary`} />
+                                                ))}
+                                                | {HomeTestimonials[currentTestimonialIndex]?.date}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
+                                        <button
+                                            onClick={handlePrevTestimonial}
+                                            className={`${activeButton === "prev" ? "bg-secondary" : "border border-white"} rounded-full size-10 text-white items-center justify-center flex`}
+                                        >
+                                            <FaArrowLeft />
+                                        </button>
+                                        <button
+                                            onClick={handleNextTestimonial}
+                                            className={`${activeButton === "next" ? "bg-secondary" : "border border-white"} rounded-full size-10 text-white items-center justify-center flex`}
+                                        >
+                                            <FaArrowRight />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
-                            <button
-                                onClick={handlePrevTestimonial}
-                                className={`${activeButton === "prev" ? "bg-secondary" : "border border-white"} rounded-full size-10 text-white items-center justify-center flex`}
-                            >
-                                <FaArrowLeft />
-                            </button>
-                            <button
-                                onClick={handleNextTestimonial}
-                                className={`${activeButton === "next" ? "bg-secondary" : "border border-white"} rounded-full size-10 text-white items-center justify-center flex`}
-                            >
-                                <FaArrowRight />
-                            </button>
-                        </div>
+                    <div className="flex items-center justify-center">
+                        <LazyLoadImage src={HomeTestimonials[currentTestimonialIndex].img} className="object-cover w-full lg:w-[35rem] lg:h-[20rem]" effect="blur" />
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div className="flex items-center justify-center">
-            <LazyLoadImage src={HomeTestimonials[currentTestimonialIndex].img} className="object-cover w-full lg:w-[35rem] lg:h-[20rem]" effect="blur" />
-        </div>
-    </div>
-</div>
 
             <div className="w-11/12 mx-auto lg:w-10/12 mb-10 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>
