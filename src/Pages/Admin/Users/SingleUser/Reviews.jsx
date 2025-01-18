@@ -9,7 +9,7 @@ import { ImCancelCircle } from 'react-icons/im';
 import ConfirmDeleteReview from './DeleteReview';
 import { ToastAlert } from '../../../../Components/General/Utils';
 
-const TABLE_HEADERS = ['Id', 'User', 'Service', 'Review', ''];
+const TABLE_HEADERS = ['Id', 'Provider', 'Service', 'Review', ''];
 const DEFAULT_PER_PAGE = 10;
 
 const Reviews = ({ trackid }) => {
@@ -124,7 +124,7 @@ const Reviews = ({ trackid }) => {
             {currentReviews.map((item, i) => (
               <TableRow key={i}>
                 <TableData>{item.trackid}</TableData>
-                <TableData>{item.ulname}</TableData>
+                <TableData>{item.pfname}</TableData>
                 <TableData>{item.service_name}</TableData>
                 <TableData>
                   <ReviewWithReadMore review={item.review || ''} />

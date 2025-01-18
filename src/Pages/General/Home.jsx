@@ -19,8 +19,7 @@ import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
 import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
-import bgsImage from "assets/bgs.png"
-
+import checked from '../../assets/check.png'
 
 const ActiveTabOptions = [
     "email"
@@ -97,7 +96,7 @@ function Home() {
         try {
             const res = await Geturl(Apis.users.get_system);
             if (res.status === true) {
-                setOffers(res.data.dashboard_middle_slider);
+                setOffers(res.data.dashboard_top_slider);
                 setServices(res.data.random_services);
                 setGallery(res.data.gallery_images);
                 setCategory(res.data.categories);
@@ -230,15 +229,18 @@ function Home() {
                     </div>
                 </div>
             </div>
+
             <div className="h-[40rem] hidden lg:block w-full bgs">
-            <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
+                    {/* <div className=" absolute object-contain lg:bottom-[13.8rem]  lg:right-[5rem]"> <img src={checked} alt="" className="object-contain size-8" /> </div> */}
+
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
                             <h1>
                                 <div className="text-secondary mt-32 text-2xl md:text-5xl font-bold">A One-Stop Place </div>
                                 <div className="font-bold text-2xl md:text-5xl">For Home Repair</div>
                             </h1>
-                            <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
+                            <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
                         </div>
                         <div className="mt-10 mb-24">
                             <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
@@ -250,7 +252,7 @@ function Home() {
                                 />
                                 <div className="text-sm">
                                     <div className="font-medium">Have any Questions?</div>
-                                    <div className="text-slate-500">+0 123 888 555</div>
+                                    <div className="text-slate-500">+1 281 760 6925</div>
                                 </div>
                             </div>
                         </div>
@@ -263,13 +265,15 @@ function Home() {
 
             <div className="h-fit lg:hidden lg:h-[81dvh] hmbanner relative lg:-mt-24 pt-10 lg:pt-0 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
+                    {/* <div className=" absolute object-contain bottom-[23.7rem] z-30 right-[4rem]"> <img src={checked} alt="" className="object-contain size-10" /> </div> */}
+
                     <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
                         <div className="">
                             <h1>
                                 <div className="text-secondary text-2xl md:text-5xl font-bold">A One-Stop Place </div>
                                 <div className="font-bold text-2xl md:text-5xl">For Home Repair</div>
                             </h1>
-                            <div className="text-xs w-[90%] mt-4">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus.t</div>
+                            <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
                         </div>
                         <div className="mt-10 mb-24">
                             <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
@@ -281,7 +285,7 @@ function Home() {
                                 />
                                 <div className="text-sm">
                                     <div className="font-medium">Have any Questions?</div>
-                                    <div className="text-slate-500">+0 123 888 555</div>
+                                    <div className="text-slate-500">+1 281 760 6925</div>
                                 </div>
                             </div>
                         </div>
@@ -397,14 +401,14 @@ function Home() {
 
             <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-">
                 <div className="w-fit flex items-center gap-5">
-                    {HomeBestOffers.map((item, index) => (
+                    {offers.map((item, index) => (
                         <div className="flex bg-white px-3 py-5 shadow-xl mb-10 gap-3 items-center rounded-xl" key={index}>
                             <div className="">
-                                <LazyLoadImage src={item.img} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
+                                <LazyLoadImage src={item.imagelinks[0]} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
                             </div>
                             <div className="w-[25rem]">
-                                <div className="text-sm text-slate-500">{item.tag}</div>
-                                <div className="font-medium text-lg">{item.title}</div>
+                                <div className="text-sm text-slate-500">{item.title}</div>
+                                <div className="font-medium text-lg">{item.description}</div>
                             </div>
                         </div>
                     ))}
@@ -414,55 +418,56 @@ function Home() {
 
 
             <div className="w-11/12 mx-auto lg:w-10/12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
-                    <div className="flex flex-col justify-center">
-                        <div className="flex items-center justify-between mt-10">
-                            <div className="font-medium text-2xl">What our customers say</div>
-                        </div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
+        <div className="flex flex-col justify-center">
+            <div className="flex items-center justify-between mt-10">
+                <div className="font-medium text-2xl">What our customers say</div>
+            </div>
 
-                        <div className="flex flex-col items-center">
-                            <div className="w-11/12">
-                                <div className="font-medium text-xl">{HomeTestimonials[currentTestimonialIndex]?.title}</div>
-                                <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">
-                                    {HomeTestimonials[currentTestimonialIndex]?.content}
-                                </div>
-                                <div className="md:flex items-center mt-10 justify-between">
-                                    <div className="flex items-center gap-">
-                                        <div className="text-4xl"><FaRegUserCircle /></div>
-                                        <div className="text-sm mx-4">
-                                            <div className="font-medium">{HomeTestimonials[currentTestimonialIndex]?.name}</div>
-                                            <div className="flex items-center gap-1 mt-2 text-slate-300 text-xs">
-                                                {new Array(HomeTestimonials[currentTestimonialIndex]?.rating).fill(0).map((_, i) => (
-                                                    <FaStar key={i} className={`text-secondary`} />
-                                                ))}
-                                                | {HomeTestimonials[currentTestimonialIndex]?.date}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
-                                        <button
-                                            onClick={handlePrevTestimonial}
-                                            className={`${activeButton === "prev" ? "bg-secondary" : "border border-white"
-                                                } rounded-full size-10 text-white items-center justify-center flex`}
-                                        >
-                                            <FaArrowLeft />
-                                        </button>
-                                        <button
-                                            onClick={handleNextTestimonial}
-                                            className={`${activeButton === "next" ? "bg-secondary" : "border border-white"
-                                                } rounded-full size-10 text-white items-center justify-center flex`}
-                                        >
-                                            <FaArrowRight />
-                                        </button>
-                                    </div>
+            <div className="flex flex-col items-center">
+                <div className="w-11/12">
+                    <div className="font-medium text-xl">{HomeTestimonials[currentTestimonialIndex]?.title}</div>
+                    <div className="text-slate-300 w-10/12 ml-4 leading-5 my-5 text-xs">
+                        {HomeTestimonials[currentTestimonialIndex]?.content}
+                    </div>
+                    <div className="md:flex items-center mt-10 justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="text-4xl"><FaRegUserCircle /></div>
+                            <div className="text-sm mx-4">
+                                <div className="font-medium">{HomeTestimonials[currentTestimonialIndex]?.name}</div>
+                                <div className="flex items-center gap-1 mt-2 text-slate-300 text-xs">
+                                    {new Array(HomeTestimonials[currentTestimonialIndex]?.rating).fill(0).map((_, i) => (
+                                        <FaStar key={i} className={`text-secondary`} />
+                                    ))}
+                                    | {HomeTestimonials[currentTestimonialIndex]?.date}
                                 </div>
                             </div>
                         </div>
+
+                        <div className="flex md:flex-row mt-3 items-center justify-between gap-3">
+                            <button
+                                onClick={handlePrevTestimonial}
+                                className={`${activeButton === "prev" ? "bg-secondary" : "border border-white"} rounded-full size-10 text-white items-center justify-center flex`}
+                            >
+                                <FaArrowLeft />
+                            </button>
+                            <button
+                                onClick={handleNextTestimonial}
+                                className={`${activeButton === "next" ? "bg-secondary" : "border border-white"} rounded-full size-10 text-white items-center justify-center flex`}
+                            >
+                                <FaArrowRight />
+                            </button>
+                        </div>
                     </div>
-                    <LazyLoadImage src={HomeTestimonials[currentTestimonialIndex].img} className="object-cover w-full object-top lg:w-[35rem] lg:h-[20rem]" effect="blur" />
                 </div>
             </div>
+        </div>
+        
+        <div className="flex items-center justify-center">
+            <LazyLoadImage src={HomeTestimonials[currentTestimonialIndex].img} className="object-cover w-full lg:w-[35rem] lg:h-[20rem]" effect="blur" />
+        </div>
+    </div>
+</div>
 
             <div className="w-11/12 mx-auto lg:w-10/12 mb-10 mt-20">
                 <div className="grid grid-cols-1 lg:grid-cols-7 rounded-3xl pt-10 px-5 lg:px-10 text-white" style={{ background: `url(${img25})center/cover no-repeat` }}>

@@ -64,34 +64,20 @@ const Signup = () => {
     }
   };
 
-  // const GoogleLogin = async () => {
-  //   try {
-  //     const res = await AuthPosturl(Apis.users.google_verify);
-  //     console.log(res.data[0].url)
-  //     if (res.status === true) {
-  //       setGoogleLoginUrl(res.data.url); // Set the Google login URL
-  //     } else {
-  //       ErrorAlert('Failed to fetch Google login URL.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error during Google login:', error);
-  //     ErrorAlert('An unexpected error occurred. Please try again.');
-  //   }
-  // };
-
   useEffect(() => {
     if (view === 2) {
-        window.scrollTo(0, 0); // Scrolls to the top of the page
+      window.scrollTo(0, 0); // Scrolls to the top of the page
     }
-}, [view]);
+  }, [view]);
 
   const GoogleLogin = async () => {
     try {
       const res = await AuthPosturl(Apis.users.google_verify);
+      console.log(res.status)
       if (res.status === true) {
-        const url = res.data.url;
+        const url = res.data[0].url;
         setGoogleLoginUrl(url); // Set the Google login URL
-        console.log(url); // Log the URL to the console
+        window.open(url); // Open the URL in a new tab
       } else {
         ErrorAlert('Failed to fetch Google login URL.');
       }
@@ -100,6 +86,7 @@ const Signup = () => {
       ErrorAlert('An unexpected error occurred. Please try again.');
     }
   };
+
   return (
     <Layout>
       <div className="bg-gray w-full h-[10rem]">
@@ -284,13 +271,6 @@ const Signup = () => {
                   >
                     Sign in with Google
                   </button>
-                  {googleLoginUrl && (
-                    <div className="mt-4">
-                      <a href={googleLoginUrl} target="_blank" rel="noopener noreferrer" className="text-secondary underline">
-                        Click here to sign in with Google
-                      </a>
-                    </div>
-                  )}
 
                   <div className="mt-4 text-center">
                     <span>Already have an account? </span>
@@ -307,4 +287,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;  
+export default Signup;

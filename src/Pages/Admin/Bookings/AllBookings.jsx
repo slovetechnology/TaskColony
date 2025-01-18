@@ -3,7 +3,7 @@ import AdminLayout from '../../../Components/Admin/AdminLayout';
 import { FaSearch } from 'react-icons/fa';
 import { GiCancel } from 'react-icons/gi';
 import { HiOutlineAdjustments } from 'react-icons/hi';
-import profiles from '../../../assets/profile.png';
+import profiles from '../../../assets/user.png';
 import { Table } from '../../../Components/Admin/Table/Table';
 import { TableRow } from '../../../Components/Admin/Table/TableRow';
 import { TableData } from '../../../Components/Admin/Table/Index';
@@ -17,9 +17,9 @@ import { ImCancelCircle } from 'react-icons/im';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { ToastAlert } from '../../../Components/General/Utils';
 import AssignBooking from './AssignBooking';
-import { SlMagnifier } from 'react-icons/sl';
+import { formatDate } from '../../../utils/utils';
 
-const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Status', '', '', ''];
+const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Date', 'Time', 'Status', '', '', ''];
 const DEFAULT_PER_PAGE = 10;
 
 const statusToVariant = {
@@ -228,7 +228,7 @@ const AllBookings = () => {
                     <div className="w-12 h-12 rounded-full overflow-hidden">
                       <img
                         className="w-full h-full object-cover"
-                        src={member.profiles || profiles}
+                        src={ profiles}
                         alt={member.ufname}
                       />
                     </div>
@@ -242,8 +242,10 @@ const AllBookings = () => {
                     <p className="text-sm font-light text-secondary-500">{member.pfname}</p>
                   </TableData>
                   <TableData>
-                    <p className="text-sm font-light text-secondary-500">{member.amt_paid}</p>
+                    <p className="text-sm font-light text-secondary-500">${member.amt_paid}</p>
                   </TableData>
+                  <TableData>{formatDate(member.created_date)}</TableData>
+                  <TableData>{member.created_time}</TableData>
                   <TableData>
                     <StatusTag
                       variant={statusToVariant[member.status_text.toLowerCase()]}

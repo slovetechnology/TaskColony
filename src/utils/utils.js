@@ -1,3 +1,8 @@
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options).replace(/\//g, '-');
+};
 
 import img1 from "assets/new/img1.svg"
 import img3 from "assets/new/img3.svg"
@@ -241,11 +246,11 @@ export const HomeProviders = [
 ]
 
 export const FooterSocials = [
-    { img: img39 },
-    { img: img40 },
-    { img: img41 },
-    { img: img42 },
-    { img: img43 },
+    { img: img39, link: 'https://www.facebook.com/profile.php?id=61568515424684&mibextid=ZbWKwL' },
+    { img: img40, link: '' },
+    { img: img41, link: 'https://www.linkedin.com/in/task-colony-a90931339?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
+    { img: img42, link: '' },
+    { img: img43, link: 'https://www.instagram.com/taskcolony' },
 ]
 
 export const FooterContacts = [

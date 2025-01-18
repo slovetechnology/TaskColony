@@ -222,8 +222,8 @@ const Aboutus = () => {
         <div className="bg-gray xl:w-[80%] w-full h-auto xl:h-[15rem] mb-40 mt-10 xl:py-20 py-10 xl:px-20 mx-auto">
           <div className="flex flex-col xl:flex-row items-center justify-center mx-10 gap-10">
             <div className="text-center xl:text-left">
-              <p className="font-[500] text-2xl">Subscribe to our newsletter</p>
-              <p className="text-xs text-primary">Subscribe to the newsletter to receive exclusive offers, latest news, and updates</p>
+              <p className="font-[500] text-2xl">Subscribe to our Newsletter</p>
+              <p className="text-xs text-primary">Subscribe to the Newsletter to receive exclusive offers, latest news, and updates</p>
             </div>
             <form onSubmit={handleSubmit(newsletter)} className="flex flex-col xl:flex-row items-center w-full xl:w-auto">
               <label className='bg-white gap-[10px] flex items-center h-16 w-[24rem] px-3 border-primary rounded-tl-md rounded-bl-md'>
