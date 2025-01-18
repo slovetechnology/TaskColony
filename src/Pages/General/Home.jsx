@@ -230,37 +230,6 @@ function Home() {
                 </div>
             </div>
 
-            {/* <div className="h-[40rem]  w-full bgs">
-                <div className="grid grid-cols-1 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
-                    <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">
-                        <div className="">
-                            <h1>
-                                <div className="text-secondary mt-32 text-2xl md:text-5xl font-bold">A One-Stop Place </div>
-                                <div className="font-bold text-2xl md:text-5xl">For Home Repair</div>
-                            </h1>
-                            <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
-                        </div>
-                        <div className="mt-10 mb-24">
-                            <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
-                            <div className="flex items-center mt-5 gap-2">
-                                <LazyLoadImage
-                                    effect="blur"
-                                    className='size-5'
-                                    src={img3}
-                                />
-                                <div className="text-sm">
-                                    <div className="font-medium">Have any Questions?</div>
-                                    <div className="text-slate-500">+1 281 760 6925</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="lg:col-span-4">
-                    </div>
-                </div>
-            </div> */}
-
             <div className="relative">
                 <div className="bg-[#fff3e4] relative -z-50 h-auto">
                     <div className="grid grid-cols-1 pt-10 pb-4  -z-50 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
@@ -299,7 +268,7 @@ function Home() {
                     </div>
 
                 </div>
-                <div className=" md:-bottom-3.5 sm:-bottom-2  absolute lg:-bottom-5 w-full  border border-red-600">
+                <div className=" md:-bottom-3.5 sm:-bottom-2  absolute lg:-bottom-5 w-full">
                     <img src={vector} alt="" className=" w-full md:h-36" />
                 </div>
             </div>
