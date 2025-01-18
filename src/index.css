@@ -126,7 +126,7 @@ transform: translateX(    100%  );
 .hmbanner::before {
   content: "";
   width: 100%;
-  height: 5rem;
+  height: 6rem;
   border-bottom-right-radius: 50%;
   border-bottom-left-radius: 50%;
   position: absolute;

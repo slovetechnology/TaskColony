@@ -4,10 +4,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { img1, img3, img4 } from 'utils/utils';
-import { HomeBestOffers, HomeProviders, HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
+import { HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
 import { FaArrowLeft, FaArrowRight, FaRegUserCircle, FaStar } from 'react-icons/fa';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
-import he from 'he'
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
 import { IoIosLogOut, IoIosNotificationsOutline } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
@@ -301,7 +300,7 @@ function Home() {
                 </div>
             </div>
 
-            <div className="w-11/12 lg:w-10/12 mx-auto mt-28">
+            <div className="  mx-10 mt-28">
                 <div className="grid grid-cols-1 lg:grid-cols-7">
                     <div className="lg:col-span-4">
                         <div className="relative">
@@ -319,8 +318,7 @@ function Home() {
 
                     <div className="lg:col-span-3">
                         <div className="mt-10">
-                            <div className="font-bold text-2xl w-4/5 mb-8">A whole world of services
-                                at your door step</div>
+                            <div className="font-bold text-2xl  mb-8">A whole world of services at your door step</div>
                             {HomeServices.map((item, index) => (
                                 <div className="flex gap-2" key={index}>
                                     <div>
@@ -393,7 +391,7 @@ function Home() {
 
 
                 <div className="flex  items-center justify-between mt-10">
-                    <div className="font-medium text-2xl">Trending Services</div>
+                    <div className="font-medium text-2xl">Best Offers</div>
                     <div className="">
                     </div>
                 </div>
