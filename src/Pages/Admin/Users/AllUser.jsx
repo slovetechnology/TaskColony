@@ -16,7 +16,7 @@ import { IoEyeSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { debounce } from 'lodash'; // Make sure to install lodash
 
-const TABLE_HEADERS = ['Full Name', 'Email', 'Contact', 'Booking', "Balance", "Verification", 'User Type', "", ""];
+const TABLE_HEADERS = ['Full Name', 'Email', 'Contact', 'Booking', "Balance", "Verification", "", ""];
 const DEFAULT_PER_PAGE = 10;
 
 const AllUser = () => {
@@ -167,7 +167,6 @@ const AllUser = () => {
                                 <TableData>{member.bookings}</TableData>
                                 <TableData>{member.walletbal}</TableData>
                                 <TableData>{member.account_verified_text}</TableData>
-                                <TableData>{member.usertype}</TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
                                         <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>

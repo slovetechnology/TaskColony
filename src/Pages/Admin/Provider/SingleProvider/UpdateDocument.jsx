@@ -25,14 +25,6 @@ const statusToNumber = {
     processing: 3,
 };
 
-// Textual representation for status
-const statusTextMapping = {
-    0: 'Pending',
-    1: 'Approved',
-    2: 'Rejected',
-    3: 'Processing',
-};
-
 const UpdateDocument = ({ closeView, singles, resendSignal, trackid }) => {
     const { register, setValue, handleSubmit } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,12 +40,15 @@ const UpdateDocument = ({ closeView, singles, resendSignal, trackid }) => {
         setIsSubmitting(true);
 
         try {
+            // Validate status
+            const statusNumber = statusToNumber[data.status] !== undefined ? statusToNumber[data.status] : 0; // Default to 0 (Pending)
+
             const dataToSend = {
-                status: statusToNumber[data.status],
+                status: statusNumber,
                 data_tid: trackid, // Include trackid in the payload
             };
 
-            const res = await AuthPosturl(Apis.admins.update_provider_docs, dataToSend);
+            const res = await AuthPosturl(Apis.admins.update_providers_docs, dataToSend);
             if (res.status) {
                 ToastAlert(res.text);
                 resendSignal();

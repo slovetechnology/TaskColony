@@ -22,6 +22,7 @@ const statusMapping = {
 const ProviderDocuments = () => {
     const { userid } = useParams();
     const [user, setUser] = useState(null);
+    const [status, setStatus] = useState(null);
     const [trackid, setTrackid] = useState(null);
     const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(0);
@@ -33,6 +34,7 @@ const ProviderDocuments = () => {
             const res = await AuthGeturl(`${Apis.admins.get_provider_detail}?userid=${userid}`);
             if (res.status === true) {
                 setUser(res.data.kyc_data[0]);
+                setStatus(res.data);
                 setTrackid(res.data.trackid);
                 setTotal(res.data.total_bookings);
             }
@@ -87,7 +89,7 @@ const ProviderDocuments = () => {
                         <TableData>{user.identity_number}</TableData>
                         <TableData>{user.gender}</TableData>
                         <TableData>{user.companyname}</TableData>
-                        <TableData>{statusMapping[user.status] || 'Unknown'}</TableData> {/* Display status text */}
+                        <TableData>{statusMapping[status.account_verified]}</TableData> {/* Display status text */}
                         <TableData>
                             <div className="flex gap-4 text-lg text-primary">
                                 <div className="cursor-pointer" onClick={() => SingleItem(user)}>

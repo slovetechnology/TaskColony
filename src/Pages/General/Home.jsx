@@ -353,7 +353,7 @@ function Home() {
                         <Link to={`/sub-category/${item.trackid}`} key={index}>
                             <div className="bg-white shadow-2xl h-[7rem] rounded-xl p-4">
                                 <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14">
-                                    <img src={item.icon} alt="" className="size-8" />
+                                <img src={item.icon} alt="" className="size-8 object-contain" />
                                 </div>
                                 <div className="text-center mt-5 mb-10 capitalize">{item.name}</div>
                             </div>
