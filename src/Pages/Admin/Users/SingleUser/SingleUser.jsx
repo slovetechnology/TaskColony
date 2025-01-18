@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Apis, AuthGeturl } from '../../../../Components/General/Api';
 import Bookings from './Bookings';
 import Reviews from './Reviews';
+import { formatDate } from '../../../../utils/utils';
 
 const SingleUser = () => {
     const { userid } = useParams();
@@ -16,11 +17,11 @@ const SingleUser = () => {
 
     const fetchUser = useCallback(async () => {
         try {
-            const res = await AuthGeturl(`${Apis.admins.get_provider_detail}?userid=${userid}`); 
+            const res = await AuthGeturl(`${Apis.admins.get_provider_detail}?userid=${userid}`);
             if (res.status === true) {
-                setUser(res.data); 
-                setTrackid(res.data.trackid); 
-                setWallet(res.data.user_wallets[0].walletbal); 
+                setUser(res.data);
+                setTrackid(res.data.trackid);
+                setWallet(res.data.user_wallets[0].walletbal);
             }
         } catch (err) {
             console.error('Failed to fetch user data:', err.message);
@@ -44,13 +45,14 @@ const SingleUser = () => {
                         <div className='mb-3'><span className="font-bold">Username:</span> {user.username}</div>
                         <div className='mb-3'><span className="font-bold">Email:</span> {user.email}</div>
                         <div className='mb-3'><span className="font-bold">Phone Number:</span> {user.phone}</div>
+                        <div className='mb-3'><span className="font-bold">Created At:</span> {formatDate(user.created_at)}</div>
                     </div>
-                   
+
                 </div>
             );
         }
-        if (activeTab === 'bookings') return <Bookings trackid={trackid}  />;
-        if (activeTab === 'reviews') return <Reviews trackid={trackid}  />;
+        if (activeTab === 'bookings') return <Bookings trackid={trackid} />;
+        if (activeTab === 'reviews') return <Reviews trackid={trackid} />;
     };
 
     return (
@@ -62,7 +64,7 @@ const SingleUser = () => {
                     user && (
                         <>
                             <div className="grid lg:grid-cols-2 mt-8 gap-5">
-                            
+
                                 <div>
                                     <div className="h-[13rem] text-white rounded-xl bg-gradient-to-r px-6 py-14 from-[#3626E3] to-[#72FF13]">
                                         <p className="text-base">Total Bookings</p>
@@ -74,7 +76,7 @@ const SingleUser = () => {
                                         </div>
                                     </div>
                                 </div>
-                              
+
                                 <div className="h-[13rem] text-white rounded-xl bg-gradient-to-r px-6 py-14 from-[#FFBC0A] to-[#FF3D3D]">
                                     <p className="text-base">Wallet Balance</p>
                                     <div className="flex mt-5 items-center justify-between">
@@ -89,7 +91,7 @@ const SingleUser = () => {
                             <div className="mt-10">
                                 <div className="bg-white px-6 py-6">
                                     <div className="flex flex-wrap items-center gap-3 text-primary font-medium border-b mb-5 pb-3">
-                                        {['about','bookings', 'reviews',].map(tab => (
+                                        {['about', 'bookings', 'reviews',].map(tab => (
                                             <button key={tab} onClick={() => setActiveTab(tab)} className={activeTab === tab ? 'text-secondary border-b px-10 border-secondary font-bold' : ''}>
                                                 {tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
                                             </button>

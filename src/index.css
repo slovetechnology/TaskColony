@@ -144,6 +144,24 @@ transform: translateX(    100%  );
 .bgs {
   background: url(./assets/bgs.png);
   background-position: bottom;
-  background-size: 100% 120%;
+  background-size: 100% 130%;
   background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 1022px) {
+  .bgs {
+    background: url(./assets/bgs.png);
+    background-position: bottom;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+} 
+
+@media screen and (min-width: 1200px) {
+  .bgs {
+    background: url(./assets/bgs.png);
+    background-position: bottom;
+    background-size: 100% 130%;
+    background-repeat: no-repeat;
+  }
 }

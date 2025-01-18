@@ -6,25 +6,22 @@ import login from '../../../assets/form.png';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Apis, Posturl } from '../../../Components/General/Api';
+import { Apis, Posturl, AuthPosturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import Cookies from 'js-cookie';
-import Signin from './Signin';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [selected, setSelected] = useState('User');
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     const dataToSend = {
       email: data.email,
       password: data.password,
-      googlecode: 'wdw', // Update as required
+      googlecode: 'wdw',
     };
 
     try {
@@ -34,22 +31,34 @@ const Login = () => {
         Cookies.set('taskcolony', token);
         ToastAlert(res.data.text);
 
-        // Delay navigation and reload by 4 seconds
         setTimeout(() => {
           window.location.href = '/service'; // Navigate and reload the page
-        }, 1000); // 4000ms = 4 seconds
+        }, 1000);
       } else {
         ErrorAlert(res.text);
       }
-
     } catch (error) {
       ErrorAlert('An unexpected error occurred. Please try again.');
-      console.log(error)
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const GoogleLogin = async () => {
+    try {
+      const res = await AuthPosturl(Apis.users.google_verify);
+      if (res.status === true) {
+        const url = res.data[0].url;
+        window.open(url); // Open the URL in a new tab
+      } else {
+        ErrorAlert('Failed to fetch Google login URL.');
+      }
+    } catch (error) {
+      console.error('Error during Google login:', error);
+      ErrorAlert('An unexpected error occurred. Please try again.');
+    }
+  };
 
   return (
     <Layout>
@@ -64,7 +73,9 @@ const Login = () => {
         </div>
       </div>
       <div className="md:flex my-14 items-center w-11/12 mx-auto justify-center">
-        <div className=""><img src={login} alt="" className="md:w-[27rem] md:rounded-tl-md md:rounded-bl-md md:h-[33rem] object-cover" /></div>
+        <div className="">
+          <img src={login} alt="" className="md:w-[27rem] md:rounded-tl-md md:rounded-bl-md md:h-[33rem] object-cover" />
+        </div>
         <div className="bg-white md:w-[27rem] md:rounded-tr-md rounded-br-md md:h-[33rem] shadow-2xl py-5 px-6">
           <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome back!</div>
           <div className="flex items-center mb-3 justify-center gap-10">
@@ -112,13 +123,15 @@ const Login = () => {
                 {isSubmitting ? 'Logging in...' : 'Login'}
               </button>
               <div className="text-sm my-5 font-[500] text-center mt-2">DON'T HAVE AN ACCOUNT? <Link to='/signup' className='text-secondary'>SIGN UP</Link></div>
-              <GoogleOAuthProvider
-              >
-                <Signin />
-              </GoogleOAuthProvider>
-
             </div>
           </form>
+          <button
+            type="button"
+            onClick={GoogleLogin}
+            className="bg-secondary w-full py-3 rounded-full text-white flex items-center justify-center"
+          >
+            <FcGoogle className="mr-2" /> Sign in with Google
+          </button>
         </div>
       </div>
     </Layout>

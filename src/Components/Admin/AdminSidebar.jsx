@@ -43,67 +43,67 @@ const AdminSidebar = () => {
                 </div>
             </div>
 
-            <div className="sidebar-menu text-xs">
+            <div className="sidebar-menu text-sm">
                 <div className="border-b p-4">
                     <p className="text-sm font-medium pb-3">MAIN MENU</p>
-                    <div onClick={() => handleNavigation('/auth/admin')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Dashboard
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/booking')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/booking')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Bookings
                     </div>
                 </div>
 
                 <div className="border-b p-4">
                     <p className="text-sm font-medium pb-3">SETTINGS</p>
-                    <div onClick={() => handleNavigation('/auth/admin/service')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/service')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Services
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/category')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/category')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Categories
                     </div>
                 </div>
 
                 <div className="border-b p-4">
                     <p className="text-sm font-medium pb-3">ACCOUNTS</p>
-                    <div onClick={() => handleNavigation('/auth/admin/user')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/user')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> All Users
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/provider')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/provider')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> All Provider
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/admin')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/admin')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> All Admins
                     </div>
                 </div>
 
                 <div className="border-b p-4">
                     <p className="text-sm font-medium pb-3">SYSTEM</p>
-                    <div onClick={() => handleNavigation('/auth/admin/slider')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/slider')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Slider
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/news-letter')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/news-letter')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> News Letter
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/earning')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/earning')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Earning
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/coupon')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/coupon')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Coupon
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/tax')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/tax')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Taxes
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/testemonial')} className="flex cursor-pointer items-center pb-3 gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/testemonial')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Testemonial
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/marquee')} className="flex cursor-pointer items-center gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/marquee')} className="flex cursor-pointer hover:text-secondary items-center gap-2">
                         <IoGridOutline /> Marquee
                     </div>
                 </div>
 
                 <div className="border-b p-4">
-                    <div onClick={handleLogout} className="flex cursor-pointer items-center text-sm pb-3 gap-2">
+                    <div onClick={handleLogout} className="flex cursor-pointer hover:text-secondary items-center text-sm pb-3 gap-2">
                         <IoIosLogOut /> Logout
                     </div>
                 </div>

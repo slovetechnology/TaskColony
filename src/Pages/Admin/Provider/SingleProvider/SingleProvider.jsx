@@ -5,10 +5,10 @@ import { useParams } from 'react-router-dom';
 import { Apis, AuthGeturl } from '../../../../Components/General/Api';
 import MyGigs from './Mygigs';
 import Bookings from './Bookings';
-import Reviews from './Reviews';
 import Payouts from './Payout';
 import ProviderDocuments from './Document';
-import ProviderReviews from './ProviderReview';
+import { formatDate } from '../../../../utils/utils';
+import Reviews from './Reviews';
 
 const SingleProvider = () => {
     const { userid } = useParams();
@@ -19,10 +19,10 @@ const SingleProvider = () => {
 
     const fetchUser = useCallback(async () => {
         try {
-            const res = await AuthGeturl(`${Apis.admins.get_provider_detail}?userid=${userid}`); 
+            const res = await AuthGeturl(`${Apis.admins.get_provider_detail}?userid=${userid}`);
             if (res.status === true) {
-                setUser(res.data); 
-                setTrackid(res.data.trackid); 
+                setUser(res.data);
+                setTrackid(res.data.trackid);
             }
         } catch (err) {
             console.error('Failed to fetch user data:', err.message);
@@ -46,7 +46,7 @@ const SingleProvider = () => {
                         <div className='mb-3'><span className="font-bold">Username:</span> {user.username}</div>
                         <div className='mb-3'><span className="font-bold">Email:</span> {user.email}</div>
                         <div className='mb-3'><span className="font-bold">Phone Number:</span> {user.phone}</div>
-                        <div className='mb-3'><span className="font-bold">Phone Number:</span> {trackid}</div>
+                        <div className='mb-3'><span className="font-bold">Created At:</span> {formatDate(user.created_at)}</div>
                     </div>
                     <div className='mt-6'>
                         <div className="text-secondary font-semibold text-lg">Bank Information</div>
@@ -59,12 +59,12 @@ const SingleProvider = () => {
                 </div>
             );
         }
-        if (activeTab === 'my-gigs') return <MyGigs trackid={trackid}  />;
-        if (activeTab === 'bookings') return <Bookings trackid={trackid}  />;
-        if (activeTab === 'providerreview') return <Reviews trackid={trackid}  />;
-        if (activeTab === 'document') return <ProviderDocuments trackid={trackid}  />;
-        if (activeTab === 'payout') return <Payouts trackid={trackid}  />;
-        if (activeTab === 'providerreview') return <ProviderReviews trackid={trackid}  />;
+        if (activeTab === 'my-gigs') return <MyGigs trackid={trackid} />;
+        if (activeTab === 'bookings') return <Bookings trackid={trackid} />;
+        if (activeTab === 'document') return <ProviderDocuments trackid={trackid} />;
+        if (activeTab === 'payout') return <Payouts trackid={trackid} />;
+        if (activeTab === 'reviews') return <Reviews trackid={trackid} />;
+
     };
 
     return (
@@ -80,7 +80,7 @@ const SingleProvider = () => {
                                     <div className="h-[13rem] text-white rounded-xl bg-gradient-to-r px-6 py-14 from-[#4797BD] to-[#63C2AB]">
                                         <p className="text-base">Total Earning</p>
                                         <div className="flex mt-5 items-center justify-between">
-                                        <p className="md:text-5xl text-2xl font-medium">${user.provider_bal}</p>
+                                            <p className="md:text-5xl text-2xl font-medium">${user.provider_bal}</p>
                                             <div className="bg-white p-3 rounded-full text-xl text-orange-500">
                                                 <GoArrowUpRight />
                                             </div>
@@ -109,13 +109,13 @@ const SingleProvider = () => {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             <div className="mt-10">
                                 <div className="bg-white px-6 py-6">
                                     <div className="flex flex-wrap items-center gap-3 text-primary font-medium border-b mb-5 pb-3">
-                                        {['about', 'my-gigs', 'provider reviews', 'document', 'payout'].map(tab => (
+                                        {['about', 'my-gigs', 'document', 'payout', 'reviews',].map(tab => (
                                             <button key={tab} onClick={() => setActiveTab(tab)} className={activeTab === tab ? 'text-secondary border-b px-10 border-secondary font-bold' : ''}>
                                                 {tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
                                             </button>
