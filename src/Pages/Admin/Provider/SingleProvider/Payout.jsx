@@ -7,10 +7,10 @@ import PaginationButton from '../../../../Components/General/Pagination/Paginati
 import { TableRow } from '../../../../Components/Admin/Table/TableRow';
 import { TableData } from '../../../../Components/Admin/Table/TableData';
 
-const TABLE_HEADERS = ['id', 'Date', 'Amount', 'Status',''];
+const TABLE_HEADERS = ['id', 'Date', 'Amount', 'Status', ''];
 const DEFAULT_PER_PAGE = 10;
 
-const Payouts = ({trackid}) => {
+const Payouts = ({ trackid }) => {
     const [payout, setPayout] = useState([]); // Set to an empty array
     const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(0);
@@ -18,7 +18,7 @@ const Payouts = ({trackid}) => {
 
     const fetchUser = useCallback(async () => {
         try {
-            const res = await AuthGeturl(`${Apis.admins.provider_payout}?&provider_tid=${trackid}`); // Include userId in the request
+            const res = await AuthGeturl(`${Apis.admins.provider_payout}?&provider_tid=${trackid}`);
             if (res.status === true) {
                 setPayout(res.data.data);
                 setTotal(res.data.total); // Assuming your API returns the total count
@@ -28,7 +28,7 @@ const Payouts = ({trackid}) => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [trackid]);
 
     useEffect(() => {
         fetchUser();
@@ -43,6 +43,10 @@ const Payouts = ({trackid}) => {
 
     if (loading) {
         return <div className="text-center">Loading payouts...</div>;
+    } 
+
+    if (payout.length === 0) {
+        return <div className="text-center">No payouts available.</div>;
     }
 
     return (
