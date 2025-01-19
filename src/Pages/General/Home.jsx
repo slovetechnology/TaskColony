@@ -168,7 +168,7 @@ function Home() {
                                                 <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                                             </div>
                                         </div>
-                                        <Link to="" className='text-secondary text-xl lg:text-2xl relative '>
+                                        <Link to="/notification" className='text-secondary text-xl lg:text-2xl relative '>
                                             <SlBell />
                                             {notificationCount > 0 && (
                                                 <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
@@ -251,7 +251,7 @@ function Home() {
                                     />
                                     <div className="text-sm">
                                         <div className="font-medium">Have any Questions?</div>
-                                        <div className="text-slate-500">+1 281 760 6925</div>
+                                        <div className="text-slate-500">+1 720 573 1900</div>
                                     </div>
                                 </div>
                             </div>

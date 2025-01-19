@@ -200,8 +200,9 @@ const BookingList = () => {
                 </div>
               ))
             ) : (
-              <div>
-                <img src={notfound} alt="Not Found" className="h-[30rem] object-contain w-full" />
+              <div className='flex items-center justify-center'>
+                {/* <img src={notfound} alt="Not Found" className="h-[30rem] object-contain w-full" /> */}
+                <div className="text-center text-xl font-semibold">You have no Bookings</div>
               </div>
             )}
           </div>

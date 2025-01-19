@@ -67,13 +67,10 @@ export const GeneralNoAuth = [
     { path: 'contact', element: Contactus },
     { path: 'verify', element: AutoLocationComponent },
     { path: 'service-detail/:userid', element: ServiceDetail },
-    { path: 'booking-list', element: BookingList },
     { path: 'category', element: Category },
     { path: 'sub-category/:trackid', element: Subcategory },
     { path: 'gallery', element: Gallery },
     { path: 'team', element: Teams },
-    { path: 'favourite', element: FavService },
-    { path: 'user-favourite', element: UserFavService },
 
 
 ]
@@ -88,6 +85,10 @@ export const GeneralRoutes = [
     { path: 'provider', element: Provider },
     { path: 'provider-kyc', element: KycForm },
     { path: 'provider-settings', element: ProviderSettings },
+    { path: 'booking-list', element: BookingList },
+    { path: 'favourite', element: FavService },
+    { path: 'user-favourite', element: UserFavService },
+
 
 ]
 
