@@ -257,14 +257,43 @@ const KycForm = ({ closeView, isOpen }) => {
 
                     <div className="grid grid-cols-2 gap-3">
                         <div className="mb-3">
+                            <label className="text-xs font-semibold">Social Security Number Type</label>
+                            <select
+                                {...register('sostype', { required: 'Social security number type is required' })}
+                                className={`input border ${errors.sostype ? 'border-red-600' : 'border'}`}
+                            >
+                                <option value="">Select</option>
+                                <option value="SSN">SSN</option>
+                                <option value="ITIN">ITIN</option>
+                                <option value="EIN">EIN</option>
+                            </select>
+                            {errors.sostype && <div className="text-red-600 text-xs">{errors.sostype.message}</div>}
+                        </div>
+
+                        <div className="mb-3">
                             <label className="text-xs font-semibold">Social Security Number</label>
                             <input
-                                {...register('security_number', { required: 'Security number is required' })}
+                                {...register('security_number', { required: 'Security number Type is required' })}
                                 type="text"
                                 className={`input border ${errors.security_number ? 'border-red-600' : 'border'}`}
-                                placeholder='SSN/ITIN/EIN'
                             />
                             {errors.security_number && <div className="text-red-600 text-xs">{errors.security_number.message}</div>}
+                        </div>
+
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="mb-3">
+                            <label className="text-xs font-semibold">Gender</label>
+                            <select
+                                {...register('gender', { required: 'Social security number type is required' })}
+                                className={`input border ${errors.gender ? 'border-red-600' : 'border'}`}
+                            >
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            {errors.gender && <div className="text-red-600 text-xs">{errors.gender.message}</div>}
                         </div>
                         <div className="mb-3">
                             <label className="text-xs font-semibold">Date Of Birth</label>
@@ -276,6 +305,7 @@ const KycForm = ({ closeView, isOpen }) => {
                             {errors.dob && <div className="text-red-600 text-xs">{errors.dob.message}</div>}
                         </div>
                     </div>
+
                     <div className="mb-5">
                         <div className="flex justify-between">
                             <label className="text-xs font-semibold">Address</label>

@@ -4,7 +4,7 @@ import gradient from "../../../assets/gradient.jpeg";
 import { MdOutlineLocationOn, MdOutlineMyLocation } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { FaChevronRight, FaUserCircle } from "react-icons/fa";
+import { FaChevronRight, FaUserCircle, FaPlus } from "react-icons/fa";
 import FavouriteService from "./FavouriteService";
 import EditUser from "./EditUser";
 import ChangePassword from "./ChangePassword";
@@ -12,6 +12,7 @@ import Settings from "./Settings";
 import FundWallet from "./Funds/FundWallet";
 import KycForm from "../Provider/KycForm";
 import KycPopups from "../../../Components/General/KycPopup";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const User = () => {
   const { user } = useSelector((state) => state.data);
@@ -20,12 +21,21 @@ const User = () => {
   const [changePass, SetChangePass] = useState(false);
   const [settings, SetSettings] = useState(false);
   const [fundWallet, SetFundwallet] = useState(false);
-  const [isKycFormOpen, setIsKycFormOpen] = useState(false); // State for KYC form
+  const [isKycFormOpen, setIsKycFormOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
+  const [image, setImage] = useState({
+    main: null,
+    preview: null,
+  });
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    const storedImage = localStorage.getItem('profileImage');
+    if (storedImage) {
+      setImage({ main: storedImage, preview: storedImage });
+    }
     getUserGeoAddress();
   }, []);
 
@@ -68,17 +78,17 @@ const User = () => {
 
   const handleKycSubmit = () => {
     if (user.kyclevel === 0) {
-      setIsKycFormOpen(true); // Open the KYC form if kyclevel is 0
+      setIsKycFormOpen(true);
     } else {
-      navigate('/provider'); // Navigate to provider if kyclevel is 1
+      navigate('/provider');
     }
   };
 
   const handleSwitchToProvider = () => {
     if (user.kyclevel === 0) {
-      setIsPopupOpen(true); // Show popup if kyclevel is 0
+      setIsPopupOpen(true);
     } else {
-      navigate('/provider'); // Navigate if kyclevel is 1
+      navigate('/provider');
     }
   };
 
@@ -91,7 +101,21 @@ const User = () => {
   const handleSettingsOpen = () => SetSettings(true);
   const handleSettingsClose = () => SetSettings(false);
   const handleCancel = () => setIsPopupOpen(false);
-  const handleCloseKycForm = () => setIsKycFormOpen(false); // Close KYC Form
+  const handleCloseKycForm = () => setIsKycFormOpen(false);
+
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImage({
+        main: file,
+        preview: reader.result,
+      });
+      localStorage.setItem('profileImage', reader.result); // Store the image in localStorage
+    };
+  };
 
   return (
     <Layout>
@@ -123,11 +147,26 @@ const User = () => {
             alt="Gradient"
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
-          <div className="bg-white w-full xl:px-10 px-4 py-5 lg:h-[40rem] shadow-2xl">
-            <div className="md:flex items-center justify-between mb-3 gap-4 pb-3">
-              <div className="flex items-center gap-4">
-                <FaUserCircle className="xl:text-[5rem] text-4xl bg-gray-200" />
-                <span className="flex-1">
+          <div className="bg-white w-full px-4 py-5 lg:h-[45rem] shadow-2xl">
+            <div className="lg:flex items-center justify-between mb-3 gap-4 pb-3">
+              <div className="md:flex items-center justify-center w-full  gap-4">
+                <div className="mb-4">
+                  <label>
+                    {image.preview === null ? (
+                    <div className=""></div>
+                    ) : (
+                      <LazyLoadImage
+                        src={image.preview}
+                        alt=""
+                        className="md:w-32 md:h-32 h-20 w-20 mx-auto border  rounded-full object-cover"
+                      />
+                    )}
+                    <input type="file" hidden onChange={handleUpload} />
+                    <div className="text-center text-secondary text-xs">Upload Profile</div>
+                  </label>
+                </div>
+
+                <div className="flex flex-col justify-center md:block items-center">
                   <h5 className="font-[500] text-sm xl:text-base">
                     {user.firstname} {user.lastname}
                   </h5>
@@ -139,18 +178,17 @@ const User = () => {
                   >
                     Edit Profile
                   </div>
-                </span>
-              </div>
-
-              <div className="flex justify-center items-center my-5 gap-2">
+                </div>
+                <div className="flex justify-center items-center my-5 gap-2">
                 <div className="text-primary text-sm font-medium">Wallet Balance</div>
                 <div className="text-secondary text-2xl">${user.user_wallets[0].walletbal}</div>
               </div>
-
-              <div className="flex items-center justify-between  px-1 text-sm py-3 gap-10 text-primary md:w-[30rem] bg-white shadow-2xl">
+              </div>
+        
+              <div className="flex items-center justify-between px-1 text-sm py-3 gap-10 text-primary md:w-full  bg-white shadow-2xl">
                 <div className=""><MdOutlineLocationOn /></div>
                 <div>{location}</div>
-                <div className=""> <MdOutlineMyLocation /></div>
+                <div className=""><MdOutlineMyLocation /></div>
               </div>
             </div>
             {user.kyclevel === 0 && <Link to='/provider-kyc'></Link>}
