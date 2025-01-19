@@ -135,7 +135,7 @@ const Provider = () => {
                       />
                     )}
                     <input type="file" hidden onChange={handleUpload} />
-                    <div className="text-center text-secondary text-xs">Upload Profile</div>
+                    <div className="text-center text-secondary text-xs">Upload Image</div>
                   </label>
                 </div>
 
@@ -153,8 +153,8 @@ const Provider = () => {
                   </div>
                 </div>
                 <div className="flex justify-center items-center my-5 gap-2">
-                  <div className="text-primary text-sm font-medium">Wallet Balance</div>
-                  <div className="text-secondary text-2xl">${user.user_wallets[0].walletbal}</div>
+                  <div className="text-primary text-sm font-medium">Total Earning</div>
+                  <div className="text-secondary text-2xl">${user.provider_bal}</div>
                 </div>
               </div>
 

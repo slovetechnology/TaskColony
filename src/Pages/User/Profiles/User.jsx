@@ -162,7 +162,7 @@ const User = () => {
                       />
                     )}
                     <input type="file" hidden onChange={handleUpload} />
-                    <div className="text-center text-secondary text-xs">Upload Profile</div>
+                    <div className="text-center text-secondary text-xs">Upload Image</div>
                   </label>
                 </div>
 
