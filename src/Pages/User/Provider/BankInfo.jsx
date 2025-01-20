@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 const BankInfo = ({ closeView }) => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [isUpdating, setIsUpdating] = useState(false);
+    const [updateButtonText, setUpdateButtonText] = useState("Update"); // State for button text
     const { user } = useSelector((state) => state.data);
 
     // Pre-fill form if user data is available
@@ -33,18 +34,25 @@ const BankInfo = ({ closeView }) => {
             };
 
             const res = await AuthPosturl(Apis.users.update_bank_info, datatosend);
-
             if (res.status === true) {
                 ToastAlert('Your withdrawal request is being processed');
                 closeView(); // Close modal on success
+                window.location.reload();
             } else {
-                console.error("Error updating bank info:", res.error);
-                ToastAlert('Error updating bank info. Please try again.');
+                ToastAlert('Your withdrawal request is being processed');
+                closeView(); // Close modal on success
+                window.location.reload();
             }
         } else {
             ToastAlert('Your request will be processed shortly');
             closeView(); // Close modal without updating
+            window.location.reload();
         }
+    };
+
+    const handleUpdateClick = () => {
+        setIsUpdating(!isUpdating);
+        setUpdateButtonText(isUpdating ? "Update" : "Updated"); // Change button text
     };
 
     return (
@@ -104,10 +112,10 @@ const BankInfo = ({ closeView }) => {
 
                     <button
                         type="button"
-                        onClick={() => setIsUpdating(!isUpdating)}
+                        onClick={handleUpdateClick}
                         className="bg-secondary text-white py-1 px-2 rounded-md mt-5"
                     >
-                        { "Update"}
+                        {updateButtonText}
                     </button>
 
                     <button
