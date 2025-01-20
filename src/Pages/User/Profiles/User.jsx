@@ -140,7 +140,7 @@ const User = () => {
         </div>
       </div>
 
-      <div className="xl:w-[80%] w-full px-2 xl:px-0 xl:my-20 my-10 mx-auto">
+      <div className="xl:w-[85%] w-full px-2 xl:px-0 xl:my-20 my-10 mx-auto">
         <div>
           <img
             src={gradient}
