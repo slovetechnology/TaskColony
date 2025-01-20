@@ -113,7 +113,7 @@ const Mygigs = ({trackid}) => {
                   <p className="text-sm font-light text-secondary-500">{member.pfname}</p>
                 </TableData>
                 <TableData>
-                  <p className="text-sm font-light text-secondary-500">{member.amt_paid}</p>
+                  <p className="text-sm font-light text-secondary-500">${member.amt_paid}</p>
                 </TableData>
                 <TableData>
                   <StatusTag

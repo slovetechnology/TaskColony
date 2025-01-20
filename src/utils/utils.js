@@ -256,7 +256,7 @@ export const FooterSocials = [
 export const FooterContacts = [
     { title: `Careers`, content: `Jobs@taskcolony.com` },
     { title: `Business Inquries`, content: `inquries@taskcolony.com` },
-    { title: `Helpline Number`, content: `+144  1234 56789` },
+    { title: `Helpline Number`, content: `+1 720 573 1900` },
 ]
 
 export { img1, img2, img3, img4, img23, img25, img37, img38, img26, img22, logo }
