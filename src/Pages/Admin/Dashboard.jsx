@@ -169,7 +169,7 @@ const Dashboard = () => {
                                     </TableData>
                                     <TableData>{member.email}</TableData>
                                     <TableData>{member.username}</TableData>
-                                    <TableData>{member.walletbal}</TableData>
+                                    <TableData>${member.walletbal}</TableData>
                                 </TableRow>
                             ))}
                         </Table>
@@ -183,7 +183,7 @@ const Dashboard = () => {
                             {(items?.recent_bookings ?? []).map((booking, index) => (
                                 <TableRow key={index} className="mb-10">
                                     <TableData>{booking.trackid}</TableData>
-                                    <TableData>{booking.amt_paid}</TableData>
+                                    <TableData>${booking.amt_paid}</TableData>
                                     <TableData>{booking.service_name}</TableData>
                                     <TableData>{booking.pfname}</TableData>
                                     <TableData>{booking.status_text}</TableData>

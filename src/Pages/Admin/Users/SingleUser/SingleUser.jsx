@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from '../../../../Components/Admin/AdminLayout';
 import { GoArrowUpRight } from 'react-icons/go';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Apis, AuthGeturl } from '../../../../Components/General/Api';
 import Bookings from './Bookings';
 import Reviews from './Reviews';
@@ -58,6 +58,9 @@ const SingleUser = () => {
     return (
         <AdminLayout>
             <div className="m-10">
+                <div className="">
+                    <Link to='/auth/admin/user' className="bg-white py-2 px-5 font-semibold text-lg  rounded-lg w-fit">Back</Link>
+                </div>
                 {loading ? (
                     <div className="text-center flex items-center justify-center w-full h-screen text-lg font-semibold">Loading user data...</div>
                 ) : (

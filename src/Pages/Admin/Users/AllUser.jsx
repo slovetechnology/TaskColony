@@ -165,7 +165,7 @@ const AllUser = () => {
                                 <TableData>{member.email}</TableData>
                                 <TableData>{member.phoneno}</TableData>
                                 <TableData>{member.bookings}</TableData>
-                                <TableData>{member.walletbal}</TableData>
+                                <TableData>${member.walletbal}</TableData>
                                 <TableData>{member.account_verified_text}</TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">

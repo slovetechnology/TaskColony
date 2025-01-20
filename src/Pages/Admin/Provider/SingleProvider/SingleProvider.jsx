@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from '../../../../Components/Admin/AdminLayout';
 import { GoArrowUpRight } from 'react-icons/go';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Apis, AuthGeturl } from '../../../../Components/General/Api';
 import MyGigs from './Mygigs';
 import Bookings from './Bookings';
@@ -9,11 +9,13 @@ import Payouts from './Payout';
 import ProviderDocuments from './Document';
 import { formatDate } from '../../../../utils/utils';
 import Reviews from './Reviews';
+import { FaRegCopy } from 'react-icons/fa';
+import { ToastAlert } from '../../../../Components/General/Utils';
 
 const SingleProvider = () => {
     const { userid } = useParams();
-    const [user, setUser] = useState(null); // Change to null for single user
-    const [trackid, setTrackid] = useState(null); // Change to null for single user
+    const [user, setUser] = useState(null);
+    const [trackid, setTrackid] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('about');
 
@@ -35,6 +37,12 @@ const SingleProvider = () => {
         fetchUser();
     }, [fetchUser]);
 
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text)
+            .then(() => ToastAlert('Copied to clipboard!'))
+            .catch(err => console.error('Failed to copy: ', err));
+    };
+
     const renderTabContent = () => {
         if (activeTab === 'about' && user) {
             return (
@@ -50,11 +58,46 @@ const SingleProvider = () => {
                     </div>
                     <div className='mt-6'>
                         <div className="text-secondary font-semibold text-lg">Bank Information</div>
-                        <div className='mb-3 mt-3'><span className="font-bold">Holder Name:</span> {user.bank_holder_name}</div>
-                        <div className='mb-3'><span className="font-bold">Bank Name:</span> {user.bank_name}</div>
-                        <div className='mb-3'><span className="font-bold">Routing Number:</span> {user.bank_route_no}</div>
-                        <div className='mb-3'><span className="font-bold">Branch Address:</span> {user.bank_address}</div>
-                        <div className='mb-3'><span className="font-bold">Account Number:</span> {user.bank_acc_no}</div>
+                        {user.bank_holder_name && (
+                            <div className='mb-3 mt-3'>
+                                <span className="font-bold">Holder Name:</span> {user.bank_holder_name}
+                                <button onClick={() => copyToClipboard(user.bank_holder_name)} className="ml-2 text-secondary">
+                                    <FaRegCopy />
+                                </button>
+                            </div>
+                        )}
+                        {user.bank_name && (
+                            <div className='mb-3'>
+                                <span className="font-bold">Bank Name:</span> {user.bank_name}
+                                <button onClick={() => copyToClipboard(user.bank_name)} className="ml-2 text-secondary">
+                                    <FaRegCopy />
+                                </button>
+                            </div>
+                        )}
+                        {user.bank_route_no && (
+                            <div className='mb-3'>
+                                <span className="font-bold">Routing Number:</span> {user.bank_route_no}
+                                <button onClick={() => copyToClipboard(user.bank_route_no)} className="ml-2 text-secondary">
+                                    <FaRegCopy />
+                                </button>
+                            </div>
+                        )}
+                        {user.bank_address && (
+                            <div className='mb-3'>
+                                <span className="font-bold">Branch Address:</span> {user.bank_address}
+                                <button onClick={() => copyToClipboard(user.bank_address)} className="ml-2 text-secondary">
+                                    <FaRegCopy />
+                                </button>
+                            </div>
+                        )}
+                        {user.bank_acc_no && (
+                            <div className='mb-3'>
+                                <span className="font-bold">Account Number:</span> {user.bank_acc_no}
+                                <button onClick={() => copyToClipboard(user.bank_acc_no)} className="ml-2 text-secondary">
+                                    <FaRegCopy />
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             );
@@ -64,12 +107,14 @@ const SingleProvider = () => {
         if (activeTab === 'document') return <ProviderDocuments trackid={trackid} />;
         if (activeTab === 'payout') return <Payouts trackid={trackid} />;
         if (activeTab === 'reviews') return <Reviews trackid={trackid} />;
-
     };
 
     return (
         <AdminLayout>
             <div className="m-10">
+                <div className="">
+                    <Link to='/auth/admin/provider' className="bg-white py-2 px-5 font-semibold text-lg  rounded-lg w-fit">Back</Link>
+                </div>
                 {loading ? (
                     <div className="text-center flex items-center justify-center w-full h-screen text-lg font-semibold">Loading user data...</div>
                 ) : (
@@ -109,13 +154,12 @@ const SingleProvider = () => {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div className="mt-10">
                                 <div className="bg-white px-6 py-6">
                                     <div className="flex flex-wrap items-center gap-3 text-primary font-medium border-b mb-5 pb-3">
-                                        {['about', 'my-gigs', 'document', 'payout', 'reviews',].map(tab => (
+                                        {['about', 'my-gigs', 'document', 'payout', 'reviews'].map(tab => (
                                             <button key={tab} onClick={() => setActiveTab(tab)} className={activeTab === tab ? 'text-secondary border-b px-10 border-secondary font-bold' : ''}>
                                                 {tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
                                             </button>

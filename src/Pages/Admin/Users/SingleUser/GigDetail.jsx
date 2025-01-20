@@ -26,7 +26,7 @@ const GigDetail = ({ gig, closeView }) => {
                     </div>
                     <div className="">
                         <p className="font-medium text-base mb-2">Amount Paid</p>
-                        <p className="text-sm">{gig.amt_paid}</p>
+                        <p className="text-sm">${gig.amt_paid}</p>
                     </div>
                     <div className="">
                         <p className="font-medium text-base mb-2">Profit</p>

@@ -94,7 +94,7 @@ const Bookings = ({trackid}) => {
                 <TableData>{gig.ufname} {gig.ulname}</TableData>
                 <TableData>{gig.service_name}</TableData>
                 <TableData>{gig.pfname} {gig.plname}</TableData>
-                <TableData>{gig.amt_paid}</TableData>
+                <TableData>${gig.amt_paid}</TableData>
                 <TableData>
                   <StatusTag
                     variant={statusToVariant[gig.status_text.toLowerCase()]}
