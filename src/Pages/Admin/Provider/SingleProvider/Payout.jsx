@@ -8,6 +8,7 @@ import { TableRow } from '../../../../Components/Admin/Table/TableRow';
 import { TableData } from '../../../../Components/Admin/Table/TableData';
 import UpdatePayout from './UpdatePayout';
 import { PiPencilSimpleLine } from 'react-icons/pi';
+import { formatDate } from '../../../../utils/utils';
 
 const TABLE_HEADERS = ['id', 'Date', 'Amount', 'Status', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -76,9 +77,9 @@ const Payouts = ({ trackid }) => {
                     {payout.map((item, i) => (
                         <TableRow key={i}>
                             <TableData>{item.id}</TableData>
-                            <TableData>{item.created_date}</TableData>
-                            <TableData>{item.amount}</TableData>
-                            <TableData>{item.status}</TableData>
+                            <TableData>{formatDate(item.created_date)}</TableData>
+                            <TableData>${item.amount}</TableData>
+                            <TableData>{item.status_text}</TableData>
                             <TableData>
                             <div className="flex gap-4 text-lg text-primary">
                                 <div className="cursor-pointer" onClick={() => SingleItem(item.id)}>

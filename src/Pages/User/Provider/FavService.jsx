@@ -78,11 +78,11 @@ const FavService = () => {
         <Layout>
             <div className="bg-gray w-full xl:h-[20rem]">
                 <div className="text-center py-10 xl:pt-24">
-                    <p className="font-[500] xl:text-4xl text-xl mb-3">Provider Favourite Service</p>
+                    <p className="font-[500] xl:text-4xl text-xl mb-3">Provider Registered Service</p>
                     <span className="flex items-center gap-4 font-[500] justify-center">
                         <p className="text-primary">Home</p>
                         <span className="bg-[#6C757D] w-3 py-0.5"></span>
-                        <p className="text-secondary">Provider Favourite Service</p>
+                        <p className="text-secondary">Provider Registered Service</p>
                     </span>
                 </div>
             </div>

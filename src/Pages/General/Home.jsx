@@ -18,7 +18,6 @@ import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
 import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
-import checked from '../../assets/check.png'
 import vector from '../../assets/Vector 10.png'
 
 const ActiveTabOptions = [
@@ -39,7 +38,7 @@ function Home() {
     const [topNav, setTopNav] = useState(false)
     const TopNavIcon = topNav ? FaTimes : SlMenu
     const [email, setEmail] = useState('');
-
+    const profileImage = localStorage.getItem('profileImage') || user.passport;
     const [providers, setProvider] = useState(null);
     const [gallery, setGallery] = useState([]);
     const defaultOptions = {
@@ -138,6 +137,8 @@ function Home() {
         }
     };
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
+
+    
     return (
         <>
             <div className='relative'>
@@ -158,11 +159,12 @@ function Home() {
                             {userloggedin && <Link className='uppercase text-xs py-3 px-4 truncate' to='/user'>Profile</Link>}
                         </div>
                         <div className="flex items-center gap-3">
+                        
                             <Link to='/user' className="">
                                 {userloggedin ? (
                                     <div className="flex items-center gap-4">
                                         <div className="flex items-center gap-2">
-                                            <FaUserCircle className="lg:text-[2rem] text-[1rem] bg-gray-200" />
+                                            <img src={profileImage} alt='User' className="w-9 h-9 rounded-full" />
                                             <div className='text-xs hidden xl:block pr-5'>
                                                 <p className="mb-0">{user?.firstname || 'User'}</p>
                                                 <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
@@ -242,7 +244,7 @@ function Home() {
                                 <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
                             </div>
                             <div className="mt-10 mb-24">
-                                <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="">Book Now</Link>
+                                <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="/booking-list">Book Now</Link>
                                 <div className="flex items-center mt-5 gap-2">
                                     <LazyLoadImage
                                         effect="blur"

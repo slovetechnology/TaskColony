@@ -153,7 +153,9 @@ const User = () => {
                 <div className="mb-4">
                   <label>
                     {image.preview === null ? (
-                    <div className=""></div>
+                    <div className="">
+                      <img src={user.passport} alt="" className="" />
+                    </div>
                     ) : (
                       <LazyLoadImage
                         src={image.preview}
