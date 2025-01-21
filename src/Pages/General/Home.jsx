@@ -1,6 +1,4 @@
 // 
-
-
 import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { img1, img3, img4 } from 'utils/utils';
@@ -19,6 +17,7 @@ import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import Footer from '../../Components/User/Footer';
 import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
 import vector from '../../assets/Vector 10.png'
+import Slider from "react-slick";
 
 const ActiveTabOptions = [
     "email"
@@ -48,6 +47,16 @@ function Home() {
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice',
         },
+    };
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1000,
     };
 
     const [notificationCount, setNotificationCount] = useState(0);
@@ -138,7 +147,7 @@ function Home() {
     };
     const [activeTab, setActiveTab] = useState(ActiveTabOptions[0])
 
-    
+
     return (
         <>
             <div className='relative'>
@@ -159,7 +168,7 @@ function Home() {
                             {userloggedin && <Link className='uppercase text-xs py-3 px-4 truncate' to='/user'>Profile</Link>}
                         </div>
                         <div className="flex items-center gap-3">
-                        
+
                             <Link to='/user' className="">
                                 {userloggedin ? (
                                     <div className="flex items-center gap-4">
@@ -372,23 +381,23 @@ function Home() {
                 </div>
             </div>
 
-            <div className="overflow-x-auto scrollsdown mt-7 mb-2 pl-0 w-[95%] mx-auto  md:pl-20 lg:pl-">
-                <div className="w-fit flex items-center gap-5">
+            <div className=" mt-7 mb-10 pl-0 w-[95%] mx-auto">
+                <Slider {...settings}>
                     {offers.map((item, index) => (
-                        <div className="flex bg-white px-3 py-5 shadow-xl mb-10 gap-3 items-center rounded-xl" key={index}>
-                            <div className="">
-                                <LazyLoadImage src={item.imagelinks[0]} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
-                            </div>
-                            <div className="w-[25rem]">
-                                <div className="text-sm text-slate-500">{item.title}</div>
-                                <div className="font-medium text-lg">{item.description}</div>
+                        <div className="flex space-x-7">
+                            <div className="md:flex bg-white mx-10 px-3 py-5 shadow-xl mb-10  gap-4 items-center rounded-xl" key={index}>
+                                <div className="">
+                                    <LazyLoadImage src={item.imagelinks[0]} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
+                                </div>
+                                <div className="w-[25rem]">
+                                    <div className="text-sm text-slate-500">{item.title}</div>
+                                    <div className="font-medium text-lg">{item.description}</div>
+                                </div>
                             </div>
                         </div>
                     ))}
-                </div>
+                </Slider>
             </div>
-
-
 
             <div className="w-11/12 mx-auto lg:w-10/12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">
