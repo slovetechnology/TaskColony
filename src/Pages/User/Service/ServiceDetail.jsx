@@ -55,7 +55,7 @@ const ServiceDetail = () => {
     try {
       const res = await Geturl(`${Apis.users.get_system}/${userid}`);
       if (res.status === true && res.data.all_services?.length > 0) {
-        const filteredService = res.data.all_services.find((item) => String(item.id) === String(userid));
+        const filteredService = res.data.all_services.find((item) => String(item.trackid) === String(userid));
         if (filteredService) {
           setService(filteredService);
           setImage({

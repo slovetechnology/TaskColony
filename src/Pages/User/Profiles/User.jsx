@@ -147,7 +147,7 @@ const User = () => {
             alt="Gradient"
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
-          <div className="bg-white w-full px-4 py-5 lg:h-[45rem] shadow-2xl">
+          <div className="bg-white w-full px-4 py-5 h-auto shadow-2xl">
             <div className="lg:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="md:flex items-center justify-center w-full  gap-4">
                 <div className="mb-4">

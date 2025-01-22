@@ -79,7 +79,7 @@ export const GeneralRoutes = [
     { path: 'notification', element: Notification },
     { path: 'fund-history', element: TranscationHistory },
     { path: 'confirm-booking', element: ConfirmBooking },
-    { path: 'booking-detail/:bookingid', element: BookingDetail },
+    { path: 'booking-detail/:trackid', element: BookingDetail },
     { path: 'booking', element: BookingList },
     { path: 'new-booking', element: Booking },
     { path: 'provider', element: Provider },

@@ -363,7 +363,7 @@ function Home() {
                                     <div className="py-4 px-5 md:h-[7rem] bg-white rounded-b-3xl shadow-xl -mt-3">
                                         <div className="font-medium">{item.name}</div>
                                         <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
-                                        <Link to={`/service-detail/${item.id}`} className='text-xs font-medium text-secondary'>View Details</Link>
+                                        <Link to={`/service-detail/${item.trackid}`} className='text-xs font-medium text-secondary'>View Details</Link>
 
                                     </div>
                                 </div>
@@ -385,15 +385,18 @@ function Home() {
                 <Slider {...settings}>
                     {offers.map((item, index) => (
                         <div className="flex space-x-7">
-                            <div className="md:flex bg-white mx-10 px-3 py-5 shadow-xl mb-10  gap-4 items-center rounded-xl" key={index}>
-                                <div className="">
-                                    <LazyLoadImage src={item.imagelinks[0]} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
+                            <Link to={`/service-detail/${item.service_id}`} className='text-xs font-medium text-secondary'>
+                                <div className="md:flex bg-white mx-10 px-3 py-5 shadow-xl mb-10  gap-4 items-center rounded-xl" key={index}>
+                                    <div className="">
+                                        <LazyLoadImage src={item.imagelinks[0]} effect='blur' className='rounded-[2rem] h-[11rem] w-[30rem] border object-cover' />
+                                    </div>
+                                    <div className="w-[25rem]">
+                                        <div className="text-sm text-slate-500">{item.title}</div>
+                                        <div className="font-medium text-lg">{item.description}</div>
+                                    </div>
                                 </div>
-                                <div className="w-[25rem]">
-                                    <div className="text-sm text-slate-500">{item.title}</div>
-                                    <div className="font-medium text-lg">{item.description}</div>
-                                </div>
-                            </div>
+                            </Link>
+
                         </div>
                     ))}
                 </Slider>

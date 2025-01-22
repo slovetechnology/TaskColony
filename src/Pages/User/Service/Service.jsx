@@ -175,7 +175,7 @@ const Service = () => {
                 <div className="py-4 px-5 shadow-2xl lg:h-[9rem] w-full bg-white rounded-b-3xl -mt-3">
                   <div className="font-medium">{item.name}</div>
                   <div className="text-xs capitalize text-slate-500 mt-3">{item.description}</div>
-                  <Link to={`/service-detail/${item.id}`} className='text-xs font-medium text-secondary'>View Details</Link>
+                  <Link to={`/service-detail/${item.trackid}`} className='text-xs font-medium text-secondary'>View Details</Link>
                 </div>
               </div>
             ))
