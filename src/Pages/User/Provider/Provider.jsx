@@ -119,14 +119,16 @@ const Provider = () => {
             alt="Gradient"
             className="h-16 w-full rounded-tl-xl rounded-tr-xl"
           />
-       
+
           <div className="bg-white w-full px-4 py-5 h-auto shadow-2xl">
             <div className="lg:flex items-center justify-between mb-3 gap-4 pb-3">
               <div className="md:flex items-center justify-center w-full  gap-4">
                 <div className="mb-4">
                   <label>
                     {image.preview === null ? (
-                      <div className=""></div>
+                      <div className="">
+                        <img src={user.passport} alt="" className="w-20" />
+                      </div>
                     ) : (
                       <LazyLoadImage
                         src={image.preview}
@@ -138,6 +140,7 @@ const Provider = () => {
                     <div className="text-center text-secondary text-xs">Upload Image</div>
                   </label>
                 </div>
+
 
                 <div className="flex flex-col justify-center md:block items-center">
                   <h5 className="font-[500] text-sm xl:text-base">

@@ -154,7 +154,7 @@ const User = () => {
                   <label>
                     {image.preview === null ? (
                     <div className="">
-                      <img src={user.passport} alt="" className="" />
+                      <img src={user.passport} alt="" className="w-20" />
                     </div>
                     ) : (
                       <LazyLoadImage
