@@ -14,8 +14,9 @@ import { Apis, AuthGeturl, AuthPosturl } from '../../../Components/General/Api';
 import ConfirmDeleteSlider from './DeleteSlider';
 import UpdateSlider from './UpdateSlider';
 import { ToastAlert } from '../../../Components/General/Utils';
+import { useSelector } from 'react-redux';
 
-const TABLE_HEADERS = ['Title', 'Location', 'Status', 'Actions'];
+const TABLE_HEADERS = ['Title', 'Location', 'Status', '', ""];
 const DEFAULT_PER_PAGE = 10;
 
 const AllSlider = () => {
@@ -27,7 +28,8 @@ const AllSlider = () => {
     const [singles, setSingles] = useState({});
     const [view, setView] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const { admin } = useSelector(state => state.data);
+    const userLevel = admin.userlevel;
     const DeleteItem = (member) => {
         setDel(true);
         setSingles(member);
@@ -149,23 +151,31 @@ const AllSlider = () => {
                                             {member.status === 1 ? 'ACTIVE' : 'INACTIVE'}
                                         </span>
                                     </TableData>
-                                    <TableData>
-                                        <div className="flex gap-4 text-primary">
-                                            <div className="cursor-pointer" onClick={() => SingleItem(member)}>
-                                                <PiPencilSimpleLine />
+                                    {userLevel !== "3" && (
+
+                                        <TableData>
+                                            <div className="flex gap-4 text-primary">
+                                                <div className="cursor-pointer" onClick={() => SingleItem(member)}>
+                                                    <PiPencilSimpleLine />
+                                                </div>
+                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+                                                    <ImCancelCircle />
+                                                </div>
                                             </div>
-                                            <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
-                                                <ImCancelCircle />
-                                            </div>
-                                        </div>
-                                    </TableData>
+                                        </TableData>
+                                    )}
+
                                 </TableRow>
                             ))}
-                            <div className="mt-10 mx-5">
-                                <Link to="/auth/admin/new-slider" className="bg-pink w-fit px-4 py-2 text-white rounded-md">
-                                    <button>Add Slider</button>
-                                </Link>
-                            </div>
+                            {userLevel !== "3" && (
+
+                                <div className="mt-10 mx-5">
+                                    <Link to="/auth/admin/new-slider" className="bg-pink w-fit px-4 py-2 text-white rounded-md">
+                                        <button>Add Slider</button>
+                                    </Link>
+                                </div>
+                            )}
+
                             <PaginationButton
                                 pageCount={Math.ceil(filteredItems.length / DEFAULT_PER_PAGE)}
                                 onPageChange={handlePageChange}

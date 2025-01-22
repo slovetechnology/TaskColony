@@ -13,6 +13,8 @@ import { PiPencilSimpleLine } from 'react-icons/pi';
 import { ImCancelCircle } from 'react-icons/im';
 import UpateCoupon from './UpdateCoupon';
 import ConfirmDeleteCoupon from './DeleteCoupon';
+import { useSelector } from 'react-redux';
+import { formatDate } from '../../../utils/utils';
 
 const TABLE_HEADERS = ['Code', 'Discount', 'Discount Type', 'Expiry Date', 'Status', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -24,7 +26,7 @@ const AllCoupon = () => {
     const [filteredItems, setFilteredItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const { admin } = useSelector(state => state.data);
     const [del, setDel] = useState(false);
     const [singles, setSingles] = useState({});
     const [loads, setLoads] = useState(false);
@@ -114,16 +116,16 @@ const AllCoupon = () => {
                     <div className="flex items-center justify-between">
                         <div className="font-medium text-lg">Coupon</div>
                         <div className="md:flex hidden items-center gap-5">
-                        <label className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="w-[16rem] bg-transparent placeholder:text-[16px] placeholder:text-primary outline-none"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                />
-                <FaSearch size={16} />
-              </label>
+                            <label className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md">
+                                <input
+                                    type="text"
+                                    placeholder="Search"
+                                    className="w-[16rem] bg-transparent placeholder:text-[16px] placeholder:text-primary outline-none"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                                <FaSearch size={16} />
+                            </label>
                             <span className="text-primary text-2xl"><HiOutlineAdjustments /></span>
                             <span className="text-primary text-2xl"><GiCancel /></span>
                         </div>
@@ -147,9 +149,9 @@ const AllCoupon = () => {
                                         <TableData className='flex gap-2 items-center'>
                                             {member.coupoun_code}
                                         </TableData>
-                                        <TableData>{member.coupon_value}</TableData>
+                                        <TableData>${member.coupon_value}</TableData>
                                         <TableData>{member.typetext}</TableData>
-                                        <TableData>{member.expiredate}</TableData>
+                                        <TableData>{formatDate(member.expiredate)}</TableData>
                                         <TableData>
                                             <span
                                                 className={`font-medium px-3 py-1 rounded-full text-white ${member.status === 1 ? 'bg-green-600' : 'bg-red-600'}`}
@@ -158,18 +160,28 @@ const AllCoupon = () => {
                                             </span>
                                         </TableData>
                                         <TableData>
-                                            <div className="flex gap-4 text-primary">
-                                                <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
-                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}> <ImCancelCircle /></div>
+                                            <div className="flex gap-4  text-primary">
+                                                {admin.userlevel !== "3" && (
+                                                    <>
+                                                        <div className="cursor-pointer" onClick={() => SingleItem(coupon)}>
+                                                            <PiPencilSimpleLine />
+                                                        </div>
+                                                        <div className="cursor-pointer" onClick={() => DeleteItem(coupon)}>
+                                                            <ImCancelCircle />
+                                                        </div>
+                                                    </>
+                                                )}
                                             </div>
                                         </TableData>
                                     </TableRow>
                                 ))
                             )}
                             <div className="mt-10 mx-5">
-                                <Link to='/auth/admin/new-coupon' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
-                                    <button>Add Coupon</button>
-                                </Link>
+                                {admin.userlevel !== "3" && (
+                                    <Link to='/auth/admin/new-coupon' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
+                                        <button>Add Coupon</button>
+                                    </Link>
+                                )}
                             </div>
                             <PaginationButton
                                 pageCount={pageCount}

@@ -13,6 +13,7 @@ import { PiPencilSimpleLine } from 'react-icons/pi';
 import { ImCancelCircle } from 'react-icons/im';
 import UpdateTestemonials from './UpdateTestemonials';
 import ConfirmDeleteTestemonial from './DeleteTestemonial';
+import { useSelector } from 'react-redux';
 
 const TABLE_HEADERS = ['Trackid', 'Name', 'Review', '', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -28,7 +29,8 @@ const AllTestemonials = () => {
   const [del, setDel] = useState(false);
   const [singles, setSingles] = useState({});
   const [view, setView] = useState(false);
-
+  const { admin } = useSelector(state => state.data);
+  const userLevel = admin.userlevel;
   const pageCount = Math.ceil(total / DEFAULT_PER_PAGE);
 
   const paginatedItems = filteredItems.slice(
@@ -211,17 +213,20 @@ const AllTestemonials = () => {
                 <TableData>
                   <ReviewWithReadMore review={member.review || ''} />
                 </TableData>
+                {userLevel !== "3" && (
 
-                <TableData>
-                  <div className="flex gap-4 text-lg text-primary">
-                    <div className="cursor-pointer" onClick={() => SingleItem(member)}>
-                      <PiPencilSimpleLine />
+                  <TableData>
+                    <div className="flex gap-4 text-lg text-primary">
+                      <div className="cursor-pointer" onClick={() => SingleItem(member)}>
+                        <PiPencilSimpleLine />
+                      </div>
+                      <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+                        <ImCancelCircle />
+                      </div>
                     </div>
-                    <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
-                      <ImCancelCircle />
-                    </div>
-                  </div>
-                </TableData>
+                  </TableData>
+                )}
+
               </TableRow>
             ))}
             <div className="w-full flex justify-center mt-4">

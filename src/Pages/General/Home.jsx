@@ -241,7 +241,7 @@ function Home() {
                 </div>
             </div>
 
-            <div className="relative">
+            <div className="relative z-10">
                 <div className="bg-[#fff3e4] relative -z-50 h-auto">
                     <div className="grid grid-cols-1 pt-10 pb-4  -z-50 lg:grid-cols-7 w-11/12 lg:w-10/12 mx-auto">
                         <div className="lg:col-span-3 w-full h-full flex flex-col justify-center z-10 relative">

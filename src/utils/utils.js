@@ -247,9 +247,7 @@ export const HomeProviders = [
 
 export const FooterSocials = [
     { img: img39, link: 'https://www.facebook.com/profile.php?id=61568515424684&mibextid=ZbWKwL' },
-    { img: img40, link: '' },
     { img: img41, link: 'https://www.linkedin.com/in/task-colony-a90931339?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
-    { img: img42, link: '' },
     { img: img43, link: 'https://www.instagram.com/taskcolony' },
 ]
 
