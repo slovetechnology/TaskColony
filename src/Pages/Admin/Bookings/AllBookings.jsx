@@ -18,6 +18,8 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { ToastAlert } from '../../../Components/General/Utils';
 import AssignBooking from './AssignBooking';
 import { formatDate } from '../../../utils/utils';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Date', 'Time', 'Status', '', '', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -34,6 +36,7 @@ const statusToVariant = {
 };
 
 const AllBookings = () => {
+  const { admin } = useSelector(state => state.data);
   const [query, setQuery] = useState({ pageNumber: 1 });
   const [total, setTotal] = useState(0);
   const [items, setItems] = useState([]);
@@ -54,15 +57,6 @@ const AllBookings = () => {
     (currentPage + 1) * DEFAULT_PER_PAGE
   );
 
-  const handlePageChange = (val) => {
-    setCurrentPage(val.selected);
-  };
-
-  const getSelectedPage = (val) => {
-    const pageNumber = val?.selected + 1;
-    setQuery({ ...query, pageNumber });
-  };
-
   const getAllBooking = useCallback(async () => {
     let allBookings = [];
     let pageNo = 1;
@@ -73,11 +67,10 @@ const AllBookings = () => {
       while (pageNo <= totalPages) {
         const res = await AuthGeturl(`${Apis.admins.get_booking}?page_no=${pageNo}&no_perpage=${perPage}`);
 
-        if (res.status === true) {
+        if (res.status) {
           const fetchedItems = res.data.data;
           totalPages = res.data.totalpage;
 
-          // Combine results into `allBookings`
           if (Array.isArray(fetchedItems)) {
             allBookings = [...allBookings, ...fetchedItems];
           } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
@@ -92,7 +85,6 @@ const AllBookings = () => {
         pageNo++;
       }
 
-      // Set combined data to state
       setItems(allBookings);
       setFilteredItems(allBookings);
       setTotal(allBookings.length);
@@ -105,6 +97,20 @@ const AllBookings = () => {
   useEffect(() => {
     getAllBooking();
   }, [getAllBooking]);
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+
+    const filtered = items.filter((item) =>
+      (item.ufname && item.ufname.toLowerCase().includes(value)) ||
+      (item.pfname && item.pfname.toLowerCase().includes(value)) ||
+      (item.uemail && item.uemail.toString().toLowerCase().includes(value)) ||
+      (item.service_name && item.service_name.toLowerCase().includes(value))
+    );
+
+    setFilteredItems(filtered);
+  };
 
   const DeleteItem = (member) => {
     setDel(true);
@@ -122,13 +128,10 @@ const AllBookings = () => {
     try {
       const res = await AuthPosturl(Apis.admins.delete_bookings, data);
       setLoads(false);
-      if (res.status === true) {
+      if (res.status) {
         setDel(false);
-
-        // Remove the deleted item from items and filteredItems
         setItems((prevItems) => prevItems.filter(item => item.trackid !== singles.trackid));
         setFilteredItems((prevFilteredItems) => prevFilteredItems.filter(item => item.trackid !== singles.trackid));
-
         ToastAlert('Booking deleted successfully.');
       } else {
         ToastAlert('Failed to delete booking.');
@@ -148,21 +151,9 @@ const AllBookings = () => {
     setSingle(val);
     setViews(!views);
   };
-
-  const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearchTerm(value);
-
-    const filtered = items.filter((item) =>
-      (item.ufname && item.ufname.toLowerCase().includes(value)) ||
-      (item.pfname && item.pfname.toLowerCase().includes(value)) ||
-      (item.uemail && item.uemail.toString().toLowerCase().includes(value)) ||
-      (item.service_name && item.service_name.toLowerCase().includes(value))
-    );
-
-    setFilteredItems(filtered);
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage);
   };
-
   return (
     <AdminLayout>
       {del && (
@@ -183,10 +174,7 @@ const AllBookings = () => {
         <AssignBooking
           singles={single}
           resendSignal={() => getAllBooking()}
-          closeView={() => {
-            console.log('Close view called'); // Debugging log
-            setViews(false);
-          }}
+          closeView={() => setViews(false)}
         />
       )}
 
@@ -218,63 +206,61 @@ const AllBookings = () => {
           <Table
             headers={TABLE_HEADERS}
             className="mt-10 bg-white"
-            onPageChange={getSelectedPage}
+            onPageChange={handlePageChange}
             pageCount={pageCount}
           >
-            {(Array.isArray(paginatedItems) ? paginatedItems : Object.values(paginatedItems)).map(
-              (member, index) => (
-                <TableRow className="mb-10" key={index}>
-                  <TableData className="flex gap-2 items-center">
-                    <div className="w-12 h-12 rounded-full overflow-hidden">
-                      <img
-                        className="w-full h-full object-cover"
-                        src={ profiles}
-                        alt={member.ufname}
-                      />
-                    </div>
-                    <div>
-                      <p className="mb-2.5">{member.ufname}</p>
-                      <p className="text-sm font-light text-secondary-500">{member.uemail}</p>
-                    </div>
-                  </TableData>
-                  <TableData>{member.service_name}</TableData>
-                  <TableData>
-                    <p className="text-sm font-light text-secondary-500">{member.pfname}</p>
-                  </TableData>
-                  <TableData>
-                    <p className="text-sm font-light text-secondary-500">${member.amt_paid}</p>
-                  </TableData>
-                  <TableData>{formatDate(member.created_date)}</TableData>
-                  <TableData>{member.created_time}</TableData>
-                  <TableData>
-                    <StatusTag
-                      variant={statusToVariant[member.status_text.toLowerCase()]}
-                      size="small"
-                      className="w-full"
-                    >
-                      {member.status_text}
-                    </StatusTag>
-                  </TableData>
+            {paginatedItems.map((member, index) => (
+              <TableRow className="mb-10" key={index}>
+                <TableData className="flex gap-2 items-center">
+                  <div className="w-12 h-12 rounded-full overflow-hidden">
+                    <img className="w-full h-full object-cover" src={profiles} alt={member.ufname} />
+                  </div>
+                  <div>
+                    <p className="mb-2.5">{member.ufname}</p>
+                    <p className="text-sm font-light text-secondary-500">{member.uemail}</p>
+                  </div>
+                </TableData>
+                <TableData>{member.service_name}</TableData>
+                <TableData>
+                  <p className="text-sm font-light text-secondary-500">{member.pfname}</p>
+                </TableData>
+                <TableData>
+                  <p className="text-sm font-light text-secondary-500">${member.amt_paid}</p>
+                </TableData>
+                <TableData>{formatDate(member.created_date)}</TableData>
+                <TableData>{member.created_time}</TableData>
+                <TableData>
+                  <StatusTag
+                    variant={statusToVariant[member.status_text.toLowerCase()]}
+                    size="small"
+                    className="w-full"
+                  >
+                    {member.status_text}
+                  </StatusTag>
+                </TableData>
 
-                  <TableData>
-                    <div className="flex gap-4 text-lg text-primary">
-                      <div className="cursor-pointer" onClick={() => SingleItem(member)}>
-                        <PiPencilSimpleLine />
-                      </div>
-                      <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
-                        <ImCancelCircle />
-                      </div>
-                      {member.status_text.toLowerCase() === 'pending' && (
-                        <div className="cursor-pointer" onClick={() => SingleItems(member)}>
-                          <IoSettingsOutline />
+                <TableData>
+                  <div className="flex gap-4 text-lg text-primary">
+                    {admin.userlevel !== "3" && (
+                      <>
+                        <div className="cursor-pointer" onClick={() => SingleItem(member)}>
+                          <PiPencilSimpleLine />
                         </div>
-                      )}
-                    </div>
-                  </TableData>
-                </TableRow>
-              )
-            )}
-            <div className=" w-full flex justify-center mt-4">
+                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+                          <ImCancelCircle />
+                        </div>
+                        {member.status_text.toLowerCase() === 'pending' && (
+                          <div className="cursor-pointer" onClick={() => SingleItems(member)}>
+                            <IoSettingsOutline />
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </TableData>
+              </TableRow>
+            ))}
+            <div className="">
               <PaginationButton pageCount={pageCount} onPageChange={handlePageChange} />
             </div>
           </Table>

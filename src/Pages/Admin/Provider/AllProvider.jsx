@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import AdminLayout from '../../../Components/Admin/AdminLayout';
 import { FaSearch } from 'react-icons/fa';
 import { GiCancel } from 'react-icons/gi';
@@ -14,12 +15,15 @@ import { PiPencilSimpleLine } from 'react-icons/pi';
 import { ImCancelCircle } from 'react-icons/im';
 import { IoEyeSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { debounce } from 'lodash'; // Make sure to install lodash
+import { debounce } from 'lodash';
 
 const TABLE_HEADERS = ['Full Name', 'Email', 'Contact', 'Booking', "Verification", "", ""];
 const DEFAULT_PER_PAGE = 10;
 
 const AllProvider = () => {
+    const { admin } = useSelector(state => state.data);
+    const userLevel = admin.userlevel; // Assuming user level is stored here
+
     const [items, setItems] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -30,10 +34,10 @@ const AllProvider = () => {
     const [view, setView] = useState(false);
     const [total, setTotal] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
-    const [loading, setLoading] = useState(false); // Loading state
+    const [loading, setLoading] = useState(false);
 
     const fetchUsers = useCallback(async () => {
-        setLoading(true); // Start loading
+        setLoading(true);
         let allUsers = [];
         let pageNo = 1;
         let totalPages = 10;
@@ -56,7 +60,7 @@ const AllProvider = () => {
         } catch (err) {
             setError(err.message);
         } finally {
-            setLoading(false); // End loading
+            setLoading(false);
         }
     }, []);
 
@@ -72,7 +76,7 @@ const AllProvider = () => {
             item.phoneno.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredItems(filtered);
-        setCurrentPage(0); // Reset to the first page when searching
+        setCurrentPage(0);
     }, [searchTerm, items]);
 
     const DeleteItem = (member) => {
@@ -168,17 +172,27 @@ const AllProvider = () => {
                                 <TableData>{member.account_verified_text}</TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
-                                        <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
-                                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
-                                        <Link to={`/auth/admin/provider/single/${member.id}`} className="cursor-pointer">
-                                            <IoEyeSharp />
-                                        </Link>
+                                        {userLevel !== "3" && (
+                                            <>
+                                                <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
+                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
+                                                <Link to={`/auth/admin/provider/single/${member.id}`} className="cursor-pointer">
+                                                    <IoEyeSharp />
+                                                </Link>
+                                            </>
+                                        )}
+
                                     </div>
                                 </TableData>
                             </TableRow>
                         ))}
 
                         <div className="w-full flex justify-end items-end mx-10 mt-4">
+                            {userLevel !== "3" && (
+                                <Link to='/auth/admin/new-provider' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
+                                    <button>Add Provider</button>
+                                </Link>
+                            )}
                             <PaginationButton
                                 pageCount={pageCount}
                                 onPageChange={handlePageChange}
@@ -191,4 +205,4 @@ const AllProvider = () => {
     );
 };
 
-export default AllProvider; 
+export default AllProvider;

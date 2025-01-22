@@ -9,6 +9,7 @@ import { TableData } from '../../../Components/Admin/Table/Index';
 import PaginationButton from '../../../Components/General/Pagination/PaginationButton';
 import { Apis, AuthGeturl } from '../../../Components/General/Api';
 import { GoArrowUpRight } from 'react-icons/go';
+import { formatDate } from '../../../utils/utils';
 
 const TABLE_HEADERS = ['Date', 'Total Services', 'Profits', 'Tax Fee'];
 const DEFAULT_PER_PAGE = 10;
@@ -132,7 +133,7 @@ const AllEarning = () => {
           <Table headers={TABLE_HEADERS} className="mt-10 bg-white">
             {paginatedItems.map((member, index) => (
               <TableRow className="mb-10" key={index}>
-                <TableData>{member.date}</TableData>
+                <TableData>{formatDate(member.date)}</TableData>
                 <TableData>{member.total_services}</TableData>
                 <TableData>{member.total_profit}</TableData>
                 <TableData>{member.total_tax_paid}</TableData>

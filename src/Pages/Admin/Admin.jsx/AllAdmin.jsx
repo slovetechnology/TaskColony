@@ -9,11 +9,12 @@ import PaginationButton from '../../../Components/General/Pagination/PaginationB
 import { Apis, AuthGeturl, AuthPosturl } from '../../../Components/General/Api';
 import { PiPencilSimpleLine } from 'react-icons/pi';
 import { ImCancelCircle } from 'react-icons/im';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ConfirmDeleteAdmin from './DeleteAdmin';
 import UpdateAdmin from './UpdateAdmin';
 import { ErrorAlert } from '../../../Components/General/Utils';
 import { FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const TABLE_HEADERS = ['Name', 'Email', 'Admin Level', 'Status', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -28,18 +29,21 @@ const AllAdmin = () => {
     const [loads, setLoads] = useState(false);
     const [view, setView] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const { admin } = useSelector(state => state.data); // Pulling from Redux
+
     const fetchUsers = useCallback(async () => {
         let allAdmins = [];
         let pageNo = 1;
-        const perPage = 15; // Match backend's default page size
-        let totalPages = 1; // Initialize totalPages
+        const perPage = 15;
 
         try {
+            let totalPages = 1;
             while (pageNo <= totalPages) {
                 const res = await AuthGeturl(`${Apis.admins.get_admin}?page_no=${pageNo}&no_perpage=${perPage}`);
                 if (res.status === true) {
                     const fetchedItems = res.data.data;
-                    totalPages = res.data.totalpage || 1; // Update total pages from response
+                    totalPages = res.data.totalpage || 1;
 
                     if (Array.isArray(fetchedItems)) {
                         allAdmins = [...allAdmins, ...fetchedItems];
@@ -51,8 +55,7 @@ const AllAdmin = () => {
                 } else {
                     throw new Error('Failed to fetch data');
                 }
-
-                pageNo++; // Move to the next page
+                pageNo++;
             }
 
             setItems(allAdmins);
@@ -61,7 +64,6 @@ const AllAdmin = () => {
             setError(err.message);
         }
     }, []);
-
 
     useEffect(() => {
         fetchUsers();
@@ -73,8 +75,10 @@ const AllAdmin = () => {
     };
 
     const SingleItem = (val) => {
-        setSingles(val);
-        setView(!view);
+        if (admin.userlevel === '1') {
+            setSingles(val);
+            setView(!view);
+        }
     };
 
     const confirmAction = async () => {
@@ -93,7 +97,7 @@ const AllAdmin = () => {
                 setItems(prevItems => prevItems.filter(item => item.trackid !== singles.trackid));
                 setFilteredItems(prevItems => prevItems.filter(item => item.trackid !== singles.trackid));
             } else {
-                ErrorAlert(res.text)
+                ErrorAlert(res.text);
             }
         } catch (error) {
             setLoads(false);
@@ -109,18 +113,18 @@ const AllAdmin = () => {
         setSearchTerm(value);
 
         if (value === '') {
-            setFilteredItems(items); // Reset to all items if search is empty
+            setFilteredItems(items);
             return;
         }
 
         const filtered = items.filter(item =>
             item.name.toLowerCase().includes(value) ||
             item.email.toLowerCase().includes(value) ||
-            (item.username && item.username.toLowerCase().includes(value)) || // Ensure username exists
+            (item.username && item.username.toLowerCase().includes(value)) ||
             item.status.toLowerCase().includes(value)
         );
 
-        setFilteredItems(filtered); // Update filteredItems with the results
+        setFilteredItems(filtered);
     };
 
     if (error) {
@@ -134,6 +138,12 @@ const AllAdmin = () => {
         currentPage * DEFAULT_PER_PAGE,
         (currentPage + 1) * DEFAULT_PER_PAGE
     );
+
+    const userLevelMapping = {
+        1: 'Super Admin',
+        2: 'Editor',
+        3: 'Viewer',
+    };
 
     return (
         <AdminLayout>
@@ -166,7 +176,7 @@ const AllAdmin = () => {
                             <TableRow className="mb-10" key={index}>
                                 <TableData>{member.name}</TableData>
                                 <TableData>{member.email}</TableData>
-                                <TableData>{member.level}</TableData>
+                                <TableData>{userLevelMapping[member.userlevel] || 'Unknown'}</TableData>
                                 <TableData>
                                     <span
                                         className={`font-medium px-3 py-1 rounded-full text-white ${member.status === '1' ? 'bg-green-600' : 'bg-red-600'}`}>
@@ -175,17 +185,32 @@ const AllAdmin = () => {
                                 </TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
-                                        <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
-                                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}> <ImCancelCircle /></div>
+                                        {admin.userlevel === '1' && ( 
+                                            <>
+                                                <div className="cursor-pointer" onClick={() => SingleItem(member)}>
+                                                    <PiPencilSimpleLine />
+                                                </div>
+                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+                                                    <ImCancelCircle />
+                                                </div>
+                                            </>
+                                        )}
+                                        {admin.userlevel === '2' && ( 
+                                            <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+                                                <ImCancelCircle />
+                                            </div>
+                                        )}
                                     </div>
                                 </TableData>
                             </TableRow>
                         ))}
-                        <div className="mt-10 mb-5 mx-10">
-                            <Link to='/auth/admin/new-admin' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
-                                <button>Add Admin</button>
-                            </Link>
-                        </div>
+                        {(admin.userlevel === '1' || admin.userlevel === '2') && ( 
+                            <div className="mt-10 mb-5 mx-10">
+                                <Link to='/auth/admin/new-admin' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
+                                    <button>Add Admin</button>
+                                </Link>
+                            </div>
+                        )}
                         <div className="w-full flex justify-end items-end mt-4">
                             <PaginationButton
                                 pageCount={pageCount}

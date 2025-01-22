@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import AdminLayout from '../../../Components/Admin/AdminLayout';
 import { Table } from '../../../Components/Admin/Table/Table';
 import { TableRow } from '../../../Components/Admin/Table/TableRow';
@@ -18,6 +19,9 @@ const TABLE_HEADERS = ['Name', 'Category', 'Commission', 'Minimum Duration', 'St
 const DEFAULT_PER_PAGE = 10;
 
 const AllServices = () => {
+    const { admin } = useSelector(state => state.data);
+    const userLevel = admin.userlevel;
+
     const [query, setQuery] = useState({ pageNumber: 1 });
     const [total, setTotal] = useState(0);
     const [items, setItems] = useState([]);
@@ -80,14 +84,14 @@ const AllServices = () => {
         let allServices = [];
         let pageNo = 1;
         const perPage = 15; // Match backend's page size
-        let totalPage = 1; // Initialize totalPage
+        let totalPage = 1;
 
         try {
             while (pageNo <= totalPage) {
                 const res = await AuthGeturl(`${Apis.admins.get_admin_services}?page_no=${pageNo}&no_perpage=${perPage}`);
                 if (res.status === true) {
                     const fetchedItems = res.data.data;
-                    totalPage = res.data.totalpage; // Update total pages from response
+                    totalPage = res.data.totalpage;
 
                     if (Array.isArray(fetchedItems)) {
                         allServices = [...allServices, ...fetchedItems];
@@ -100,10 +104,9 @@ const AllServices = () => {
                     throw new Error('Failed to fetch data');
                 }
 
-                pageNo++; // Increment to next page
+                pageNo++;
             }
 
-            // Set combined data
             setItems(allServices);
             setFilteredItems(allServices);
             setTotal(allServices.length);
@@ -111,7 +114,6 @@ const AllServices = () => {
             console.error(err.message);
         }
     }, []);
-
 
     useEffect(() => {
         GetAllCat();
@@ -133,7 +135,7 @@ const AllServices = () => {
     };
 
     const handleSearch = (e) => {
-        const value = e.target.value.toLowerCase(); // Convert search term to lowercase
+        const value = e.target.value.toLowerCase();
         setSearchTerm(value);
 
         const filtered = items.filter(item =>
@@ -142,8 +144,8 @@ const AllServices = () => {
             item.min_duration.toString().toLowerCase().includes(value)
         );
 
-        setFilteredItems(filtered); // Update filtered items
-        setTotal(filtered.length); // Update total for pagination
+        setFilteredItems(filtered);
+        setTotal(filtered.length);
     };
 
     return (
@@ -172,10 +174,7 @@ const AllServices = () => {
                     </div>
                 </div>
                 <div className="flex items-start mb-10 justify-start">
-                    <Table
-                        headers={TABLE_HEADERS}
-                        className='mt-10 bg-white'
-                    >
+                    <Table headers={TABLE_HEADERS} className='mt-10 bg-white'>
                         {paginatedItems.map((member, index) => (
                             <TableRow className='mb-10' key={index}>
                                 <TableData>{member.name}</TableData>
@@ -183,30 +182,33 @@ const AllServices = () => {
                                 <TableData>{member.commission}</TableData>
                                 <TableData>{member.min_duration}</TableData>
                                 <TableData>
-                                    <span
-                                        className={`font-medium px-3 py-1 rounded-full text-white ${member.status === 1 ? 'bg-green-600' : 'bg-red-600'}`}
-                                    >
+                                    <span className={`font-medium px-3 py-1 rounded-full text-white ${member.status === 1 ? 'bg-green-600' : 'bg-red-600'}`}>
                                         {member.status === 1 ? 'ACTIVE' : 'INACTIVE'}
                                     </span>
                                 </TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
-                                        <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
-                                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
+                                        {userLevel !== "3" && (
+                                            <>
+                                                <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
+                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
+                                            </>
+                                        )}
                                     </div>
                                 </TableData>
                             </TableRow>
                         ))}
                         <div className="mt-10 mb-5 mx-10">
-                            <Link to='/auth/admin/new-service' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
-                                <button>Add Services</button>
-                            </Link>
+                            {userLevel !== "3" && (
+                                <Link to='/auth/admin/new-service' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
+                                    <button>Add Services</button>
+                                </Link>
+                            )}
                             <PaginationButton
                                 pageCount={pageCount}
                                 onPageChange={handlePageChange}
                             />
                         </div>
-
                     </Table>
                 </div>
             </div>

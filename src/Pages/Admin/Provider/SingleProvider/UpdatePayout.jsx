@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form';
 import { ToastAlert } from '../../../../Components/General/Utils';
 
 const statusToVariant = {
-    sucess : 'success',
+    paid : 'success',
     pending: 'warn',
-    processing: 'accept',
+    onhold: 'accept',
 };
 
 // Status options for dropdown display
@@ -18,9 +18,9 @@ const statusOptions = Object.keys(statusToVariant).map(status => ({
 
 // Numeric mapping for API
 const statusToNumber = {
-    sucess: 1,
+    paid: 1,
     pending: 0,
-    processing: 2,
+    onhold: 2,
 };
 
 const UpdatePayout = ({ closeView, singles, resendSignal }) => {

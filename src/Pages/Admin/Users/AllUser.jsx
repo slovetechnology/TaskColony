@@ -15,6 +15,7 @@ import { ImCancelCircle } from 'react-icons/im';
 import { IoEyeSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { debounce } from 'lodash'; // Make sure to install lodash
+import { useSelector } from 'react-redux';
 
 const TABLE_HEADERS = ['Full Name', 'Email', 'Contact', 'Booking', "Balance", "Verification", "", ""];
 const DEFAULT_PER_PAGE = 10;
@@ -31,7 +32,8 @@ const AllUser = () => {
     const [total, setTotal] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false); // Loading state
-
+    const { admin } = useSelector(state => state.data);
+    const userLevel = admin.userlevel;
     const fetchUsers = useCallback(async () => {
         setLoading(true); // Start loading
         let allUsers = [];
@@ -169,11 +171,17 @@ const AllUser = () => {
                                 <TableData>{member.account_verified_text}</TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
-                                        <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
-                                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
-                                        <Link to={`/auth/admin/user/single/${member.id}`} className="cursor-pointer">
-                                            <IoEyeSharp />
-                                        </Link>
+                                        {userLevel !== "3" && (
+
+                                            <>
+                                                <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
+                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
+                                                <Link to={`/auth/admin/user/single/${member.id}`} className="cursor-pointer">
+                                                    <IoEyeSharp />
+                                                </Link>
+                                            </>
+                                        )}
+
                                     </div>
                                 </TableData>
                             </TableRow>

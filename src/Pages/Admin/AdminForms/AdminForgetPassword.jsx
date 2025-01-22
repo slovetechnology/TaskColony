@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Apis, Posturl } from '../../../Components/General/Api';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const AdminForgetPassword = () => {
     const [view, setView] = useState(1); // 1 = Email, 2 = OTP, 3 = Password, 4 = Success
@@ -198,6 +199,8 @@ const AdminForgetPassword = () => {
                     </div>
                 </div>
             )}
+                  <Toaster />
+
         </>
     );
 };

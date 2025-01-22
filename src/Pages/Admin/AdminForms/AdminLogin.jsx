@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Apis, Posturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import Cookies from 'js-cookie';
+import { Toaster } from 'react-hot-toast';
 
 const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -95,6 +96,8 @@ const AdminLogin = () => {
           </form>
         </div>
       </div>
+      <Toaster />
+
     </div>
   );
 };
