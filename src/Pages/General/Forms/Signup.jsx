@@ -70,15 +70,14 @@ const Signup = () => {
       window.scrollTo(0, 0); // Scrolls to the top of the page
     }
   }, [view]);
-
   const GoogleLogin = async () => {
     try {
       const res = await AuthPosturl(Apis.users.google_verify);
-      console.log(res.status)
+      console.log(res.status);
       if (res.status === true) {
         const url = res.data[0].url;
         setGoogleLoginUrl(url); // Set the Google login URL
-        window.open(url); // Open the URL in a new tab
+        window.location.href = url; // Redirect the current window to the URL
       } else {
         ErrorAlert('Failed to fetch Google login URL.');
       }
@@ -270,7 +269,7 @@ const Signup = () => {
                     onClick={GoogleLogin}
                     className="bg-white w-full py-3 rounded-md border flex items-center justify-center"
                   >
-                    <FcGoogle className="mr-2" /> Sign in with Google
+                    <FcGoogle className="mr-2" /> Sign up with Google
                   </button>
 
                   <div className="mt-4 text-center">

@@ -13,15 +13,18 @@ import Cookies from 'js-cookie';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [googleCode, setGoogleCode] = useState(null); // State to store the Google code
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
+
+    // Build the payload dynamically based on the presence of googleCode
     const dataToSend = {
       email: data.email,
       password: data.password,
-      googlecode: 'wdw',
+      ...(googleCode && { googlecode: googleCode }), // Add googleCode only if it's available
     };
 
     try {
@@ -50,7 +53,28 @@ const Login = () => {
       const res = await AuthPosturl(Apis.users.google_verify);
       if (res.status === true) {
         const url = res.data[0].url;
-        window.open(url); // Open the URL in a new tab
+        const popup = window.open(url, '_blank', 'width=500,height=600'); // Open Google login in a popup
+
+        const interval = setInterval(() => {
+          try {
+            if (popup.closed) {
+              clearInterval(interval);
+
+              // Simulate fetching the URL from the popup
+              const popupUrl = popup.location.href;
+
+              if (popupUrl.includes('code=')) {
+                const authCode = extractAuthCode(popupUrl);
+                setGoogleCode(authCode); // Save the Google code in state
+                ToastAlert('Google sign-in successful! You can now submit the form.');
+              } else {
+                ErrorAlert('Failed to retrieve authorization code.');
+              }
+            }
+          } catch (error) {
+            // Ignored to handle cross-origin access issues
+          }
+        }, 1000);
       } else {
         ErrorAlert('Failed to fetch Google login URL.');
       }
@@ -58,6 +82,11 @@ const Login = () => {
       console.error('Error during Google login:', error);
       ErrorAlert('An unexpected error occurred. Please try again.');
     }
+  };
+
+  const extractAuthCode = (url) => {
+    const params = new URLSearchParams(new URL(url).search);
+    return params.get('code'); // Extract the 'code' from the URL
   };
 
   return (
