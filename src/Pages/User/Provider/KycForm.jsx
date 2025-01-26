@@ -361,6 +361,13 @@ const KycForm = ({ closeView, isOpen }) => {
                             )}
                         </div>
                     </div>
+                    <div className="mt-6 mb-3 space-y-3">
+                        <label className="flex items-center">
+                            <input {...register('agree_terms', { required: true })} type="checkbox" className="accent-secondary mr-2" />
+                            <span className="text-secondary underline">Terms Of Service</span>
+                        </label>
+
+                    </div>
                     <button type="submit" className="bg-secondary px-4 py-1 rounded-md text-white" disabled={isSubmitting}>
                         Submit
                     </button>
