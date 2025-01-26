@@ -60,7 +60,7 @@ const AllTaxes = () => {
 
     const fetchTaxes = async () => {
         try {
-            const res = await AuthGeturl(Apis.admins.get_taxes);
+            const res = await AuthGeturl(Apis.admins.get_admin_taxes);
             if (res.status) {
                 setItems(res.data.data);
                 setFilteredItems(res.data.data);

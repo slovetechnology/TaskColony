@@ -5,8 +5,8 @@ import { Team } from '../../utils/utils'
 const Teams = () => {
     return (
         <Layout>
-            <div className="bg-gray w-full xl:h-[20rem]">
-                <div className="text-center py-10 xl:pt-24">
+        <div className="bg-gray w-full xl:h-[10rem]">
+          <div className="text-center py-1 pt-10">
                     <p className='font-[500] text-4xl mb-3'>Team</p>
                     <span className='flex items-center gap-4 font-[500] justify-center'>
                         <p className="text-primary">Home</p>

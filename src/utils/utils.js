@@ -258,3 +258,82 @@ export const FooterContacts = [
 ]
 
 export { img1, img2, img3, img4, img23, img25, img37, img38, img26, img22, logo }
+export const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    autoplay: true,
+    autoplaySpeed: 1000,
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true,
+            },
+        },
+        {
+            breakpoint: 769,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                initialSlide: 2,
+                infinite: true,
+                dots: true,
+            },
+        },
+        {
+            breakpoint: 576,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true,
+            },
+        },
+    ],
+};
+// export const settings = {
+//     dots: true,
+//     infinite: true,
+//     speed: 500,
+//     slidesToShow: 2, // Show one slide by default for small screens
+//     slidesToScroll: 1,
+//     autoplay: true,
+//     autoplaySpeed: 1000,
+//     responsive: [
+//         {
+//           breakpoint: 1024,
+//           settings: {
+//             slidesToShow: 1,
+//             slidesToScroll: 1,
+//             infinite: true,
+//             dots: true,
+//           },
+//         },
+//         {
+//           breakpoint: 769,
+//           settings: {
+//             slidesToShow: 1,
+//             slidesToScroll: 1,
+//             initialSlide: 2,
+//             infinite: true,
+//             dots: true,
+//           },
+//         },
+//         {
+//           breakpoint: 576,
+//           settings: {
+//             slidesToShow: 1,
+//             slidesToScroll: 1,
+//             infinite: true,
+//             dots: true,
+//           },
+//         },
+//       ],
+// };
