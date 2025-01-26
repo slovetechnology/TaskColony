@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../../../Components/User/Layout';
 import signup from '../../../assets/form.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
-import { Apis, AuthPosturl, Posturl } from '../../../Components/General/Api';
+import { Apis, AuthPosturl, Geturl, Posturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import VerifyEmail from './VerifyEmail';
 import Cookies from 'js-cookie';
@@ -22,8 +22,10 @@ const Signup = () => {
   const Icon1 = pass1 ? FaEye : FaEyeSlash;
   const Icon2 = pass2 ? FaEye : FaEyeSlash;
   const navigate = useNavigate();
-
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [selectedState, setSelectedState] = useState(''); // State for selected state
+  const [states, setStates] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { register, setValue, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -31,7 +33,7 @@ const Signup = () => {
       firstname: data.firstname,
       zipcode: data.zipcode,
       state: data.state,
-      city: data.city,
+      city: selectedState,
       lastname: data.lastname,
       email: data.email,
       phone: data.phone,
@@ -64,6 +66,28 @@ const Signup = () => {
       setIsSubmitting(false);
     }
   };
+  const fetchAllData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const stateResponse = await Geturl(Apis.users.get_system);
+      console.log("State Response:", stateResponse); // Log the response
+      if (stateResponse.status === true) {
+        setStates(stateResponse.data.cities);
+      } else {
+        console.error("Failed to fetch states");
+      }
+    } catch (err) {
+      console.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+
+
+  useEffect(() => {
+    fetchAllData();
+  }, [fetchAllData]);
 
   useEffect(() => {
     if (view === 2) {
@@ -156,24 +180,44 @@ const Signup = () => {
                     {errors.username && <div className="text-red-600">{errors.username.message}</div>}
                   </div>
 
-                  <div className="mb-3">
-                    <label>State</label>
-                    <input
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">Select State</label>
+                    <select
+                      className={`inputs border ${errors.state ? 'border-red-600' : 'border'}`}
                       {...register('state', { required: 'State is required' })}
-                      type="text"
-                      className={`input border ${errors.state ? 'border-red-600' : 'border'}`}
-                    />
-                    {errors.state && <div className="text-red-600">{errors.state.message}</div>}
+                      onChange={(e) => {
+                        const selectedStateId = e.target.value;
+                        const state = states.find(state => state.trackid === selectedStateId);
+                        setSelectedState(state ? state.name : ''); // Set selected state name
+                        setValue('state', selectedStateId); // Set the state ID in the form
+                      }}
+                    >
+                      <option value="">Select State</option>
+                      {states.length > 0 ? (
+                        states.map((state) => (
+                          <option key={state.trackid} value={state.trackid}>
+                            {state.name}
+                          </option>
+                        ))
+                      ) : (
+                        <option disabled>No states available</option>
+                      )}
+                    </select>
+                    {errors.state && (
+                      <div className="text-red-600">{errors.state.message}</div>
+                    )}
                   </div>
 
-                  <div className="mb-3">
-                    <label>City</label>
+                  <div className="mb-5">
+                    <label className="text-xs font-semibold">City</label>
                     <input
-                      {...register('city', { required: 'City is required' })}
+                      {...register('city')}
                       type="text"
-                      className={`input border ${errors.city ? 'border-red-600' : 'border'}`}
+                      placeholder="City"
+                      className={`inputs border ${errors.city ? 'border' : 'border'}`}
+                      value={selectedState} // Display selected state name
+                      onChange={(e) => setSelectedState(e.target.value)} // Allow user to edit
                     />
-                    {errors.city && <div className="text-red-600">{errors.city.message}</div>}
                   </div>
 
                   <div className="mb-3">

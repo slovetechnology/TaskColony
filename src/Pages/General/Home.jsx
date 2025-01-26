@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { img1, img3, img4 } from 'utils/utils';
-import { HomeServices, HomeTestimonials, img22, img23, img25, img26, StoreLinks } from '../../utils/utils';
+import { HomeServices, HomeTestimonials, img22, img23, img25, img26, settings, StoreLinks } from '../../utils/utils';
 import { FaArrowLeft, FaArrowRight, FaRegUserCircle, FaStar } from 'react-icons/fa';
 import { Apis, AuthGeturl, Geturl, Posturl } from '../../Components/General/Api';
 import { FaBars, FaTimes, FaUserCircle, FaUserPlus } from 'react-icons/fa';
@@ -49,15 +49,7 @@ function Home() {
         },
     };
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 1000,
-    };
+
 
     const [notificationCount, setNotificationCount] = useState(0);
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
@@ -381,7 +373,7 @@ function Home() {
                 </div>
             </div>
 
-            <div className=" mt-7 mb-10 pl-0 w-[95%] mx-auto">
+            <div className=" mt-7 mb-10 pl-0 w-[95%]  mx-auto">
                 <Slider {...settings}>
                     {offers.map((item, index) => (
                         <div className="flex space-x-7">

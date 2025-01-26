@@ -73,7 +73,7 @@ const Booking = () => {
     };
 
     const fetchCoordinatesFromAddress = async (address) => {
-        const apiKey = "YOUR_API_KEY"; // Replace with your API key
+        const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
         try {
             const response = await fetch(
                 `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`

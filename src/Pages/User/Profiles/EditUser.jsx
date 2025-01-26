@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from '../../../Components/General/Modal';
-import { Apis, AuthPosturl } from '../../../Components/General/Api';
+import { Apis, AuthPosturl, Geturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 
 const EditUser = ({ closeView, singles }) => {
@@ -12,21 +12,45 @@ const EditUser = ({ closeView, singles }) => {
         preview: singles.passport || null, // Use existing passport image as preview if available
     });
 
-    // Populate form with existing user data
+    const [selectedState, setSelectedState] = useState(''); // State for selected state
+    const [states, setStates] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const fetchAllData = useCallback(async () => {
+        setLoading(true);
+        try {
+            const stateResponse = await Geturl(Apis.users.get_system);
+            if (stateResponse.status === true) {
+                setStates(stateResponse.data.cities);
+            }
+        } catch (err) {
+            console.error(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         if (singles) {
+            setValue('firstname', singles.firstname || '');
+            setValue('lastname', singles.lastname || '');
             setValue('email', singles.email || '');
             setValue('state', singles.state || '');
-            setValue('address', singles.address || '');
-            setValue('city', singles.city || '');
+            setValue('address', singles.address1 || '');
+            setValue('city', singles.cityname || '');
             setValue('postalcode', singles.postalcode || '');
+            setValue('phoneno', singles.phone || ''); // Auto-populate phone number
         }
     }, [singles, setValue]);
+
+    useEffect(() => {
+        fetchAllData();
+    }, [fetchAllData]);
 
     const onImageChange = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
-        
+
         reader.onload = () => {
             setImage({
                 main: file,
@@ -44,8 +68,9 @@ const EditUser = ({ closeView, singles }) => {
 
         const payload = new FormData();
         payload.append('state_tid', data.state);
+        payload.append('phoneno', data.phoneno);
         payload.append('address', data.address);
-        payload.append('city', data.city);
+        payload.append('city', selectedState);
         payload.append('postalcode', data.postalcode);
         payload.append('trackid', singles.trackid);
         if (image.main) {
@@ -73,14 +98,66 @@ const EditUser = ({ closeView, singles }) => {
             <div className="text-black">
                 <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mb-3">
-                        <label>State</label>
+                    <div className="mb-5">
+                        <label className="text-xs font-semibold">First Name</label>
                         <input
-                            {...register('state', { required: 'State is required' })}
+                            {...register('firstname')}
                             type="text"
-                            className={`input border ${errors.state ? 'border-red-600' : 'border'}`}
+                            placeholder=""
+                            className={`inputs border ${errors.firstname ? 'border-red-600' : 'border'}`}
+                            readOnly // Make the field read-only
                         />
-                        {errors.state && <div className="text-red-600">{errors.state.message}</div>}
+                    </div>
+
+                    <div className="mb-5">
+                        <label className="text-xs font-semibold">Last Name</label>
+                        <input
+                            {...register('lastname')}
+                            type="text"
+                            placeholder=""
+                            className={`inputs border ${errors.lastname ? 'border-red-600' : 'border'}`}
+                            readOnly // Make the field read-only
+                        />
+                    </div>
+
+                    <div className="mb-5">
+                        <label className="text-xs font-semibold">Select State</label>
+                        <select
+                            className={`inputs border ${errors.state ? 'border-red-600' : 'border'}`}
+                            {...register('state', { required: 'State is required' })}
+                            onChange={(e) => {
+                                const selectedStateId = e.target.value;
+                                const state = states.find(state => state.trackid === selectedStateId);
+                                setSelectedState(state ? state.name : ''); // Set selected state name
+                                setValue('state', selectedStateId); // Set the state ID in the form
+                            }}
+                        >
+                            <option value="">Select State</option>
+                            {states.length > 0 ? (
+                                states.map((state) => (
+                                    <option key={state.trackid} value={state.trackid}>
+                                        {state.name}
+                                    </option>
+                                ))
+                            ) : (
+                                <option disabled>No states available</option>
+                            )}
+                        </select>
+                        {errors.state && (
+                            <div className="text-red-600">{errors.state.message}</div>
+                        )}
+                    </div>
+
+                    <div className="mb-5">
+                        <label className="text-xs font-semibold">City</label>
+                        <input
+                            {...register('city')}
+                            type="text"
+                            placeholder="City"
+                            className={`inputs border ${errors.city ? 'border-red-600' : 'border'}`}
+                            value={selectedState} // Display selected state name
+                            onChange={(e) => setSelectedState(e.target.value)} // Allow user to edit
+                        />
                     </div>
 
                     <div className="mb-3">
@@ -91,16 +168,6 @@ const EditUser = ({ closeView, singles }) => {
                             className={`input border ${errors.address ? 'border-red-600' : 'border'}`}
                         />
                         {errors.address && <div className="text-red-600">{errors.address.message}</div>}
-                    </div>
-
-                    <div className="mb-3">
-                        <label>City</label>
-                        <input
-                            {...register('city', { required: 'City is required' })}
-                            type="text"
-                            className={`input border ${errors.city ? 'border-red-600' : 'border'}`}
-                        />
-                        {errors.city && <div className="text-red-600">{errors.city.message}</div>}
                     </div>
 
                     <div className="mb-3">
