@@ -181,6 +181,7 @@ import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import { AuthGeturl, Apis, Geturl } from '../../Components/General/Api'; // Assuming this is the API service
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Header = () => {
   const { userloggedin, user } = useSelector((state) => state.data); // Pulling from Redux
@@ -246,7 +247,7 @@ const Header = () => {
   };
 
   // Get profile image from localStorage, fallback to Redux store
-  const profileImage = localStorage.getItem('profileImage') || user.passport;
+  const profileImage =  user.passport;
 
   return (
     <div className='relative'>
@@ -271,7 +272,7 @@ const Header = () => {
               {userloggedin ? (
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
-                    <img src={profileImage} alt='User' className="w-9 h-9 rounded-full" />
+                    <LazyLoadImage effect='blur' src={profileImage} alt='User' className="w-10 h-10 border object-cover rounded-full" />
                     <div className='text-xs hidden xl:block pr-5'>
                       <p className="mb-0">{user?.firstname || 'User'}</p>
                       <p className="text-sm font-medium text-secondary-500">{user?.email}</p>

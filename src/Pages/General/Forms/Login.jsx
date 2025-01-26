@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../../../Components/User/Layout';
 import { FcGoogle } from 'react-icons/fc';
 import login from '../../../assets/form.png';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Apis, Posturl, AuthPosturl } from '../../../Components/General/Api';
+import { Apis, Posturl, AuthPosturl, Geturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import Cookies from 'js-cookie';
+import {decodeToken} from 'react-jwt'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation()
   const { register, handleSubmit, formState: { errors } } = useForm();
+  // const [searchParams] = useSearchParams()
+  // const googleCode = searchParams.get('code')
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const search = location?.search 
+  //     if(search) {
+  //       const res = await Geturl(`${Apis.users.google_verifing}${search}`);
+  //       if(res.status === true) {
+  //         navigate('/service')
+  //       }
+  //     }
+  //   })()
+  // }, [])
+  // http://localhost:5173/login?code=4%2F0ASVgi3KwegxKUjPyCO5XiLfPdSPA8pi9ESFnCjNUS_iqYEyiISpKtQwRE51j2lbpuyi5uQ&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -50,7 +67,7 @@ const Login = () => {
       const res = await AuthPosturl(Apis.users.google_verify);
       if (res.status === true) {
         const url = res.data[0].url;
-        window.open(url); // Open the URL in a new tab
+        window.open(url, "_blank"); // Open the URL in a new tab
       } else {
         ErrorAlert('Failed to fetch Google login URL.');
       }

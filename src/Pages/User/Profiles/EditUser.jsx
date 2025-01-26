@@ -7,6 +7,10 @@ import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 const EditUser = ({ closeView, singles }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const [image, setImage] = useState({
+        main: null,
+        preview: singles.passport || null, // Use existing passport image as preview if available
+    });
 
     // Populate form with existing user data
     useEffect(() => {
@@ -16,32 +20,49 @@ const EditUser = ({ closeView, singles }) => {
             setValue('address', singles.address || '');
             setValue('city', singles.city || '');
             setValue('postalcode', singles.postalcode || '');
-            setValue('phoneno', singles.phone || '');
         }
     }, [singles, setValue]);
+
+    const onImageChange = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+            setImage({
+                main: file,
+                preview: reader.result, // Set the preview to the uploaded image
+            });
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
 
     const onSubmit = async (data, event) => {
         event.preventDefault();
         setIsSubmitting(true);
 
-        const payload = {
-            state_tid: data.state,
-            address: data.address,
-            city: data.city,
-            postalcode: data.postalcode,
-            phoneno: data.phoneno,
-            trackid: singles.trackid,
-        };
+        const payload = new FormData();
+        payload.append('state_tid', data.state);
+        payload.append('address', data.address);
+        payload.append('city', data.city);
+        payload.append('postalcode', data.postalcode);
+        payload.append('trackid', singles.trackid);
+        if (image.main) {
+            payload.append('image', image.main);
+        }
 
         try {
-            const response = await AuthPosturl(Apis.users.edit_user_profile, payload,);
+            const response = await AuthPosturl(Apis.users.edit_user_profile, payload);
             if (response.status === true) {
-                ToastAlert(response.text)
+                ToastAlert(response.text);
+                closeView();
+                window.location.reload();
             }
             console.log('Response:', response.data);
         } catch (error) {
             console.error('Error updating user:', error);
-            ErrorAlert(response.text)
+            ErrorAlert(error.text);
         } finally {
             setIsSubmitting(false);
         }
@@ -52,8 +73,6 @@ const EditUser = ({ closeView, singles }) => {
             <div className="text-black">
                 <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
-
-
                     <div className="mb-3">
                         <label>State</label>
                         <input
@@ -67,16 +86,17 @@ const EditUser = ({ closeView, singles }) => {
                     <div className="mb-3">
                         <label>Address</label>
                         <input
-                            {...register('address', { required: 'address is required' })}
+                            {...register('address', { required: 'Address is required' })}
                             type="text"
                             className={`input border ${errors.address ? 'border-red-600' : 'border'}`}
                         />
                         {errors.address && <div className="text-red-600">{errors.address.message}</div>}
                     </div>
+
                     <div className="mb-3">
                         <label>City</label>
                         <input
-                            {...register('city', { required: 'city is required' })}
+                            {...register('city', { required: 'City is required' })}
                             type="text"
                             className={`input border ${errors.city ? 'border-red-600' : 'border'}`}
                         />
@@ -107,6 +127,26 @@ const EditUser = ({ closeView, singles }) => {
                         />
                         {errors.phoneno && <div className="text-red-600">{errors.phoneno.message}</div>}
                     </div>
+
+                    <div className="mb-3">
+                        <label>Upload Image</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={onImageChange}
+                            className="input border"
+                        />
+                    </div>
+
+                    {image.preview && (
+                        <div className="mb-3">
+                            <img
+                                src={image.preview}
+                                alt="Preview"
+                                className="w-full h-32 border object-cover"
+                            />
+                        </div>
+                    )}
 
                     <div className="flex justify-end gap-3">
                         <button

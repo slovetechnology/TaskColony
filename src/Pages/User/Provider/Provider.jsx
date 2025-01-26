@@ -125,19 +125,9 @@ const Provider = () => {
               <div className="md:flex items-center justify-center w-full  gap-4">
                 <div className="mb-4">
                   <label>
-                    {image.preview === null ? (
-                      <div className="">
-                        <img src={user.passport} alt="" className="w-20" />
-                      </div>
-                    ) : (
-                      <LazyLoadImage
-                        src={image.preview}
-                        alt=""
-                        className="md:w-32 md:h-32 h-20 w-20 mx-auto border  rounded-full object-cover"
-                      />
-                    )}
-                    <input type="file" hidden onChange={handleUpload} />
-                    <div className="text-center text-secondary text-xs">Upload Image</div>
+                    <div className="">
+                      <img src={user.passport} alt="" className="w-24 h-24 rounded-full object-cover" />
+                    </div>
                   </label>
                 </div>
 

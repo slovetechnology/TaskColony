@@ -47,7 +47,7 @@ const user_urls = {
     update_review: `${user}/reviews/update_review.php`,
 
     get_testimonial: `${user}/testimonials/get_all_testimonials.php`,
-    google_verifing: `${user}/auth/login_with_google_verify.php?code=4%2F0AeanS0Y5KLHo2R9a2z93lEVFfmb7vGFjvHEuXlyi73c6OODYE0Rbo0fe9zvbFNNbsSFm_Q&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent&fromcode=2&registervia=1`,
+    google_verifing: `${user}/auth/login_with_google_verify.php`,
 };
 const admin_urls = {
     get_admin_dashboard: `${admin}/dashboard/all_stat.php`,

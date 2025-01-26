@@ -253,7 +253,7 @@ function Home() {
                                 <div className="text-xs w-[90%] mt-4">Your trusted partner for all home repairs. From plumbing to renovations, our skilled professionals deliver reliable solutions with ease.</div>
                             </div>
                             <div className="mt-10 mb-24">
-                                <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="/booking-list">Book Now</Link>
+                                <Link className='bg-secondary py-3 px-3 rounded-lg text-white' to="/">Book Now</Link>
                                 <div className="flex items-center mt-5 gap-2">
                                     <LazyLoadImage
                                         effect="blur"

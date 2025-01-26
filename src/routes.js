@@ -73,7 +73,7 @@ export const GeneralNoAuth = [
     { path: 'team', element: Teams },
 
 
-]
+]   
 export const GeneralRoutes = [
     { path: 'user', element: User },
     { path: 'notification', element: Notification },
