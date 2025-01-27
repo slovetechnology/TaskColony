@@ -26,7 +26,11 @@ const Signup = () => {
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(false);
   const { register, setValue, handleSubmit, formState: { errors } } = useForm();
+  const [showStateHelp, setShowStateHelp] = useState(false);
 
+  const toggleStateHelp = () => {
+    setShowStateHelp((prev) => !prev); // Toggle the visibility
+  };
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     const dataToSend = {
@@ -287,7 +291,12 @@ const Signup = () => {
                       className={`input border ${errors.password ? 'border-red-600' : 'border'}`}
                     />
                   </div>
-
+                  <div className="text-secondary  cursor-pointer" onClick={toggleStateHelp}>
+                    Can't see your state?
+                  </div>
+                  {showStateHelp && (
+                    <div className="mt-2 text-sm text-gray-600 ">If your state is not listed, TaskColony is currently not offering services in your area. You will be notified once TaskColony expands operations to your state.</div>
+                  )}
                   <div className="mt-6 space-y-3">
                     <label className="flex items-center">
                       <input {...register('agree_terms', { required: true })} type="checkbox" className="accent-secondary mr-2" />

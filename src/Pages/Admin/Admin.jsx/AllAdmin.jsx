@@ -185,7 +185,7 @@ const AllAdmin = () => {
                                 </TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
-                                        {admin.userlevel === '1' && ( 
+                                        {admin.userlevel === '1' && (
                                             <>
                                                 <div className="cursor-pointer" onClick={() => SingleItem(member)}>
                                                     <PiPencilSimpleLine />
@@ -193,18 +193,17 @@ const AllAdmin = () => {
                                                 <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
                                                     <ImCancelCircle />
                                                 </div>
+                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+                                                    <ImCancelCircle />
+                                                </div>
                                             </>
                                         )}
-                                        {admin.userlevel === '2' && ( 
-                                            <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
-                                                <ImCancelCircle />
-                                            </div>
-                                        )}
+
                                     </div>
                                 </TableData>
                             </TableRow>
                         ))}
-                        {(admin.userlevel === '1' || admin.userlevel === '2') && ( 
+                        {admin.userlevel === '1' && (
                             <div className="mt-10 mb-5 mx-10">
                                 <Link to='/auth/admin/new-admin' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
                                     <button>Add Admin</button>
