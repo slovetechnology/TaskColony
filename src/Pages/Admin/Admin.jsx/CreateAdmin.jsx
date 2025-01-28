@@ -14,8 +14,8 @@ const statusOptions = [
 
 const levelOptions = [
     { id: 1, label: 'Super Admin', value: 'admin' },
-    { id: 2, label: 'Editor', value: 'editor' },
-    { id: 3, label: 'Viewer', value: 'viewer' },
+    { id: 3, label: 'Editor', value: 'editor' },
+    { id: 4 , label: 'Viewer', value: 'viewer' },
 ];
 
 const CreateAdmin = () => {

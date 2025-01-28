@@ -132,7 +132,7 @@ const Signup = () => {
           <div className="md:flex my-14 mx-2">
             <img src={signup} alt="Signup" className="md:w-[27rem] rounded-tl-md rounded-bl-md object-cover" />
             <div className="bg-white rounded-tr-md md:w-[27rem] rounded-br-md shadow-2xl py-5 px-6">
-              <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome to Task Colony</div>
+              <div className="text-center text-[#4B5563] font-[400] text-lg mb-4">Welcome to TaskColony</div>
               <div className="flex items-center mb-3 justify-center gap-10">
                 <div className="w-24 h-0.5 bg-[#E5E7EB]"></div>
                 <p className="text-xs text-primary">SIGN UP</p>

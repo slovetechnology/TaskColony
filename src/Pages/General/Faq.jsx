@@ -14,8 +14,8 @@ const Faq = () => {
 
     return (
         <Layout>
-        <div className="bg-gray w-full xl:h-[10rem]">
-          <div className="text-center py-1 pt-10">
+            <div className="bg-gray w-full xl:h-[10rem]">
+                <div className="text-center py-1 pt-10">
                     <p className='font-[500] text-4xl mb-3'>FAQs</p>
                     <span className='flex items-center gap-4 font-[500] justify-center'>
                         <p className="text-primary">Home</p>
@@ -25,12 +25,12 @@ const Faq = () => {
                 </div>
             </div>
             <div className="mb-20 lg:mt-40">
-            <div className="lg:flex items-start justify-between lg:mx-32 mx-5 mt-10  lg:mt-20">
+                <div className="lg:flex items-start justify-between lg:mx-32 mx-5 mt-10  lg:mt-20">
                     <div className="">
                         <p className="text-xl font-medium">FAQs For Users</p>
                         <p className='text-base mt-2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
                         <div className="border rounded-md py-2 px-5 w-fit border-primary mt-4">
-                            <Link to='' className='text-primary'>Contact</Link>
+                            <Link to='/contact' className='text-primary'>Contact</Link>
                         </div>
                     </div>
                     <div className="">
@@ -75,7 +75,7 @@ const Faq = () => {
                         <p className="text-xl font-medium">FAQs For Providers</p>
                         <p className='text-base mt-2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
                         <div className="border rounded-md py-2 px-5 w-fit border-primary mt-4">
-                            <Link to='' className='text-primary'>Contact</Link>
+                            <Link to='/contact' className='text-primary'>Contact</Link>
                         </div>
                     </div>
                     <div className="">
