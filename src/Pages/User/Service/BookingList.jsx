@@ -185,7 +185,7 @@ const BookingList = () => {
                     </div>
                     <div className="flex font-[500] pt-8 gap-3">
                       <div className="bg-secondary py-1 px-4 rounded-md text-white">
-                        <Link className="" to={`/booking-detail/${item.trackid}`}>
+                        <Link className="" to={`/booking-detail/${item.id}`}>
                           View
                         </Link>
                       </div>

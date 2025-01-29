@@ -186,13 +186,15 @@ const AllProvider = () => {
                                 </TableData>
                             </TableRow>
                         ))}
-
-                        <div className="w-full flex justify-end items-end mx-10 mt-4">
-                            {userLevel !== "3" && (
+                        {userLevel !== "3" && (
+                            <div className="mt-10 mx-10">
                                 <Link to='/auth/admin/new-provider' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
                                     <button>Add Provider</button>
                                 </Link>
-                            )}
+                            </div>
+                        )}
+                        <div className="w-full flex items-center gap-6  mx-10 mt-4">
+
                             <PaginationButton
                                 pageCount={pageCount}
                                 onPageChange={handlePageChange}

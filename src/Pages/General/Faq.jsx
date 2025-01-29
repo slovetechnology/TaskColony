@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Layout from '../../Components/User/Layout';
 import { Link } from 'react-router-dom';
-import { Packages } from '../../utils/utils';
-import { FaPlus, FaMinus, FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import icons
+import {  ProviderPackages, UserPackages } from '../../utils/utils';
+import {  FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import icons
 import { motion, AnimatePresence } from 'framer-motion'; // Import framer-motion
 
 const Faq = () => {
@@ -35,7 +35,7 @@ const Faq = () => {
                     </div>
                     <div className="">
                         <div className="mt-10">
-                            {Packages.map((item) => (
+                            {UserPackages.map((item) => (
                                 <div key={item.id}>
                                     <div onClick={() => toggleService(item.id)} className="lg:w-[50vw]">
                                         <div className="flex items-center justify-between cursor-pointer">
@@ -55,8 +55,9 @@ const Faq = () => {
                                                     transition={{ duration: 0.3 }}
                                                     className="flex items-center lg:w-[50vw] gap-2.5 mt-2"
                                                 >
-                                                    <span className="bg-primary-50 p-2 text-sm font-medium">{item.droptext}</span>
-                                                </motion.div>
+                                                    <span className="bg-primary-50 p-2 text-base font-medium">{item.droptext.text}</span>
+                                                    <span className="bg-primary-50 p-2 text-base font-medium">{item.droptext.subtext}</span>
+                                                    </motion.div>
                                             )}
                                         </AnimatePresence>
                                     </div>
@@ -80,7 +81,7 @@ const Faq = () => {
                     </div>
                     <div className="">
                         <div className="mt-10">
-                            {Packages.map((item) => (
+                            {ProviderPackages.map((item) => (
                                 <div key={item.id}>
                                     <div onClick={() => toggleService(item.id)} className="lg:w-[50vw]">
                                         <div className="flex items-center justify-between cursor-pointer">
@@ -100,7 +101,8 @@ const Faq = () => {
                                                     transition={{ duration: 0.3 }}
                                                     className="flex items-center lg:w-[50vw] gap-2.5 mt-2"
                                                 >
-                                                    <span className="bg-primary-50 p-2 text-sm font-medium">{item.droptext}</span>
+                                                    <span className="bg-primary-50 p-2 text-base font-medium">{item.droptext.text}</span>
+                                                    <span className="bg-primary-50 p-2 text-base font-medium">{item.droptext.subtext}</span>
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>

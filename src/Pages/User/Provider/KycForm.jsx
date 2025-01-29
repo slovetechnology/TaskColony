@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import Modal from '../../../Components/General/Modal';
 import { Apis, AuthPosturl, Geturl } from '../../../Components/General/Api';
 import { FaPlus } from 'react-icons/fa';
-import { ToastAlert } from '../../../Components/General/Utils';
+import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
+import TermsOfService from './TermsOfService';
 
 const KycForm = ({ closeView, isOpen }) => {
     const [loading, setLoading] = useState(false);
@@ -17,6 +18,8 @@ const KycForm = ({ closeView, isOpen }) => {
     });
     const [states, setStates] = useState([]);
     const [locationButtonText, setLocationButtonText] = useState('Get Location');
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+    const [agreeTerms, setAgreeTerms] = useState(false); // Checkbox state
 
     const getUserGeoAddress = async () => {
         setLocationButtonText('Getting your location...');
@@ -92,6 +95,11 @@ const KycForm = ({ closeView, isOpen }) => {
 
     const onSubmit = async (data, event) => {
         event.preventDefault();
+        if (!agreeTerms) {
+            ErrorAlert('You must agree to the Terms of Service.');
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {
@@ -115,9 +123,9 @@ const KycForm = ({ closeView, isOpen }) => {
                 formData.append('images[]', image);
             }
 
-            const response = await AuthPosturl(Apis.users.kyc_form, formData,);
+            const response = await AuthPosturl(Apis.users.kyc_form, formData);
             if (response.status === true) {
-                ToastAlert('')
+                ToastAlert('KYC form submitted successfully');
                 setTimeout(() => {
                     window.location.href = '/provider';
                 }, 200);
@@ -126,6 +134,19 @@ const KycForm = ({ closeView, isOpen }) => {
             console.error('Error submitting KYC form:', error);
         } finally {
             setIsSubmitting(false);
+        }
+    };
+    const [isButtonActive, setIsButtonActive] = useState(false);
+
+    const handleButtonClick = () => {
+        setIsButtonActive(true);
+    };
+    const handleCheckboxChange = (e) => {
+        setAgreeTerms(e.target.checked);
+        if (e.target.checked) {
+            setIsModalOpen(true); // Open the modal when checked
+        } else {
+            setIsModalOpen(false); // Close the modal if unchecked
         }
     };
 
@@ -273,20 +294,19 @@ const KycForm = ({ closeView, isOpen }) => {
                         <div className="mb-3">
                             <label className="text-xs font-semibold">Social Security Number</label>
                             <input
-                                {...register('security_number', { required: 'Security number Type is required' })}
+                                {...register('security_number', { required: 'Security number is required' })}
                                 type="text"
                                 className={`input border ${errors.security_number ? 'border-red-600' : 'border'}`}
                             />
                             {errors.security_number && <div className="text-red-600 text-xs">{errors.security_number.message}</div>}
                         </div>
-
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                         <div className="mb-3">
                             <label className="text-xs font-semibold">Gender</label>
                             <select
-                                {...register('gender', { required: 'Social security number type is required' })}
+                                {...register('gender', { required: 'Gender is required' })}
                                 className={`input border ${errors.gender ? 'border-red-600' : 'border'}`}
                             >
                                 <option value="">Select</option>
@@ -363,16 +383,26 @@ const KycForm = ({ closeView, isOpen }) => {
                     </div>
                     <div className="mt-6 mb-3 space-y-3">
                         <label className="flex items-center">
-                            <input {...register('agree_terms', { required: true })} type="checkbox" className="accent-secondary mr-2" />
-                            <span className="text-secondary underline">Terms Of Service</span>
+                            <input
+                                type="checkbox"
+                                className="accent-secondary mr-2"
+                                onChange={handleCheckboxChange}
+                            />
+                            <span className="text-secondary underline">I agree to the Terms Of Service</span>
                         </label>
-
                     </div>
-                    <button type="submit" className="bg-secondary px-4 py-1 rounded-md text-white" disabled={isSubmitting}>
+                    <button
+                        type="submit"
+                        className={`px-4 py-1 rounded-md text-white ${isButtonActive ? 'bg-green-500' : 'bg-secondary'}`}
+                        disabled={isSubmitting}
+                        onClick={handleButtonClick}
+                    >
                         Submit
                     </button>
                 </form>
             </div>
+
+            <TermsOfService isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </Modal>
     );
 };
