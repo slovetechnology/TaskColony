@@ -241,7 +241,7 @@ const AllBookings = () => {
 
                 <TableData>
                   <div className="flex gap-4 text-lg text-primary">
-                    {admin.userlevel !== "3" && (
+                    {admin.userlevel !== "4" && (
                       <>
                         <div className="cursor-pointer" onClick={() => SingleItem(member)}>
                           <PiPencilSimpleLine />

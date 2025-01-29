@@ -172,7 +172,7 @@ const AllProvider = () => {
                                 <TableData>{member.account_verified_text}</TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
-                                        {userLevel !== "3" && (
+                                        {userLevel !== "4" && (
                                             <>
                                                 <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
                                                 <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>

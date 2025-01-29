@@ -188,7 +188,7 @@ const AllServices = () => {
                                 </TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
-                                        {userLevel !== "3" && (
+                                        {userLevel !== "4" && (
                                             <>
                                                 <div className="cursor-pointer" onClick={() => SingleItem(member)}><PiPencilSimpleLine /></div>
                                                 <div className="cursor-pointer" onClick={() => DeleteItem(member)}><ImCancelCircle /></div>
@@ -199,7 +199,7 @@ const AllServices = () => {
                             </TableRow>
                         ))}
                         <div className="mt-10 mb-5 mx-10">
-                            {userLevel !== "3" && (
+                            {userLevel !== "4" && (
                                 <Link to='/auth/admin/new-service' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
                                     <button>Add Services</button>
                                 </Link>
