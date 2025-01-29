@@ -1,10 +1,28 @@
-import React from 'react'
-import Modal from '../../../Components/General/Modal'
-import ToggleButton from '../../../Components/General/toggle-button'
-import { useForm } from 'react-hook-form'
+import React, { useEffect, useState } from 'react';
+import Modal from '../../../Components/General/Modal';
+import ToggleButton from '../../../Components/General/toggle-button';
+import { useSelector } from 'react-redux';
 
-const Settings = ({ closeview, resendSignal }) => {
-  const { register, handleSubmit, setValue, watch } = useForm({})
+const Settings = ({ closeview }) => {
+  const { user } = useSelector(state => state.data);
+  const [displayOnApp, setDisplayOnApp] = useState(user.push_notification === 1);
+
+  // Load initial state from localStorage
+  useEffect(() => {
+    const storedValue = localStorage.getItem('push_notification');
+    if (storedValue !== null) {
+      setDisplayOnApp(storedValue === 'true');
+    }
+  }, []);
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('push_notification', displayOnApp);
+  }, [displayOnApp]);
+
+  const handleToggle = () => {
+    setDisplayOnApp(prev => !prev);
+  };
 
   return (
     <Modal closeView={closeview}>
@@ -18,16 +36,14 @@ const Settings = ({ closeview, resendSignal }) => {
           </div>
           <div className="flex items-center gap-4 mb-8">
             <ToggleButton
-              checked={watch('displayonapp')}
-              onChange={() => setValue('displayonapp', !watch('displayonapp'))}
+              checked={displayOnApp}
+              onChange={handleToggle}
             />
           </div>
         </div>
-    
-
       </div>
     </Modal>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

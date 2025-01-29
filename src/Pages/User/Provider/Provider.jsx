@@ -198,9 +198,9 @@ const Provider = () => {
               </div>
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"
-                to="/terms"
+                to="/provider-terms"
               >
-                Terms & Conditions <FaChevronRight />
+                Terms Of Service <FaChevronRight />
               </Link>
 
               <Link

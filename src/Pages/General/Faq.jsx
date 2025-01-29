@@ -24,7 +24,7 @@ const Faq = () => {
                     </span>
                 </div>
             </div>
-            <div className="mb-20 lg:mt-40">
+            <div className="mb-20">
                 <div className="lg:flex items-start justify-between lg:mx-32 mx-5 mt-10  lg:mt-20">
                     <div className="">
                         <p className="text-xl font-medium">FAQs For Users</p>
