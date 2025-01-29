@@ -141,8 +141,8 @@ const AllAdmin = () => {
 
     const userLevelMapping = {
         1: 'Super Admin',
-        2: 'Editor',
-        3: 'Viewer',
+        3: 'Editor',
+        4: 'Viewer',
     };
 
     return (
@@ -189,9 +189,6 @@ const AllAdmin = () => {
                                             <>
                                                 <div className="cursor-pointer" onClick={() => SingleItem(member)}>
                                                     <PiPencilSimpleLine />
-                                                </div>
-                                                <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
-                                                    <ImCancelCircle />
                                                 </div>
                                                 <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
                                                     <ImCancelCircle />

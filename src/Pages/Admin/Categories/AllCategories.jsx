@@ -153,7 +153,7 @@ const AllCategories = () => {
                 </TableData>
                 <TableData>
                   <div className="flex gap-4 text-primary">
-                    {admin.userlevel !== "3" && (
+                    {admin.userlevel !== "4" && (
                       <>
                         <div className="cursor-pointer" onClick={() => SingleItem(member)}>
                           <PiPencilSimpleLine />
@@ -168,7 +168,7 @@ const AllCategories = () => {
               </TableRow>
             ))}
             <div className="mt-10 mx-5">
-              {admin.userlevel !== "3" && (
+              {admin.userlevel !== "4" && (
                 <Link to='/auth/admin/new-category' className="bg-pink w-fit px-4 py-2 text-white rounded-md">
                   <button>Add Category</button>
                 </Link>

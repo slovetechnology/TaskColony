@@ -297,7 +297,7 @@ const User = () => {
                 className="border py-3 px-2 items-center justify-between flex w-full"
                 to="/user-favourite"
               >
-                Favourite Service <FaChevronRight />
+                Favorite Service <FaChevronRight />
               </Link>
 
               <Link

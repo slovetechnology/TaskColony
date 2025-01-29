@@ -151,7 +151,7 @@ const AllSlider = () => {
                                             {member.status === 1 ? 'ACTIVE' : 'INACTIVE'}
                                         </span>
                                     </TableData>
-                                    {userLevel !== "3" && (
+                                    {userLevel !== "4" && (
 
                                         <TableData>
                                             <div className="flex gap-4 text-primary">
@@ -167,7 +167,7 @@ const AllSlider = () => {
 
                                 </TableRow>
                             ))}
-                            {userLevel !== "3" && (
+                            {userLevel !== "4" && (
 
                                 <div className="mt-10 mx-5">
                                     <Link to="/auth/admin/new-slider" className="bg-pink w-fit px-4 py-2 text-white rounded-md">

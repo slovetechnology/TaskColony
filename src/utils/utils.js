@@ -44,9 +44,7 @@ import img36 from "assets/new/img36.svg"
 import img37 from "assets/new/img37.svg"
 import img38 from "assets/new/img38.svg"
 import img39 from "assets/new/img39.svg"
-import img40 from "assets/new/img40.svg"
 import img41 from "assets/new/img41.svg"
-import img42 from "assets/new/img42.svg"
 import img43 from "assets/new/img43.svg"
 import review from "../../src/assets/review.png"
 
@@ -108,33 +106,142 @@ export const HomeCategories = [
     { img: img12, title: 'cleaning' },
     { img: img13, title: 'Shopping & Delivery' },
 ]
-export const Packages = [
+
+export const ProviderPackages = [
+      {
+        droptext: { text: `Yes, your data is secure. We follow stringent privacy and security protocols as outlined in our Privacy Policy to ensure your personal and transactional data is protected.`, },
+        text: '11. For Providers',
+        id: 11
+    },
     {
-        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
-        text: 'Question text goes here',
+        droptext: {
+            text: `If you encounter any challenges or have further questions, please contact our support team:`,
+            subtext: [
+                `Email: support@swiftpointsproject.com`,
+                `Phone: +1332350929`,
+                `Feedback: Available on our app.`
+            ]
+
+        },
+        text: '12. How to manage jobs/task',
+        id: 12
+    },
+    {
+        droptext: {
+            text: `If you encounter any challenges or have further questions, please contact our support team:`,
+            subtext: [
+                `Email: support@swiftpointsproject.com`,
+                `Phone: +1332350929`,
+                `Feedback: Available on our app.`
+            ]
+
+        },
+        text: '13. Are the providers verified?',
+        id: 12
+    },
+    {
+        droptext: {
+            text: `If you encounter any challenges or have further questions, please contact our support team:`,
+            subtext: [
+                `Email: support@swiftpointsproject.com`,
+                `Phone: +1332350929`,
+                `Feedback: Available on our app.`
+            ]
+
+        },
+        text: '13. Is it free?',
+        id: 13
+    },
+];
+export const UserPackages = [
+    {
+        droptext: { text: `Swift Points (SP) are digital rewards mined within the Swift Points Mining App. SP can be earned by users through mining and participating in ecosystem activities, with the potential to convert them to SwiftCoin (SC) in the future.`, },
+        text: '1. Trying to Book a service? Do not worry; you are only a few clicks away.',
         id: 1
     },
     {
-        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
-        text: 'Question text goes here',
+        droptext: {
+            text: `Mining is simple:`,
+
+            subtext: [
+                `Open the Swift Points app.`,
+                `Tap “Start Mining.”`,
+                `Mining rewards are credited every 12 hours. Ensure to reactivate mining sessions regularly to maximize your earnings.`,
+            ]
+        },
+        text: `2. How to manage my bookings`,
         id: 2
     },
     {
-        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
-        text: 'Question text goes here',
+        droptext: { text: `Yes, the Swift Points Mining App is completely free to download and use. There are no charges for mining SP.`, },
+        text: '3. Is my Location visible to Providers on the app?',
         id: 3
     },
     {
-        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
-        text: 'Question text goes here',
+        droptext: {
+            text: `Share your unique referral code  available in the app.`,
+
+            subtext: [
+                `For every active referral, you receive Swift points (SP) and incentives.`,
+                `The referral program includes special milestones where you can earn USDT rewards based on the number of active miners you refer.”`,
+            ]
+        },
+        text: '4. Is it safe to use?',
         id: 4
     },
     {
-        droptext: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minima, cupiditate perspiciatis provident deserunt reprehenderit reiciendis repellat? Fugiat blanditiis eius ad expedita. Ratione porro itaque quae harum molestiae pariatur illum laudantium possimus est deleniti, doloribus quod, consequuntur quos exercitationem unde nemo repellendus sequi corrupti deserunt, et labore neque sit fugit. Porro ex, illum cumque quo id maxime quis autem at ad dicta perspiciatis corporis provident itaque commodi repellendus totam quod, sequi dolor consectetur eveniet mollitia veniam earum soluta! Iste voluptatum est ab. Quos voluptatum quasi laborum molestias. Aliquid odit, temporibus itaque corrupti voluptatum beatae quasi laboriosam magni officiis quidem repudiandae!`,
-        text: 'Question text goes here',
+        droptext: { text: `The buyback program allows users to exchange their mined Swift Points (SP) for USDT during specific periods. The rates are predetermined, e.g., 100 SP = 1 USDT.`, },
+        text: '5. Are there any consultation fees?',
         id: 5
     },
+    {
+        droptext: { text: `Once SwiftCoin (SC) launches, your Swift Points can be converted into SwiftCoin at the standard conversion rate of 1,000 SP = 1 SC, allowing you to participate in the broader cryptocurrency market.`, },
+        text: '6. When can I book my service?',
+        id: 6
+    },
+    {
+        droptext: { text: `Yes, Swift Points (SP) can be transferred between users! This feature is already integrated into the app, allowing users to exchange SP seamlessly. Whether you’re rewarding someone, engaging in peer-to-peer exchanges, or building a stronger community, transferring SP is fast, secure, and easy to use.`, },
+        text: '7. Who are the Providers?',
+        id: 7
+    },
+    {
+        droptext: { text: `Mining rates may decrease as more users join the ecosystem. This adjustment is designed to maintain the balance and sustainability of Swift Points over time.`, },
+        text: '8. Can I choose a Provider?',
+        id: 8
+    },
+    {
+        droptext: {
+            text: `Be an early adopter to enjoy higher initial mining rates.`,
+
+            subtext: [
+                `Refer friends and participate in special mining rate boosts announced periodically.`,
+                `Stay active and log in daily to maximize mining sessions.”`,
+                `Engage in our social educational programs to increase your SP.`,
+            ]
+        },
+        text: '9. Can I Book by phone?',
+        id: 9
+    },
+    {
+        droptext: { text: `The Social-Fi Wallet Browser is an integrated Web2 and Web3 platform that allows users to explore decentralized applications (DApps), manage cryptocurrencies, and perform transactions securely within the Swift Ecosystem.`, },
+        text: '10. How does Payment work?',
+        id: 10
+    },
+    {
+        droptext: {
+            text: `If you encounter any challenges or have further questions, please contact our support team:`,
+            subtext: [
+                `Email: support@swiftpointsproject.com`,
+                `Phone: +1332350929`,
+                `Feedback: Available on our app.`
+            ]
+
+        },
+        text: '13. Is it free?',
+        id: 13
+    },
 ];
+
 export const Team = [
     { img: team1, title: 'Olivia Rhye', position: 'Founder & CEO', description: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit." },
     { img: team2, title: 'Phoenix Baker', position: 'Engineering Manager', description: "Lead engineering teams at Figma, Pitch, and Protocol Labs." },

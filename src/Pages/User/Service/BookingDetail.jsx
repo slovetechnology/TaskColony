@@ -25,7 +25,7 @@ const StarRating = ({ rating, setRating }) => {
 
 const BookingDetail = () => {
     const [loading, setLoading] = useState(false);
-    const { bookingid } = useParams();
+    const { trackid } = useParams();
     const [booking, setBooking] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [rating, setRating] = useState(0);
@@ -33,16 +33,15 @@ const BookingDetail = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [editReview, setEditReview] = useState(false);
     const [singles, setSingles] = useState({});
-    const [view, setView] = useState(false);
     const [del, setDel] = useState(false);
     const [loads, setLoads] = useState(false);
 
     const fetchBooking = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await AuthGeturl(`${Apis.users.get_booking}/${bookingid}`);
+            const res = await AuthGeturl(`${Apis.users.get_booking}/${trackid}`);
             if (res?.status === true && Array.isArray(res.data?.data)) {
-                const filteredService = res.data.data.find(item => String(item.id) === String(bookingid));
+                const filteredService = res.data.data.find(item => String(item.id) === String(trackid));
                 setBooking(filteredService ? [filteredService] : []);
             } else {
                 setBooking([]);
@@ -53,7 +52,7 @@ const BookingDetail = () => {
         } finally {
             setLoading(false);
         }
-    }, [bookingid]);
+    }, [trackid]);
 
     useEffect(() => {
         fetchBooking();
@@ -197,9 +196,7 @@ const BookingDetail = () => {
                                 </div>
                             </div>
                             <div className="lg:flex mt-5 mb-10 mx-2 lg:mx-10">
-
                                 <div className="lg:w-[70%]">
-
                                     <div className="mb-4">
                                         <Link to='/booking-list' className="bg-secondary w-fit px-4 py-2 mb-4 text-white">Back</Link>
                                     </div>
@@ -226,7 +223,23 @@ const BookingDetail = () => {
                                                     <p className="text-primary text-xs">{item.description}</p>
                                                 </div>
                                             </div>
-
+                                            <div className="">
+                                                <div className="bg-white shadow-2xl text-lg font-semibold border rounded-xl p-5">
+                                                    <div className=""></div>
+                                                    <div className="">
+                                                        <p>{item.pfname} {item.plname}</p>
+                                                        <div className="flex items-center">
+                                                            {Array.from({ length: 5 }, (_, index) => (
+                                                                <FaStar
+                                                                    key={index}
+                                                                    color={index < item.poverall_rating ? '#FFD700' : '#ddd'}
+                                                                />
+                                                            ))}
+                                                            <span className="ml-2">{item.poverall_rating}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div className="">
                                                 {item.status === 'Completed' && (
                                                     <>
@@ -283,7 +296,7 @@ const BookingDetail = () => {
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div className="flex items-center gap-2 text-secondary cursor-pointer md:text-sm">
-                                                                                                <div onClick={() => SingleItem(review)} className="">Edit</div>
+                                                                                                <div onClick={() => SingleItem(review)} className="text-gray-600">Edit</div>
                                                                                                 <div onClick={() => DeleteItem(review)} className=""><FaTrashAlt /></div>
                                                                                             </div>
                                                                                         </div>
@@ -312,7 +325,6 @@ const BookingDetail = () => {
                                             <p className="font-[500] text-xl">Payment Summary</p>
                                             <div className="h-[28rem] px-6">
                                                 <div className="text-xs">
-
                                                     <div className="flex items-center justify-between gap-5 my-5">
                                                         <div className="text-sm text-primary">Payment Method</div>
                                                         <div className="font-medium">{item.paid_with}</div>

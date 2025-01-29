@@ -51,6 +51,7 @@ import AdminForgetPassword from "./Pages/Admin/AdminForms/AdminForgetPassword"
 import AllProvider from "./Pages/Admin/Provider/AllProvider"
 import SingleProvider from "./Pages/Admin/Provider/SingleProvider/SingleProvider"
 import NewsLetter from "./Pages/Admin/NewsLetter"
+import ProviderTerms from "./Pages/General/ProviderTerms"
 
 
 export const GeneralNoAuth = [
@@ -61,6 +62,7 @@ export const GeneralNoAuth = [
     { path: '', element: Home },
     { path: 'service', element: Service },
     { path: 'terms', element: Terms },
+    { path: 'provider-terms', element: ProviderTerms },
     { path: 'privacy', element: Privacy },
     { path: 'about', element: Aboutus },
     { path: 'faq', element: Faq },
