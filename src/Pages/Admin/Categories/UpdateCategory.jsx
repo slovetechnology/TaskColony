@@ -35,8 +35,6 @@ const UpdateCategory = ({ singles, closeView, resendSignal }) => {
         event.preventDefault(); 
         setIsSubmitting(true);
 
-        console.log('Submitting data:', data);
-
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('status', data.status === 'active' ? 1 : 0);

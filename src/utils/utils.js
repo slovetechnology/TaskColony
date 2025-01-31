@@ -109,17 +109,15 @@ export const HomeCategories = [
 
 export const ProviderPackages = [
       {
-        droptext: { text: `Yes, your data is secure. We follow stringent privacy and security protocols as outlined in our Privacy Policy to ensure your personal and transactional data is protected.`, },
+        droptext: { text: ``, },
         text: '11. For Providers',
         id: 11
     },
     {
         droptext: {
-            text: `If you encounter any challenges or have further questions, please contact our support team:`,
+            text: ``,
             subtext: [
-                `Email: support@swiftpointsproject.com`,
-                `Phone: +1332350929`,
-                `Feedback: Available on our app.`
+    
             ]
 
         },
@@ -128,11 +126,9 @@ export const ProviderPackages = [
     },
     {
         droptext: {
-            text: `If you encounter any challenges or have further questions, please contact our support team:`,
+            text: ``,
             subtext: [
-                `Email: support@swiftpointsproject.com`,
-                `Phone: +1332350929`,
-                `Feedback: Available on our app.`
+    
             ]
 
         },
@@ -141,11 +137,9 @@ export const ProviderPackages = [
     },
     {
         droptext: {
-            text: `If you encounter any challenges or have further questions, please contact our support team:`,
+            text: ``,
             subtext: [
-                `Email: support@swiftpointsproject.com`,
-                `Phone: +1332350929`,
-                `Feedback: Available on our app.`
+    
             ]
 
         },
@@ -155,7 +149,7 @@ export const ProviderPackages = [
 ];
 export const UserPackages = [
     {
-        droptext: { text: `Swift Points (SP) are digital rewards mined within the Swift Points Mining App. SP can be earned by users through mining and participating in ecosystem activities, with the potential to convert them to SwiftCoin (SC) in the future.`, },
+        droptext: { text: ``, },
         text: '1. Trying to Book a service? Do not worry; you are only a few clicks away.',
         id: 1
     },
@@ -164,16 +158,14 @@ export const UserPackages = [
             text: `Mining is simple:`,
 
             subtext: [
-                `Open the Swift Points app.`,
-                `Tap “Start Mining.”`,
-                `Mining rewards are credited every 12 hours. Ensure to reactivate mining sessions regularly to maximize your earnings.`,
+   
             ]
         },
         text: `2. How to manage my bookings`,
         id: 2
     },
     {
-        droptext: { text: `Yes, the Swift Points Mining App is completely free to download and use. There are no charges for mining SP.`, },
+        droptext: { text: ``, },
         text: '3. Is my Location visible to Providers on the app?',
         id: 3
     },
@@ -182,64 +174,48 @@ export const UserPackages = [
             text: `Share your unique referral code  available in the app.`,
 
             subtext: [
-                `For every active referral, you receive Swift points (SP) and incentives.`,
-                `The referral program includes special milestones where you can earn USDT rewards based on the number of active miners you refer.”`,
             ]
         },
         text: '4. Is it safe to use?',
         id: 4
     },
     {
-        droptext: { text: `The buyback program allows users to exchange their mined Swift Points (SP) for USDT during specific periods. The rates are predetermined, e.g., 100 SP = 1 USDT.`, },
+        droptext: { text: ``, },
         text: '5. Are there any consultation fees?',
         id: 5
     },
     {
-        droptext: { text: `Once SwiftCoin (SC) launches, your Swift Points can be converted into SwiftCoin at the standard conversion rate of 1,000 SP = 1 SC, allowing you to participate in the broader cryptocurrency market.`, },
+        droptext: { text: ``, },
         text: '6. When can I book my service?',
         id: 6
     },
     {
-        droptext: { text: `Yes, Swift Points (SP) can be transferred between users! This feature is already integrated into the app, allowing users to exchange SP seamlessly. Whether you’re rewarding someone, engaging in peer-to-peer exchanges, or building a stronger community, transferring SP is fast, secure, and easy to use.`, },
+        droptext: { text: ``, },
         text: '7. Who are the Providers?',
         id: 7
     },
     {
-        droptext: { text: `Mining rates may decrease as more users join the ecosystem. This adjustment is designed to maintain the balance and sustainability of Swift Points over time.`, },
+        droptext: { text: ``, },
         text: '8. Can I choose a Provider?',
         id: 8
     },
     {
         droptext: {
-            text: `Be an early adopter to enjoy higher initial mining rates.`,
+            text: ``,
 
             subtext: [
-                `Refer friends and participate in special mining rate boosts announced periodically.`,
-                `Stay active and log in daily to maximize mining sessions.”`,
-                `Engage in our social educational programs to increase your SP.`,
+                
             ]
         },
         text: '9. Can I Book by phone?',
         id: 9
     },
     {
-        droptext: { text: `The Social-Fi Wallet Browser is an integrated Web2 and Web3 platform that allows users to explore decentralized applications (DApps), manage cryptocurrencies, and perform transactions securely within the Swift Ecosystem.`, },
+        droptext: { text: ``, },
         text: '10. How does Payment work?',
         id: 10
     },
-    {
-        droptext: {
-            text: `If you encounter any challenges or have further questions, please contact our support team:`,
-            subtext: [
-                `Email: support@swiftpointsproject.com`,
-                `Phone: +1332350929`,
-                `Feedback: Available on our app.`
-            ]
-
-        },
-        text: '13. Is it free?',
-        id: 13
-    },
+    
 ];
 
 export const Team = [

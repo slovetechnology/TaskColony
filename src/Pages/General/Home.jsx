@@ -18,6 +18,7 @@ import Footer from '../../Components/User/Footer';
 import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
 import vector from '../../assets/Vector 10.png'
 import Slider from "react-slick";
+import Notification from './Notification';
 
 const ActiveTabOptions = [
     "email"
@@ -37,6 +38,8 @@ function Home() {
     const [topNav, setTopNav] = useState(false)
     const TopNavIcon = topNav ? FaTimes : SlMenu
     const [email, setEmail] = useState('');
+    const [notify, Setnotify] = useState(false);
+
     const profileImage = localStorage.getItem('profileImage') || user.passport;
     const [providers, setProvider] = useState(null);
     const [gallery, setGallery] = useState([]);
@@ -89,6 +92,9 @@ function Home() {
         navigate('/login');
         window.location.reload();
     };
+
+    const handleNotifyOpen = () => Setnotify(true);
+    const handleNotifyClose = () => Setnotify(false);
 
     // Fetch bookings
     const fetchAllHome = useCallback(async () => {
@@ -171,14 +177,16 @@ function Home() {
                                                 <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                                             </div>
                                         </div>
-                                        <Link to="/notification" className='text-secondary text-xl lg:text-2xl relative '>
-                                            <SlBell />
-                                            {notificationCount > 0 && (
-                                                <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
-                                                    {notificationCount}
-                                                </div>
-                                            )}
-                                        </Link>
+                                        <div className="" onClick={handleNotifyOpen}>
+                                            <Link to="#" className='text-secondary text-xl lg:text-2xl relative '>
+                                                <SlBell />
+                                                {notificationCount > 0 && (
+                                                    <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
+                                                        {notificationCount}
+                                                    </div>
+                                                )}
+                                            </Link>
+                                        </div>
                                         <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
                                             <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
                                                 <IoIosLogOut />
@@ -487,6 +495,7 @@ function Home() {
             </div>
 
 
+            {notify && <Notification closeview={handleNotifyClose} />}
 
             <Footer />
         </>

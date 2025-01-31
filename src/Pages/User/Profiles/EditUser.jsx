@@ -84,7 +84,6 @@ const EditUser = ({ closeView, singles }) => {
                 closeView();
                 window.location.reload();
             }
-            console.log('Response:', response.data);
         } catch (error) {
             console.error('Error updating user:', error);
             ErrorAlert(error.text);

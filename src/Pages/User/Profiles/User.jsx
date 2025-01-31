@@ -14,6 +14,7 @@ import KycPopups from "../../../Components/General/KycPopup";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Apis, AuthPosturl } from "../../../Components/General/Api";
 import { ErrorAlert, ToastAlert } from "../../../Components/General/Utils";
+import Notification from "../../General/Notification";
 
 const User = () => {
   const { user } = useSelector((state) => state.data);
@@ -22,6 +23,7 @@ const User = () => {
   const [changePass, SetChangePass] = useState(false);
   const [settings, SetSettings] = useState(false);
   const [fundWallet, SetFundwallet] = useState(false);
+  const [notify, Setnotify] = useState(false);
   const [isKycFormOpen, setIsKycFormOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -94,12 +96,19 @@ const User = () => {
 
   const handleEditUserOpen = () => setIsEditUserOpen(true);
   const handleEditUserClose = () => setIsEditUserOpen(false);
+
+  const handleNotifyOpen = () => Setnotify(true);
+  const handleNotifyClose = () => Setnotify(false);
+
   const handleChangePasswordOpen = () => SetChangePass(true);
   const handleChangePasswordClose = () => SetChangePass(false);
+
   const handleFundWalletOpen = () => SetFundwallet(true);
   const handleFundWalletClose = () => SetFundwallet(false);
+
   const handleSettingsOpen = () => SetSettings(true);
   const handleSettingsClose = () => SetSettings(false);
+
   const handleCancel = () => setIsPopupOpen(false);
   const handleCloseKycForm = () => setIsKycFormOpen(false);
 
@@ -142,14 +151,12 @@ const User = () => {
 
     try {
       const response = await AuthPosturl(Apis.users.edit_user_profile, payload);
-      console.log(response.status)
       if (response.status === true) {
         ToastAlert(response.text);
         handleEditUserClose();
 
       }
       window.location.reload();
-      console.log('Response:', response.data);
     } catch (error) {
       console.error('Error updating user:', error);
       ErrorAlert(error.text);
@@ -249,13 +256,15 @@ const User = () => {
                 <FaChevronRight />
               </div>
 
-              <Link
-                to="/notification"
-                className="border py-3 px-2 items-center justify-between flex w-full"
+              <div
+                onClick={handleNotifyOpen}
+                className="border flex items-center justify-between py-3 px-2 cursor-pointer"
               >
-                Notification <FaChevronRight />
-              </Link>
+                <Link to="#">Notification</Link>
+                <FaChevronRight />
+              </div>
 
+             
               <Link
                 to="/faq"
                 className="border py-3 px-2 items-center justify-between flex w-full"
@@ -316,7 +325,6 @@ const User = () => {
           closeView={handleEditUserClose}
           singles={user}
           updateUser={(updatedData) => {
-            console.log("User updated:", updatedData);
             handleEditUserClose();
           }}
         />
@@ -325,6 +333,7 @@ const User = () => {
       {changePass && <ChangePassword closeview={handleChangePasswordClose} />}
       {fundWallet && <FundWallet closeview={handleFundWalletClose} />}
       {settings && <Settings closeview={handleSettingsClose} />}
+      {notify && <Notification closeview={handleNotifyClose} />}
     </Layout>
   );
 };

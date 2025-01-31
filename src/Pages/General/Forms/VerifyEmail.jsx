@@ -15,11 +15,7 @@ const VerifyEmail = ({ email: initialEmail, token }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (token) {
-            console.log("Token received in VerifyEmail component:", token);
-        }
-    }, [token]);
+    
     useEffect(() => {
         if (view === 2) {
             window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -34,11 +30,8 @@ const VerifyEmail = ({ email: initialEmail, token }) => {
         };
         try {
             const res = await AuthPosturl(Apis.users.send_verify, dataToSend);
-            console.log(res)
             if (res.status === true) {
-                console.log(res.status)
                 Cookies.set('taskcolony', token); 
-                console.log("Token set in cookies (onSubmit):", token);
                 ToastAlert(res.text);
                 setView(2);
             } else {
@@ -63,7 +56,6 @@ const VerifyEmail = ({ email: initialEmail, token }) => {
             const res = await AuthPosturl(Apis.users.otp_verify, dataToSend);
             if (res.status === true) {
                 Cookies.set('taskcolony', token); 
-                console.log("Token set in cookies (onSubmit):", token);
                 ToastAlert(res.text);
                 setTimeout(() => {
                     navigate('/login'); 

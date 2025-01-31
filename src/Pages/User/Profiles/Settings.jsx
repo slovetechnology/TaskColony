@@ -41,6 +41,18 @@ const Settings = ({ closeview }) => {
             />
           </div>
         </div>
+        <div className="flex mt-5 justify-between">
+          <div className="">
+            <div className="font-medium">Push Notification</div>
+            <div className="text-sm font-medium">Customize Push Notification</div>
+          </div>
+          <div className="flex items-center gap-4 mb-8">
+            <ToggleButton
+              checked={displayOnApp}
+              onChange={handleToggle}
+            />
+          </div>
+        </div>
       </div>
     </Modal>
   );

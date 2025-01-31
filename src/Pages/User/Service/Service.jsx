@@ -29,7 +29,6 @@ const Service = () => {
     try {
       const res = await Geturl(Apis.users.get_system);
       if (res.status) {
-        console.log(res.status)
         setItems(res.data.all_services);
       } else {
         throw new Error('Failed to fetch services');

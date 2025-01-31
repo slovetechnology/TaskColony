@@ -47,7 +47,6 @@ const Provider = () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        console.log("Latitude:", latitude, "Longitude:", longitude);
 
         try {
           const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Use your actual API key here
@@ -75,18 +74,6 @@ const Provider = () => {
     );
   };
 
-  const handleUpload = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setImage({
-        main: file,
-        preview: reader.result,
-      });
-      localStorage.setItem("profileImage", reader.result); // Save image to local storage
-    };
-  };
 
   const handleEditUserOpen = () => setIsEditUserOpen(true);
   const handleEditUserClose = () => setIsEditUserOpen(false);
@@ -226,7 +213,6 @@ const Provider = () => {
           closeView={handleEditUserClose}
           singles={user}
           updateUser={(updatedData) => {
-            console.log("User updated:", updatedData);
             handleEditUserClose();
           }}
         />
