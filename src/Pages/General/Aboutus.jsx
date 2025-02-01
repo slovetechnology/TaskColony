@@ -123,7 +123,7 @@ const Aboutus = () => {
                   <p className="text-xs mb-3 text-primary">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters</p>
                   <p className="text-secondary text-xs italic">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                 </div>
-                <div className="lg:flex items-center justify-center xl:mt-0 mt-8 gap-6">
+                <div className="md:flex items-center justify-center xl:mt-0 mt-8 gap-6">
                   {about.map((item, i) => (
                     <div key={i} className="bg-white md:w-[12rem] mb-3 flex items-center justify-center flex-col lg:h-[12rem] py-3 rounded-xl">
                       <img src={item.image} alt="" className="xl:w-16 w-10 md:w-14" />
@@ -154,7 +154,7 @@ const Aboutus = () => {
           </div>
         </div>
 
-        <div className="mt-[20rem] lg:mt-[15rem]">
+        <div className="mt-[20rem] md:mt-[10rem ] mb-[5rem]">
           <div className="flex items-center justify-center font-semibold text-3xl">Our Team</div>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-16 mt-7">
             {Team.map((item, i) => (

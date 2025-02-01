@@ -74,7 +74,6 @@ const Signup = () => {
     setLoading(true);
     try {
       const stateResponse = await Geturl(Apis.users.get_system);
-      console.log("State Response:", stateResponse); // Log the response
       if (stateResponse.status === true) {
         setStates(stateResponse.data.cities);
       } else {
@@ -101,7 +100,6 @@ const Signup = () => {
   const GoogleLogin = async () => {
     try {
       const res = await AuthPosturl(Apis.users.google_verify);
-      console.log(res.status);
       if (res.status === true) {
         const url = res.data[0].url;
         setGoogleLoginUrl(url); // Set the Google login URL

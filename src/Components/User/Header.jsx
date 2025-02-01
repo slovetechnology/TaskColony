@@ -182,6 +182,7 @@ import Cookies from 'js-cookie';
 import { NavLinks, TopNavsLinks } from '../../utils/utils';
 import { AuthGeturl, Apis, Geturl } from '../../Components/General/Api'; // Assuming this is the API service
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Notification from '../../Pages/General/Notification';
 
 const Header = () => {
   const { userloggedin, user } = useSelector((state) => state.data); // Pulling from Redux
@@ -194,6 +195,7 @@ const Header = () => {
   const [notificationCount, setNotificationCount] = useState(0); // State for notification count
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [notify, Setnotify] = useState(false);
 
   const fetchAllHome = useCallback(async () => {
     setLoading(true);
@@ -238,6 +240,8 @@ const Header = () => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
+  const handleNotifyOpen = () => Setnotify(true);
+  const handleNotifyClose = () => Setnotify(false);
 
   const handleLogout = () => {
     Cookies.remove('taskcolony');
@@ -247,7 +251,7 @@ const Header = () => {
   };
 
   // Get profile image from localStorage, fallback to Redux store
-  const profileImage =  user.passport;
+  const profileImage = user.passport;
 
   return (
     <div className='relative'>
@@ -278,14 +282,16 @@ const Header = () => {
                       <p className="text-sm font-medium text-secondary-500">{user?.email}</p>
                     </div>
                   </div>
-                  <Link to="/notification" className='text-secondary text-xl lg:text-2xl relative '>
-                    <SlBell />
-                    {notificationCount > 0 && (
-                      <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
-                        {notificationCount}
-                      </div>
-                    )}
-                  </Link>
+                  <div className="" onClick={handleNotifyOpen}>
+                    <Link to="#" className='text-secondary text-xl lg:text-2xl relative '>
+                      <SlBell />
+                      {notificationCount > 0 && (
+                        <div className="absolute -top-2 -right-2 bg-black text-white flex items-center justify-center size-5 rounded-full text-[0.7rem]">
+                          {notificationCount}
+                        </div>
+                      )}
+                    </Link>
+                  </div>
                   <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
                     <div onClick={handleLogout} className="flex cursor-pointer items-center text-secondary gap-2">
                       <IoIosLogOut />
@@ -337,6 +343,8 @@ const Header = () => {
           </p>
         </div>
       </div>
+      {notify && <Notification closeview={handleNotifyClose} />}
+
     </div>
   );
 };

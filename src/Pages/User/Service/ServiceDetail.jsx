@@ -653,8 +653,8 @@ const ServiceDetail = () => {
           </div>
 
           <div className="flex overflow-auto scrollsdown my-10 mx-5 gap-10">
-            {services.slice(0, 8).map((item, index) => (
-              <div className="flex-shrink-0" key={index}>
+            {services.slice(0, 8).map((item,) => (
+              <div className="flex-shrink-0" key={item.id}>
                 <div className="">
                   <LazyLoadImage
                     effect="blur"
