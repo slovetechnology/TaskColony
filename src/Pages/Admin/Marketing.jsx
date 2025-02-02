@@ -5,7 +5,7 @@ import { Apis, AuthPosturl } from '../../Components/General/Api';
 import AdminLayout from '../../Components/Admin/AdminLayout';
 import { ErrorAlert } from '../../Components/General/Utils';
 
-const Marquee = () => {
+const Marketing = () => {
     const editor = useRef(null);
     const { handleSubmit, formState: { errors } } = useForm();
     const [content, setContent] = useState('');
@@ -14,12 +14,13 @@ const Marquee = () => {
     const onSubmit = async () => {
         const formData = new FormData();
         
+        // Extract plain text from the content
         const plainTextContent = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
         formData.append('message', plainTextContent); // Save plain text content
 
         setLoading(true);
         try {
-            const res = await AuthPosturl(Apis.admins.marquee_message, formData);
+            const res = await AuthPosturl(Apis.admins.marketing_message, formData);
             if (res.status === true) {
                 setContent(''); // Clear the content after successful submission
             } else {
@@ -57,4 +58,4 @@ const Marquee = () => {
     );
 };
 
-export default Marquee;
+export default Marketing;

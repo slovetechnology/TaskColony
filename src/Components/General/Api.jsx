@@ -97,6 +97,12 @@ const admin_urls = {
     update_admin_slider: `${admin}/slider/update_slider.php`,
     delete_admin_slider: `${admin}/slider/delete_slider.php`,
 
+    //faqs
+    get_admin_faqs: `${admin}/faqs/get_all_faqs.php`,
+    create_admin_faqs: `${admin}/faqs/create_faqs.php`,
+    update_admin_faqs: `${admin}/faqs/update_faqs.php`,
+    delete_admin_faqs: `${admin}/faqs/delete_faqs.php`,
+
     //services
     get_admin_services: `${admin}/services/get_all_services.php`,
     create_admin_services: `${admin}/services/create_services.php`,
@@ -130,6 +136,7 @@ const admin_urls = {
     resetpass_admin: `${admin}/auth/reset_password.php`,
     create_admin: `${admin}/admins/create_admin.php`,
     marquee_message: `${admin}/system/update_banner_message.php`,
+    marketing_message: `${admin}/system/update_marketing_message.php`,
 };
 
 export const Apis = {
