@@ -136,6 +136,7 @@ const admin_urls = {
     resetpass_admin: `${admin}/auth/reset_password.php`,
     create_admin: `${admin}/admins/create_admin.php`,
     marquee_message: `${admin}/system/update_banner_message.php`,
+    marketing_message: `${admin}/system/update_marketing_message.php`,
 };
 
 export const Apis = {

@@ -100,8 +100,11 @@ const AdminSidebar = () => {
                     <div onClick={() => handleNavigation('/auth/admin/testemonial')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Testemonial
                     </div>
-                    <div onClick={() => handleNavigation('/auth/admin/marquee')} className="flex cursor-pointer hover:text-secondary items-center gap-2">
+                    <div onClick={() => handleNavigation('/auth/admin/marquee')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
                         <IoGridOutline /> Marquee
+                    </div>
+                    <div onClick={() => handleNavigation('/auth/admin/market')} className="flex cursor-pointer hover:text-secondary items-center gap-2">
+                        <IoGridOutline /> Marketing Message
                     </div>
                 </div>
 

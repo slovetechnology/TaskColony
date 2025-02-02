@@ -54,6 +54,7 @@ import NewsLetter from "./Pages/Admin/NewsLetter"
 import ProviderTerms from "./Pages/General/ProviderTerms"
 import AllFaqs from "./Pages/Admin/Faqs/AllFaqs"
 import NewFaqs from "./Pages/Admin/Faqs/NewFaqs"
+import Marketing from "./Pages/Admin/Marketing"
 
 
 export const GeneralNoAuth = [
@@ -121,6 +122,7 @@ export const AdminRoutes = [
     { path: 'new-coupon', element: NewCoupon },
     { path: 'coupon', element: AllCoupon },
     { path: 'marquee', element: Marquee },
+    { path: 'market', element: Marketing },
     
 
 ]

@@ -117,7 +117,7 @@ const AllFaqs = () => {
       <div className="md:mx-10 mx-2 mb-20">
         <div className="bg-white mt-10 px-5 py-4 w-full">
           <div className="flex items-center justify-between">
-            <div className="font-medium text-lg">Categories</div>
+            <div className="font-medium text-lg">FAQs</div>
             <div className="md:flex hidden items-center gap-5">
               <label className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md">
                 <input
