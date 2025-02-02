@@ -60,7 +60,7 @@ const Faq = () => {
             <div className="mb-20">
                 <div className="lg:flex items-start justify-between lg:mx-32 mx-5 mt-10 lg:mt-20">
                     <div className="">
-                        <p className="text-xl font-medium">FAQs For Users</p>
+                        <p className="text-xl font-medium">FAQs For Users & Providers</p>
                         <p className='text-base mt-2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
                         <div className="border rounded-md py-2 px-5 w-fit border-primary mt-4">
                             <Link to='/contact' className='text-primary'>Contact</Link>
