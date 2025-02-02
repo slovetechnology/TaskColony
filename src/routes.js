@@ -52,6 +52,8 @@ import AllProvider from "./Pages/Admin/Provider/AllProvider"
 import SingleProvider from "./Pages/Admin/Provider/SingleProvider/SingleProvider"
 import NewsLetter from "./Pages/Admin/NewsLetter"
 import ProviderTerms from "./Pages/General/ProviderTerms"
+import AllFaqs from "./Pages/Admin/Faqs/AllFaqs"
+import NewFaqs from "./Pages/Admin/Faqs/NewFaqs"
 
 
 export const GeneralNoAuth = [
@@ -111,7 +113,9 @@ export const AdminRoutes = [
     { path: 'category', element: AllCategories },
     { path: 'new-category', element: NewCategory },
     { path: 'slider', element: AllSlider },
+    { path: 'faqs', element: AllFaqs },
     { path: 'new-slider', element: NewSlider },
+    { path: 'new-faq', element: NewFaqs },
     { path: 'tax', element: AllTaxes },
     { path: 'new-tax', element: NewTax },
     { path: 'new-coupon', element: NewCoupon },
