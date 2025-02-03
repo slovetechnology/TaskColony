@@ -8,7 +8,7 @@ const user = 'user';
 const admin = 'admin';
 const user_urls = {
     register: `${user}/auth/register_user.php`,
-    google_verify: `${user}/auth/login_with_google_get_url.php`,
+    google_url: `${user}/auth/login_with_google_get_url.php`,
     app_link: `${user}/system/send_download_link.php`,
     provider_favservice: `${user}/profile/update_profile_service.php`,
     complete_gig: `${user}/gigs/set_task_as_completed.php`,
@@ -47,7 +47,7 @@ const user_urls = {
     update_review: `${user}/reviews/update_review.php`,
 
     get_testimonial: `${user}/testimonials/get_all_testimonials.php`,
-    google_verifing: `${user}/auth/login_with_google_verify.php`,
+    google_verify: `${user}/auth/login_with_google_verify.php`,
 };
 const admin_urls = {
     get_admin_dashboard: `${admin}/dashboard/all_stat.php`,

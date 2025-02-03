@@ -36,14 +36,9 @@ const Faq = () => {
         }
     }, []);
 
-    // Fetch FAQs on component mount
     useEffect(() => {
         fetchAllHome();
     }, [fetchAllHome]);
-
-    // Render loading state or error
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
 
     return (
         <Layout>
@@ -89,9 +84,7 @@ const Faq = () => {
                                                     className="flex items-center lg:w-[50vw] gap-2.5 mt-2"
                                                 >
                                                     <span className="bg-primary-50 p-2 text-base font-medium">{item.details}</span>
-                                                    {item.droptext && (
-                                                        <span className="bg-primary-50 p-2 text-base font-medium">{item.droptext.subtext}</span>
-                                                    )}
+                                                
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
