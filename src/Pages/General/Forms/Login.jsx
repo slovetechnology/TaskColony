@@ -9,7 +9,6 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Apis, Posturl, AuthPosturl, Geturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import Cookies from 'js-cookie';
-import { decodeToken } from 'react-jwt'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +45,7 @@ const Login = () => {
           ToastAlert(res.data.text);
 
           setTimeout(() => {
-            window.location.href = '/service'; // Navigate and reload the page
+            window.location.href = '/service'; 
           }, 1000);
         }
       }
@@ -164,3 +163,14 @@ const Login = () => {
 };
 
 export default Login;
+
+/*
+
+backend.taskcolony.com/api/user/auth/login_with_google_verify.php?code=4%2F0ASVgi3Lh3xWIsRbmydm7twzkJuxDGSxXpa491-jo8qWJ06mkHrxTeqPXPy-O9ZTTeZ-zow&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=none
+
+
+
+https://backend.taskcolony.com/api/user/auth/login_with_google_verify.php?code=4/0ASVgi3KfgupzcHQ8GQ9YmsFTYw1Z20428F9Gvuv7hrMRkiGvWjc2pqlJylS3U-JBAutJBw
+
+https://taskcolony.com/login.html?code=4%2F0ASVgi3KVoHPbjH9q4h6uBJ7a8J4PBJEMu7XBZkLIcb38IfsGE1EZUukeYrwHxVkw1b60sg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none
+*/

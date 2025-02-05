@@ -59,6 +59,7 @@ import Marketing from "./Pages/Admin/Marketing"
 
 export const GeneralNoAuth = [
     { path: 'login', element: Login },
+    { path: 'login.html', element: Login },
     { path: 'reset-password', element: ForgetPassword },
     { path: 'signup', element: Signup },
     { path: 'forms', element: FormTest },
