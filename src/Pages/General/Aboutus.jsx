@@ -154,7 +154,7 @@ const Aboutus = () => {
           </div>
         </div>
 
-        <div className="mt-[20rem] md:mt-[10rem ] mb-[5rem]">
+        {/* <div className="mt-[20rem] md:mt-[10rem ] mb-[5rem]">
           <div className="flex items-center justify-center font-semibold text-3xl">Our Team</div>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-16 mt-7">
             {Team.map((item, i) => (
@@ -168,7 +168,7 @@ const Aboutus = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="w-11/12 mx-auto lg:w-10/12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 bg-black rounded-3xl px-5 md:px-10 py-14 text-white">

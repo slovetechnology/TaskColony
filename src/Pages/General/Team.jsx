@@ -5,8 +5,8 @@ import { Team } from '../../utils/utils'
 const Teams = () => {
     return (
         <Layout>
-        <div className="bg-gray w-full xl:h-[10rem]">
-          <div className="text-center py-1 pt-10">
+            <div className="bg-gray w-full xl:h-[10rem]">
+                <div className="text-center py-1 pt-10">
                     <p className='font-[500] text-4xl mb-3'>Team</p>
                     <span className='flex items-center gap-4 font-[500] justify-center'>
                         <p className="text-primary">Home</p>
@@ -15,7 +15,8 @@ const Teams = () => {
                     </span>
                 </div>
             </div>
-            <div className="mt-16 mb-20">
+            <div className="text-2xl font-semibold text-center py-20">Our team will be added soon.</div>
+            {/* <div className="mt-16 mb-20">
                 <div className="flex items-center justify-center font-semibold text-3xl">Our Team</div>
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-16 mt-7">
                     {Team.map((item, i) => (
@@ -29,7 +30,7 @@ const Teams = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </Layout>
     )
 }
