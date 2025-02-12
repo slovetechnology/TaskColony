@@ -14,43 +14,40 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [searchParams] = useSearchParams()
-  const googleCode = searchParams.get('code')
-
+  const [searchParams] = useSearchParams();
 
   const GoogleLogin = async () => {
     try {
       const res = await AuthPosturl(Apis.users.google_url);
       if (res.status === true) {
         const url = res.data[0].url;
-        window.open(url, "_blank"); // Open the URL in a new tab
+        window.location.href = url;
       } else {
         ErrorAlert('Failed to fetch Google login URL.');
       }
     } catch (error) {
-      console.error('Error during Google login:', error);
       ErrorAlert('An unexpected error occurred. Please try again.');
     }
   };
+
   useEffect(() => {
     (async () => {
-      const search = location?.search
+      const search = location?.search;
       if (search) {
         const res = await Geturl(`${Apis.users.google_verify}${search}`);
         if (res.status === true) {
-          const token = res.data.data[0].access_token;
+          const token = res.data[0].access_token;
           Cookies.set('taskcolony', token);
-          ToastAlert(res.data.text);
-
-          setTimeout(() => {
-            window.location.href = '/service'; 
-          }, 1000);
+          ToastAlert(res.text);
+          window.location.href = '/service';
+        } else {
+          ErrorAlert('Login verification failed.');
         }
       }
-    })()
-  }, [])
+    })();
+  }, [location]);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -80,8 +77,6 @@ const Login = () => {
       setIsSubmitting(false);
     }
   };
-
-
 
   return (
     <Layout>
@@ -155,7 +150,6 @@ const Login = () => {
               <div className="text-sm my-5 font-[500] text-center mt-2">DON'T HAVE AN ACCOUNT? <Link to='/signup' className='text-secondary'>SIGN UP</Link></div>
             </div>
           </form>
-
         </div>
       </div>
     </Layout>
@@ -163,14 +157,3 @@ const Login = () => {
 };
 
 export default Login;
-
-/*
-
-backend.taskcolony.com/api/user/auth/login_with_google_verify.php?code=4%2F0ASVgi3Lh3xWIsRbmydm7twzkJuxDGSxXpa491-jo8qWJ06mkHrxTeqPXPy-O9ZTTeZ-zow&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=none
-
-
-
-https://backend.taskcolony.com/api/user/auth/login_with_google_verify.php?code=4/0ASVgi3KfgupzcHQ8GQ9YmsFTYw1Z20428F9Gvuv7hrMRkiGvWjc2pqlJylS3U-JBAutJBw
-
-https://taskcolony.com/login.html?code=4%2F0ASVgi3KVoHPbjH9q4h6uBJ7a8J4PBJEMu7XBZkLIcb38IfsGE1EZUukeYrwHxVkw1b60sg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none
-*/

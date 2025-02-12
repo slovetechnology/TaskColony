@@ -16,7 +16,7 @@ import ConfirmDeleteServices from './DeleteServices';
 import UpdateService from './UpdateServices';
 
 const TABLE_HEADERS = ['Name', 'Category', 'Commission', 'Minimum Duration', 'Status', ''];
-const DEFAULT_PER_PAGE = 10;
+const DEFAULT_PER_PAGE = 20;
 
 const AllServices = () => {
     const { admin } = useSelector(state => state.data);

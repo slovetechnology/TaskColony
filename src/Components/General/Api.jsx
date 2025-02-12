@@ -49,6 +49,7 @@ const user_urls = {
     get_testimonial: `${user}/testimonials/get_all_testimonials.php`,
     google_verify: `${user}/auth/login_with_google_verify.php`,
 };
+
 const admin_urls = {
     get_admin_dashboard: `${admin}/dashboard/all_stat.php`,
     get_admin_earning: `${admin}/earning/earning_stat.php`,

@@ -6,24 +6,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Apis, Geturl } from '../../Components/General/Api';
 
 const Faq = () => {
-    const [isOpen, setIsOpen] = useState({}); // Track which items are open
-    const [faq, setFaq] = useState([]); // Store FAQs
-    const [loading, setLoading] = useState(false); // Loading state
-    const [error, setError] = useState(null); // Error state
+    const [isOpen, setIsOpen] = useState({});
+    const [faq, setFaq] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const fetchAllHome = useCallback(async () => {
         setLoading(true);
         try {
             const res = await Geturl(Apis.users.get_system);
-            console.log(res.data.faqs);
 
             if (res.status === true) {
-                setFaq(res.data.faqs); // Set fetched FAQs
+                setFaq(res.data.faqs);
             } else {
                 throw new Error('Failed to fetch data');
             }
         } catch (err) {
-            setError(err.message); // Set error message
+            setError(err.message);
         } finally {
             setLoading(false);
         }
@@ -36,7 +35,7 @@ const Faq = () => {
     const toggleFaq = (index) => {
         setIsOpen((prevState) => ({
             ...prevState,
-            [index]: !prevState[index], // Toggle the clicked item
+            [index]: !prevState[index],
         }));
     };
 
@@ -56,14 +55,9 @@ const Faq = () => {
                 <div className="lg:flex items-start justify-between lg:mx-28 mx-5 mt-10 lg:mt-20">
                     <div className='w-full'>
                         <p className="text-xl font-medium">FAQs For Users & Providers</p>
-                        <p className="text-base mt-2">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
-                            elementum tristique.
-                        </p>
+                        <p className="text-base mt-2">We have answers to your Questions!</p>
                         <div className="border rounded-md py-2 px-5 w-fit border-primary mt-4">
-                            <Link to="/contact" className="text-primary">
-                                Contact
-                            </Link>
+                            <Link to="/contact" className="text-primary">Contact</Link>
                         </div>
                     </div>
                     <div>
@@ -73,7 +67,7 @@ const Faq = () => {
                                     <div className="lg:w-[50vw]">
                                         <div
                                             className="flex items-center justify-between cursor-pointer"
-                                            onClick={() => toggleFaq(i)} // Toggle this specific FAQ
+                                            onClick={() => toggleFaq(i)}
                                         >
                                             <p className="text-lg font-semibold">{item.title}</p>
                                             <button className="p-1.5">
@@ -91,9 +85,7 @@ const Faq = () => {
                                                     transition={{ duration: 0.3 }}
                                                     className="flex items-center lg:w-[50vw] gap-2.5 mt-2"
                                                 >
-                                                    <span className="bg-primary-50 p-2 text-base font-medium">
-                                                        {item.details}
-                                                    </span>
+                                                        <div dangerouslySetInnerHTML={{ __html: item.details }} />
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>

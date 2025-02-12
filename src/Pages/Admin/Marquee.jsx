@@ -1,19 +1,19 @@
-import React, { useRef, useState } from 'react';
-import JoditEditor from 'jodit-react';
+import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the Quill stylesheet
 import { useForm } from 'react-hook-form';
 import { Apis, AuthPosturl } from '../../Components/General/Api';
 import AdminLayout from '../../Components/Admin/AdminLayout';
 import { ErrorAlert } from '../../Components/General/Utils';
 
 const Marquee = () => {
-    const editor = useRef(null);
     const { handleSubmit, formState: { errors } } = useForm();
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async () => {
         const formData = new FormData();
-        
+
         const plainTextContent = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
         formData.append('message', plainTextContent); // Save plain text content
 
@@ -21,6 +21,8 @@ const Marquee = () => {
         try {
             const res = await AuthPosturl(Apis.admins.marquee_message, formData);
             if (res.status === true) {
+                ToastAlert(res.text)
+
                 setContent(''); // Clear the content after successful submission
             } else {
                 ErrorAlert(res.text);
@@ -38,15 +40,15 @@ const Marquee = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-3">
                         <div className="capitalize font-medium mb-5">Enter Content</div>
-                        <JoditEditor
-                            ref={editor}
+                        <ReactQuill
                             value={content}
-                            onChange={newContent => setContent(newContent)} // Handle content change
+                            onChange={setContent} // Handle content change
+                            theme="snow" // Optional: You can choose other themes like 'bubble'
                         />
                         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
                     </div>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className={`bg-secondary text-white p-2 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                         disabled={loading}>
                         {loading ? 'Submitting...' : 'Submit'}

@@ -4,39 +4,23 @@ import gradient from "../../../assets/gradient.jpeg";
 import { MdOutlineLocationOn, MdOutlineMyLocation } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaChevronRight, FaUserCircle, FaPlus } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import FavouriteService from "../Profiles/FavouriteService";
 import ChangePassword from "../Profiles/ChangePassword";
 import Settings from "../Profiles/Settings";
 import ProviderWithdraw from "./ProviderWithdraw";
 import EditUser from "../Profiles/EditUser";
 import Kyc from "./Kycverify";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Provider = () => {
   const { user } = useSelector((state) => state.data);
   const [location, setLocation] = useState("Fetching location...");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditUserOpen, setIsEditUserOpen] = useState(false);
-  const [changePass, SetChangePass] = useState(false);
-  const [settings, SetSettings] = useState(false);
-  const [fundWithdraw, SetFundwithdraw] = useState(false);
+  const [changePass, setChangePass] = useState(false);
+  const [settings, setSettings] = useState(false);
+  const [fundWithdraw, setFundWithdraw] = useState(false);
   const [kyc, setKyc] = useState(false);
-  const [image, setImage] = useState({
-    main: null,
-    preview: null,
-  });
-
-  useEffect(() => {
-    // Retrieve image from local storage when the component mounts
-    const savedImage = localStorage.getItem("profileImage");
-    if (savedImage) {
-      setImage({ main: savedImage, preview: savedImage });
-    }
-
-    // Call the function to get the address when the component mounts
-    getUserGeoAddress();
-  }, []);
 
   const getUserGeoAddress = async () => {
     if (!navigator.geolocation) {
@@ -74,16 +58,19 @@ const Provider = () => {
     );
   };
 
+  useEffect(() => {
+    getUserGeoAddress();
+  }, []);
 
   const handleEditUserOpen = () => setIsEditUserOpen(true);
   const handleEditUserClose = () => setIsEditUserOpen(false);
-  const handleChangePasswordClose = () => SetChangePass(false);
-  const handlefundWithdrawOpen = () => SetFundwithdraw(true);
-  const handlefundWithdrawClose = () => SetFundwithdraw(false);
+  const handleChangePasswordClose = () => setChangePass(false);
+  const handleFundWithdrawOpen = () => setFundWithdraw(true);
+  const handleFundWithdrawClose = () => setFundWithdraw(false);
   const handleKycOpen = () => setKyc(true);
   const handleKycClose = () => setKyc(false);
-  const handleSettingsOpen = () => SetSettings(true);
-  const handleSettingsClose = () => SetSettings(false);
+  const handleSettingsOpen = () => setSettings(true);
+  const handleSettingsClose = () => setSettings(false);
   const handleModalClose = () => setIsModalOpen(false);
 
   return (
@@ -109,7 +96,7 @@ const Provider = () => {
 
           <div className="bg-white w-full px-4 py-5 h-auto shadow-2xl">
             <div className="lg:flex items-center justify-between mb-3 gap-4 pb-3">
-              <div className="md:flex items-center justify-center w-full  gap-4">
+              <div className="md:flex items-center justify-center w-full gap-4">
                 <div className="mb-4">
                   <label>
                     <div className="">
@@ -117,7 +104,6 @@ const Provider = () => {
                     </div>
                   </label>
                 </div>
-
 
                 <div className="flex flex-col justify-center md:block items-center">
                   <h5 className="font-[500] text-sm xl:text-base">
@@ -138,7 +124,7 @@ const Provider = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between px-1 text-sm py-3 gap-10 text-primary md:w-full  bg-white shadow-2xl">
+              <div className="flex items-center justify-between px-1 text-sm py-3 gap-10 text-primary md:w-full bg-white shadow-2xl">
                 <div className=""><MdOutlineLocationOn /></div>
                 <div>{location}</div>
                 <div className=""><MdOutlineMyLocation /></div>
@@ -155,7 +141,7 @@ const Provider = () => {
 
             <div className="flex flex-col gap-10 lg:grid-cols-2 lg:grid">
               <div
-                onClick={handlefundWithdrawOpen}
+                onClick={handleFundWithdrawOpen}
                 className="border flex items-center justify-between py-3 px-2 cursor-pointer"
               >
                 <Link to="#">Withdraw Earning</Link>
@@ -176,13 +162,6 @@ const Provider = () => {
                 FAQs <FaChevronRight />
               </Link>
 
-              <div
-                onClick={handleSettingsOpen}
-                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
-              >
-                <Link to="#">Settings</Link>
-                <FaChevronRight />
-              </div>
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"
                 to="/provider-terms"
@@ -220,7 +199,7 @@ const Provider = () => {
 
       {isModalOpen && <FavouriteService closeview={handleModalClose} />}
       {changePass && <ChangePassword closeview={handleChangePasswordClose} />}
-      {fundWithdraw && <ProviderWithdraw closeView={handlefundWithdrawClose} />}
+      {fundWithdraw && <ProviderWithdraw closeView={handleFundWithdrawClose} />}
       {kyc && <Kyc closeView={handleKycClose} />}
       {settings && <Settings closeview={handleSettingsClose} />}
     </Layout>

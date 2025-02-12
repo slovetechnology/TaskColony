@@ -280,14 +280,7 @@ const User = () => {
                 <FaChevronRight />
               </div>
 
-              <div
-                onClick={handleSettingsOpen}
-                className="border py-3 px-2 items-center justify-between flex w-full cursor-pointer"
-              >
-                <Link to="#">Settings</Link>
-                <FaChevronRight />
-              </div>
-
+       
               <Link
                 className="border py-3 px-2 items-center justify-between flex w-full"
                 to="/terms"

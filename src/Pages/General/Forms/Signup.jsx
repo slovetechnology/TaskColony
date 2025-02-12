@@ -99,16 +99,14 @@ const Signup = () => {
   }, [view]);
   const GoogleLogin = async () => {
     try {
-      const res = await AuthPosturl(Apis.users.google_verify);
+      const res = await AuthPosturl(Apis.users.google_url);
       if (res.status === true) {
         const url = res.data[0].url;
-        setGoogleLoginUrl(url); // Set the Google login URL
-        window.location.href = url; // Redirect the current window to the URL
+        window.location.href = url;
       } else {
         ErrorAlert('Failed to fetch Google login URL.');
       }
     } catch (error) {
-      console.error('Error during Google login:', error);
       ErrorAlert('An unexpected error occurred. Please try again.');
     }
   };

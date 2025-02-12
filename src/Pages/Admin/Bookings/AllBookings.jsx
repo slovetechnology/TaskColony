@@ -19,7 +19,6 @@ import { ToastAlert } from '../../../Components/General/Utils';
 import AssignBooking from './AssignBooking';
 import { formatDate } from '../../../utils/utils';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Date', 'Time', 'Status', '', '', ''];
 const DEFAULT_PER_PAGE = 10;
@@ -36,7 +35,6 @@ const statusToVariant = {
 };
 
 const AllBookings = () => {
-  const { admin } = useSelector(state => state.data);
   const [query, setQuery] = useState({ pageNumber: 1 });
   const [total, setTotal] = useState(0);
   const [items, setItems] = useState([]);
@@ -49,6 +47,7 @@ const AllBookings = () => {
   const [view, setView] = useState(false);
   const [views, setViews] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const { admin } = useSelector(state => state.data);
 
   const pageCount = Math.ceil(total / DEFAULT_PER_PAGE);
 
@@ -57,27 +56,27 @@ const AllBookings = () => {
     (currentPage + 1) * DEFAULT_PER_PAGE
   );
 
+  const handlePageChange = (val) => {
+    setCurrentPage(val.selected);
+  };
+
+  const getSelectedPage = (val) => {
+    const pageNumber = val?.selected + 1;
+    setQuery({ ...query, pageNumber });
+  };
+
   const getAllBooking = useCallback(async () => {
     let allBookings = [];
     let pageNo = 1;
-    const perPage = 15; // Match backend page size
-    let totalPages = 1;
+    const perPage = 15;
 
     try {
-      while (pageNo <= totalPages) {
+      while (true) {
         const res = await AuthGeturl(`${Apis.admins.get_booking}?page_no=${pageNo}&no_perpage=${perPage}`);
 
-        if (res.status) {
-          const fetchedItems = res.data.data;
-          totalPages = res.data.totalpage;
-
-          if (Array.isArray(fetchedItems)) {
-            allBookings = [...allBookings, ...fetchedItems];
-          } else if (typeof fetchedItems === 'object' && fetchedItems !== null) {
-            allBookings.push(fetchedItems);
-          } else {
-            console.error('Unexpected data structure');
-          }
+        if (res.status && Array.isArray(res.data.data)) {
+          allBookings = [...allBookings, ...res.data.data];
+          if (pageNo >= res.data.totalpage) break;
         } else {
           throw new Error('Failed to fetch bookings.');
         }
@@ -97,20 +96,6 @@ const AllBookings = () => {
   useEffect(() => {
     getAllBooking();
   }, [getAllBooking]);
-
-  const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearchTerm(value);
-
-    const filtered = items.filter((item) =>
-      (item.ufname && item.ufname.toLowerCase().includes(value)) ||
-      (item.pfname && item.pfname.toLowerCase().includes(value)) ||
-      (item.uemail && item.uemail.toString().toLowerCase().includes(value)) ||
-      (item.service_name && item.service_name.toLowerCase().includes(value))
-    );
-
-    setFilteredItems(filtered);
-  };
 
   const DeleteItem = (member) => {
     setDel(true);
@@ -142,18 +127,22 @@ const AllBookings = () => {
     }
   };
 
-  const SingleItem = (val) => {
-    setSingles(val);
-    setView(!view);
+  const toggleView = (setter) => () => setter(prev => !prev);
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+
+    const filtered = items.filter((item) =>
+      (item.ufname && item.ufname.toLowerCase().includes(value)) ||
+      (item.pfname && item.pfname.toLowerCase().includes(value)) ||
+      (item.uemail && item.uemail.toString().toLowerCase().includes(value)) ||
+      (item.service_name && item.service_name.toLowerCase().includes(value))
+    );
+
+    setFilteredItems(filtered);
   };
 
-  const SingleItems = (val) => {
-    setSingle(val);
-    setViews(!views);
-  };
-  const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage);
-  };
   return (
     <AdminLayout>
       {del && (
@@ -166,15 +155,15 @@ const AllBookings = () => {
       {view && (
         <UpdateBooking
           singles={singles}
-          resendSignal={() => getAllBooking()}
-          closeView={() => setView(!view)}
+          resendSignal={getAllBooking}
+          closeView={toggleView(setView)}
         />
       )}
       {views && (
         <AssignBooking
           singles={single}
-          resendSignal={() => getAllBooking()}
-          closeView={() => setViews(false)}
+          resendSignal={getAllBooking}
+          closeView={toggleView(setViews)}
         />
       )}
 
@@ -206,7 +195,7 @@ const AllBookings = () => {
           <Table
             headers={TABLE_HEADERS}
             className="mt-10 bg-white"
-            onPageChange={handlePageChange}
+            onPageChange={getSelectedPage}
             pageCount={pageCount}
           >
             {paginatedItems.map((member, index) => (
@@ -238,19 +227,18 @@ const AllBookings = () => {
                     {member.status_text}
                   </StatusTag>
                 </TableData>
-
                 <TableData>
                   <div className="flex gap-4 text-lg text-primary">
                     {admin.userlevel !== "4" && (
                       <>
-                        <div className="cursor-pointer" onClick={() => SingleItem(member)}>
+                        <div className="cursor-pointer" onClick={() => setSingles(member)}>
                           <PiPencilSimpleLine />
                         </div>
                         <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
                           <ImCancelCircle />
                         </div>
                         {member.status_text.toLowerCase() === 'pending' && (
-                          <div className="cursor-pointer" onClick={() => SingleItems(member)}>
+                          <div className="cursor-pointer" onClick={() => setSingle(member)}>
                             <IoSettingsOutline />
                           </div>
                         )}
@@ -260,7 +248,7 @@ const AllBookings = () => {
                 </TableData>
               </TableRow>
             ))}
-            <div className="">
+            <div className="ml-10">
               <PaginationButton pageCount={pageCount} onPageChange={handlePageChange} />
             </div>
           </Table>
