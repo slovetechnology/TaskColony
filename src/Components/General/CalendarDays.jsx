@@ -26,13 +26,15 @@ const CalendarDays = ({ onSelectDate }) => {
             {[...Array(currentMonthDays).keys()].map((index) => {
                 const day = index + 1;
                 const timeFix = `${currentYear}-${currentMonth + 1}-${day}`;
-                const dataToSet = moment(new Date(timeFix)).format("YYYY-MM-DD");
+                // const dataToSet = moment(new Date(timeFix)).format("YYYY-MM-DD");
+                const dataToSet = new Date(timeFix)
 
                 if (moment(dataToSet).isBefore(moment(), 'day')) {
                     return null;
                 }
 
-                const momentFix = moment(dataToSet).format("dddd");
+                const momentFix = dataToSet.toLocaleString('en-US', { weekday: 'short' });
+                // const momentFix = moment(dataToSet).format("dddd");
 
                 return (
                     <div key={`current-${index}`}>
@@ -41,7 +43,7 @@ const CalendarDays = ({ onSelectDate }) => {
                                         ${active === dataToSet ? "bg-secondary text-white" : "bg-white"}`}
                             onClick={() => handleDateChange(dataToSet)}
                         >
-                            <label className="pb-1">{momentFix}</label>
+                            <label className="pb-1">{momentFix}-</label>
                             <button>{day}</button>
                         </div>
                     </div>
