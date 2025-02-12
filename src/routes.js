@@ -39,7 +39,6 @@ import AutoLocationComponent from "./Components/General/Map"
 import Booking from "./Pages/User/Service/NewBooking"
 import KycForm from "./Pages/User/Provider/KycForm"
 import BookingDetail from "./Pages/User/Service/BookingDetail"
-import Gallery from "./Pages/General/Gallery"
 import TranscationHistory from "./Pages/General/TranscationHistory"
 import Marquee from "./Pages/Admin/Marquee"
 import Teams from "./Pages/General/Team"
@@ -75,7 +74,6 @@ export const GeneralNoAuth = [
     { path: 'service-detail/:userid', element: ServiceDetail },
     { path: 'category', element: Category },
     { path: 'sub-category/:trackid', element: Subcategory },
-    { path: 'gallery', element: Gallery },
     { path: 'team', element: Teams },
 
 

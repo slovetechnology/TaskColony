@@ -20,12 +20,12 @@ const Notification = ({ closeview }) => {
   }
   useEffect(() => { GetNotify() }, [])
   return (
-    <Modal height='' closeView={closeview}>
+    <Modal height='h-[40rem]' closeView={closeview}>
       <div className="font-bold text-2xl">Notification</div>
       <div className="mt-10">
-        <div className="w-full overflow-y-auto scrollsdown">
+        <div className=" ">
           {items.map((item, i) => (
-            <div key={i} className="flex items-start mb-3 gap-4 pb-3 border-b">
+            <div key={i} className="flex w-full overflow-y-auto items-start mb-3 gap-4 pb-3 border-b">
               <div className="text-4xl"> <FaUserCircle /> </div>
               <span className="flex-1">
                 <h5 className="font-[500] text-sm xl:text-base">{item.notificationtitle}</h5>

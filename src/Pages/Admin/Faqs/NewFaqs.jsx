@@ -1,21 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import AdminLayout from '../../../Components/Admin/AdminLayout';
 import { useForm } from 'react-hook-form';
 import { Apis, AuthPosturl } from '../../../Components/General/Api';
 import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import { Link } from 'react-router-dom';
-import JoditEditor from 'jodit-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const NewFaqs = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [details, setDetails] = useState('');
-    const editor = useRef(null);
 
     const onSubmit = async (data) => {
+        console.log('Details before submission:', details);
+
         const formData = new FormData();
         formData.append('title', data.title);
-        formData.append('details', details); // Use the plain text content
+        formData.append('details', details); // Save HTML content directly
 
         setIsSubmitting(true);
 
@@ -34,13 +36,6 @@ const NewFaqs = () => {
         }
     };
 
-    // Function to extract plain text from HTML
-    const getPlainText = (html) => {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-        return tempDiv.innerText || tempDiv.textContent || '';
-    };
-
     return (
         <AdminLayout>
             <div className="bg-[#5a5a5a] h-[40.8rem] w-full py-5">
@@ -49,7 +44,7 @@ const NewFaqs = () => {
                 </div>
                 <div className="bg-white w-[95%] mx-auto text-primary h-[35rem] px-10 pt-10 overflow-hidden">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="">
+                        <div>
                             <div className="col-span-2">
                                 <label className="text-xs">Title</label>
                                 <input
@@ -65,16 +60,15 @@ const NewFaqs = () => {
                         <div className="bg-white border p-4 shadow-xl rounded-lg my-10">
                             <div className="mb-3">
                                 <div className="capitalize font-medium mb-5">Enter Content</div>
-                                <JoditEditor
-                                    ref={editor}
+                                <ReactQuill
                                     value={details}
-                                    onChange={newContent => setDetails(getPlainText(newContent))} // Convert to plain text
+                                    onChange={setDetails} // Handle content change
+                                    theme="snow"
                                 />
                                 {errors.details && <span className="text-red-500">{errors.details.message}</span>}
                             </div>
                         </div>
 
-                        {/* Submit Button */}
                         <div className="flex items-start justify-start mt-8">
                             <button
                                 type="submit"

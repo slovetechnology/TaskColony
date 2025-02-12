@@ -26,13 +26,13 @@ const CalendarDays = ({ onSelectDate }) => {
             {[...Array(currentMonthDays).keys()].map((index) => {
                 const day = index + 1;
                 const timeFix = `${currentYear}-${currentMonth + 1}-${day}`;
-                const dataToSet = moment(timeFix).format("YYYY-MM-DD");
+                const dataToSet = moment(new Date(timeFix)).format("YYYY-MM-DD");
 
                 if (moment(dataToSet).isBefore(moment(), 'day')) {
                     return null;
                 }
 
-                const momentFix = moment(dataToSet).format("ddd");
+                const momentFix = moment(dataToSet).format("dddd");
 
                 return (
                     <div key={`current-${index}`}>

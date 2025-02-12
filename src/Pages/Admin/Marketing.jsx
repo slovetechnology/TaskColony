@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react';
-import JoditEditor from 'jodit-react';
+import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the Quill stylesheet
 import { useForm } from 'react-hook-form';
 import { Apis, AuthPosturl } from '../../Components/General/Api';
 import AdminLayout from '../../Components/Admin/AdminLayout';
-import { ErrorAlert } from '../../Components/General/Utils';
+import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
 
 const Marketing = () => {
-    const editor = useRef(null);
     const { handleSubmit, formState: { errors } } = useForm();
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(false);
@@ -22,12 +22,13 @@ const Marketing = () => {
         try {
             const res = await AuthPosturl(Apis.admins.marketing_message, formData);
             if (res.status === true) {
+                ToastAlert(res.text)
                 setContent(''); // Clear the content after successful submission
             } else {
                 ErrorAlert(res.text);
             }
         } catch (error) {
-            ErrorAlert('An error occurred while submitting the marquee message.');
+            ErrorAlert('An error occurred while submitting the marketing message.');
         } finally {
             setLoading(false);
         }
@@ -39,10 +40,10 @@ const Marketing = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-3">
                         <div className="capitalize font-medium mb-5">Enter Content</div>
-                        <JoditEditor
-                            ref={editor}
+                        <ReactQuill
                             value={content}
-                            onChange={newContent => setContent(newContent)} // Handle content change
+                            onChange={setContent} // Handle content change
+                            theme="snow" // Optional: You can choose other themes like 'bubble'
                         />
                         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
                     </div>

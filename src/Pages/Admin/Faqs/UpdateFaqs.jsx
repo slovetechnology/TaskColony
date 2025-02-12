@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ModalLayout from '../../../Components/Admin/ModalLayout';
 import { Apis, AuthPosturl } from '../../../Components/General/Api';
 import { useForm } from 'react-hook-form';
 import { ToastAlert } from '../../../Components/General/Utils';
-import JoditEditor from 'jodit-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the Quill stylesheet
 
 const UpdateFaqs = ({ singles, closeView, resendSignal }) => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [content, setContent] = useState('');
-    const editor = useRef(null);
 
     useEffect(() => {
         if (singles) {
@@ -56,7 +56,7 @@ const UpdateFaqs = ({ singles, closeView, resendSignal }) => {
             <div className="bg-white w-[95%] mx-auto text-primary h-auto px-scroll pt-10 overflow-auto">
                 <div className="text-slate-600 text-xl rounded-lg shadow-xl mb-5 bg-blue-50 p-3">Update Faq</div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="">
+                    <div>
                         <div className="col-span-2">
                             <label className="text-xs">Title</label>
                             <input
@@ -73,10 +73,10 @@ const UpdateFaqs = ({ singles, closeView, resendSignal }) => {
                     <div className="border bg-white p-4 shadow-xl rounded-lg my-10">
                         <div className="mb-3">
                             <div className="capitalize font-medium mb-5">Enter Content</div>
-                            <JoditEditor
-                                ref={editor}
+                            <ReactQuill
                                 value={content}
-                                onChange={newContent => setContent(newContent)} // Handle content change
+                                onChange={setContent} // Handle content change
+                                theme="snow"
                             />
                             {errors.content && <span className="text-red-500">{errors.content.message}</span>}
                         </div>
