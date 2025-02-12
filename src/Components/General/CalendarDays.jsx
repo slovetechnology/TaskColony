@@ -15,7 +15,7 @@ const CalendarDays = ({ onSelectDate }) => {
 
     useEffect(() => {
         onSelectDate(moment(active).format('MM-DD-YYYY'));
-    }, [active]); // Removed onSelectDate from dependency list
+    }, [active]);
 
     const handleDateChange = (value) => {
         setActive(value);
