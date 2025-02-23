@@ -20,7 +20,7 @@ import AssignBooking from './AssignBooking';
 import { formatDate } from '../../../utils/utils';
 import { useSelector } from 'react-redux';
 
-const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Date', 'Time', 'Status', '', '', ''];
+const TABLE_HEADERS = ['Name', 'Service', 'Provider', 'Amount', 'Trackid', 'Date', 'Time', 'Status', '', '', ''];
 const DEFAULT_PER_PAGE = 10;
 
 const statusToVariant = {
@@ -142,7 +142,10 @@ const AllBookings = () => {
 
     setFilteredItems(filtered);
   };
-
+  const SingleItems = (val) => {
+    setSingle(val);
+    setViews(!views);
+  };
   return (
     <AdminLayout>
       {del && (
@@ -211,10 +214,13 @@ const AllBookings = () => {
                 </TableData>
                 <TableData>{member.service_name}</TableData>
                 <TableData>
-                  <p className="text-sm font-light text-secondary-500">{member.pfname}</p>
+                  <p className="text-sm font-light text-secondary-500">{member.pfname} {member.plname}</p>
                 </TableData>
                 <TableData>
                   <p className="text-sm font-light text-secondary-500">${member.amt_paid}</p>
+                </TableData>
+                <TableData>
+                  <p className="text-sm font-light text-secondary-500">{member.provider_tid}</p>
                 </TableData>
                 <TableData>{formatDate(member.created_date)}</TableData>
                 <TableData>{member.created_time}</TableData>
@@ -238,7 +244,7 @@ const AllBookings = () => {
                           <ImCancelCircle />
                         </div>
                         {member.status_text.toLowerCase() === 'pending' && (
-                          <div className="cursor-pointer" onClick={() => setSingle(member)}>
+                          <div className="cursor-pointer" onClick={() => SingleItems(member)}>
                             <IoSettingsOutline />
                           </div>
                         )}

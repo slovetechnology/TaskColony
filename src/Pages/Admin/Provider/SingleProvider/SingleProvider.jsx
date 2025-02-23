@@ -54,6 +54,7 @@ const SingleProvider = () => {
                         <div className='mb-3'><span className="font-bold">Username:</span> {user.username}</div>
                         <div className='mb-3'><span className="font-bold">Email:</span> {user.email}</div>
                         <div className='mb-3'><span className="font-bold">Phone Number:</span> {user.phone}</div>
+                        <div className='mb-3'><span className="font-bold">Trackid:</span> {user.trackid}</div>
                         <div className='mb-3'><span className="font-bold">Created At:</span> {formatDate(user.created_at)}</div>
                     </div>
                     <div className='mt-6'>

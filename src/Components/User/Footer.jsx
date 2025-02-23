@@ -20,8 +20,8 @@ function Footer() {
                     <div className="">
                         <div className="uppercase">dOWNLOAD THE APP ON</div>
                         <div className="flex flex-wrap items-center gap-2 mt-2">
-                            <a href="" rel="noreferrer"> <img src={img37} alt="" className="w-10/12" /> </a>
-                            <a href="" rel="noreferrer"> <img src={img38} alt="" className="w-10/12" /> </a>
+                            <a href="https://apps.apple.com/app/task-colony/id6741864955" rel="noreferrer"> <img src={img37} alt="" className="w-10/12" /> </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.taskcolony.app" rel="noreferrer"> <img src={img38} alt="" className="w-10/12" /> </a>
                         </div>
                     </div>
                 </div>
