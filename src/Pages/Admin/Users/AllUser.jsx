@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 import { debounce } from 'lodash'; // Make sure to install lodash
 import { useSelector } from 'react-redux';
 
-const TABLE_HEADERS = ['Full Name', 'Email', 'Contact', 'Booking', "Balance", "Verification", "", ""];
+const TABLE_HEADERS = ['Full Name', 'Email', 'Contact', 'Booking', "Balance", "Status", "", ""];
 const DEFAULT_PER_PAGE = 10;
 
 const AllUser = () => {
@@ -71,6 +71,7 @@ const AllUser = () => {
             item.fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.lname.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.trackid.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.phoneno.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredItems(filtered);
@@ -168,7 +169,9 @@ const AllUser = () => {
                                 <TableData>{member.phoneno}</TableData>
                                 <TableData>{member.bookings}</TableData>
                                 <TableData>${member.walletbal}</TableData>
-                                <TableData>{member.account_verified_text}</TableData>
+                                <TableData className={member.status === 1 ? 'text-green-600' : 'text-red-600'}>
+                                    {member.status === 1 ? 'Active' : 'Inactive'}
+                                </TableData>
                                 <TableData>
                                     <div className="flex gap-4 text-primary">
                                         {userLevel !== "4" && (

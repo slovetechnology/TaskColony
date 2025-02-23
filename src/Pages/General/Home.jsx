@@ -482,7 +482,7 @@ function Home() {
                                     <img src={img22} alt="" className="" />
                                     <div className="flex flex-col items-center gap-3">
                                         {StoreLinks.map((item, index) => (
-                                            <Link to="" className='' key={index}>
+                                            <Link to={item.link} className='' key={index}>
                                                 <LazyLoadImage src={item.img} effect='blur' className='' />
                                             </Link>
                                         ))}

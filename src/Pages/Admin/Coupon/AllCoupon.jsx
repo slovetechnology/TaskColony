@@ -163,10 +163,10 @@ const AllCoupon = () => {
                                             <div className="flex gap-4  text-primary">
                                                 {admin.userlevel !== "4" && (
                                                     <>
-                                                        <div className="cursor-pointer" onClick={() => SingleItem(coupon)}>
+                                                        <div className="cursor-pointer" onClick={() => SingleItem(member)}>
                                                             <PiPencilSimpleLine />
                                                         </div>
-                                                        <div className="cursor-pointer" onClick={() => DeleteItem(coupon)}>
+                                                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
                                                             <ImCancelCircle />
                                                         </div>
                                                     </>

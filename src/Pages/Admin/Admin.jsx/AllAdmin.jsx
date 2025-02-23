@@ -149,7 +149,7 @@ const AllAdmin = () => {
         <AdminLayout>
             {del && <ConfirmDeleteAdmin confirmAction={confirmAction} closeView={() => setDel(false)} isLoading={loads} />}
             {view && <UpdateAdmin singles={singles} resendSignal={() => fetchUsers()} closeView={() => setView(!view)} />}
-            <div className="md:mx-10 mx-2 mb-20">
+            <div className="md:mx-20 mx-2 mb-20">
                 <div className="bg-white mt-10 px-5 py-4 w-full">
                     <div className="flex items-center justify-between">
                         <div className="font-medium text-lg">All Admin</div>

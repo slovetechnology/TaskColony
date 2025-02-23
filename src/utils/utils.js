@@ -310,8 +310,8 @@ export const HomeTestimonials = [
     },
 ];
 export const StoreLinks = [
-    { img: img27 },
-    { img: img28 },
+    { img: img27, link: 'https://play.google.com/store/apps/details?id=com.taskcolony.app' },
+    { img: img28, link: "https://apps.apple.com/app/task-colony/id6741864955"},
 ]
 
 export const HomeGallery = [
@@ -381,42 +381,3 @@ export const settings = {
         },
     ],
 };
-// export const settings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 2, // Show one slide by default for small screens
-//     slidesToScroll: 1,
-//     autoplay: true,
-//     autoplaySpeed: 1000,
-//     responsive: [
-//         {
-//           breakpoint: 1024,
-//           settings: {
-//             slidesToShow: 1,
-//             slidesToScroll: 1,
-//             infinite: true,
-//             dots: true,
-//           },
-//         },
-//         {
-//           breakpoint: 769,
-//           settings: {
-//             slidesToShow: 1,
-//             slidesToScroll: 1,
-//             initialSlide: 2,
-//             infinite: true,
-//             dots: true,
-//           },
-//         },
-//         {
-//           breakpoint: 576,
-//           settings: {
-//             slidesToShow: 1,
-//             slidesToScroll: 1,
-//             infinite: true,
-//             dots: true,
-//           },
-//         },
-//       ],
-// };

@@ -32,7 +32,7 @@ const AdminSidebar = () => {
     };
 
     return (
-        <div className="admin-sidebar">
+        <div className="">
             <div className="border-b py-8">
                 <div onClick={() => handleNavigation('/auth/admin')} className="logo-container">
                     <Lottie
@@ -43,7 +43,7 @@ const AdminSidebar = () => {
                 </div>
             </div>
 
-            <div className="sidebar-menu text-sm">
+            <div className=" text-sm">
                 <div className="border-b p-4">
                     <p className="text-sm font-medium pb-3">MAIN MENU</p>
                     <div onClick={() => handleNavigation('/auth/admin')} className="flex cursor-pointer hover:text-secondary items-center pb-3 gap-2">
