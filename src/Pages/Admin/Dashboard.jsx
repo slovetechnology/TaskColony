@@ -368,7 +368,7 @@ const Dashboard = () => {
                         ))}
                     </div>
                 ) : (
-                    <p>Loading dashboard data...</p>
+                    <></>
                 )}           
 
                 {/* Earnings Overview Chart */}
