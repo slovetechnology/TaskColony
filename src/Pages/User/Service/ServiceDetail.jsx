@@ -9,7 +9,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useForm } from 'react-hook-form';
 import CalendarDays from '../../../Components/General/CalendarDays';
 import { useSelector } from 'react-redux';
-import { ErrorAlert } from '../../../Components/General/Utils';
+import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import ConfirmBooking from './ConfirmBooking';
 import moment from 'moment';
 import Popups from '../../../Components/General/Popups';
@@ -238,6 +238,7 @@ const ServiceDetail = () => {
 
     setImages(prevImages => [...prevImages, ...newImages]);
   };
+  
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('job_title', data.job_title);
@@ -261,25 +262,28 @@ const ServiceDetail = () => {
     formData.append('urgent', 0);
 
     setIsSubmitting(true);
-    setIsModalOpen(true);
 
     try {
       const res = await AuthPosturl(Apis.users.create_bookings, formData);
-      if (res.status === true && res.data[0].paid === true) {
-        setBookingData({
-          ...data,
-          price: data.price,
-          paymentUrl: res.text,
-          firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
-        });
-        setView(2);
-      } else {
-        if (res.data[0].paid === false) {
+
+      if (res.status) { // Check if status is true
+        if (res.data[0].paid) {
+          setBookingData({
+            ...data,
+            price: data.price,
+            paymentUrl: res.text,
+            firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
+          });
+          setView(2); // Set view to confirm booking
+          setIsModalOpen(true); // Open modal for successful booking
+        } else {
           setTimeout(() => {
-            window.location.href = res.text;
+            window.location.href = res.text; // Redirect if not paid
           }, 2000);
+          ErrorAlert('You do not have enough funds to carry out this booking.');
         }
-        ErrorAlert('You do not have enough funds to carry out this booking.');
+      } else {
+        ErrorAlert(res.text); // Show error message
       }
     } catch (error) {
       console.error('Error submitting booking:', error);
