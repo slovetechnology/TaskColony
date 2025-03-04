@@ -128,7 +128,10 @@ const AllBookings = () => {
   };
 
   const toggleView = (setter) => () => setter(prev => !prev);
-
+  const SingleItem = (val) => {
+    setSingles(val);
+    setView(!view);
+  };
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
@@ -237,9 +240,10 @@ const AllBookings = () => {
                   <div className="flex gap-4 text-lg text-primary">
                     {admin.userlevel !== "4" && (
                       <>
-                        <div className="cursor-pointer" onClick={() => setSingles(member)}>
+                        <div className="cursor-pointer" onClick={() => SingleItem(member)}>
                           <PiPencilSimpleLine />
                         </div>
+
                         <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
                           <ImCancelCircle />
                         </div>
