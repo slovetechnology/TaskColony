@@ -29,6 +29,7 @@ const AllAdmin = () => {
     const [loads, setLoads] = useState(false);
     const [view, setView] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [statusFilter, setStatusFilter] = useState(''); // New state for status filter
 
     const { admin } = useSelector(state => state.data); // Pulling from Redux
 
@@ -112,17 +113,42 @@ const AllAdmin = () => {
         const value = e.target.value.toLowerCase().trim();
         setSearchTerm(value);
 
-        if (value === '') {
-            setFilteredItems(items);
-            return;
+        let filtered = items;
+
+        if (value !== '') {
+            filtered = filtered.filter(item =>
+                item.name.toLowerCase().includes(value) ||
+                item.email.toLowerCase().includes(value) ||
+                (item.username && item.username.toLowerCase().includes(value)) ||
+                item.status.toLowerCase().includes(value)
+            );
         }
 
-        const filtered = items.filter(item =>
-            item.name.toLowerCase().includes(value) ||
-            item.email.toLowerCase().includes(value) ||
-            (item.username && item.username.toLowerCase().includes(value)) ||
-            item.status.toLowerCase().includes(value)
-        );
+        if (statusFilter !== '') {
+            filtered = filtered.filter(item => item.status === statusFilter);
+        }
+
+        setFilteredItems(filtered);
+    };
+
+    const handleStatusFilterChange = (e) => {
+        const value = e.target.value;
+        setStatusFilter(value);
+
+        let filtered = items;
+
+        if (searchTerm !== '') {
+            filtered = filtered.filter(item =>
+                item.name.toLowerCase().includes(searchTerm) ||
+                item.email.toLowerCase().includes(searchTerm) ||
+                (item.username && item.username.toLowerCase().includes(searchTerm)) ||
+                item.status.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        if (value !== '') {
+            filtered = filtered.filter(item => item.status === value);
+        }
 
         setFilteredItems(filtered);
     };
@@ -164,9 +190,16 @@ const AllAdmin = () => {
                                 />
                                 <FaSearch size={16} />
                             </label>
-                            <span className="text-primary text-2xl"><HiOutlineAdjustments /></span>
-                            <span className="text-primary text-2xl"><GiCancel /></span>
-                        </div>
+                            <select
+                                className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md"
+                                value={statusFilter}
+                                onChange={handleStatusFilterChange}
+                            >
+                                <option value="">All Statuses</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+  <span className="text-primary text-2xl"><GiCancel /></span>                        </div>
                     </div>
                 </div>
 

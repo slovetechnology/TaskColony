@@ -310,7 +310,7 @@ export const HomeTestimonials = [
     },
 ];
 export const StoreLinks = [
-    { img: img27, link: 'https://play.google.com/store/apps/details?id=com.taskcolony.app' },
+    { img: img27, link: 'https://play.google.com/store/apps/details?id=com.taskcolony.app ' },
     { img: img28, link: "https://apps.apple.com/app/task-colony/id6741864955"},
 ]
 

@@ -120,8 +120,7 @@ const AllSlider = () => {
                                 />
                                 <FaSearch size={16} />
                             </label>
-                            <span className="text-primary text-2xl"><HiOutlineAdjustments /></span>
-                            <span className="text-primary text-2xl cursor-pointer" onClick={() => setSearchTerm('')}><GiCancel /></span>
+//                            <span className="text-primary text-2xl cursor-pointer" onClick={() => setSearchTerm('')}><GiCancel /></span>
                         </div>
                     </div>
                 </div>
