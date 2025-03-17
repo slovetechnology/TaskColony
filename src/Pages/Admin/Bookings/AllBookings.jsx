@@ -133,6 +133,10 @@ const AllBookings = () => {
     setSingles(val);
     setView(!view);
   };
+  const SingleItems = (val) => {
+    setSingle(val);
+    setViews(!views);
+  };
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
@@ -277,9 +281,9 @@ const AllBookings = () => {
                           <PiPencilSimpleLine />
                         </div>
 
-                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+                        {/* <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
                           <ImCancelCircle />
-                        </div>
+                        </div> */}
                         {member.status_text.toLowerCase() === 'pending' && (
                           <div className="cursor-pointer" onClick={() => SingleItems(member)}>
                             <IoSettingsOutline />
