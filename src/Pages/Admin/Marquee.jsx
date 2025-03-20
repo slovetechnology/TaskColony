@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css'; // Import the Quill stylesheet
 import { useForm } from 'react-hook-form';
 import { Apis, AuthPosturl } from '../../Components/General/Api';
 import AdminLayout from '../../Components/Admin/AdminLayout';
-import { ErrorAlert } from '../../Components/General/Utils';
+import { ErrorAlert, ToastAlert } from '../../Components/General/Utils';
 
 const Marquee = () => {
     const { handleSubmit, formState: { errors } } = useForm();
@@ -13,22 +13,22 @@ const Marquee = () => {
 
     const onSubmit = async () => {
         const formData = new FormData();
-
         const plainTextContent = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
         formData.append('message', plainTextContent); // Save plain text content
 
         setLoading(true);
         try {
             const res = await AuthPosturl(Apis.admins.marquee_message, formData);
-            if (res.status === true) {
-                ToastAlert(res.text)
 
+            if (res.status === true) {
+                ToastAlert(res.text); // Show success message
                 setContent(''); // Clear the content after successful submission
             } else {
-                ErrorAlert(res.text);
+                ToastAlert(res.text); // Show error message
             }
         } catch (error) {
-            ErrorAlert('An error occurred while submitting the marquee message.');
+            console.error('Error:', error); // Log the actual error
+            ToastAlert('An error occurred while submitting.'); // Show a generic error message
         } finally {
             setLoading(false);
         }

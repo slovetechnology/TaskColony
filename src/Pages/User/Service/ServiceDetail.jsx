@@ -9,7 +9,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useForm } from 'react-hook-form';
 import CalendarDays from '../../../Components/General/CalendarDays';
 import { useSelector } from 'react-redux';
-import { ErrorAlert } from '../../../Components/General/Utils';
+import { ErrorAlert, ToastAlert } from '../../../Components/General/Utils';
 import ConfirmBooking from './ConfirmBooking';
 import moment from 'moment';
 import Popups from '../../../Components/General/Popups';
@@ -31,6 +31,7 @@ const ServiceDetail = () => {
   const [view, setView] = useState(1); // 1 = Booking Form, 2 = Confirm Booking
   const [bookingData, setBookingData] = useState(null);
   const [selectedState, setSelectedState] = useState(''); // State for selected state
+  const [selectedServiceCommission, setSelectedServiceCommission] = useState(null);
 
   useEffect(() => {
     if (view === 2) {
@@ -238,12 +239,13 @@ const ServiceDetail = () => {
 
     setImages(prevImages => [...prevImages, ...newImages]);
   };
+
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('job_title', data.job_title);
     formData.append('service_tid', data.service_tid);
     formData.append('state_tid', data.state_tid);
-    formData.append('city', selectedState); // Use selected state name for city
+    formData.append('city', selectedState);
     formData.append('coupon_code', data.coupon_code);
     formData.append('description', data.description);
     formData.append('address', location.address || data.address);
@@ -261,25 +263,34 @@ const ServiceDetail = () => {
     formData.append('urgent', 0);
 
     setIsSubmitting(true);
-    setIsModalOpen(true);
 
     try {
       const res = await AuthPosturl(Apis.users.create_bookings, formData);
-      if (res.status === true && res.data[0].paid === true) {
-        setBookingData({
-          ...data,
-          price: data.price,
-          paymentUrl: res.text,
-          firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
-        });
-        setView(2);
-      } else {
-        if (res.data[0].paid === false) {
+      if (res.status) {
+        const selectedService = services.find(service => service.trackid === data.service_tid);
+        setSelectedServiceCommission(selectedService ? selectedService.commission : null);
+
+        if (res.data[0].paid) {
+          setBookingData({
+            ...data,
+            price: data.price,
+            paymentUrl: res.text,
+            firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
+          });
+          setView(2);
+          setIsModalOpen(true);
+        } else {
+          setIsModalOpen(true);
           setTimeout(() => {
             window.location.href = res.text;
           }, 2000);
+          ErrorAlert('You do not have enough funds to carry out this booking.');
         }
-        ErrorAlert('You do not have enough funds to carry out this booking.');
+      } else {
+        setIsModalOpen(true);
+        setTimeout(() => {
+          ErrorAlert(res.text);
+        }, 2000);
       }
     } catch (error) {
       console.error('Error submitting booking:', error);
@@ -678,7 +689,11 @@ const ServiceDetail = () => {
         <ConfirmBooking bookingData={bookingData} />
       )}
       <Popups isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Commission Fee">
-        <p>Task Colony will take a 10% commission on any payment made.</p>
+        {selectedServiceCommission !== null ? (
+          <p>Task Colony will take a {selectedServiceCommission} commission on this payment.</p>
+        ) : (
+          <p>No commission information available.</p>
+        )}
       </Popups>
     </Layout>
   );

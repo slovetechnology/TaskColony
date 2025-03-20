@@ -168,9 +168,7 @@ const AllServices = () => {
                                 />
                                 <FaSearch size={16} />
                             </label>
-                            <span className="text-primary text-2xl"><HiOutlineAdjustments /></span>
-                            <span className="text-primary text-2xl"><GiCancel /></span>
-                        </div>
+  <span className="text-primary text-2xl"><GiCancel /></span>                        </div>
                     </div>
                 </div>
                 <div className="flex items-start mb-10 justify-start">

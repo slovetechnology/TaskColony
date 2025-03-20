@@ -11,7 +11,7 @@ const AssignBooking = ({ singles, resendSignal, closeView }) => {
 
     const fetchUsers = useCallback(async () => {
         try {
-            const res = await AuthGeturl(Apis.admins.get_provider);
+            const res = await AuthGeturl(`${Apis.admins.get_provider}?sortbyuser=2`);
             if (res.status === true && Array.isArray(res.data.data)) {
                 setItems(res.data.data);
             } else {

@@ -31,15 +31,36 @@ const AllCategories = () => {
   const [loads, setLoads] = useState(false);
   const [view, setView] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState(''); // New state for status filter
 
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
 
-    const filtered = items.filter(item =>
+    let filtered = items.filter(item =>
       item.name.toLowerCase().includes(value) ||
       item.status.toString().toLowerCase().includes(value)
     );
+
+    if (statusFilter !== '') {
+      filtered = filtered.filter(item => item.status.toString().toLowerCase() === statusFilter);
+    }
+
+    setFilteredItems(filtered);
+  };
+
+  const handleStatusFilterChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setStatusFilter(value);
+
+    let filtered = items.filter(item =>
+      item.name.toLowerCase().includes(searchTerm) ||
+      item.status.toString().toLowerCase().includes(searchTerm)
+    );
+
+    if (value !== '') {
+      filtered = filtered.filter(item => item.status.toString().toLowerCase() === value);
+    }
 
     setFilteredItems(filtered);
   };
@@ -129,6 +150,15 @@ const AllCategories = () => {
                 />
                 <FaSearch size={16} />
               </label>
+              <select
+                className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md"
+                value={statusFilter}
+                onChange={handleStatusFilterChange}
+              >
+                <option value="">All Statuses</option>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
               <span className="text-primary text-2xl"><HiOutlineAdjustments /></span>
               <span className="text-primary text-2xl"><GiCancel /></span>
             </div>

@@ -8,7 +8,6 @@ const CalendarDays = ({ onSelectDate }) => {
     // Function to ensure that the date is in a correct format (YYYY-MM-DD)
     const formatDate = (date) => {
         if (!(date instanceof Date) || isNaN(date)) {
-            console.error("Invalid date passed to formatDate", date);
             return null; // Handle invalid date case here
         }
         const year = date.getFullYear();

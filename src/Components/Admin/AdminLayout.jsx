@@ -48,7 +48,7 @@ const AdminLayout = ({ children }) => {
                         </div>
                     </div>
 
-                    <div className="h-[88vh]  w-full lg:mx-10 mx-0 bg-gray overflow-y-auto scrollsdown relative">
+                    <div className="h-[88vh]  w-full lg:mx-7 mx-0 bg-gray overflow-y-auto scrollsdown relative">
                         {children}
                     </div>
                 </div>

@@ -47,6 +47,7 @@ const AllBookings = () => {
   const [view, setView] = useState(false);
   const [views, setViews] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState(''); // New state for status filter
   const { admin } = useSelector(state => state.data);
 
   const pageCount = Math.ceil(total / DEFAULT_PER_PAGE);
@@ -128,24 +129,50 @@ const AllBookings = () => {
   };
 
   const toggleView = (setter) => () => setter(prev => !prev);
-
+  const SingleItem = (val) => {
+    setSingles(val);
+    setView(!view);
+  };
+  const SingleItems = (val) => {
+    setSingle(val);
+    setViews(!views);
+  };
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
 
-    const filtered = items.filter((item) =>
+    let filtered = items.filter((item) =>
       (item.ufname && item.ufname.toLowerCase().includes(value)) ||
       (item.pfname && item.pfname.toLowerCase().includes(value)) ||
       (item.uemail && item.uemail.toString().toLowerCase().includes(value)) ||
       (item.service_name && item.service_name.toLowerCase().includes(value))
     );
 
+    if (statusFilter !== '') {
+      filtered = filtered.filter(item => item.status_text.toLowerCase() === statusFilter);
+    }
+
     setFilteredItems(filtered);
   };
-  const SingleItems = (val) => {
-    setSingle(val);
-    setViews(!views);
+
+  const handleStatusFilterChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setStatusFilter(value);
+
+    let filtered = items.filter((item) =>
+      (item.ufname && item.ufname.toLowerCase().includes(searchTerm)) ||
+      (item.pfname && item.pfname.toLowerCase().includes(searchTerm)) ||
+      (item.uemail && item.uemail.toString().toLowerCase().includes(searchTerm)) ||
+      (item.service_name && item.service_name.toLowerCase().includes(searchTerm))
+    );
+
+    if (value !== '') {
+      filtered = filtered.filter(item => item.status_text.toLowerCase() === value);
+    }
+
+    setFilteredItems(filtered);
   };
+
   return (
     <AdminLayout>
       {del && (
@@ -185,9 +212,22 @@ const AllBookings = () => {
                 />
                 <FaSearch size={16} />
               </label>
-              <span className="text-primary text-2xl">
-                <HiOutlineAdjustments />
-              </span>
+              <select
+                className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md"
+                value={statusFilter}
+                onChange={handleStatusFilterChange}
+              >
+                <option value="">All Statuses</option>
+                <option value="completed">Completed</option>
+                <option value="canceled">Canceled</option>
+                <option value="pending">Pending</option>
+                <option value="accepted">Accepted</option>
+                <option value="done">Done</option>
+                <option value="rejected">Rejected</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="hold">Hold</option>
+              </select>
+             
               <span className="text-primary text-2xl">
                 <GiCancel />
               </span>
@@ -237,12 +277,13 @@ const AllBookings = () => {
                   <div className="flex gap-4 text-lg text-primary">
                     {admin.userlevel !== "4" && (
                       <>
-                        <div className="cursor-pointer" onClick={() => setSingles(member)}>
+                        <div className="cursor-pointer" onClick={() => SingleItem(member)}>
                           <PiPencilSimpleLine />
                         </div>
-                        <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
+
+                        {/* <div className="cursor-pointer" onClick={() => DeleteItem(member)}>
                           <ImCancelCircle />
-                        </div>
+                        </div> */}
                         {member.status_text.toLowerCase() === 'pending' && (
                           <div className="cursor-pointer" onClick={() => SingleItems(member)}>
                             <IoSettingsOutline />

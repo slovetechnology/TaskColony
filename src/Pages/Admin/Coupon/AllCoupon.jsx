@@ -26,6 +26,7 @@ const AllCoupon = () => {
     const [filteredItems, setFilteredItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
+    const [statusFilter, setStatusFilter] = useState(''); // New state for status filter
     const { admin } = useSelector(state => state.data);
     const [del, setDel] = useState(false);
     const [singles, setSingles] = useState({});
@@ -93,12 +94,34 @@ const AllCoupon = () => {
         const value = e.target.value.toLowerCase(); // Convert search term to lowercase
         setSearchTerm(value);
 
-        const filtered = items.filter(item =>
+        let filtered = items.filter(item =>
             item.trackid.toLowerCase().includes(value) || // Convert and match trackid
             item.typetext.toLowerCase().includes(value) || // Convert and match typetext
             item.coupon_value.toString().toLowerCase().includes(value) || // Convert and match coupon value
             item.expiredate.toLowerCase().includes(value) // Convert and match expire date
         );
+
+        if (statusFilter !== '') {
+            filtered = filtered.filter(item => item.status.toString().toLowerCase() === statusFilter);
+        }
+
+        setFilteredItems(filtered); // Update filtered items
+    };
+
+    const handleStatusFilterChange = (e) => {
+        const value = e.target.value.toLowerCase();
+        setStatusFilter(value);
+
+        let filtered = items.filter(item =>
+            item.trackid.toLowerCase().includes(searchTerm) || // Convert and match trackid
+            item.typetext.toLowerCase().includes(searchTerm) || // Convert and match typetext
+            item.coupon_value.toString().toLowerCase().includes(searchTerm) || // Convert and match coupon value
+            item.expiredate.toLowerCase().includes(searchTerm) // Convert and match expire date
+        );
+
+        if (value !== '') {
+            filtered = filtered.filter(item => item.status.toString().toLowerCase() === value);
+        }
 
         setFilteredItems(filtered); // Update filtered items
     };
@@ -126,7 +149,15 @@ const AllCoupon = () => {
                                 />
                                 <FaSearch size={16} />
                             </label>
-                            <span className="text-primary text-2xl"><HiOutlineAdjustments /></span>
+                            <select
+                                className="border gap-[10px] text-[#9C9C9C] flex items-center py-2.5 px-3 border-primary rounded-md"
+                                value={statusFilter}
+                                onChange={handleStatusFilterChange}
+                            >
+                                <option value="">All Statuses</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
                             <span className="text-primary text-2xl"><GiCancel /></span>
                         </div>
                     </div>

@@ -25,21 +25,24 @@ const Booking = () => {
         latitude: null,
         longitude: null,
     });
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+    const [locationButtonText, setLocationButtonText] = useState('Get Location');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedServiceCommission, setSelectedServiceCommission] = useState(null);
+
     useEffect(() => {
         if (view === 2) {
             window.scrollTo(0, 0); // Scrolls to the top of the page
         }
     }, [view]);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
-    const [locationButtonText, setLocationButtonText] = useState('Get Location');
-    const [selectedState, setSelectedState] = useState(''); // State for selected state
 
     const getUserGeoAddress = async () => {
-        setLocationButtonText('Getting your location...'); // Change button text
+        setLocationButtonText('Getting your location...');
         if (!navigator.geolocation) {
             ErrorAlert('Geolocation is not supported by your browser.');
-            setLocationButtonText('Get Location'); // Reset button text
+            setLocationButtonText('Get Location');
             return;
         }
 
@@ -62,18 +65,18 @@ const Booking = () => {
                 } catch (error) {
                     console.error('Error fetching geolocation:', error);
                 } finally {
-                    setLocationButtonText('Get Location'); // Reset button text
+                    setLocationButtonText('Get Location');
                 }
             },
             (error) => {
                 ErrorAlert(`Error fetching location: ${error.message}`);
-                setLocationButtonText('Get Location'); // Reset button text
+                setLocationButtonText('Get Location');
             }
         );
     };
 
     const fetchCoordinatesFromAddress = async (address) => {
-        const apiKey = "AIzaSyAWrGaFeWRxxtjxUCZGG7naNmHtg0RK88o"; // Replace with your API key
+        const apiKey = "YOUR_API_KEY"; // Replace with your API key
         try {
             const response = await fetch(
                 `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
@@ -101,17 +104,14 @@ const Booking = () => {
     const fetchAllData = useCallback(async () => {
         setLoading(true);
         try {
-            // Fetch categories, states, and services
             const categoryResponse = await Geturl(Apis.users.get_system);
             if (categoryResponse.status === true) {
                 setCategories(categoryResponse.data.categories);
             }
-
             const stateResponse = await Geturl(Apis.users.get_system);
             if (stateResponse.status === true) {
                 setStates(stateResponse.data.cities);
             }
-
             const serviceResponse = await Geturl(Apis.users.get_system);
             if (serviceResponse.status === true) {
                 setServices(serviceResponse.data.all_services);
@@ -132,7 +132,7 @@ const Booking = () => {
         formData.append('job_title', data.job_title);
         formData.append('service_tid', data.service_tid);
         formData.append('state_tid', data.state_tid);
-        formData.append('city', selectedState); // Use selected state name for city
+        formData.append('city', selectedState);
         formData.append('coupon_code', data.coupon_code);
         formData.append('description', data.description);
         formData.append('address', location.address || data.address);
@@ -141,34 +141,43 @@ const Booking = () => {
         formData.append('time', moment(data.time, 'HH:mm').format('hh:mm A'));
         formData.append('price', data.price);
         formData.append('date', selectedDateTime.date ? moment(selectedDateTime.date).format('MM-DD-YYYY') : moment().format('MM-DD-YYYY'));
-
+        
         images.forEach(image => {
             formData.append('images[]', image);
         });
-
+        
         formData.append('zipcode', data.zipcode);
         formData.append('urgent', 0);
-
+        
         setIsSubmitting(true);
-        setIsModalOpen(true);
-
+        
         try {
             const res = await AuthPosturl(Apis.users.create_bookings, formData);
-            if (res.status === true && res.data[0].paid === true) {
-                setBookingData({
-                    ...data,
-                    price: data.price,
-                    paymentUrl: res.text,
-                    firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
-                });
-                setView(2);
-            } else {
-                if (res.data[0].paid === false) {
+            if (res.status) {
+                const selectedService = services.find(service => service.trackid === data.service_tid);
+                setSelectedServiceCommission(selectedService ? selectedService.commission : null);
+
+                if (res.data[0].paid) {
+                    setBookingData({
+                        ...data,
+                        price: data.price,
+                        paymentUrl: res.text,
+                        firstImage: images[0] ? URL.createObjectURL(images[0]) : null,
+                    });
+                    setView(2);
+                    setIsModalOpen(true);
+                } else {
+                    setIsModalOpen(true);
                     setTimeout(() => {
                         window.location.href = res.text;
                     }, 2000);
+                    ErrorAlert('You do not have enough funds to carry out this booking.');
                 }
-                ErrorAlert('You do not have enough funds to carry out this booking.');
+            } else {
+                setIsModalOpen(true);
+                setTimeout(() => {
+                    ErrorAlert(res.text);
+                }, 2000);
             }
         } catch (error) {
             console.error('Error submitting booking:', error);
@@ -279,7 +288,7 @@ const Booking = () => {
                                         >
                                             <option value="">Select Service</option>
                                             {services
-                                                .filter((service) => service.cat_tid === selectedCategory) // Filter services by selected category
+                                                .filter((service) => service.cat_tid === selectedCategory)
                                                 .map((service) => (
                                                     <option key={service.trackid} value={service.trackid}>
                                                         {service.name}
@@ -300,8 +309,8 @@ const Booking = () => {
                                             onChange={(e) => {
                                                 const selectedStateId = e.target.value;
                                                 const state = states.find(state => state.trackid === selectedStateId);
-                                                setSelectedState(state ? state.name : ''); // Set selected state name
-                                                setValue('state_tid', selectedStateId); // Set the state ID in the form
+                                                setSelectedState(state ? state.name : '');
+                                                setValue('state_tid', selectedStateId);
                                             }}
                                         >
                                             <option value="">Select State</option>
@@ -324,8 +333,8 @@ const Booking = () => {
                                             type="text"
                                             placeholder="City"
                                             className={`inputs border ${errors.city ? 'border' : 'border'}`}
-                                            value={selectedState} // Display selected state name
-                                            onChange={(e) => setSelectedState(e.target.value)} // Allow user to edit
+                                            value={selectedState}
+                                            onChange={(e) => setSelectedState(e.target.value)}
                                         />
                                     </div>
 
@@ -350,7 +359,7 @@ const Booking = () => {
                                             onChange={(e) => {
                                                 const newTime = e.target.value;
                                                 setSelectedDateTime((prev) => ({ ...prev, time: newTime }));
-                                                setValue('time', newTime, { shouldValidate: true }); // Sync with react-hook-form
+                                                setValue('time', newTime, { shouldValidate: true });
                                             }}
                                         />
                                         {errors.time && (
@@ -375,7 +384,7 @@ const Booking = () => {
                                             onChange={(e) => {
                                                 const newAddress = e.target.value;
                                                 setLocation({ ...location, address: newAddress });
-                                                fetchCoordinatesFromAddress(newAddress); // Fetch coordinates
+                                                fetchCoordinatesFromAddress(newAddress);
                                             }}
                                         />
                                         {errors.address && (
@@ -402,7 +411,7 @@ const Booking = () => {
                                         <input
                                             {...register('coupon_code')}
                                             type="text"
-                                            placeholder="coupon"
+                                            placeholder="Coupon"
                                             className={`inputs border ${errors.coupon_code ? 'border-red-600' : 'border'}`}
                                         />
                                     </div>
@@ -432,7 +441,7 @@ const Booking = () => {
                                                         onChange={handleUpload}
                                                         type="file"
                                                         multiple
-                                                        accept=".png,.jpg,.jpeg,.svg" // Allow SVGs
+                                                        accept=".png,.jpg,.jpeg,.svg"
                                                         hidden
                                                     />
                                                 </label>
@@ -461,7 +470,7 @@ const Booking = () => {
                                                                 onChange={handleUpload}
                                                                 type="file"
                                                                 multiple
-                                                                accept=".png,.jpg,.jpeg,.svg" // Allow SVGs
+                                                                accept=".png,.jpg,.jpeg,.svg"
                                                                 hidden
                                                             />
                                                         </label>
@@ -476,7 +485,8 @@ const Booking = () => {
                                         className={`w-full py-2 mt-5 text-white ${isSubmitting ? 'bg-secondary' : 'bg-secondary'} rounded-md`}
                                         disabled={isSubmitting}
                                     >
-                                        {isSubmitting ? 'Submitting...' : 'Submit Booking'}
+                                        {isSubmitting ? 'Submitting...'
+                                        : 'Submit Booking'}
                                     </button>
                                 </div>
                             </form>
@@ -484,15 +494,21 @@ const Booking = () => {
                     </div>
                 </div>
             )}
-            {view === 2 && bookingData && (
+            {view === 2 && (
                 <ConfirmBooking
                     bookingData={bookingData}
-                    setView={setView}
-                    setImages={setImages}
+                    onClose={() => {
+                        setView(1);
+                        setBookingData(null);
+                    }}
                 />
             )}
             <Popups isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Commission Fee">
-                <p>Task Colony will take a 10% commission on any payment made.</p>
+                {selectedServiceCommission !== null ? (
+                    <p>Task Colony will take a {selectedServiceCommission} commission on this payment.</p>
+                ) : (
+                    <p>No commission information available.</p>
+                )}
             </Popups>
         </Layout>
     );

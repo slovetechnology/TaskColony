@@ -331,7 +331,7 @@ function Home() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 lg:gap-y-16 gap-x-4">
-                    {category.slice(0, 6).map((item, index) => (
+                    {category.slice(0, 4).map((item, index) => (
                         <Link to={`/sub-category/${item.trackid}`} key={index}>
                             <div className="bg-white shadow-2xl h-[7rem] rounded-xl p-4">
                                 <div className="bg-secondary p-3 rounded-full w-fit mx-auto -mt-14">
