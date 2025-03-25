@@ -32,20 +32,17 @@ const Notification = ({ closeview }) => {
   // Helper function to format the date
   const formatDate = (dateString) => {
     const options = {
-      month: 'short',
       day: '2-digit',
+      month: 'short',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
     };
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+    return new Intl.DateTimeFormat('en-GB', options).format(new Date(dateString));
   };
   return (
     <Modal height='h-[40rem]' closeView={closeview}>
       <div className="font-bold text-2xl mb-4">Notification</div>
       <div className="flex justify-end">
-    
+        {/* <button className="bg-secondary px-4 py-2 text-white rounded-lg" onClick={Markasread()}>Mark As Read</button> */}
       </div>
       <div className="mt-6">
         <div>
