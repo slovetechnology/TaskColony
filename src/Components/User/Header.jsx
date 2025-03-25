@@ -51,7 +51,7 @@ const Header = () => {
       try {
         const res = await AuthGeturl(Apis.users.all_notification);
         if (res.status === true && res.data.records) {
-          setNotificationCount(res.data.records.length);
+          setNotificationCount(user.unreadnoti);
         }
       } catch (error) {
         console.error('Error fetching notifications:', error);
@@ -149,7 +149,7 @@ const Header = () => {
               )}
             </Link>
 
-            <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer">
+            <div className="xl:hidden flex text-xl lg:text-2xl cursor-pointer text-secondary">
               <TopNavIcon onClick={() => setTopNav(!topNav)} />
             </div>
           </div>
