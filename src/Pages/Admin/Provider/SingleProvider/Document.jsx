@@ -8,7 +8,7 @@ import { TableData } from '../../../../Components/Admin/Table/TableData';
 import { PiPencilSimpleLine } from 'react-icons/pi';
 import UpdateDocument from './UpdateDocument';
 
-const TABLE_HEADERS = ["Name", 'Id Type', 'Number', 'Gender', "Company Name", 'Status', ''];
+const TABLE_HEADERS = ["Name","Document", 'Id Type', 'Number', 'Gender', "Company Name", 'Status', ''];
 const DEFAULT_PER_PAGE = 10;
 
 // Status mapping
@@ -28,6 +28,7 @@ const ProviderDocuments = () => {
     const [total, setTotal] = useState(0);
     const [view, setView] = useState(false);
     const [singles, setSingles] = useState({});
+    const [imagePreview, setImagePreview] = useState({ visible: false, src: '' }); // State for image preview
 
     const fetchUser = useCallback(async () => {
         try {
@@ -54,6 +55,19 @@ const ProviderDocuments = () => {
         setCurrentPage(val.selected);
     };
 
+    const SingleItem = (val) => {
+        setSingles(val);
+        setView(true);
+    };
+
+    const openImagePreview = (src) => {
+        setImagePreview({ visible: true, src });
+    };
+
+    const closeImagePreview = () => {
+        setImagePreview({ visible: false, src: '' });
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -61,11 +75,6 @@ const ProviderDocuments = () => {
     if (!user) {
         return <div>No user data available.</div>;
     }
-
-    const SingleItem = (val) => {
-        setSingles(val);
-        setView(true);
-    };
 
     return (
         <div className="">
@@ -77,6 +86,19 @@ const ProviderDocuments = () => {
                     closeView={() => setView(false)}
                 />
             )}
+            {imagePreview.visible && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="relative">
+                        <img src={imagePreview.src} alt="Preview" className="max-w-full max-h-screen" />
+                        <button
+                            className="absolute top-2 right-2 text-white text-2xl"
+                            onClick={closeImagePreview}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className="flex items-start mb-10 justify-start">
                 <Table
                     headers={TABLE_HEADERS}
@@ -85,6 +107,14 @@ const ProviderDocuments = () => {
                 >
                     <TableRow>
                         <TableData>{user.fullname}</TableData>
+                        <TableData>
+                            <img
+                                src={user.business_cc}
+                                alt=""
+                                className="h-20 w-20 cursor-pointer"
+                                onClick={() => openImagePreview(user.business_cc)} // Open image preview on click
+                            />
+                        </TableData>
                         <TableData>{user.sostype}</TableData>
                         <TableData>{user.identity_number}</TableData>
                         <TableData>{user.gender}</TableData>
