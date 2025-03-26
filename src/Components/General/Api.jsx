@@ -23,6 +23,7 @@ const user_urls = {
     login: `${user}/auth/loginapp.php`,
     get_user_profile: `${user}/profile/get_user_detail.php`,
     fund_wallet: `${user}/profile/fundwallet.php`,
+    mark_as_read: `${user}/profile/mark_noti_as_read.php`,
     fund_history: `${user}/profile/get_fund_history.php`,
     change_profile_pass: `${user}/profile/update_profile_password.php`,
     edit_user_profile: `${user}/profile/update_profile_data.php`,
